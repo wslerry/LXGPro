@@ -2,7 +2,7 @@ import arcpy
 from tqdm import tqdm
 import os
 import time
-from datetime import datetime, date, timedelta
+from datetime import timedelta
 
 arcpy.env.overwriteOutput = True
 

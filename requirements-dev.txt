@@ -1,0 +1,5 @@
+tqdm
+numpy
+pandas
+jinja2
+xhtml2pdf
