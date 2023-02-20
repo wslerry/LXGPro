@@ -19,3 +19,8 @@ Replication()
 
 [ref 1](https://jacobtomlinson.dev/posts/2020/versioning-and-formatting-your-python-code/)
 
+```bash
+git add -A
+git commit -m "Add versioneer"
+git tag 0.0.1
+```
