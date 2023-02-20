@@ -19,7 +19,8 @@ from Cython.Distutils import build_ext
 
 
 ext_modules = [
-    Extension("LXG",  ["replication.py"]),
+    Extension("LXGMigration",  ["LXG/migration.py"]),
+    Extension("LXGReplication",  ["LXG/replication.py"]),
 ]
 
 with open("README.md", "r") as fh:
@@ -28,13 +29,13 @@ with open("requirements.txt", "r") as fh:
     requirements = [line.strip() for line in fh]
 
 setup(
-    name='LXG',
+    name=f'LXG',
     version=versioneer.get_version(),
     cmdclass={'build_ext': build_ext, 'versioning': versioneer.get_cmdclass()},
     ext_modules=ext_modules,
     author="Lerry William",
     author_email="lerryws@sains.com.my",
-    description="A Python library to replicate ArcSDE to FileGDB",
+    description="A Python library to migrate FileGDB to ArcSDE and replicate ArcSDE to FileGDB",
     long_description=long_description,
     long_description_content_type="text/markdown",
     packages=setuptools.find_packages(),
@@ -43,6 +44,6 @@ setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    python_requires='>=3.6',
+    python_requires='>=3.7',
     install_requires=requirements,
 )
