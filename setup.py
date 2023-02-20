@@ -28,7 +28,7 @@ with open("requirements.txt", "r") as fh:
     requirements = [line.strip() for line in fh]
 
 setup(
-    name='lxg_replication',
+    name='LXG',
     version=versioneer.get_version(),
     cmdclass={'build_ext': build_ext, 'versioning': versioneer.get_cmdclass()},
     ext_modules=ext_modules,
