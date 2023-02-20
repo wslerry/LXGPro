@@ -19,8 +19,8 @@ from Cython.Distutils import build_ext
 
 
 ext_modules = [
-    Extension("LXGMigration",  ["LXG/migration.py"]),
-    Extension("LXGReplication",  ["LXG/replication.py"]),
+    Extension("LXGMIG",  ["LXG/migration.py"]),
+    Extension("LXGREP",  ["LXG/replication.py"]),
 ]
 
 with open("README.md", "r") as fh:

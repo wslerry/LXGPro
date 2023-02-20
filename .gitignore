@@ -1,8 +1,11 @@
 .idea
 __pycache__
+test*
+build
 
 latest.py
 convert2shp.py
 projection_multiprocessing.py
 replicate.py
 workspace.py
+*.pyd
