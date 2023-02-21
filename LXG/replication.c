@@ -830,7 +830,7 @@ static const char *__pyx_f[] = {
 struct __pyx_obj_6LXGREP___pyx_scope_struct__fast_poly_append;
 struct __pyx_obj_6LXGREP___pyx_scope_struct_1_genexpr;
 
-/* "LXG/replication.py":502
+/* "LXG/replication.py":504
  *         del _params
  * 
  *     def fast_poly_append(self, fc):             # <<<<<<<<<<<<<<
@@ -843,7 +843,7 @@ struct __pyx_obj_6LXGREP___pyx_scope_struct__fast_poly_append {
 };
 
 
-/* "LXG/replication.py":534
+/* "LXG/replication.py":536
  *             try:
  *                 # Start an edit operation
  *                 query = f"{oid_fieldname} IN ({', '.join(str(x) for x in oid_nums)})"             # <<<<<<<<<<<<<<
@@ -1025,9 +1025,6 @@ static CYTHON_INLINE PyObject* __Pyx_PyObject_CallMethO(PyObject *func, PyObject
 /* PyObjectCallOneArg.proto */
 static CYTHON_INLINE PyObject* __Pyx_PyObject_CallOneArg(PyObject *func, PyObject *arg);
 
-/* PyObjectCall2Args.proto */
-static CYTHON_UNUSED PyObject* __Pyx_PyObject_Call2Args(PyObject* function, PyObject* arg1, PyObject* arg2);
-
 /* RaiseArgTupleInvalid.proto */
 static void __Pyx_RaiseArgtupleInvalid(const char* func_name, int exact,
     Py_ssize_t num_min, Py_ssize_t num_max, Py_ssize_t num_found);
@@ -1039,6 +1036,9 @@ static void __Pyx_RaiseDoubleKeywordsError(const char* func_name, PyObject* kw_n
 static int __Pyx_ParseOptionalKeywords(PyObject *kwds, PyObject **argnames[],\
     PyObject *kwds2, PyObject *values[], Py_ssize_t num_pos_args,\
     const char* function_name);
+
+/* PyObjectCall2Args.proto */
+static CYTHON_UNUSED PyObject* __Pyx_PyObject_Call2Args(PyObject* function, PyObject* arg1, PyObject* arg2);
 
 /* PyObjectSetAttrStr.proto */
 #if CYTHON_USE_TYPE_SLOTS
@@ -1789,6 +1789,7 @@ static const char __pyx_k_realpath[] = "realpath";
 static const char __pyx_k_report_2[] = "./report";
 static const char __pyx_k_shp_tabs[] = "shp_tabs";
 static const char __pyx_k_strftime[] = "strftime";
+static const char __pyx_k_temp_dir[] = "temp_dir";
 static const char __pyx_k_temp_sde[] = "temp.sde";
 static const char __pyx_k_tempfile[] = "tempfile";
 static const char __pyx_k_template[] = "template";
@@ -1802,6 +1803,7 @@ static const char __pyx_k_INTERSECT[] = "INTERSECT";
 static const char __pyx_k_OBJECT_ID[] = "OBJECT_ID";
 static const char __pyx_k_aliasName[] = "aliasName";
 static const char __pyx_k_deleteRow[] = "deleteRow";
+static const char __pyx_k_directory[] = "directory";
 static const char __pyx_k_fc_points[] = "fc_points";
 static const char __pyx_k_field_src[] = "field_src";
 static const char __pyx_k_field_tgt[] = "field_tgt";
@@ -2150,6 +2152,7 @@ static PyObject *__pyx_n_s_dest;
 static PyObject *__pyx_n_s_df;
 static PyObject *__pyx_n_s_df_html;
 static PyObject *__pyx_n_s_dir;
+static PyObject *__pyx_n_s_directory;
 static PyObject *__pyx_n_s_dirname;
 static PyObject *__pyx_n_s_dirs;
 static PyObject *__pyx_n_s_doc;
@@ -2346,6 +2349,7 @@ static PyObject *__pyx_kp_s_table_title;
 static PyObject *__pyx_n_s_target_feature;
 static PyObject *__pyx_n_s_target_string;
 static PyObject *__pyx_n_s_temp_connection;
+static PyObject *__pyx_n_s_temp_dir;
 static PyObject *__pyx_kp_s_temp_sde;
 static PyObject *__pyx_n_s_temp_sde_2;
 static PyObject *__pyx_n_s_tempfile;
@@ -2385,7 +2389,7 @@ static PyObject *__pyx_n_s_your_existance_in_questions;
 static PyObject *__pyx_n_s_zip;
 static PyObject *__pyx_n_s_zip_list;
 static PyObject *__pyx_pf_6LXGREP_process(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_seconds); /* proto */
-static PyObject *__pyx_pf_6LXGREP_2your_existance_in_questions(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_geodatabase_name); /* proto */
+static PyObject *__pyx_pf_6LXGREP_2your_existance_in_questions(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_directory, PyObject *__pyx_v_geodatabase_name); /* proto */
 static PyObject *__pyx_pf_6LXGREP_6ToBRSO___init__(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self, PyObject *__pyx_v_file_geodatabase, PyObject *__pyx_v_projection); /* proto */
 static PyObject *__pyx_pf_6LXGREP_6ToBRSO_2define(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self, PyObject *__pyx_v_datasets); /* proto */
 static PyObject *__pyx_pf_6LXGREP_11ToShapefile___init__(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self, PyObject *__pyx_v_geodatabase, PyObject *__pyx_v_output_directory); /* proto */
@@ -2540,7 +2544,7 @@ static PyObject *__pyx_pf_6LXGREP_process(CYTHON_UNUSED PyObject *__pyx_self, Py
  * 
  *     return converted_time             # <<<<<<<<<<<<<<
  * 
- * def your_existance_in_questions(geodatabase_name):
+ * def your_existance_in_questions(directory, geodatabase_name):
  */
   __Pyx_XDECREF(__pyx_r);
   __Pyx_INCREF(__pyx_v_converted_time);
@@ -2573,36 +2577,86 @@ static PyObject *__pyx_pf_6LXGREP_process(CYTHON_UNUSED PyObject *__pyx_self, Py
 /* "LXG/replication.py":25
  *     return converted_time
  * 
- * def your_existance_in_questions(geodatabase_name):             # <<<<<<<<<<<<<<
- *     gdb_filename = os.path.join(current_dir, geodatabase_name)
+ * def your_existance_in_questions(directory, geodatabase_name):             # <<<<<<<<<<<<<<
+ *     gdb_filename = os.path.join(directory, geodatabase_name)
  *     if arcpy.Exists(gdb_filename):
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_6LXGREP_3your_existance_in_questions(PyObject *__pyx_self, PyObject *__pyx_v_geodatabase_name); /*proto*/
-static PyMethodDef __pyx_mdef_6LXGREP_3your_existance_in_questions = {"your_existance_in_questions", (PyCFunction)__pyx_pw_6LXGREP_3your_existance_in_questions, METH_O, 0};
-static PyObject *__pyx_pw_6LXGREP_3your_existance_in_questions(PyObject *__pyx_self, PyObject *__pyx_v_geodatabase_name) {
+static PyObject *__pyx_pw_6LXGREP_3your_existance_in_questions(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyMethodDef __pyx_mdef_6LXGREP_3your_existance_in_questions = {"your_existance_in_questions", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_6LXGREP_3your_existance_in_questions, METH_VARARGS|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_6LXGREP_3your_existance_in_questions(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+  PyObject *__pyx_v_directory = 0;
+  PyObject *__pyx_v_geodatabase_name = 0;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("your_existance_in_questions (wrapper)", 0);
-  __pyx_r = __pyx_pf_6LXGREP_2your_existance_in_questions(__pyx_self, ((PyObject *)__pyx_v_geodatabase_name));
+  {
+    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_directory,&__pyx_n_s_geodatabase_name,0};
+    PyObject* values[2] = {0,0};
+    if (unlikely(__pyx_kwds)) {
+      Py_ssize_t kw_args;
+      const Py_ssize_t pos_args = PyTuple_GET_SIZE(__pyx_args);
+      switch (pos_args) {
+        case  2: values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
+        CYTHON_FALLTHROUGH;
+        case  1: values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
+        CYTHON_FALLTHROUGH;
+        case  0: break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+      kw_args = PyDict_Size(__pyx_kwds);
+      switch (pos_args) {
+        case  0:
+        if (likely((values[0] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_directory)) != 0)) kw_args--;
+        else goto __pyx_L5_argtuple_error;
+        CYTHON_FALLTHROUGH;
+        case  1:
+        if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_geodatabase_name)) != 0)) kw_args--;
+        else {
+          __Pyx_RaiseArgtupleInvalid("your_existance_in_questions", 1, 2, 2, 1); __PYX_ERR(0, 25, __pyx_L3_error)
+        }
+      }
+      if (unlikely(kw_args > 0)) {
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "your_existance_in_questions") < 0)) __PYX_ERR(0, 25, __pyx_L3_error)
+      }
+    } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
+      goto __pyx_L5_argtuple_error;
+    } else {
+      values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
+      values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
+    }
+    __pyx_v_directory = values[0];
+    __pyx_v_geodatabase_name = values[1];
+  }
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L5_argtuple_error:;
+  __Pyx_RaiseArgtupleInvalid("your_existance_in_questions", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 25, __pyx_L3_error)
+  __pyx_L3_error:;
+  __Pyx_AddTraceback("LXGREP.your_existance_in_questions", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return NULL;
+  __pyx_L4_argument_unpacking_done:;
+  __pyx_r = __pyx_pf_6LXGREP_2your_existance_in_questions(__pyx_self, __pyx_v_directory, __pyx_v_geodatabase_name);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_6LXGREP_2your_existance_in_questions(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_geodatabase_name) {
+static PyObject *__pyx_pf_6LXGREP_2your_existance_in_questions(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_directory, PyObject *__pyx_v_geodatabase_name) {
   PyObject *__pyx_v_gdb_filename = NULL;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
   PyObject *__pyx_t_2 = NULL;
   PyObject *__pyx_t_3 = NULL;
-  PyObject *__pyx_t_4 = NULL;
-  int __pyx_t_5;
-  PyObject *__pyx_t_6 = NULL;
-  int __pyx_t_7;
+  int __pyx_t_4;
+  PyObject *__pyx_t_5 = NULL;
+  int __pyx_t_6;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
@@ -2610,8 +2664,8 @@ static PyObject *__pyx_pf_6LXGREP_2your_existance_in_questions(CYTHON_UNUSED PyO
 
   /* "LXG/replication.py":26
  * 
- * def your_existance_in_questions(geodatabase_name):
- *     gdb_filename = os.path.join(current_dir, geodatabase_name)             # <<<<<<<<<<<<<<
+ * def your_existance_in_questions(directory, geodatabase_name):
+ *     gdb_filename = os.path.join(directory, geodatabase_name)             # <<<<<<<<<<<<<<
  *     if arcpy.Exists(gdb_filename):
  *         arcpy.Delete_management(gdb_filename)
  */
@@ -2623,113 +2677,109 @@ static PyObject *__pyx_pf_6LXGREP_2your_existance_in_questions(CYTHON_UNUSED PyO
   __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_join); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 26, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_current_dir); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 26, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = NULL;
-  __pyx_t_5 = 0;
+  __pyx_t_3 = NULL;
+  __pyx_t_4 = 0;
   if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_2))) {
-    __pyx_t_4 = PyMethod_GET_SELF(__pyx_t_2);
-    if (likely(__pyx_t_4)) {
+    __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_2);
+    if (likely(__pyx_t_3)) {
       PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_2);
-      __Pyx_INCREF(__pyx_t_4);
+      __Pyx_INCREF(__pyx_t_3);
       __Pyx_INCREF(function);
       __Pyx_DECREF_SET(__pyx_t_2, function);
-      __pyx_t_5 = 1;
+      __pyx_t_4 = 1;
     }
   }
   #if CYTHON_FAST_PYCALL
   if (PyFunction_Check(__pyx_t_2)) {
-    PyObject *__pyx_temp[3] = {__pyx_t_4, __pyx_t_3, __pyx_v_geodatabase_name};
-    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_5, 2+__pyx_t_5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 26, __pyx_L1_error)
-    __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
+    PyObject *__pyx_temp[3] = {__pyx_t_3, __pyx_v_directory, __pyx_v_geodatabase_name};
+    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_4, 2+__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 26, __pyx_L1_error)
+    __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   } else
   #endif
   #if CYTHON_FAST_PYCCALL
   if (__Pyx_PyFastCFunction_Check(__pyx_t_2)) {
-    PyObject *__pyx_temp[3] = {__pyx_t_4, __pyx_t_3, __pyx_v_geodatabase_name};
-    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_5, 2+__pyx_t_5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 26, __pyx_L1_error)
-    __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
+    PyObject *__pyx_temp[3] = {__pyx_t_3, __pyx_v_directory, __pyx_v_geodatabase_name};
+    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_4, 2+__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 26, __pyx_L1_error)
+    __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   } else
   #endif
   {
-    __pyx_t_6 = PyTuple_New(2+__pyx_t_5); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 26, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_6);
-    if (__pyx_t_4) {
-      __Pyx_GIVEREF(__pyx_t_4); PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_4); __pyx_t_4 = NULL;
+    __pyx_t_5 = PyTuple_New(2+__pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 26, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
+    if (__pyx_t_3) {
+      __Pyx_GIVEREF(__pyx_t_3); PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_3); __pyx_t_3 = NULL;
     }
-    __Pyx_GIVEREF(__pyx_t_3);
-    PyTuple_SET_ITEM(__pyx_t_6, 0+__pyx_t_5, __pyx_t_3);
+    __Pyx_INCREF(__pyx_v_directory);
+    __Pyx_GIVEREF(__pyx_v_directory);
+    PyTuple_SET_ITEM(__pyx_t_5, 0+__pyx_t_4, __pyx_v_directory);
     __Pyx_INCREF(__pyx_v_geodatabase_name);
     __Pyx_GIVEREF(__pyx_v_geodatabase_name);
-    PyTuple_SET_ITEM(__pyx_t_6, 1+__pyx_t_5, __pyx_v_geodatabase_name);
-    __pyx_t_3 = 0;
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_6, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 26, __pyx_L1_error)
+    PyTuple_SET_ITEM(__pyx_t_5, 1+__pyx_t_4, __pyx_v_geodatabase_name);
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_5, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 26, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   }
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_v_gdb_filename = __pyx_t_1;
   __pyx_t_1 = 0;
 
   /* "LXG/replication.py":27
- * def your_existance_in_questions(geodatabase_name):
- *     gdb_filename = os.path.join(current_dir, geodatabase_name)
+ * def your_existance_in_questions(directory, geodatabase_name):
+ *     gdb_filename = os.path.join(directory, geodatabase_name)
  *     if arcpy.Exists(gdb_filename):             # <<<<<<<<<<<<<<
  *         arcpy.Delete_management(gdb_filename)
- *         arcpy.CreateFileGDB_management(current_dir, geodatabase_name, "9.3")
+ *         arcpy.CreateFileGDB_management(directory, geodatabase_name, "9.3")
  */
   __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 27, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_Exists); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 27, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_6);
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_Exists); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 27, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_t_2 = NULL;
-  if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_6))) {
-    __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_6);
+  if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_5))) {
+    __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_5);
     if (likely(__pyx_t_2)) {
-      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_6);
+      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_5);
       __Pyx_INCREF(__pyx_t_2);
       __Pyx_INCREF(function);
-      __Pyx_DECREF_SET(__pyx_t_6, function);
+      __Pyx_DECREF_SET(__pyx_t_5, function);
     }
   }
-  __pyx_t_1 = (__pyx_t_2) ? __Pyx_PyObject_Call2Args(__pyx_t_6, __pyx_t_2, __pyx_v_gdb_filename) : __Pyx_PyObject_CallOneArg(__pyx_t_6, __pyx_v_gdb_filename);
+  __pyx_t_1 = (__pyx_t_2) ? __Pyx_PyObject_Call2Args(__pyx_t_5, __pyx_t_2, __pyx_v_gdb_filename) : __Pyx_PyObject_CallOneArg(__pyx_t_5, __pyx_v_gdb_filename);
   __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
   if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 27, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-  __pyx_t_7 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_7 < 0)) __PYX_ERR(0, 27, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 27, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  if (__pyx_t_7) {
+  if (__pyx_t_6) {
 
     /* "LXG/replication.py":28
- *     gdb_filename = os.path.join(current_dir, geodatabase_name)
+ *     gdb_filename = os.path.join(directory, geodatabase_name)
  *     if arcpy.Exists(gdb_filename):
  *         arcpy.Delete_management(gdb_filename)             # <<<<<<<<<<<<<<
- *         arcpy.CreateFileGDB_management(current_dir, geodatabase_name, "9.3")
+ *         arcpy.CreateFileGDB_management(directory, geodatabase_name, "9.3")
  *     else:
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 28, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_6);
-    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_n_s_Delete_management); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 28, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 28, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
+    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_Delete_management); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 28, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-    __pyx_t_6 = NULL;
+    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+    __pyx_t_5 = NULL;
     if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_2))) {
-      __pyx_t_6 = PyMethod_GET_SELF(__pyx_t_2);
-      if (likely(__pyx_t_6)) {
+      __pyx_t_5 = PyMethod_GET_SELF(__pyx_t_2);
+      if (likely(__pyx_t_5)) {
         PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_2);
-        __Pyx_INCREF(__pyx_t_6);
+        __Pyx_INCREF(__pyx_t_5);
         __Pyx_INCREF(function);
         __Pyx_DECREF_SET(__pyx_t_2, function);
       }
     }
-    __pyx_t_1 = (__pyx_t_6) ? __Pyx_PyObject_Call2Args(__pyx_t_2, __pyx_t_6, __pyx_v_gdb_filename) : __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_v_gdb_filename);
-    __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
+    __pyx_t_1 = (__pyx_t_5) ? __Pyx_PyObject_Call2Args(__pyx_t_2, __pyx_t_5, __pyx_v_gdb_filename) : __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_v_gdb_filename);
+    __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
     if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 28, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
@@ -2738,150 +2788,142 @@ static PyObject *__pyx_pf_6LXGREP_2your_existance_in_questions(CYTHON_UNUSED PyO
     /* "LXG/replication.py":29
  *     if arcpy.Exists(gdb_filename):
  *         arcpy.Delete_management(gdb_filename)
- *         arcpy.CreateFileGDB_management(current_dir, geodatabase_name, "9.3")             # <<<<<<<<<<<<<<
+ *         arcpy.CreateFileGDB_management(directory, geodatabase_name, "9.3")             # <<<<<<<<<<<<<<
  *     else:
- *         arcpy.CreateFileGDB_management(current_dir, geodatabase_name, "9.3")
+ *         arcpy.CreateFileGDB_management(directory, geodatabase_name, "9.3")
  */
     __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 29, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_CreateFileGDB_management); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 29, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_6);
+    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_CreateFileGDB_management); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 29, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_current_dir); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 29, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_3 = NULL;
-    __pyx_t_5 = 0;
-    if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_6))) {
-      __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_6);
-      if (likely(__pyx_t_3)) {
-        PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_6);
-        __Pyx_INCREF(__pyx_t_3);
+    __pyx_t_2 = NULL;
+    __pyx_t_4 = 0;
+    if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_5))) {
+      __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_5);
+      if (likely(__pyx_t_2)) {
+        PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_5);
+        __Pyx_INCREF(__pyx_t_2);
         __Pyx_INCREF(function);
-        __Pyx_DECREF_SET(__pyx_t_6, function);
-        __pyx_t_5 = 1;
+        __Pyx_DECREF_SET(__pyx_t_5, function);
+        __pyx_t_4 = 1;
       }
     }
     #if CYTHON_FAST_PYCALL
-    if (PyFunction_Check(__pyx_t_6)) {
-      PyObject *__pyx_temp[4] = {__pyx_t_3, __pyx_t_2, __pyx_v_geodatabase_name, __pyx_kp_s_9_3};
-      __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_6, __pyx_temp+1-__pyx_t_5, 3+__pyx_t_5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 29, __pyx_L1_error)
-      __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
+    if (PyFunction_Check(__pyx_t_5)) {
+      PyObject *__pyx_temp[4] = {__pyx_t_2, __pyx_v_directory, __pyx_v_geodatabase_name, __pyx_kp_s_9_3};
+      __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_5, __pyx_temp+1-__pyx_t_4, 3+__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 29, __pyx_L1_error)
+      __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
       __Pyx_GOTREF(__pyx_t_1);
-      __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     } else
     #endif
     #if CYTHON_FAST_PYCCALL
-    if (__Pyx_PyFastCFunction_Check(__pyx_t_6)) {
-      PyObject *__pyx_temp[4] = {__pyx_t_3, __pyx_t_2, __pyx_v_geodatabase_name, __pyx_kp_s_9_3};
-      __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_6, __pyx_temp+1-__pyx_t_5, 3+__pyx_t_5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 29, __pyx_L1_error)
-      __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
+    if (__Pyx_PyFastCFunction_Check(__pyx_t_5)) {
+      PyObject *__pyx_temp[4] = {__pyx_t_2, __pyx_v_directory, __pyx_v_geodatabase_name, __pyx_kp_s_9_3};
+      __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_5, __pyx_temp+1-__pyx_t_4, 3+__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 29, __pyx_L1_error)
+      __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
       __Pyx_GOTREF(__pyx_t_1);
-      __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     } else
     #endif
     {
-      __pyx_t_4 = PyTuple_New(3+__pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 29, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_4);
-      if (__pyx_t_3) {
-        __Pyx_GIVEREF(__pyx_t_3); PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_3); __pyx_t_3 = NULL;
+      __pyx_t_3 = PyTuple_New(3+__pyx_t_4); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 29, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_3);
+      if (__pyx_t_2) {
+        __Pyx_GIVEREF(__pyx_t_2); PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_2); __pyx_t_2 = NULL;
       }
-      __Pyx_GIVEREF(__pyx_t_2);
-      PyTuple_SET_ITEM(__pyx_t_4, 0+__pyx_t_5, __pyx_t_2);
+      __Pyx_INCREF(__pyx_v_directory);
+      __Pyx_GIVEREF(__pyx_v_directory);
+      PyTuple_SET_ITEM(__pyx_t_3, 0+__pyx_t_4, __pyx_v_directory);
       __Pyx_INCREF(__pyx_v_geodatabase_name);
       __Pyx_GIVEREF(__pyx_v_geodatabase_name);
-      PyTuple_SET_ITEM(__pyx_t_4, 1+__pyx_t_5, __pyx_v_geodatabase_name);
+      PyTuple_SET_ITEM(__pyx_t_3, 1+__pyx_t_4, __pyx_v_geodatabase_name);
       __Pyx_INCREF(__pyx_kp_s_9_3);
       __Pyx_GIVEREF(__pyx_kp_s_9_3);
-      PyTuple_SET_ITEM(__pyx_t_4, 2+__pyx_t_5, __pyx_kp_s_9_3);
-      __pyx_t_2 = 0;
-      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_t_4, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 29, __pyx_L1_error)
+      PyTuple_SET_ITEM(__pyx_t_3, 2+__pyx_t_4, __pyx_kp_s_9_3);
+      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_t_3, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 29, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
-      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+      __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     }
-    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
     /* "LXG/replication.py":27
- * def your_existance_in_questions(geodatabase_name):
- *     gdb_filename = os.path.join(current_dir, geodatabase_name)
+ * def your_existance_in_questions(directory, geodatabase_name):
+ *     gdb_filename = os.path.join(directory, geodatabase_name)
  *     if arcpy.Exists(gdb_filename):             # <<<<<<<<<<<<<<
  *         arcpy.Delete_management(gdb_filename)
- *         arcpy.CreateFileGDB_management(current_dir, geodatabase_name, "9.3")
+ *         arcpy.CreateFileGDB_management(directory, geodatabase_name, "9.3")
  */
     goto __pyx_L3;
   }
 
   /* "LXG/replication.py":31
- *         arcpy.CreateFileGDB_management(current_dir, geodatabase_name, "9.3")
+ *         arcpy.CreateFileGDB_management(directory, geodatabase_name, "9.3")
  *     else:
- *         arcpy.CreateFileGDB_management(current_dir, geodatabase_name, "9.3")             # <<<<<<<<<<<<<<
+ *         arcpy.CreateFileGDB_management(directory, geodatabase_name, "9.3")             # <<<<<<<<<<<<<<
  * 
  *     return gdb_filename
  */
   /*else*/ {
-    __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 31, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_6);
-    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_n_s_CreateFileGDB_management); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 31, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-    __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_n_s_current_dir); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 31, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_6);
-    __pyx_t_2 = NULL;
-    __pyx_t_5 = 0;
-    if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_4))) {
-      __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_4);
-      if (likely(__pyx_t_2)) {
-        PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_4);
-        __Pyx_INCREF(__pyx_t_2);
+    __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 31, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
+    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_CreateFileGDB_management); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 31, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_3);
+    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+    __pyx_t_5 = NULL;
+    __pyx_t_4 = 0;
+    if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_3))) {
+      __pyx_t_5 = PyMethod_GET_SELF(__pyx_t_3);
+      if (likely(__pyx_t_5)) {
+        PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_3);
+        __Pyx_INCREF(__pyx_t_5);
         __Pyx_INCREF(function);
-        __Pyx_DECREF_SET(__pyx_t_4, function);
-        __pyx_t_5 = 1;
+        __Pyx_DECREF_SET(__pyx_t_3, function);
+        __pyx_t_4 = 1;
       }
     }
     #if CYTHON_FAST_PYCALL
-    if (PyFunction_Check(__pyx_t_4)) {
-      PyObject *__pyx_temp[4] = {__pyx_t_2, __pyx_t_6, __pyx_v_geodatabase_name, __pyx_kp_s_9_3};
-      __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_4, __pyx_temp+1-__pyx_t_5, 3+__pyx_t_5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 31, __pyx_L1_error)
-      __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
+    if (PyFunction_Check(__pyx_t_3)) {
+      PyObject *__pyx_temp[4] = {__pyx_t_5, __pyx_v_directory, __pyx_v_geodatabase_name, __pyx_kp_s_9_3};
+      __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_4, 3+__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 31, __pyx_L1_error)
+      __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
       __Pyx_GOTREF(__pyx_t_1);
-      __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     } else
     #endif
     #if CYTHON_FAST_PYCCALL
-    if (__Pyx_PyFastCFunction_Check(__pyx_t_4)) {
-      PyObject *__pyx_temp[4] = {__pyx_t_2, __pyx_t_6, __pyx_v_geodatabase_name, __pyx_kp_s_9_3};
-      __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_4, __pyx_temp+1-__pyx_t_5, 3+__pyx_t_5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 31, __pyx_L1_error)
-      __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
+    if (__Pyx_PyFastCFunction_Check(__pyx_t_3)) {
+      PyObject *__pyx_temp[4] = {__pyx_t_5, __pyx_v_directory, __pyx_v_geodatabase_name, __pyx_kp_s_9_3};
+      __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_4, 3+__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 31, __pyx_L1_error)
+      __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
       __Pyx_GOTREF(__pyx_t_1);
-      __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     } else
     #endif
     {
-      __pyx_t_3 = PyTuple_New(3+__pyx_t_5); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 31, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_3);
-      if (__pyx_t_2) {
-        __Pyx_GIVEREF(__pyx_t_2); PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_2); __pyx_t_2 = NULL;
+      __pyx_t_2 = PyTuple_New(3+__pyx_t_4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 31, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_2);
+      if (__pyx_t_5) {
+        __Pyx_GIVEREF(__pyx_t_5); PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_t_5); __pyx_t_5 = NULL;
       }
-      __Pyx_GIVEREF(__pyx_t_6);
-      PyTuple_SET_ITEM(__pyx_t_3, 0+__pyx_t_5, __pyx_t_6);
+      __Pyx_INCREF(__pyx_v_directory);
+      __Pyx_GIVEREF(__pyx_v_directory);
+      PyTuple_SET_ITEM(__pyx_t_2, 0+__pyx_t_4, __pyx_v_directory);
       __Pyx_INCREF(__pyx_v_geodatabase_name);
       __Pyx_GIVEREF(__pyx_v_geodatabase_name);
-      PyTuple_SET_ITEM(__pyx_t_3, 1+__pyx_t_5, __pyx_v_geodatabase_name);
+      PyTuple_SET_ITEM(__pyx_t_2, 1+__pyx_t_4, __pyx_v_geodatabase_name);
       __Pyx_INCREF(__pyx_kp_s_9_3);
       __Pyx_GIVEREF(__pyx_kp_s_9_3);
-      PyTuple_SET_ITEM(__pyx_t_3, 2+__pyx_t_5, __pyx_kp_s_9_3);
-      __pyx_t_6 = 0;
-      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_3, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 31, __pyx_L1_error)
+      PyTuple_SET_ITEM(__pyx_t_2, 2+__pyx_t_4, __pyx_kp_s_9_3);
+      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_2, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 31, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
-      __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+      __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     }
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   }
   __pyx_L3:;
 
   /* "LXG/replication.py":33
- *         arcpy.CreateFileGDB_management(current_dir, geodatabase_name, "9.3")
+ *         arcpy.CreateFileGDB_management(directory, geodatabase_name, "9.3")
  * 
  *     return gdb_filename             # <<<<<<<<<<<<<<
  * 
@@ -2895,8 +2937,8 @@ static PyObject *__pyx_pf_6LXGREP_2your_existance_in_questions(CYTHON_UNUSED PyO
   /* "LXG/replication.py":25
  *     return converted_time
  * 
- * def your_existance_in_questions(geodatabase_name):             # <<<<<<<<<<<<<<
- *     gdb_filename = os.path.join(current_dir, geodatabase_name)
+ * def your_existance_in_questions(directory, geodatabase_name):             # <<<<<<<<<<<<<<
+ *     gdb_filename = os.path.join(directory, geodatabase_name)
  *     if arcpy.Exists(gdb_filename):
  */
 
@@ -2905,8 +2947,7 @@ static PyObject *__pyx_pf_6LXGREP_2your_existance_in_questions(CYTHON_UNUSED PyO
   __Pyx_XDECREF(__pyx_t_1);
   __Pyx_XDECREF(__pyx_t_2);
   __Pyx_XDECREF(__pyx_t_3);
-  __Pyx_XDECREF(__pyx_t_4);
-  __Pyx_XDECREF(__pyx_t_6);
+  __Pyx_XDECREF(__pyx_t_5);
   __Pyx_AddTraceback("LXGREP.your_existance_in_questions", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
@@ -7010,6 +7051,7 @@ static PyObject *__pyx_pw_6LXGREP_17AppendNewFeatures_1__init__(PyObject *__pyx_
 
 static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures___init__(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self, PyObject *__pyx_v_init_geodatabase, PyObject *__pyx_v_latest_geodatabase, PyObject *__pyx_v_report) {
   PyObject *__pyx_v_start0 = NULL;
+  PyObject *__pyx_v_current_dir = NULL;
   PyObject *__pyx_v_check_list = NULL;
   PyObject *__pyx_v_stop0 = NULL;
   PyObject *__pyx_r = NULL;
@@ -7017,13 +7059,14 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures___init__(CYTHON_UNUSED PyO
   PyObject *__pyx_t_1 = NULL;
   PyObject *__pyx_t_2 = NULL;
   PyObject *__pyx_t_3 = NULL;
-  PyObject *__pyx_t_4 = NULL;
-  int __pyx_t_5;
-  Py_ssize_t __pyx_t_6;
-  Py_UCS4 __pyx_t_7;
-  PyObject *__pyx_t_8 = NULL;
+  int __pyx_t_4;
+  PyObject *__pyx_t_5 = NULL;
+  int __pyx_t_6;
+  Py_ssize_t __pyx_t_7;
+  Py_UCS4 __pyx_t_8;
   PyObject *__pyx_t_9 = NULL;
   PyObject *__pyx_t_10 = NULL;
+  PyObject *__pyx_t_11 = NULL;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
@@ -7073,7 +7116,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures___init__(CYTHON_UNUSED PyO
  *         self.new_ds_list = list()
  *         start0 = time.time()             # <<<<<<<<<<<<<<
  * 
- *         # self.gdb_poly = os.path.join(current_dir, 'polys.gdb')
+ *         current_dir = tempfile.mkdtemp()
  */
   __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_time); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 163, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
@@ -7098,268 +7141,16 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures___init__(CYTHON_UNUSED PyO
   __pyx_v_start0 = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "LXG/replication.py":166
+  /* "LXG/replication.py":165
+ *         start0 = time.time()
+ * 
+ *         current_dir = tempfile.mkdtemp()             # <<<<<<<<<<<<<<
  * 
  *         # self.gdb_poly = os.path.join(current_dir, 'polys.gdb')
- *         self.gdb_poly = your_existance_in_questions('polys.gdb')             # <<<<<<<<<<<<<<
- *         self.gdb_lines = your_existance_in_questions('lines.gdb')
- *         self.gdb_points = your_existance_in_questions('points.gdb')
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_your_existance_in_questions); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 166, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_tempfile); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 165, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_2 = NULL;
-  if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_3))) {
-    __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_3);
-    if (likely(__pyx_t_2)) {
-      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_3);
-      __Pyx_INCREF(__pyx_t_2);
-      __Pyx_INCREF(function);
-      __Pyx_DECREF_SET(__pyx_t_3, function);
-    }
-  }
-  __pyx_t_1 = (__pyx_t_2) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_2, __pyx_kp_s_polys_gdb) : __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_kp_s_polys_gdb);
-  __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 166, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_gdb_poly, __pyx_t_1) < 0) __PYX_ERR(0, 166, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-
-  /* "LXG/replication.py":167
- *         # self.gdb_poly = os.path.join(current_dir, 'polys.gdb')
- *         self.gdb_poly = your_existance_in_questions('polys.gdb')
- *         self.gdb_lines = your_existance_in_questions('lines.gdb')             # <<<<<<<<<<<<<<
- *         self.gdb_points = your_existance_in_questions('points.gdb')
- * 
- */
-  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_your_existance_in_questions); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 167, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_2 = NULL;
-  if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_3))) {
-    __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_3);
-    if (likely(__pyx_t_2)) {
-      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_3);
-      __Pyx_INCREF(__pyx_t_2);
-      __Pyx_INCREF(function);
-      __Pyx_DECREF_SET(__pyx_t_3, function);
-    }
-  }
-  __pyx_t_1 = (__pyx_t_2) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_2, __pyx_kp_s_lines_gdb) : __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_kp_s_lines_gdb);
-  __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 167, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_gdb_lines, __pyx_t_1) < 0) __PYX_ERR(0, 167, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-
-  /* "LXG/replication.py":168
- *         self.gdb_poly = your_existance_in_questions('polys.gdb')
- *         self.gdb_lines = your_existance_in_questions('lines.gdb')
- *         self.gdb_points = your_existance_in_questions('points.gdb')             # <<<<<<<<<<<<<<
- * 
- *         self.prepare_features(self.gdb1)
- */
-  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_your_existance_in_questions); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 168, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_2 = NULL;
-  if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_3))) {
-    __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_3);
-    if (likely(__pyx_t_2)) {
-      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_3);
-      __Pyx_INCREF(__pyx_t_2);
-      __Pyx_INCREF(function);
-      __Pyx_DECREF_SET(__pyx_t_3, function);
-    }
-  }
-  __pyx_t_1 = (__pyx_t_2) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_2, __pyx_kp_s_points_gdb) : __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_kp_s_points_gdb);
-  __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 168, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_gdb_points, __pyx_t_1) < 0) __PYX_ERR(0, 168, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-
-  /* "LXG/replication.py":170
- *         self.gdb_points = your_existance_in_questions('points.gdb')
- * 
- *         self.prepare_features(self.gdb1)             # <<<<<<<<<<<<<<
- *         self.prepare_features(self.gdb2)
- * 
- */
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_prepare_features); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 170, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_gdb1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 170, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_4 = NULL;
-  if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_3))) {
-    __pyx_t_4 = PyMethod_GET_SELF(__pyx_t_3);
-    if (likely(__pyx_t_4)) {
-      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_3);
-      __Pyx_INCREF(__pyx_t_4);
-      __Pyx_INCREF(function);
-      __Pyx_DECREF_SET(__pyx_t_3, function);
-    }
-  }
-  __pyx_t_1 = (__pyx_t_4) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_4, __pyx_t_2) : __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_2);
-  __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 170, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-
-  /* "LXG/replication.py":171
- * 
- *         self.prepare_features(self.gdb1)
- *         self.prepare_features(self.gdb2)             # <<<<<<<<<<<<<<
- * 
- *         check_list = self.check_differences()
- */
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_prepare_features); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 171, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_gdb2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 171, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_4 = NULL;
-  if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_3))) {
-    __pyx_t_4 = PyMethod_GET_SELF(__pyx_t_3);
-    if (likely(__pyx_t_4)) {
-      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_3);
-      __Pyx_INCREF(__pyx_t_4);
-      __Pyx_INCREF(function);
-      __Pyx_DECREF_SET(__pyx_t_3, function);
-    }
-  }
-  __pyx_t_1 = (__pyx_t_4) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_4, __pyx_t_2) : __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_2);
-  __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 171, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-
-  /* "LXG/replication.py":173
- *         self.prepare_features(self.gdb2)
- * 
- *         check_list = self.check_differences()             # <<<<<<<<<<<<<<
- * 
- *         if self.create_report:
- */
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_check_differences); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 173, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_2 = NULL;
-  if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_3))) {
-    __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_3);
-    if (likely(__pyx_t_2)) {
-      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_3);
-      __Pyx_INCREF(__pyx_t_2);
-      __Pyx_INCREF(function);
-      __Pyx_DECREF_SET(__pyx_t_3, function);
-    }
-  }
-  __pyx_t_1 = (__pyx_t_2) ? __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_2) : __Pyx_PyObject_CallNoArg(__pyx_t_3);
-  __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 173, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_v_check_list = __pyx_t_1;
-  __pyx_t_1 = 0;
-
-  /* "LXG/replication.py":175
- *         check_list = self.check_differences()
- * 
- *         if self.create_report:             # <<<<<<<<<<<<<<
- *             self.report(check_list)
- *         else:
- */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_create_report); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 175, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_5 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_5 < 0)) __PYX_ERR(0, 175, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  if (__pyx_t_5) {
-
-    /* "LXG/replication.py":176
- * 
- *         if self.create_report:
- *             self.report(check_list)             # <<<<<<<<<<<<<<
- *         else:
- *             pass
- */
-    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_report); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 176, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_2 = NULL;
-    if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_3))) {
-      __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_3);
-      if (likely(__pyx_t_2)) {
-        PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_3);
-        __Pyx_INCREF(__pyx_t_2);
-        __Pyx_INCREF(function);
-        __Pyx_DECREF_SET(__pyx_t_3, function);
-      }
-    }
-    __pyx_t_1 = (__pyx_t_2) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_2, __pyx_v_check_list) : __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_v_check_list);
-    __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 176, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-
-    /* "LXG/replication.py":175
- *         check_list = self.check_differences()
- * 
- *         if self.create_report:             # <<<<<<<<<<<<<<
- *             self.report(check_list)
- *         else:
- */
-    goto __pyx_L3;
-  }
-
-  /* "LXG/replication.py":178
- *             self.report(check_list)
- *         else:
- *             pass             # <<<<<<<<<<<<<<
- * 
- *         self.append_latest(check_list)
- */
-  /*else*/ {
-  }
-  __pyx_L3:;
-
-  /* "LXG/replication.py":180
- *             pass
- * 
- *         self.append_latest(check_list)             # <<<<<<<<<<<<<<
- * 
- *         stop0 = time.time()
- */
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_append_latest); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 180, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_2 = NULL;
-  if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_3))) {
-    __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_3);
-    if (likely(__pyx_t_2)) {
-      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_3);
-      __Pyx_INCREF(__pyx_t_2);
-      __Pyx_INCREF(function);
-      __Pyx_DECREF_SET(__pyx_t_3, function);
-    }
-  }
-  __pyx_t_1 = (__pyx_t_2) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_2, __pyx_v_check_list) : __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_v_check_list);
-  __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 180, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-
-  /* "LXG/replication.py":182
- *         self.append_latest(check_list)
- * 
- *         stop0 = time.time()             # <<<<<<<<<<<<<<
- *         arcpy.AddMessage(f'[INFO]\t Processing Done. Total time {process(stop0 - start0)}s ...')
- * 
- */
-  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_time); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 182, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_time); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 182, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_mkdtemp); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 165, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_t_3 = NULL;
@@ -7374,115 +7165,484 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures___init__(CYTHON_UNUSED PyO
   }
   __pyx_t_1 = (__pyx_t_3) ? __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_3) : __Pyx_PyObject_CallNoArg(__pyx_t_2);
   __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
+  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 165, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_v_current_dir = __pyx_t_1;
+  __pyx_t_1 = 0;
+
+  /* "LXG/replication.py":168
+ * 
+ *         # self.gdb_poly = os.path.join(current_dir, 'polys.gdb')
+ *         self.gdb_poly = your_existance_in_questions(current_dir, 'polys.gdb')             # <<<<<<<<<<<<<<
+ *         self.gdb_lines = your_existance_in_questions(current_dir, 'lines.gdb')
+ *         self.gdb_points = your_existance_in_questions(current_dir, 'points.gdb')
+ */
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_your_existance_in_questions); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 168, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_3 = NULL;
+  __pyx_t_4 = 0;
+  if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_2))) {
+    __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_2);
+    if (likely(__pyx_t_3)) {
+      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_2);
+      __Pyx_INCREF(__pyx_t_3);
+      __Pyx_INCREF(function);
+      __Pyx_DECREF_SET(__pyx_t_2, function);
+      __pyx_t_4 = 1;
+    }
+  }
+  #if CYTHON_FAST_PYCALL
+  if (PyFunction_Check(__pyx_t_2)) {
+    PyObject *__pyx_temp[3] = {__pyx_t_3, __pyx_v_current_dir, __pyx_kp_s_polys_gdb};
+    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_4, 2+__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 168, __pyx_L1_error)
+    __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
+    __Pyx_GOTREF(__pyx_t_1);
+  } else
+  #endif
+  #if CYTHON_FAST_PYCCALL
+  if (__Pyx_PyFastCFunction_Check(__pyx_t_2)) {
+    PyObject *__pyx_temp[3] = {__pyx_t_3, __pyx_v_current_dir, __pyx_kp_s_polys_gdb};
+    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_4, 2+__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 168, __pyx_L1_error)
+    __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
+    __Pyx_GOTREF(__pyx_t_1);
+  } else
+  #endif
+  {
+    __pyx_t_5 = PyTuple_New(2+__pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 168, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
+    if (__pyx_t_3) {
+      __Pyx_GIVEREF(__pyx_t_3); PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_3); __pyx_t_3 = NULL;
+    }
+    __Pyx_INCREF(__pyx_v_current_dir);
+    __Pyx_GIVEREF(__pyx_v_current_dir);
+    PyTuple_SET_ITEM(__pyx_t_5, 0+__pyx_t_4, __pyx_v_current_dir);
+    __Pyx_INCREF(__pyx_kp_s_polys_gdb);
+    __Pyx_GIVEREF(__pyx_kp_s_polys_gdb);
+    PyTuple_SET_ITEM(__pyx_t_5, 1+__pyx_t_4, __pyx_kp_s_polys_gdb);
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_5, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 168, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  }
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_gdb_poly, __pyx_t_1) < 0) __PYX_ERR(0, 168, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+  /* "LXG/replication.py":169
+ *         # self.gdb_poly = os.path.join(current_dir, 'polys.gdb')
+ *         self.gdb_poly = your_existance_in_questions(current_dir, 'polys.gdb')
+ *         self.gdb_lines = your_existance_in_questions(current_dir, 'lines.gdb')             # <<<<<<<<<<<<<<
+ *         self.gdb_points = your_existance_in_questions(current_dir, 'points.gdb')
+ * 
+ */
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_your_existance_in_questions); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 169, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_5 = NULL;
+  __pyx_t_4 = 0;
+  if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_2))) {
+    __pyx_t_5 = PyMethod_GET_SELF(__pyx_t_2);
+    if (likely(__pyx_t_5)) {
+      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_2);
+      __Pyx_INCREF(__pyx_t_5);
+      __Pyx_INCREF(function);
+      __Pyx_DECREF_SET(__pyx_t_2, function);
+      __pyx_t_4 = 1;
+    }
+  }
+  #if CYTHON_FAST_PYCALL
+  if (PyFunction_Check(__pyx_t_2)) {
+    PyObject *__pyx_temp[3] = {__pyx_t_5, __pyx_v_current_dir, __pyx_kp_s_lines_gdb};
+    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_4, 2+__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 169, __pyx_L1_error)
+    __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
+    __Pyx_GOTREF(__pyx_t_1);
+  } else
+  #endif
+  #if CYTHON_FAST_PYCCALL
+  if (__Pyx_PyFastCFunction_Check(__pyx_t_2)) {
+    PyObject *__pyx_temp[3] = {__pyx_t_5, __pyx_v_current_dir, __pyx_kp_s_lines_gdb};
+    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_4, 2+__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 169, __pyx_L1_error)
+    __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
+    __Pyx_GOTREF(__pyx_t_1);
+  } else
+  #endif
+  {
+    __pyx_t_3 = PyTuple_New(2+__pyx_t_4); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 169, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_3);
+    if (__pyx_t_5) {
+      __Pyx_GIVEREF(__pyx_t_5); PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_5); __pyx_t_5 = NULL;
+    }
+    __Pyx_INCREF(__pyx_v_current_dir);
+    __Pyx_GIVEREF(__pyx_v_current_dir);
+    PyTuple_SET_ITEM(__pyx_t_3, 0+__pyx_t_4, __pyx_v_current_dir);
+    __Pyx_INCREF(__pyx_kp_s_lines_gdb);
+    __Pyx_GIVEREF(__pyx_kp_s_lines_gdb);
+    PyTuple_SET_ITEM(__pyx_t_3, 1+__pyx_t_4, __pyx_kp_s_lines_gdb);
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_3, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 169, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  }
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_gdb_lines, __pyx_t_1) < 0) __PYX_ERR(0, 169, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+  /* "LXG/replication.py":170
+ *         self.gdb_poly = your_existance_in_questions(current_dir, 'polys.gdb')
+ *         self.gdb_lines = your_existance_in_questions(current_dir, 'lines.gdb')
+ *         self.gdb_points = your_existance_in_questions(current_dir, 'points.gdb')             # <<<<<<<<<<<<<<
+ * 
+ *         self.prepare_features(self.gdb1)
+ */
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_your_existance_in_questions); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 170, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_3 = NULL;
+  __pyx_t_4 = 0;
+  if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_2))) {
+    __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_2);
+    if (likely(__pyx_t_3)) {
+      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_2);
+      __Pyx_INCREF(__pyx_t_3);
+      __Pyx_INCREF(function);
+      __Pyx_DECREF_SET(__pyx_t_2, function);
+      __pyx_t_4 = 1;
+    }
+  }
+  #if CYTHON_FAST_PYCALL
+  if (PyFunction_Check(__pyx_t_2)) {
+    PyObject *__pyx_temp[3] = {__pyx_t_3, __pyx_v_current_dir, __pyx_kp_s_points_gdb};
+    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_4, 2+__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 170, __pyx_L1_error)
+    __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
+    __Pyx_GOTREF(__pyx_t_1);
+  } else
+  #endif
+  #if CYTHON_FAST_PYCCALL
+  if (__Pyx_PyFastCFunction_Check(__pyx_t_2)) {
+    PyObject *__pyx_temp[3] = {__pyx_t_3, __pyx_v_current_dir, __pyx_kp_s_points_gdb};
+    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_4, 2+__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 170, __pyx_L1_error)
+    __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
+    __Pyx_GOTREF(__pyx_t_1);
+  } else
+  #endif
+  {
+    __pyx_t_5 = PyTuple_New(2+__pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 170, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
+    if (__pyx_t_3) {
+      __Pyx_GIVEREF(__pyx_t_3); PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_3); __pyx_t_3 = NULL;
+    }
+    __Pyx_INCREF(__pyx_v_current_dir);
+    __Pyx_GIVEREF(__pyx_v_current_dir);
+    PyTuple_SET_ITEM(__pyx_t_5, 0+__pyx_t_4, __pyx_v_current_dir);
+    __Pyx_INCREF(__pyx_kp_s_points_gdb);
+    __Pyx_GIVEREF(__pyx_kp_s_points_gdb);
+    PyTuple_SET_ITEM(__pyx_t_5, 1+__pyx_t_4, __pyx_kp_s_points_gdb);
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_5, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 170, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  }
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_gdb_points, __pyx_t_1) < 0) __PYX_ERR(0, 170, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+  /* "LXG/replication.py":172
+ *         self.gdb_points = your_existance_in_questions(current_dir, 'points.gdb')
+ * 
+ *         self.prepare_features(self.gdb1)             # <<<<<<<<<<<<<<
+ *         self.prepare_features(self.gdb2)
+ * 
+ */
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_prepare_features); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 172, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_gdb1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 172, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_3 = NULL;
+  if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_2))) {
+    __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_2);
+    if (likely(__pyx_t_3)) {
+      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_2);
+      __Pyx_INCREF(__pyx_t_3);
+      __Pyx_INCREF(function);
+      __Pyx_DECREF_SET(__pyx_t_2, function);
+    }
+  }
+  __pyx_t_1 = (__pyx_t_3) ? __Pyx_PyObject_Call2Args(__pyx_t_2, __pyx_t_3, __pyx_t_5) : __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_5);
+  __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 172, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+  /* "LXG/replication.py":173
+ * 
+ *         self.prepare_features(self.gdb1)
+ *         self.prepare_features(self.gdb2)             # <<<<<<<<<<<<<<
+ * 
+ *         check_list = self.check_differences()
+ */
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_prepare_features); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 173, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_gdb2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 173, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_3 = NULL;
+  if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_2))) {
+    __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_2);
+    if (likely(__pyx_t_3)) {
+      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_2);
+      __Pyx_INCREF(__pyx_t_3);
+      __Pyx_INCREF(function);
+      __Pyx_DECREF_SET(__pyx_t_2, function);
+    }
+  }
+  __pyx_t_1 = (__pyx_t_3) ? __Pyx_PyObject_Call2Args(__pyx_t_2, __pyx_t_3, __pyx_t_5) : __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_5);
+  __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 173, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+  /* "LXG/replication.py":175
+ *         self.prepare_features(self.gdb2)
+ * 
+ *         check_list = self.check_differences()             # <<<<<<<<<<<<<<
+ * 
+ *         if self.create_report:
+ */
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_check_differences); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 175, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_5 = NULL;
+  if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_2))) {
+    __pyx_t_5 = PyMethod_GET_SELF(__pyx_t_2);
+    if (likely(__pyx_t_5)) {
+      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_2);
+      __Pyx_INCREF(__pyx_t_5);
+      __Pyx_INCREF(function);
+      __Pyx_DECREF_SET(__pyx_t_2, function);
+    }
+  }
+  __pyx_t_1 = (__pyx_t_5) ? __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_5) : __Pyx_PyObject_CallNoArg(__pyx_t_2);
+  __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
+  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 175, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_v_check_list = __pyx_t_1;
+  __pyx_t_1 = 0;
+
+  /* "LXG/replication.py":177
+ *         check_list = self.check_differences()
+ * 
+ *         if self.create_report:             # <<<<<<<<<<<<<<
+ *             self.report(check_list)
+ *         else:
+ */
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_create_report); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 177, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 177, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  if (__pyx_t_6) {
+
+    /* "LXG/replication.py":178
+ * 
+ *         if self.create_report:
+ *             self.report(check_list)             # <<<<<<<<<<<<<<
+ *         else:
+ *             pass
+ */
+    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_report); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 178, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __pyx_t_5 = NULL;
+    if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_2))) {
+      __pyx_t_5 = PyMethod_GET_SELF(__pyx_t_2);
+      if (likely(__pyx_t_5)) {
+        PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_2);
+        __Pyx_INCREF(__pyx_t_5);
+        __Pyx_INCREF(function);
+        __Pyx_DECREF_SET(__pyx_t_2, function);
+      }
+    }
+    __pyx_t_1 = (__pyx_t_5) ? __Pyx_PyObject_Call2Args(__pyx_t_2, __pyx_t_5, __pyx_v_check_list) : __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_v_check_list);
+    __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 178, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+    /* "LXG/replication.py":177
+ *         check_list = self.check_differences()
+ * 
+ *         if self.create_report:             # <<<<<<<<<<<<<<
+ *             self.report(check_list)
+ *         else:
+ */
+    goto __pyx_L3;
+  }
+
+  /* "LXG/replication.py":180
+ *             self.report(check_list)
+ *         else:
+ *             pass             # <<<<<<<<<<<<<<
+ * 
+ *         self.append_latest(check_list)
+ */
+  /*else*/ {
+  }
+  __pyx_L3:;
+
+  /* "LXG/replication.py":182
+ *             pass
+ * 
+ *         self.append_latest(check_list)             # <<<<<<<<<<<<<<
+ * 
+ *         stop0 = time.time()
+ */
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_append_latest); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 182, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_5 = NULL;
+  if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_2))) {
+    __pyx_t_5 = PyMethod_GET_SELF(__pyx_t_2);
+    if (likely(__pyx_t_5)) {
+      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_2);
+      __Pyx_INCREF(__pyx_t_5);
+      __Pyx_INCREF(function);
+      __Pyx_DECREF_SET(__pyx_t_2, function);
+    }
+  }
+  __pyx_t_1 = (__pyx_t_5) ? __Pyx_PyObject_Call2Args(__pyx_t_2, __pyx_t_5, __pyx_v_check_list) : __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_v_check_list);
+  __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
   if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 182, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+  /* "LXG/replication.py":184
+ *         self.append_latest(check_list)
+ * 
+ *         stop0 = time.time()             # <<<<<<<<<<<<<<
+ *         arcpy.AddMessage(f'[INFO]\t Processing Done. Total time {process(stop0 - start0)}s ...')
+ * 
+ */
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_time); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 184, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_time); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 184, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_t_2 = NULL;
+  if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_5))) {
+    __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_5);
+    if (likely(__pyx_t_2)) {
+      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_5);
+      __Pyx_INCREF(__pyx_t_2);
+      __Pyx_INCREF(function);
+      __Pyx_DECREF_SET(__pyx_t_5, function);
+    }
+  }
+  __pyx_t_1 = (__pyx_t_2) ? __Pyx_PyObject_CallOneArg(__pyx_t_5, __pyx_t_2) : __Pyx_PyObject_CallNoArg(__pyx_t_5);
+  __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
+  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 184, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   __pyx_v_stop0 = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "LXG/replication.py":183
+  /* "LXG/replication.py":185
  * 
  *         stop0 = time.time()
  *         arcpy.AddMessage(f'[INFO]\t Processing Done. Total time {process(stop0 - start0)}s ...')             # <<<<<<<<<<<<<<
  * 
  *         shutil.rmtree(current_dir)
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 183, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 185, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_AddMessage); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 185, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_AddMessage); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 183, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = PyTuple_New(3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 183, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_6 = 0;
-  __pyx_t_7 = 127;
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __pyx_t_5 = PyTuple_New(3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 185, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_7 = 0;
+  __pyx_t_8 = 127;
   __Pyx_INCREF(__pyx_kp_u_INFO_Processing_Done_Total_time);
-  __pyx_t_6 += 36;
+  __pyx_t_7 += 36;
   __Pyx_GIVEREF(__pyx_kp_u_INFO_Processing_Done_Total_time);
-  PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_kp_u_INFO_Processing_Done_Total_time);
-  __Pyx_GetModuleGlobalName(__pyx_t_8, __pyx_n_s_process); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 183, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_8);
-  __pyx_t_9 = PyNumber_Subtract(__pyx_v_stop0, __pyx_v_start0); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 183, __pyx_L1_error)
+  PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_kp_u_INFO_Processing_Done_Total_time);
+  __Pyx_GetModuleGlobalName(__pyx_t_9, __pyx_n_s_process); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 185, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_9);
-  __pyx_t_10 = NULL;
-  if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_8))) {
-    __pyx_t_10 = PyMethod_GET_SELF(__pyx_t_8);
-    if (likely(__pyx_t_10)) {
-      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_8);
-      __Pyx_INCREF(__pyx_t_10);
+  __pyx_t_10 = PyNumber_Subtract(__pyx_v_stop0, __pyx_v_start0); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 185, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_10);
+  __pyx_t_11 = NULL;
+  if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_9))) {
+    __pyx_t_11 = PyMethod_GET_SELF(__pyx_t_9);
+    if (likely(__pyx_t_11)) {
+      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_9);
+      __Pyx_INCREF(__pyx_t_11);
       __Pyx_INCREF(function);
-      __Pyx_DECREF_SET(__pyx_t_8, function);
+      __Pyx_DECREF_SET(__pyx_t_9, function);
     }
   }
-  __pyx_t_4 = (__pyx_t_10) ? __Pyx_PyObject_Call2Args(__pyx_t_8, __pyx_t_10, __pyx_t_9) : __Pyx_PyObject_CallOneArg(__pyx_t_8, __pyx_t_9);
-  __Pyx_XDECREF(__pyx_t_10); __pyx_t_10 = 0;
+  __pyx_t_3 = (__pyx_t_11) ? __Pyx_PyObject_Call2Args(__pyx_t_9, __pyx_t_11, __pyx_t_10) : __Pyx_PyObject_CallOneArg(__pyx_t_9, __pyx_t_10);
+  __Pyx_XDECREF(__pyx_t_11); __pyx_t_11 = 0;
+  __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
+  if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 185, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-  if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 183, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-  __pyx_t_8 = __Pyx_PyObject_FormatSimple(__pyx_t_4, __pyx_empty_unicode); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 183, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_8);
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_7 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_8) > __pyx_t_7) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_8) : __pyx_t_7;
-  __pyx_t_6 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_8);
-  __Pyx_GIVEREF(__pyx_t_8);
-  PyTuple_SET_ITEM(__pyx_t_2, 1, __pyx_t_8);
-  __pyx_t_8 = 0;
+  __pyx_t_9 = __Pyx_PyObject_FormatSimple(__pyx_t_3, __pyx_empty_unicode); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 185, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_9);
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __pyx_t_8 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_9) > __pyx_t_8) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_9) : __pyx_t_8;
+  __pyx_t_7 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_9);
+  __Pyx_GIVEREF(__pyx_t_9);
+  PyTuple_SET_ITEM(__pyx_t_5, 1, __pyx_t_9);
+  __pyx_t_9 = 0;
   __Pyx_INCREF(__pyx_kp_u_s);
-  __pyx_t_6 += 5;
+  __pyx_t_7 += 5;
   __Pyx_GIVEREF(__pyx_kp_u_s);
-  PyTuple_SET_ITEM(__pyx_t_2, 2, __pyx_kp_u_s);
-  __pyx_t_8 = __Pyx_PyUnicode_Join(__pyx_t_2, 3, __pyx_t_6, __pyx_t_7); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 183, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_8);
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = NULL;
-  if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_3))) {
-    __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_3);
-    if (likely(__pyx_t_2)) {
-      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_3);
-      __Pyx_INCREF(__pyx_t_2);
+  PyTuple_SET_ITEM(__pyx_t_5, 2, __pyx_kp_u_s);
+  __pyx_t_9 = __Pyx_PyUnicode_Join(__pyx_t_5, 3, __pyx_t_7, __pyx_t_8); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 185, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_9);
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __pyx_t_5 = NULL;
+  if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_2))) {
+    __pyx_t_5 = PyMethod_GET_SELF(__pyx_t_2);
+    if (likely(__pyx_t_5)) {
+      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_2);
+      __Pyx_INCREF(__pyx_t_5);
       __Pyx_INCREF(function);
-      __Pyx_DECREF_SET(__pyx_t_3, function);
+      __Pyx_DECREF_SET(__pyx_t_2, function);
     }
   }
-  __pyx_t_1 = (__pyx_t_2) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_2, __pyx_t_8) : __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_8);
-  __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 183, __pyx_L1_error)
+  __pyx_t_1 = (__pyx_t_5) ? __Pyx_PyObject_Call2Args(__pyx_t_2, __pyx_t_5, __pyx_t_9) : __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_9);
+  __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 185, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "LXG/replication.py":185
+  /* "LXG/replication.py":187
  *         arcpy.AddMessage(f'[INFO]\t Processing Done. Total time {process(stop0 - start0)}s ...')
  * 
  *         shutil.rmtree(current_dir)             # <<<<<<<<<<<<<<
  * 
  *     def prepare_features(self, geodatabase):
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_shutil); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 185, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_rmtree); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 185, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_8);
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_current_dir); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 185, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_shutil); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 187, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_rmtree); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 187, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_9);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_t_2 = NULL;
-  if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_8))) {
-    __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_8);
+  if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_9))) {
+    __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_9);
     if (likely(__pyx_t_2)) {
-      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_8);
+      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_9);
       __Pyx_INCREF(__pyx_t_2);
       __Pyx_INCREF(function);
-      __Pyx_DECREF_SET(__pyx_t_8, function);
+      __Pyx_DECREF_SET(__pyx_t_9, function);
     }
   }
-  __pyx_t_1 = (__pyx_t_2) ? __Pyx_PyObject_Call2Args(__pyx_t_8, __pyx_t_2, __pyx_t_3) : __Pyx_PyObject_CallOneArg(__pyx_t_8, __pyx_t_3);
+  __pyx_t_1 = (__pyx_t_2) ? __Pyx_PyObject_Call2Args(__pyx_t_9, __pyx_t_2, __pyx_v_current_dir) : __Pyx_PyObject_CallOneArg(__pyx_t_9, __pyx_v_current_dir);
   __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 185, __pyx_L1_error)
+  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 187, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+  __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
   /* "LXG/replication.py":157
@@ -7500,14 +7660,15 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures___init__(CYTHON_UNUSED PyO
   __Pyx_XDECREF(__pyx_t_1);
   __Pyx_XDECREF(__pyx_t_2);
   __Pyx_XDECREF(__pyx_t_3);
-  __Pyx_XDECREF(__pyx_t_4);
-  __Pyx_XDECREF(__pyx_t_8);
+  __Pyx_XDECREF(__pyx_t_5);
   __Pyx_XDECREF(__pyx_t_9);
   __Pyx_XDECREF(__pyx_t_10);
+  __Pyx_XDECREF(__pyx_t_11);
   __Pyx_AddTraceback("LXGREP.AppendNewFeatures.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_start0);
+  __Pyx_XDECREF(__pyx_v_current_dir);
   __Pyx_XDECREF(__pyx_v_check_list);
   __Pyx_XDECREF(__pyx_v_stop0);
   __Pyx_XGIVEREF(__pyx_r);
@@ -7515,7 +7676,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures___init__(CYTHON_UNUSED PyO
   return __pyx_r;
 }
 
-/* "LXG/replication.py":187
+/* "LXG/replication.py":189
  *         shutil.rmtree(current_dir)
  * 
  *     def prepare_features(self, geodatabase):             # <<<<<<<<<<<<<<
@@ -7558,11 +7719,11 @@ static PyObject *__pyx_pw_6LXGREP_17AppendNewFeatures_3prepare_features(PyObject
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_geodatabase)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("prepare_features", 1, 2, 2, 1); __PYX_ERR(0, 187, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("prepare_features", 1, 2, 2, 1); __PYX_ERR(0, 189, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "prepare_features") < 0)) __PYX_ERR(0, 187, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "prepare_features") < 0)) __PYX_ERR(0, 189, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
       goto __pyx_L5_argtuple_error;
@@ -7575,7 +7736,7 @@ static PyObject *__pyx_pw_6LXGREP_17AppendNewFeatures_3prepare_features(PyObject
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("prepare_features", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 187, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("prepare_features", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 189, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("LXGREP.AppendNewFeatures.prepare_features", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -7640,7 +7801,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("prepare_features", 0);
 
-  /* "LXG/replication.py":188
+  /* "LXG/replication.py":190
  * 
  *     def prepare_features(self, geodatabase):
  *         fc_class_name = None             # <<<<<<<<<<<<<<
@@ -7650,22 +7811,22 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
   __Pyx_INCREF(Py_None);
   __pyx_v_fc_class_name = Py_None;
 
-  /* "LXG/replication.py":189
+  /* "LXG/replication.py":191
  *     def prepare_features(self, geodatabase):
  *         fc_class_name = None
  *         if geodatabase == self.gdb1:             # <<<<<<<<<<<<<<
  *             fc_class_name = 'gdb1'
  *         elif geodatabase == self.gdb2:
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_gdb1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 189, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_gdb1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 191, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = PyObject_RichCompare(__pyx_v_geodatabase, __pyx_t_1, Py_EQ); __Pyx_XGOTREF(__pyx_t_2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 189, __pyx_L1_error)
+  __pyx_t_2 = PyObject_RichCompare(__pyx_v_geodatabase, __pyx_t_1, Py_EQ); __Pyx_XGOTREF(__pyx_t_2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 191, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(0, 189, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(0, 191, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   if (__pyx_t_3) {
 
-    /* "LXG/replication.py":190
+    /* "LXG/replication.py":192
  *         fc_class_name = None
  *         if geodatabase == self.gdb1:
  *             fc_class_name = 'gdb1'             # <<<<<<<<<<<<<<
@@ -7675,7 +7836,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
     __Pyx_INCREF(__pyx_n_s_gdb1);
     __Pyx_DECREF_SET(__pyx_v_fc_class_name, __pyx_n_s_gdb1);
 
-    /* "LXG/replication.py":189
+    /* "LXG/replication.py":191
  *     def prepare_features(self, geodatabase):
  *         fc_class_name = None
  *         if geodatabase == self.gdb1:             # <<<<<<<<<<<<<<
@@ -7685,22 +7846,22 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
     goto __pyx_L3;
   }
 
-  /* "LXG/replication.py":191
+  /* "LXG/replication.py":193
  *         if geodatabase == self.gdb1:
  *             fc_class_name = 'gdb1'
  *         elif geodatabase == self.gdb2:             # <<<<<<<<<<<<<<
  *             fc_class_name = 'gdb2'
  *         else:
  */
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_gdb2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 191, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_gdb2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 193, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_1 = PyObject_RichCompare(__pyx_v_geodatabase, __pyx_t_2, Py_EQ); __Pyx_XGOTREF(__pyx_t_1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 191, __pyx_L1_error)
+  __pyx_t_1 = PyObject_RichCompare(__pyx_v_geodatabase, __pyx_t_2, Py_EQ); __Pyx_XGOTREF(__pyx_t_1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 193, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(0, 191, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(0, 193, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   if (__pyx_t_3) {
 
-    /* "LXG/replication.py":192
+    /* "LXG/replication.py":194
  *             fc_class_name = 'gdb1'
  *         elif geodatabase == self.gdb2:
  *             fc_class_name = 'gdb2'             # <<<<<<<<<<<<<<
@@ -7710,7 +7871,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
     __Pyx_INCREF(__pyx_n_s_gdb2);
     __Pyx_DECREF_SET(__pyx_v_fc_class_name, __pyx_n_s_gdb2);
 
-    /* "LXG/replication.py":191
+    /* "LXG/replication.py":193
  *         if geodatabase == self.gdb1:
  *             fc_class_name = 'gdb1'
  *         elif geodatabase == self.gdb2:             # <<<<<<<<<<<<<<
@@ -7720,7 +7881,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
     goto __pyx_L3;
   }
 
-  /* "LXG/replication.py":194
+  /* "LXG/replication.py":196
  *             fc_class_name = 'gdb2'
  *         else:
  *             pass             # <<<<<<<<<<<<<<
@@ -7731,68 +7892,68 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
   }
   __pyx_L3:;
 
-  /* "LXG/replication.py":196
+  /* "LXG/replication.py":198
  *             pass
  * 
  *         arcpy.env.workspace = geodatabase             # <<<<<<<<<<<<<<
  *         dss = sorted(arcpy.ListDatasets("", "Feature"))
  *         pbar01 = tqdm(dss, desc=f'{geodatabase}', position=0, colour='GREEN')
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 196, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 198, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_env); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 196, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_env); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 198, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  if (__Pyx_PyObject_SetAttrStr(__pyx_t_2, __pyx_n_s_workspace, __pyx_v_geodatabase) < 0) __PYX_ERR(0, 196, __pyx_L1_error)
+  if (__Pyx_PyObject_SetAttrStr(__pyx_t_2, __pyx_n_s_workspace, __pyx_v_geodatabase) < 0) __PYX_ERR(0, 198, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "LXG/replication.py":197
+  /* "LXG/replication.py":199
  * 
  *         arcpy.env.workspace = geodatabase
  *         dss = sorted(arcpy.ListDatasets("", "Feature"))             # <<<<<<<<<<<<<<
  *         pbar01 = tqdm(dss, desc=f'{geodatabase}', position=0, colour='GREEN')
  *         for ds in pbar01:
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 197, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 199, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_ListDatasets); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 197, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_ListDatasets); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 199, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_tuple__7, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 197, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_tuple__7, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 199, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_4 = PySequence_List(__pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 197, __pyx_L1_error)
+  __pyx_t_4 = PySequence_List(__pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 199, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_t_2 = ((PyObject*)__pyx_t_4);
   __pyx_t_4 = 0;
-  __pyx_t_5 = PyList_Sort(__pyx_t_2); if (unlikely(__pyx_t_5 == ((int)-1))) __PYX_ERR(0, 197, __pyx_L1_error)
+  __pyx_t_5 = PyList_Sort(__pyx_t_2); if (unlikely(__pyx_t_5 == ((int)-1))) __PYX_ERR(0, 199, __pyx_L1_error)
   __pyx_v_dss = ((PyObject*)__pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "LXG/replication.py":198
+  /* "LXG/replication.py":200
  *         arcpy.env.workspace = geodatabase
  *         dss = sorted(arcpy.ListDatasets("", "Feature"))
  *         pbar01 = tqdm(dss, desc=f'{geodatabase}', position=0, colour='GREEN')             # <<<<<<<<<<<<<<
  *         for ds in pbar01:
  *             # Polygon
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_tqdm); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 198, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_tqdm); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 200, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_4 = PyTuple_New(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 198, __pyx_L1_error)
+  __pyx_t_4 = PyTuple_New(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 200, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_INCREF(__pyx_v_dss);
   __Pyx_GIVEREF(__pyx_v_dss);
   PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_v_dss);
-  __pyx_t_1 = __Pyx_PyDict_NewPresized(3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 198, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyDict_NewPresized(3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 200, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_6 = __Pyx_PyObject_FormatSimple(__pyx_v_geodatabase, __pyx_empty_unicode); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 198, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_FormatSimple(__pyx_v_geodatabase, __pyx_empty_unicode); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 200, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_desc, __pyx_t_6) < 0) __PYX_ERR(0, 198, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_desc, __pyx_t_6) < 0) __PYX_ERR(0, 200, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_position, __pyx_int_0) < 0) __PYX_ERR(0, 198, __pyx_L1_error)
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_colour, __pyx_n_s_GREEN) < 0) __PYX_ERR(0, 198, __pyx_L1_error)
-  __pyx_t_6 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_4, __pyx_t_1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 198, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_position, __pyx_int_0) < 0) __PYX_ERR(0, 200, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_colour, __pyx_n_s_GREEN) < 0) __PYX_ERR(0, 200, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_4, __pyx_t_1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 200, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
@@ -7800,7 +7961,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
   __pyx_v_pbar01 = __pyx_t_6;
   __pyx_t_6 = 0;
 
-  /* "LXG/replication.py":199
+  /* "LXG/replication.py":201
  *         dss = sorted(arcpy.ListDatasets("", "Feature"))
  *         pbar01 = tqdm(dss, desc=f'{geodatabase}', position=0, colour='GREEN')
  *         for ds in pbar01:             # <<<<<<<<<<<<<<
@@ -7811,26 +7972,26 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
     __pyx_t_6 = __pyx_v_pbar01; __Pyx_INCREF(__pyx_t_6); __pyx_t_7 = 0;
     __pyx_t_8 = NULL;
   } else {
-    __pyx_t_7 = -1; __pyx_t_6 = PyObject_GetIter(__pyx_v_pbar01); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 199, __pyx_L1_error)
+    __pyx_t_7 = -1; __pyx_t_6 = PyObject_GetIter(__pyx_v_pbar01); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 201, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
-    __pyx_t_8 = Py_TYPE(__pyx_t_6)->tp_iternext; if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 199, __pyx_L1_error)
+    __pyx_t_8 = Py_TYPE(__pyx_t_6)->tp_iternext; if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 201, __pyx_L1_error)
   }
   for (;;) {
     if (likely(!__pyx_t_8)) {
       if (likely(PyList_CheckExact(__pyx_t_6))) {
         if (__pyx_t_7 >= PyList_GET_SIZE(__pyx_t_6)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_1 = PyList_GET_ITEM(__pyx_t_6, __pyx_t_7); __Pyx_INCREF(__pyx_t_1); __pyx_t_7++; if (unlikely(0 < 0)) __PYX_ERR(0, 199, __pyx_L1_error)
+        __pyx_t_1 = PyList_GET_ITEM(__pyx_t_6, __pyx_t_7); __Pyx_INCREF(__pyx_t_1); __pyx_t_7++; if (unlikely(0 < 0)) __PYX_ERR(0, 201, __pyx_L1_error)
         #else
-        __pyx_t_1 = PySequence_ITEM(__pyx_t_6, __pyx_t_7); __pyx_t_7++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 199, __pyx_L1_error)
+        __pyx_t_1 = PySequence_ITEM(__pyx_t_6, __pyx_t_7); __pyx_t_7++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 201, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_1);
         #endif
       } else {
         if (__pyx_t_7 >= PyTuple_GET_SIZE(__pyx_t_6)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_1 = PyTuple_GET_ITEM(__pyx_t_6, __pyx_t_7); __Pyx_INCREF(__pyx_t_1); __pyx_t_7++; if (unlikely(0 < 0)) __PYX_ERR(0, 199, __pyx_L1_error)
+        __pyx_t_1 = PyTuple_GET_ITEM(__pyx_t_6, __pyx_t_7); __Pyx_INCREF(__pyx_t_1); __pyx_t_7++; if (unlikely(0 < 0)) __PYX_ERR(0, 201, __pyx_L1_error)
         #else
-        __pyx_t_1 = PySequence_ITEM(__pyx_t_6, __pyx_t_7); __pyx_t_7++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 199, __pyx_L1_error)
+        __pyx_t_1 = PySequence_ITEM(__pyx_t_6, __pyx_t_7); __pyx_t_7++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 201, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_1);
         #endif
       }
@@ -7840,7 +8001,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
           if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else __PYX_ERR(0, 199, __pyx_L1_error)
+          else __PYX_ERR(0, 201, __pyx_L1_error)
         }
         break;
       }
@@ -7849,16 +8010,16 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
     __Pyx_XDECREF_SET(__pyx_v_ds, __pyx_t_1);
     __pyx_t_1 = 0;
 
-    /* "LXG/replication.py":201
+    /* "LXG/replication.py":203
  *         for ds in pbar01:
  *             # Polygon
  *             fc_poly = sorted(arcpy.ListFeatureClasses("", "Polygon", ds))             # <<<<<<<<<<<<<<
  * 
  *             if len(fc_poly) > 0:
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 201, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 203, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_ListFeatureClasses); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 201, __pyx_L1_error)
+    __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_ListFeatureClasses); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 203, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_9);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __pyx_t_2 = NULL;
@@ -7876,7 +8037,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
     #if CYTHON_FAST_PYCALL
     if (PyFunction_Check(__pyx_t_9)) {
       PyObject *__pyx_temp[4] = {__pyx_t_2, __pyx_kp_s_, __pyx_n_s_Polygon, __pyx_v_ds};
-      __pyx_t_4 = __Pyx_PyFunction_FastCall(__pyx_t_9, __pyx_temp+1-__pyx_t_10, 3+__pyx_t_10); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 201, __pyx_L1_error)
+      __pyx_t_4 = __Pyx_PyFunction_FastCall(__pyx_t_9, __pyx_temp+1-__pyx_t_10, 3+__pyx_t_10); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 203, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
       __Pyx_GOTREF(__pyx_t_4);
     } else
@@ -7884,13 +8045,13 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
     #if CYTHON_FAST_PYCCALL
     if (__Pyx_PyFastCFunction_Check(__pyx_t_9)) {
       PyObject *__pyx_temp[4] = {__pyx_t_2, __pyx_kp_s_, __pyx_n_s_Polygon, __pyx_v_ds};
-      __pyx_t_4 = __Pyx_PyCFunction_FastCall(__pyx_t_9, __pyx_temp+1-__pyx_t_10, 3+__pyx_t_10); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 201, __pyx_L1_error)
+      __pyx_t_4 = __Pyx_PyCFunction_FastCall(__pyx_t_9, __pyx_temp+1-__pyx_t_10, 3+__pyx_t_10); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 203, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
       __Pyx_GOTREF(__pyx_t_4);
     } else
     #endif
     {
-      __pyx_t_11 = PyTuple_New(3+__pyx_t_10); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 201, __pyx_L1_error)
+      __pyx_t_11 = PyTuple_New(3+__pyx_t_10); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 203, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_11);
       if (__pyx_t_2) {
         __Pyx_GIVEREF(__pyx_t_2); PyTuple_SET_ITEM(__pyx_t_11, 0, __pyx_t_2); __pyx_t_2 = NULL;
@@ -7904,21 +8065,21 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
       __Pyx_INCREF(__pyx_v_ds);
       __Pyx_GIVEREF(__pyx_v_ds);
       PyTuple_SET_ITEM(__pyx_t_11, 2+__pyx_t_10, __pyx_v_ds);
-      __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_9, __pyx_t_11, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 201, __pyx_L1_error)
+      __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_9, __pyx_t_11, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 203, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
       __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
     }
     __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-    __pyx_t_9 = PySequence_List(__pyx_t_4); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 201, __pyx_L1_error)
+    __pyx_t_9 = PySequence_List(__pyx_t_4); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 203, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_9);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __pyx_t_1 = ((PyObject*)__pyx_t_9);
     __pyx_t_9 = 0;
-    __pyx_t_5 = PyList_Sort(__pyx_t_1); if (unlikely(__pyx_t_5 == ((int)-1))) __PYX_ERR(0, 201, __pyx_L1_error)
+    __pyx_t_5 = PyList_Sort(__pyx_t_1); if (unlikely(__pyx_t_5 == ((int)-1))) __PYX_ERR(0, 203, __pyx_L1_error)
     __Pyx_XDECREF_SET(__pyx_v_fc_poly, ((PyObject*)__pyx_t_1));
     __pyx_t_1 = 0;
 
-    /* "LXG/replication.py":203
+    /* "LXG/replication.py":205
  *             fc_poly = sorted(arcpy.ListFeatureClasses("", "Polygon", ds))
  * 
  *             if len(fc_poly) > 0:             # <<<<<<<<<<<<<<
@@ -7927,33 +8088,33 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
  */
     if (unlikely(__pyx_v_fc_poly == Py_None)) {
       PyErr_SetString(PyExc_TypeError, "object of type 'NoneType' has no len()");
-      __PYX_ERR(0, 203, __pyx_L1_error)
+      __PYX_ERR(0, 205, __pyx_L1_error)
     }
-    __pyx_t_12 = PyList_GET_SIZE(__pyx_v_fc_poly); if (unlikely(__pyx_t_12 == ((Py_ssize_t)-1))) __PYX_ERR(0, 203, __pyx_L1_error)
+    __pyx_t_12 = PyList_GET_SIZE(__pyx_v_fc_poly); if (unlikely(__pyx_t_12 == ((Py_ssize_t)-1))) __PYX_ERR(0, 205, __pyx_L1_error)
     __pyx_t_3 = ((__pyx_t_12 > 0) != 0);
     if (__pyx_t_3) {
 
-      /* "LXG/replication.py":204
+      /* "LXG/replication.py":206
  * 
  *             if len(fc_poly) > 0:
  *                 pbar03 = tqdm(fc_poly, desc="Polygon", position=1, colour='Yellow', leave=False)             # <<<<<<<<<<<<<<
  *                 for poly in pbar03:
  *                     self._polys([os.path.join(geodatabase, ds, poly),
  */
-      __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_tqdm); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 204, __pyx_L1_error)
+      __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_tqdm); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 206, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
-      __pyx_t_9 = PyTuple_New(1); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 204, __pyx_L1_error)
+      __pyx_t_9 = PyTuple_New(1); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 206, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_9);
       __Pyx_INCREF(__pyx_v_fc_poly);
       __Pyx_GIVEREF(__pyx_v_fc_poly);
       PyTuple_SET_ITEM(__pyx_t_9, 0, __pyx_v_fc_poly);
-      __pyx_t_4 = __Pyx_PyDict_NewPresized(4); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 204, __pyx_L1_error)
+      __pyx_t_4 = __Pyx_PyDict_NewPresized(4); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 206, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
-      if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_desc, __pyx_n_s_Polygon) < 0) __PYX_ERR(0, 204, __pyx_L1_error)
-      if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_position, __pyx_int_1) < 0) __PYX_ERR(0, 204, __pyx_L1_error)
-      if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_colour, __pyx_n_s_Yellow) < 0) __PYX_ERR(0, 204, __pyx_L1_error)
-      if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_leave, Py_False) < 0) __PYX_ERR(0, 204, __pyx_L1_error)
-      __pyx_t_11 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_9, __pyx_t_4); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 204, __pyx_L1_error)
+      if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_desc, __pyx_n_s_Polygon) < 0) __PYX_ERR(0, 206, __pyx_L1_error)
+      if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_position, __pyx_int_1) < 0) __PYX_ERR(0, 206, __pyx_L1_error)
+      if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_colour, __pyx_n_s_Yellow) < 0) __PYX_ERR(0, 206, __pyx_L1_error)
+      if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_leave, Py_False) < 0) __PYX_ERR(0, 206, __pyx_L1_error)
+      __pyx_t_11 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_9, __pyx_t_4); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 206, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_11);
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
       __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
@@ -7961,7 +8122,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
       __Pyx_XDECREF_SET(__pyx_v_pbar03, __pyx_t_11);
       __pyx_t_11 = 0;
 
-      /* "LXG/replication.py":205
+      /* "LXG/replication.py":207
  *             if len(fc_poly) > 0:
  *                 pbar03 = tqdm(fc_poly, desc="Polygon", position=1, colour='Yellow', leave=False)
  *                 for poly in pbar03:             # <<<<<<<<<<<<<<
@@ -7972,26 +8133,26 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
         __pyx_t_11 = __pyx_v_pbar03; __Pyx_INCREF(__pyx_t_11); __pyx_t_12 = 0;
         __pyx_t_13 = NULL;
       } else {
-        __pyx_t_12 = -1; __pyx_t_11 = PyObject_GetIter(__pyx_v_pbar03); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 205, __pyx_L1_error)
+        __pyx_t_12 = -1; __pyx_t_11 = PyObject_GetIter(__pyx_v_pbar03); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 207, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_11);
-        __pyx_t_13 = Py_TYPE(__pyx_t_11)->tp_iternext; if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 205, __pyx_L1_error)
+        __pyx_t_13 = Py_TYPE(__pyx_t_11)->tp_iternext; if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 207, __pyx_L1_error)
       }
       for (;;) {
         if (likely(!__pyx_t_13)) {
           if (likely(PyList_CheckExact(__pyx_t_11))) {
             if (__pyx_t_12 >= PyList_GET_SIZE(__pyx_t_11)) break;
             #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-            __pyx_t_4 = PyList_GET_ITEM(__pyx_t_11, __pyx_t_12); __Pyx_INCREF(__pyx_t_4); __pyx_t_12++; if (unlikely(0 < 0)) __PYX_ERR(0, 205, __pyx_L1_error)
+            __pyx_t_4 = PyList_GET_ITEM(__pyx_t_11, __pyx_t_12); __Pyx_INCREF(__pyx_t_4); __pyx_t_12++; if (unlikely(0 < 0)) __PYX_ERR(0, 207, __pyx_L1_error)
             #else
-            __pyx_t_4 = PySequence_ITEM(__pyx_t_11, __pyx_t_12); __pyx_t_12++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 205, __pyx_L1_error)
+            __pyx_t_4 = PySequence_ITEM(__pyx_t_11, __pyx_t_12); __pyx_t_12++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 207, __pyx_L1_error)
             __Pyx_GOTREF(__pyx_t_4);
             #endif
           } else {
             if (__pyx_t_12 >= PyTuple_GET_SIZE(__pyx_t_11)) break;
             #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-            __pyx_t_4 = PyTuple_GET_ITEM(__pyx_t_11, __pyx_t_12); __Pyx_INCREF(__pyx_t_4); __pyx_t_12++; if (unlikely(0 < 0)) __PYX_ERR(0, 205, __pyx_L1_error)
+            __pyx_t_4 = PyTuple_GET_ITEM(__pyx_t_11, __pyx_t_12); __Pyx_INCREF(__pyx_t_4); __pyx_t_12++; if (unlikely(0 < 0)) __PYX_ERR(0, 207, __pyx_L1_error)
             #else
-            __pyx_t_4 = PySequence_ITEM(__pyx_t_11, __pyx_t_12); __pyx_t_12++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 205, __pyx_L1_error)
+            __pyx_t_4 = PySequence_ITEM(__pyx_t_11, __pyx_t_12); __pyx_t_12++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 207, __pyx_L1_error)
             __Pyx_GOTREF(__pyx_t_4);
             #endif
           }
@@ -8001,7 +8162,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
             PyObject* exc_type = PyErr_Occurred();
             if (exc_type) {
               if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-              else __PYX_ERR(0, 205, __pyx_L1_error)
+              else __PYX_ERR(0, 207, __pyx_L1_error)
             }
             break;
           }
@@ -8010,21 +8171,21 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
         __Pyx_XDECREF_SET(__pyx_v_poly, __pyx_t_4);
         __pyx_t_4 = 0;
 
-        /* "LXG/replication.py":206
+        /* "LXG/replication.py":208
  *                 pbar03 = tqdm(fc_poly, desc="Polygon", position=1, colour='Yellow', leave=False)
  *                 for poly in pbar03:
  *                     self._polys([os.path.join(geodatabase, ds, poly),             # <<<<<<<<<<<<<<
  *                                  geodatabase,
  *                                  os.path.join(self.gdb_poly, f'{fc_class_name}_{poly}_pts'),
  */
-        __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_polys); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 206, __pyx_L1_error)
+        __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_polys); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 208, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_9);
-        __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_os); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 206, __pyx_L1_error)
+        __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_os); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 208, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_2);
-        __pyx_t_14 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_path); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 206, __pyx_L1_error)
+        __pyx_t_14 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_path); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 208, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_14);
         __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-        __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_14, __pyx_n_s_join); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 206, __pyx_L1_error)
+        __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_14, __pyx_n_s_join); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 208, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_2);
         __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
         __pyx_t_14 = NULL;
@@ -8042,7 +8203,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
         #if CYTHON_FAST_PYCALL
         if (PyFunction_Check(__pyx_t_2)) {
           PyObject *__pyx_temp[4] = {__pyx_t_14, __pyx_v_geodatabase, __pyx_v_ds, __pyx_v_poly};
-          __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_10, 3+__pyx_t_10); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 206, __pyx_L1_error)
+          __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_10, 3+__pyx_t_10); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 208, __pyx_L1_error)
           __Pyx_XDECREF(__pyx_t_14); __pyx_t_14 = 0;
           __Pyx_GOTREF(__pyx_t_1);
         } else
@@ -8050,13 +8211,13 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
         #if CYTHON_FAST_PYCCALL
         if (__Pyx_PyFastCFunction_Check(__pyx_t_2)) {
           PyObject *__pyx_temp[4] = {__pyx_t_14, __pyx_v_geodatabase, __pyx_v_ds, __pyx_v_poly};
-          __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_10, 3+__pyx_t_10); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 206, __pyx_L1_error)
+          __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_10, 3+__pyx_t_10); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 208, __pyx_L1_error)
           __Pyx_XDECREF(__pyx_t_14); __pyx_t_14 = 0;
           __Pyx_GOTREF(__pyx_t_1);
         } else
         #endif
         {
-          __pyx_t_15 = PyTuple_New(3+__pyx_t_10); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 206, __pyx_L1_error)
+          __pyx_t_15 = PyTuple_New(3+__pyx_t_10); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 208, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_15);
           if (__pyx_t_14) {
             __Pyx_GIVEREF(__pyx_t_14); PyTuple_SET_ITEM(__pyx_t_15, 0, __pyx_t_14); __pyx_t_14 = NULL;
@@ -8070,34 +8231,34 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
           __Pyx_INCREF(__pyx_v_poly);
           __Pyx_GIVEREF(__pyx_v_poly);
           PyTuple_SET_ITEM(__pyx_t_15, 2+__pyx_t_10, __pyx_v_poly);
-          __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_15, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 206, __pyx_L1_error)
+          __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_15, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 208, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_1);
           __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
         }
         __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-        /* "LXG/replication.py":208
+        /* "LXG/replication.py":210
  *                     self._polys([os.path.join(geodatabase, ds, poly),
  *                                  geodatabase,
  *                                  os.path.join(self.gdb_poly, f'{fc_class_name}_{poly}_pts'),             # <<<<<<<<<<<<<<
  *                                  os.path.join(self.gdb_poly, f'{fc_class_name}_{poly}_buf')
  *                                  ])
  */
-        __Pyx_GetModuleGlobalName(__pyx_t_15, __pyx_n_s_os); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 208, __pyx_L1_error)
+        __Pyx_GetModuleGlobalName(__pyx_t_15, __pyx_n_s_os); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 210, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_15);
-        __pyx_t_14 = __Pyx_PyObject_GetAttrStr(__pyx_t_15, __pyx_n_s_path); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 208, __pyx_L1_error)
+        __pyx_t_14 = __Pyx_PyObject_GetAttrStr(__pyx_t_15, __pyx_n_s_path); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 210, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_14);
         __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
-        __pyx_t_15 = __Pyx_PyObject_GetAttrStr(__pyx_t_14, __pyx_n_s_join); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 208, __pyx_L1_error)
+        __pyx_t_15 = __Pyx_PyObject_GetAttrStr(__pyx_t_14, __pyx_n_s_join); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 210, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_15);
         __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
-        __pyx_t_14 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_gdb_poly); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 208, __pyx_L1_error)
+        __pyx_t_14 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_gdb_poly); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 210, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_14);
-        __pyx_t_16 = PyTuple_New(4); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 208, __pyx_L1_error)
+        __pyx_t_16 = PyTuple_New(4); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 210, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_16);
         __pyx_t_17 = 0;
         __pyx_t_18 = 127;
-        __pyx_t_19 = __Pyx_PyObject_FormatSimple(__pyx_v_fc_class_name, __pyx_empty_unicode); if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 208, __pyx_L1_error)
+        __pyx_t_19 = __Pyx_PyObject_FormatSimple(__pyx_v_fc_class_name, __pyx_empty_unicode); if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 210, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_19);
         __pyx_t_18 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_19) > __pyx_t_18) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_19) : __pyx_t_18;
         __pyx_t_17 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_19);
@@ -8108,7 +8269,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
         __pyx_t_17 += 1;
         __Pyx_GIVEREF(__pyx_n_u__8);
         PyTuple_SET_ITEM(__pyx_t_16, 1, __pyx_n_u__8);
-        __pyx_t_19 = __Pyx_PyObject_FormatSimple(__pyx_v_poly, __pyx_empty_unicode); if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 208, __pyx_L1_error)
+        __pyx_t_19 = __Pyx_PyObject_FormatSimple(__pyx_v_poly, __pyx_empty_unicode); if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 210, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_19);
         __pyx_t_18 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_19) > __pyx_t_18) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_19) : __pyx_t_18;
         __pyx_t_17 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_19);
@@ -8119,7 +8280,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
         __pyx_t_17 += 4;
         __Pyx_GIVEREF(__pyx_n_u_pts);
         PyTuple_SET_ITEM(__pyx_t_16, 3, __pyx_n_u_pts);
-        __pyx_t_19 = __Pyx_PyUnicode_Join(__pyx_t_16, 4, __pyx_t_17, __pyx_t_18); if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 208, __pyx_L1_error)
+        __pyx_t_19 = __Pyx_PyUnicode_Join(__pyx_t_16, 4, __pyx_t_17, __pyx_t_18); if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 210, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_19);
         __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
         __pyx_t_16 = NULL;
@@ -8137,7 +8298,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
         #if CYTHON_FAST_PYCALL
         if (PyFunction_Check(__pyx_t_15)) {
           PyObject *__pyx_temp[3] = {__pyx_t_16, __pyx_t_14, __pyx_t_19};
-          __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_15, __pyx_temp+1-__pyx_t_10, 2+__pyx_t_10); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 208, __pyx_L1_error)
+          __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_15, __pyx_temp+1-__pyx_t_10, 2+__pyx_t_10); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 210, __pyx_L1_error)
           __Pyx_XDECREF(__pyx_t_16); __pyx_t_16 = 0;
           __Pyx_GOTREF(__pyx_t_2);
           __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
@@ -8147,7 +8308,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
         #if CYTHON_FAST_PYCCALL
         if (__Pyx_PyFastCFunction_Check(__pyx_t_15)) {
           PyObject *__pyx_temp[3] = {__pyx_t_16, __pyx_t_14, __pyx_t_19};
-          __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_15, __pyx_temp+1-__pyx_t_10, 2+__pyx_t_10); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 208, __pyx_L1_error)
+          __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_15, __pyx_temp+1-__pyx_t_10, 2+__pyx_t_10); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 210, __pyx_L1_error)
           __Pyx_XDECREF(__pyx_t_16); __pyx_t_16 = 0;
           __Pyx_GOTREF(__pyx_t_2);
           __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
@@ -8155,7 +8316,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
         } else
         #endif
         {
-          __pyx_t_20 = PyTuple_New(2+__pyx_t_10); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 208, __pyx_L1_error)
+          __pyx_t_20 = PyTuple_New(2+__pyx_t_10); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 210, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_20);
           if (__pyx_t_16) {
             __Pyx_GIVEREF(__pyx_t_16); PyTuple_SET_ITEM(__pyx_t_20, 0, __pyx_t_16); __pyx_t_16 = NULL;
@@ -8166,34 +8327,34 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
           PyTuple_SET_ITEM(__pyx_t_20, 1+__pyx_t_10, __pyx_t_19);
           __pyx_t_14 = 0;
           __pyx_t_19 = 0;
-          __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_15, __pyx_t_20, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 208, __pyx_L1_error)
+          __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_15, __pyx_t_20, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 210, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_2);
           __Pyx_DECREF(__pyx_t_20); __pyx_t_20 = 0;
         }
         __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
 
-        /* "LXG/replication.py":209
+        /* "LXG/replication.py":211
  *                                  geodatabase,
  *                                  os.path.join(self.gdb_poly, f'{fc_class_name}_{poly}_pts'),
  *                                  os.path.join(self.gdb_poly, f'{fc_class_name}_{poly}_buf')             # <<<<<<<<<<<<<<
  *                                  ])
  * 
  */
-        __Pyx_GetModuleGlobalName(__pyx_t_20, __pyx_n_s_os); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 209, __pyx_L1_error)
+        __Pyx_GetModuleGlobalName(__pyx_t_20, __pyx_n_s_os); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 211, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_20);
-        __pyx_t_19 = __Pyx_PyObject_GetAttrStr(__pyx_t_20, __pyx_n_s_path); if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 209, __pyx_L1_error)
+        __pyx_t_19 = __Pyx_PyObject_GetAttrStr(__pyx_t_20, __pyx_n_s_path); if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 211, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_19);
         __Pyx_DECREF(__pyx_t_20); __pyx_t_20 = 0;
-        __pyx_t_20 = __Pyx_PyObject_GetAttrStr(__pyx_t_19, __pyx_n_s_join); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 209, __pyx_L1_error)
+        __pyx_t_20 = __Pyx_PyObject_GetAttrStr(__pyx_t_19, __pyx_n_s_join); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 211, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_20);
         __Pyx_DECREF(__pyx_t_19); __pyx_t_19 = 0;
-        __pyx_t_19 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_gdb_poly); if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 209, __pyx_L1_error)
+        __pyx_t_19 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_gdb_poly); if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 211, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_19);
-        __pyx_t_14 = PyTuple_New(4); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 209, __pyx_L1_error)
+        __pyx_t_14 = PyTuple_New(4); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 211, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_14);
         __pyx_t_17 = 0;
         __pyx_t_18 = 127;
-        __pyx_t_16 = __Pyx_PyObject_FormatSimple(__pyx_v_fc_class_name, __pyx_empty_unicode); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 209, __pyx_L1_error)
+        __pyx_t_16 = __Pyx_PyObject_FormatSimple(__pyx_v_fc_class_name, __pyx_empty_unicode); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 211, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_16);
         __pyx_t_18 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_16) > __pyx_t_18) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_16) : __pyx_t_18;
         __pyx_t_17 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_16);
@@ -8204,7 +8365,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
         __pyx_t_17 += 1;
         __Pyx_GIVEREF(__pyx_n_u__8);
         PyTuple_SET_ITEM(__pyx_t_14, 1, __pyx_n_u__8);
-        __pyx_t_16 = __Pyx_PyObject_FormatSimple(__pyx_v_poly, __pyx_empty_unicode); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 209, __pyx_L1_error)
+        __pyx_t_16 = __Pyx_PyObject_FormatSimple(__pyx_v_poly, __pyx_empty_unicode); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 211, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_16);
         __pyx_t_18 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_16) > __pyx_t_18) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_16) : __pyx_t_18;
         __pyx_t_17 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_16);
@@ -8215,7 +8376,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
         __pyx_t_17 += 4;
         __Pyx_GIVEREF(__pyx_n_u_buf);
         PyTuple_SET_ITEM(__pyx_t_14, 3, __pyx_n_u_buf);
-        __pyx_t_16 = __Pyx_PyUnicode_Join(__pyx_t_14, 4, __pyx_t_17, __pyx_t_18); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 209, __pyx_L1_error)
+        __pyx_t_16 = __Pyx_PyUnicode_Join(__pyx_t_14, 4, __pyx_t_17, __pyx_t_18); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 211, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_16);
         __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
         __pyx_t_14 = NULL;
@@ -8233,7 +8394,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
         #if CYTHON_FAST_PYCALL
         if (PyFunction_Check(__pyx_t_20)) {
           PyObject *__pyx_temp[3] = {__pyx_t_14, __pyx_t_19, __pyx_t_16};
-          __pyx_t_15 = __Pyx_PyFunction_FastCall(__pyx_t_20, __pyx_temp+1-__pyx_t_10, 2+__pyx_t_10); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 209, __pyx_L1_error)
+          __pyx_t_15 = __Pyx_PyFunction_FastCall(__pyx_t_20, __pyx_temp+1-__pyx_t_10, 2+__pyx_t_10); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 211, __pyx_L1_error)
           __Pyx_XDECREF(__pyx_t_14); __pyx_t_14 = 0;
           __Pyx_GOTREF(__pyx_t_15);
           __Pyx_DECREF(__pyx_t_19); __pyx_t_19 = 0;
@@ -8243,7 +8404,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
         #if CYTHON_FAST_PYCCALL
         if (__Pyx_PyFastCFunction_Check(__pyx_t_20)) {
           PyObject *__pyx_temp[3] = {__pyx_t_14, __pyx_t_19, __pyx_t_16};
-          __pyx_t_15 = __Pyx_PyCFunction_FastCall(__pyx_t_20, __pyx_temp+1-__pyx_t_10, 2+__pyx_t_10); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 209, __pyx_L1_error)
+          __pyx_t_15 = __Pyx_PyCFunction_FastCall(__pyx_t_20, __pyx_temp+1-__pyx_t_10, 2+__pyx_t_10); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 211, __pyx_L1_error)
           __Pyx_XDECREF(__pyx_t_14); __pyx_t_14 = 0;
           __Pyx_GOTREF(__pyx_t_15);
           __Pyx_DECREF(__pyx_t_19); __pyx_t_19 = 0;
@@ -8251,7 +8412,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
         } else
         #endif
         {
-          __pyx_t_21 = PyTuple_New(2+__pyx_t_10); if (unlikely(!__pyx_t_21)) __PYX_ERR(0, 209, __pyx_L1_error)
+          __pyx_t_21 = PyTuple_New(2+__pyx_t_10); if (unlikely(!__pyx_t_21)) __PYX_ERR(0, 211, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_21);
           if (__pyx_t_14) {
             __Pyx_GIVEREF(__pyx_t_14); PyTuple_SET_ITEM(__pyx_t_21, 0, __pyx_t_14); __pyx_t_14 = NULL;
@@ -8262,20 +8423,20 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
           PyTuple_SET_ITEM(__pyx_t_21, 1+__pyx_t_10, __pyx_t_16);
           __pyx_t_19 = 0;
           __pyx_t_16 = 0;
-          __pyx_t_15 = __Pyx_PyObject_Call(__pyx_t_20, __pyx_t_21, NULL); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 209, __pyx_L1_error)
+          __pyx_t_15 = __Pyx_PyObject_Call(__pyx_t_20, __pyx_t_21, NULL); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 211, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_15);
           __Pyx_DECREF(__pyx_t_21); __pyx_t_21 = 0;
         }
         __Pyx_DECREF(__pyx_t_20); __pyx_t_20 = 0;
 
-        /* "LXG/replication.py":206
+        /* "LXG/replication.py":208
  *                 pbar03 = tqdm(fc_poly, desc="Polygon", position=1, colour='Yellow', leave=False)
  *                 for poly in pbar03:
  *                     self._polys([os.path.join(geodatabase, ds, poly),             # <<<<<<<<<<<<<<
  *                                  geodatabase,
  *                                  os.path.join(self.gdb_poly, f'{fc_class_name}_{poly}_pts'),
  */
-        __pyx_t_20 = PyList_New(4); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 206, __pyx_L1_error)
+        __pyx_t_20 = PyList_New(4); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 208, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_20);
         __Pyx_GIVEREF(__pyx_t_1);
         PyList_SET_ITEM(__pyx_t_20, 0, __pyx_t_1);
@@ -8302,12 +8463,12 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
         __pyx_t_4 = (__pyx_t_15) ? __Pyx_PyObject_Call2Args(__pyx_t_9, __pyx_t_15, __pyx_t_20) : __Pyx_PyObject_CallOneArg(__pyx_t_9, __pyx_t_20);
         __Pyx_XDECREF(__pyx_t_15); __pyx_t_15 = 0;
         __Pyx_DECREF(__pyx_t_20); __pyx_t_20 = 0;
-        if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 206, __pyx_L1_error)
+        if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 208, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_4);
         __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
         __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-        /* "LXG/replication.py":205
+        /* "LXG/replication.py":207
  *             if len(fc_poly) > 0:
  *                 pbar03 = tqdm(fc_poly, desc="Polygon", position=1, colour='Yellow', leave=False)
  *                 for poly in pbar03:             # <<<<<<<<<<<<<<
@@ -8317,7 +8478,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
       }
       __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
 
-      /* "LXG/replication.py":203
+      /* "LXG/replication.py":205
  *             fc_poly = sorted(arcpy.ListFeatureClasses("", "Polygon", ds))
  * 
  *             if len(fc_poly) > 0:             # <<<<<<<<<<<<<<
@@ -8326,16 +8487,16 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
  */
     }
 
-    /* "LXG/replication.py":212
+    /* "LXG/replication.py":214
  *                                  ])
  * 
  *             fc_lines = sorted(arcpy.ListFeatureClasses("", "Polyline", ds))             # <<<<<<<<<<<<<<
  *             if len(fc_lines) > 0:
  *                 pbar03 = tqdm(fc_lines, desc="Polyline", position=1, colour='Yellow', leave=False)
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_9, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 212, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_9, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 214, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_9);
-    __pyx_t_20 = __Pyx_PyObject_GetAttrStr(__pyx_t_9, __pyx_n_s_ListFeatureClasses); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 212, __pyx_L1_error)
+    __pyx_t_20 = __Pyx_PyObject_GetAttrStr(__pyx_t_9, __pyx_n_s_ListFeatureClasses); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 214, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_20);
     __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
     __pyx_t_9 = NULL;
@@ -8353,7 +8514,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
     #if CYTHON_FAST_PYCALL
     if (PyFunction_Check(__pyx_t_20)) {
       PyObject *__pyx_temp[4] = {__pyx_t_9, __pyx_kp_s_, __pyx_n_s_Polyline, __pyx_v_ds};
-      __pyx_t_4 = __Pyx_PyFunction_FastCall(__pyx_t_20, __pyx_temp+1-__pyx_t_10, 3+__pyx_t_10); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 212, __pyx_L1_error)
+      __pyx_t_4 = __Pyx_PyFunction_FastCall(__pyx_t_20, __pyx_temp+1-__pyx_t_10, 3+__pyx_t_10); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 214, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
       __Pyx_GOTREF(__pyx_t_4);
     } else
@@ -8361,13 +8522,13 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
     #if CYTHON_FAST_PYCCALL
     if (__Pyx_PyFastCFunction_Check(__pyx_t_20)) {
       PyObject *__pyx_temp[4] = {__pyx_t_9, __pyx_kp_s_, __pyx_n_s_Polyline, __pyx_v_ds};
-      __pyx_t_4 = __Pyx_PyCFunction_FastCall(__pyx_t_20, __pyx_temp+1-__pyx_t_10, 3+__pyx_t_10); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 212, __pyx_L1_error)
+      __pyx_t_4 = __Pyx_PyCFunction_FastCall(__pyx_t_20, __pyx_temp+1-__pyx_t_10, 3+__pyx_t_10); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 214, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
       __Pyx_GOTREF(__pyx_t_4);
     } else
     #endif
     {
-      __pyx_t_15 = PyTuple_New(3+__pyx_t_10); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 212, __pyx_L1_error)
+      __pyx_t_15 = PyTuple_New(3+__pyx_t_10); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 214, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_15);
       if (__pyx_t_9) {
         __Pyx_GIVEREF(__pyx_t_9); PyTuple_SET_ITEM(__pyx_t_15, 0, __pyx_t_9); __pyx_t_9 = NULL;
@@ -8381,21 +8542,21 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
       __Pyx_INCREF(__pyx_v_ds);
       __Pyx_GIVEREF(__pyx_v_ds);
       PyTuple_SET_ITEM(__pyx_t_15, 2+__pyx_t_10, __pyx_v_ds);
-      __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_20, __pyx_t_15, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 212, __pyx_L1_error)
+      __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_20, __pyx_t_15, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 214, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
       __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
     }
     __Pyx_DECREF(__pyx_t_20); __pyx_t_20 = 0;
-    __pyx_t_20 = PySequence_List(__pyx_t_4); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 212, __pyx_L1_error)
+    __pyx_t_20 = PySequence_List(__pyx_t_4); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 214, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_20);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __pyx_t_11 = ((PyObject*)__pyx_t_20);
     __pyx_t_20 = 0;
-    __pyx_t_5 = PyList_Sort(__pyx_t_11); if (unlikely(__pyx_t_5 == ((int)-1))) __PYX_ERR(0, 212, __pyx_L1_error)
+    __pyx_t_5 = PyList_Sort(__pyx_t_11); if (unlikely(__pyx_t_5 == ((int)-1))) __PYX_ERR(0, 214, __pyx_L1_error)
     __Pyx_XDECREF_SET(__pyx_v_fc_lines, ((PyObject*)__pyx_t_11));
     __pyx_t_11 = 0;
 
-    /* "LXG/replication.py":213
+    /* "LXG/replication.py":215
  * 
  *             fc_lines = sorted(arcpy.ListFeatureClasses("", "Polyline", ds))
  *             if len(fc_lines) > 0:             # <<<<<<<<<<<<<<
@@ -8404,33 +8565,33 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
  */
     if (unlikely(__pyx_v_fc_lines == Py_None)) {
       PyErr_SetString(PyExc_TypeError, "object of type 'NoneType' has no len()");
-      __PYX_ERR(0, 213, __pyx_L1_error)
+      __PYX_ERR(0, 215, __pyx_L1_error)
     }
-    __pyx_t_12 = PyList_GET_SIZE(__pyx_v_fc_lines); if (unlikely(__pyx_t_12 == ((Py_ssize_t)-1))) __PYX_ERR(0, 213, __pyx_L1_error)
+    __pyx_t_12 = PyList_GET_SIZE(__pyx_v_fc_lines); if (unlikely(__pyx_t_12 == ((Py_ssize_t)-1))) __PYX_ERR(0, 215, __pyx_L1_error)
     __pyx_t_3 = ((__pyx_t_12 > 0) != 0);
     if (__pyx_t_3) {
 
-      /* "LXG/replication.py":214
+      /* "LXG/replication.py":216
  *             fc_lines = sorted(arcpy.ListFeatureClasses("", "Polyline", ds))
  *             if len(fc_lines) > 0:
  *                 pbar03 = tqdm(fc_lines, desc="Polyline", position=1, colour='Yellow', leave=False)             # <<<<<<<<<<<<<<
  *                 for line in pbar03:
  *                     # pbar03.set_description(line)
  */
-      __Pyx_GetModuleGlobalName(__pyx_t_11, __pyx_n_s_tqdm); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 214, __pyx_L1_error)
+      __Pyx_GetModuleGlobalName(__pyx_t_11, __pyx_n_s_tqdm); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 216, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_11);
-      __pyx_t_20 = PyTuple_New(1); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 214, __pyx_L1_error)
+      __pyx_t_20 = PyTuple_New(1); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 216, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_20);
       __Pyx_INCREF(__pyx_v_fc_lines);
       __Pyx_GIVEREF(__pyx_v_fc_lines);
       PyTuple_SET_ITEM(__pyx_t_20, 0, __pyx_v_fc_lines);
-      __pyx_t_4 = __Pyx_PyDict_NewPresized(4); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 214, __pyx_L1_error)
+      __pyx_t_4 = __Pyx_PyDict_NewPresized(4); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 216, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
-      if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_desc, __pyx_n_s_Polyline) < 0) __PYX_ERR(0, 214, __pyx_L1_error)
-      if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_position, __pyx_int_1) < 0) __PYX_ERR(0, 214, __pyx_L1_error)
-      if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_colour, __pyx_n_s_Yellow) < 0) __PYX_ERR(0, 214, __pyx_L1_error)
-      if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_leave, Py_False) < 0) __PYX_ERR(0, 214, __pyx_L1_error)
-      __pyx_t_15 = __Pyx_PyObject_Call(__pyx_t_11, __pyx_t_20, __pyx_t_4); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 214, __pyx_L1_error)
+      if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_desc, __pyx_n_s_Polyline) < 0) __PYX_ERR(0, 216, __pyx_L1_error)
+      if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_position, __pyx_int_1) < 0) __PYX_ERR(0, 216, __pyx_L1_error)
+      if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_colour, __pyx_n_s_Yellow) < 0) __PYX_ERR(0, 216, __pyx_L1_error)
+      if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_leave, Py_False) < 0) __PYX_ERR(0, 216, __pyx_L1_error)
+      __pyx_t_15 = __Pyx_PyObject_Call(__pyx_t_11, __pyx_t_20, __pyx_t_4); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 216, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_15);
       __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
       __Pyx_DECREF(__pyx_t_20); __pyx_t_20 = 0;
@@ -8438,7 +8599,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
       __Pyx_XDECREF_SET(__pyx_v_pbar03, __pyx_t_15);
       __pyx_t_15 = 0;
 
-      /* "LXG/replication.py":215
+      /* "LXG/replication.py":217
  *             if len(fc_lines) > 0:
  *                 pbar03 = tqdm(fc_lines, desc="Polyline", position=1, colour='Yellow', leave=False)
  *                 for line in pbar03:             # <<<<<<<<<<<<<<
@@ -8449,26 +8610,26 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
         __pyx_t_15 = __pyx_v_pbar03; __Pyx_INCREF(__pyx_t_15); __pyx_t_12 = 0;
         __pyx_t_13 = NULL;
       } else {
-        __pyx_t_12 = -1; __pyx_t_15 = PyObject_GetIter(__pyx_v_pbar03); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 215, __pyx_L1_error)
+        __pyx_t_12 = -1; __pyx_t_15 = PyObject_GetIter(__pyx_v_pbar03); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 217, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_15);
-        __pyx_t_13 = Py_TYPE(__pyx_t_15)->tp_iternext; if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 215, __pyx_L1_error)
+        __pyx_t_13 = Py_TYPE(__pyx_t_15)->tp_iternext; if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 217, __pyx_L1_error)
       }
       for (;;) {
         if (likely(!__pyx_t_13)) {
           if (likely(PyList_CheckExact(__pyx_t_15))) {
             if (__pyx_t_12 >= PyList_GET_SIZE(__pyx_t_15)) break;
             #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-            __pyx_t_4 = PyList_GET_ITEM(__pyx_t_15, __pyx_t_12); __Pyx_INCREF(__pyx_t_4); __pyx_t_12++; if (unlikely(0 < 0)) __PYX_ERR(0, 215, __pyx_L1_error)
+            __pyx_t_4 = PyList_GET_ITEM(__pyx_t_15, __pyx_t_12); __Pyx_INCREF(__pyx_t_4); __pyx_t_12++; if (unlikely(0 < 0)) __PYX_ERR(0, 217, __pyx_L1_error)
             #else
-            __pyx_t_4 = PySequence_ITEM(__pyx_t_15, __pyx_t_12); __pyx_t_12++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 215, __pyx_L1_error)
+            __pyx_t_4 = PySequence_ITEM(__pyx_t_15, __pyx_t_12); __pyx_t_12++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 217, __pyx_L1_error)
             __Pyx_GOTREF(__pyx_t_4);
             #endif
           } else {
             if (__pyx_t_12 >= PyTuple_GET_SIZE(__pyx_t_15)) break;
             #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-            __pyx_t_4 = PyTuple_GET_ITEM(__pyx_t_15, __pyx_t_12); __Pyx_INCREF(__pyx_t_4); __pyx_t_12++; if (unlikely(0 < 0)) __PYX_ERR(0, 215, __pyx_L1_error)
+            __pyx_t_4 = PyTuple_GET_ITEM(__pyx_t_15, __pyx_t_12); __Pyx_INCREF(__pyx_t_4); __pyx_t_12++; if (unlikely(0 < 0)) __PYX_ERR(0, 217, __pyx_L1_error)
             #else
-            __pyx_t_4 = PySequence_ITEM(__pyx_t_15, __pyx_t_12); __pyx_t_12++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 215, __pyx_L1_error)
+            __pyx_t_4 = PySequence_ITEM(__pyx_t_15, __pyx_t_12); __pyx_t_12++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 217, __pyx_L1_error)
             __Pyx_GOTREF(__pyx_t_4);
             #endif
           }
@@ -8478,7 +8639,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
             PyObject* exc_type = PyErr_Occurred();
             if (exc_type) {
               if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-              else __PYX_ERR(0, 215, __pyx_L1_error)
+              else __PYX_ERR(0, 217, __pyx_L1_error)
             }
             break;
           }
@@ -8487,19 +8648,19 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
         __Pyx_XDECREF_SET(__pyx_v_line, __pyx_t_4);
         __pyx_t_4 = 0;
 
-        /* "LXG/replication.py":217
+        /* "LXG/replication.py":219
  *                 for line in pbar03:
  *                     # pbar03.set_description(line)
  *                     input_line = os.path.join(geodatabase, ds, line)             # <<<<<<<<<<<<<<
  *                     pts_feat_line = os.path.join(self.gdb_lines, f'{fc_class_name}_{line}_pts')
  *                     arcpy.GeneratePointsAlongLines_management(Input_Features=input_line,
  */
-        __Pyx_GetModuleGlobalName(__pyx_t_20, __pyx_n_s_os); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 217, __pyx_L1_error)
+        __Pyx_GetModuleGlobalName(__pyx_t_20, __pyx_n_s_os); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 219, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_20);
-        __pyx_t_11 = __Pyx_PyObject_GetAttrStr(__pyx_t_20, __pyx_n_s_path); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 217, __pyx_L1_error)
+        __pyx_t_11 = __Pyx_PyObject_GetAttrStr(__pyx_t_20, __pyx_n_s_path); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 219, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_11);
         __Pyx_DECREF(__pyx_t_20); __pyx_t_20 = 0;
-        __pyx_t_20 = __Pyx_PyObject_GetAttrStr(__pyx_t_11, __pyx_n_s_join); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 217, __pyx_L1_error)
+        __pyx_t_20 = __Pyx_PyObject_GetAttrStr(__pyx_t_11, __pyx_n_s_join); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 219, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_20);
         __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
         __pyx_t_11 = NULL;
@@ -8517,7 +8678,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
         #if CYTHON_FAST_PYCALL
         if (PyFunction_Check(__pyx_t_20)) {
           PyObject *__pyx_temp[4] = {__pyx_t_11, __pyx_v_geodatabase, __pyx_v_ds, __pyx_v_line};
-          __pyx_t_4 = __Pyx_PyFunction_FastCall(__pyx_t_20, __pyx_temp+1-__pyx_t_10, 3+__pyx_t_10); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 217, __pyx_L1_error)
+          __pyx_t_4 = __Pyx_PyFunction_FastCall(__pyx_t_20, __pyx_temp+1-__pyx_t_10, 3+__pyx_t_10); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 219, __pyx_L1_error)
           __Pyx_XDECREF(__pyx_t_11); __pyx_t_11 = 0;
           __Pyx_GOTREF(__pyx_t_4);
         } else
@@ -8525,13 +8686,13 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
         #if CYTHON_FAST_PYCCALL
         if (__Pyx_PyFastCFunction_Check(__pyx_t_20)) {
           PyObject *__pyx_temp[4] = {__pyx_t_11, __pyx_v_geodatabase, __pyx_v_ds, __pyx_v_line};
-          __pyx_t_4 = __Pyx_PyCFunction_FastCall(__pyx_t_20, __pyx_temp+1-__pyx_t_10, 3+__pyx_t_10); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 217, __pyx_L1_error)
+          __pyx_t_4 = __Pyx_PyCFunction_FastCall(__pyx_t_20, __pyx_temp+1-__pyx_t_10, 3+__pyx_t_10); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 219, __pyx_L1_error)
           __Pyx_XDECREF(__pyx_t_11); __pyx_t_11 = 0;
           __Pyx_GOTREF(__pyx_t_4);
         } else
         #endif
         {
-          __pyx_t_9 = PyTuple_New(3+__pyx_t_10); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 217, __pyx_L1_error)
+          __pyx_t_9 = PyTuple_New(3+__pyx_t_10); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 219, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_9);
           if (__pyx_t_11) {
             __Pyx_GIVEREF(__pyx_t_11); PyTuple_SET_ITEM(__pyx_t_9, 0, __pyx_t_11); __pyx_t_11 = NULL;
@@ -8545,7 +8706,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
           __Pyx_INCREF(__pyx_v_line);
           __Pyx_GIVEREF(__pyx_v_line);
           PyTuple_SET_ITEM(__pyx_t_9, 2+__pyx_t_10, __pyx_v_line);
-          __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_20, __pyx_t_9, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 217, __pyx_L1_error)
+          __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_20, __pyx_t_9, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 219, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_4);
           __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
         }
@@ -8553,28 +8714,28 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
         __Pyx_XDECREF_SET(__pyx_v_input_line, __pyx_t_4);
         __pyx_t_4 = 0;
 
-        /* "LXG/replication.py":218
+        /* "LXG/replication.py":220
  *                     # pbar03.set_description(line)
  *                     input_line = os.path.join(geodatabase, ds, line)
  *                     pts_feat_line = os.path.join(self.gdb_lines, f'{fc_class_name}_{line}_pts')             # <<<<<<<<<<<<<<
  *                     arcpy.GeneratePointsAlongLines_management(Input_Features=input_line,
  *                                                               Output_Feature_Class=pts_feat_line,
  */
-        __Pyx_GetModuleGlobalName(__pyx_t_20, __pyx_n_s_os); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 218, __pyx_L1_error)
+        __Pyx_GetModuleGlobalName(__pyx_t_20, __pyx_n_s_os); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 220, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_20);
-        __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_t_20, __pyx_n_s_path); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 218, __pyx_L1_error)
+        __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_t_20, __pyx_n_s_path); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 220, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_9);
         __Pyx_DECREF(__pyx_t_20); __pyx_t_20 = 0;
-        __pyx_t_20 = __Pyx_PyObject_GetAttrStr(__pyx_t_9, __pyx_n_s_join); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 218, __pyx_L1_error)
+        __pyx_t_20 = __Pyx_PyObject_GetAttrStr(__pyx_t_9, __pyx_n_s_join); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 220, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_20);
         __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-        __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_gdb_lines); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 218, __pyx_L1_error)
+        __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_gdb_lines); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 220, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_9);
-        __pyx_t_11 = PyTuple_New(4); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 218, __pyx_L1_error)
+        __pyx_t_11 = PyTuple_New(4); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 220, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_11);
         __pyx_t_17 = 0;
         __pyx_t_18 = 127;
-        __pyx_t_2 = __Pyx_PyObject_FormatSimple(__pyx_v_fc_class_name, __pyx_empty_unicode); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 218, __pyx_L1_error)
+        __pyx_t_2 = __Pyx_PyObject_FormatSimple(__pyx_v_fc_class_name, __pyx_empty_unicode); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 220, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_2);
         __pyx_t_18 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_2) > __pyx_t_18) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_2) : __pyx_t_18;
         __pyx_t_17 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_2);
@@ -8585,7 +8746,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
         __pyx_t_17 += 1;
         __Pyx_GIVEREF(__pyx_n_u__8);
         PyTuple_SET_ITEM(__pyx_t_11, 1, __pyx_n_u__8);
-        __pyx_t_2 = __Pyx_PyObject_FormatSimple(__pyx_v_line, __pyx_empty_unicode); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 218, __pyx_L1_error)
+        __pyx_t_2 = __Pyx_PyObject_FormatSimple(__pyx_v_line, __pyx_empty_unicode); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 220, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_2);
         __pyx_t_18 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_2) > __pyx_t_18) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_2) : __pyx_t_18;
         __pyx_t_17 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_2);
@@ -8596,7 +8757,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
         __pyx_t_17 += 4;
         __Pyx_GIVEREF(__pyx_n_u_pts);
         PyTuple_SET_ITEM(__pyx_t_11, 3, __pyx_n_u_pts);
-        __pyx_t_2 = __Pyx_PyUnicode_Join(__pyx_t_11, 4, __pyx_t_17, __pyx_t_18); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 218, __pyx_L1_error)
+        __pyx_t_2 = __Pyx_PyUnicode_Join(__pyx_t_11, 4, __pyx_t_17, __pyx_t_18); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 220, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_2);
         __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
         __pyx_t_11 = NULL;
@@ -8614,7 +8775,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
         #if CYTHON_FAST_PYCALL
         if (PyFunction_Check(__pyx_t_20)) {
           PyObject *__pyx_temp[3] = {__pyx_t_11, __pyx_t_9, __pyx_t_2};
-          __pyx_t_4 = __Pyx_PyFunction_FastCall(__pyx_t_20, __pyx_temp+1-__pyx_t_10, 2+__pyx_t_10); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 218, __pyx_L1_error)
+          __pyx_t_4 = __Pyx_PyFunction_FastCall(__pyx_t_20, __pyx_temp+1-__pyx_t_10, 2+__pyx_t_10); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 220, __pyx_L1_error)
           __Pyx_XDECREF(__pyx_t_11); __pyx_t_11 = 0;
           __Pyx_GOTREF(__pyx_t_4);
           __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
@@ -8624,7 +8785,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
         #if CYTHON_FAST_PYCCALL
         if (__Pyx_PyFastCFunction_Check(__pyx_t_20)) {
           PyObject *__pyx_temp[3] = {__pyx_t_11, __pyx_t_9, __pyx_t_2};
-          __pyx_t_4 = __Pyx_PyCFunction_FastCall(__pyx_t_20, __pyx_temp+1-__pyx_t_10, 2+__pyx_t_10); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 218, __pyx_L1_error)
+          __pyx_t_4 = __Pyx_PyCFunction_FastCall(__pyx_t_20, __pyx_temp+1-__pyx_t_10, 2+__pyx_t_10); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 220, __pyx_L1_error)
           __Pyx_XDECREF(__pyx_t_11); __pyx_t_11 = 0;
           __Pyx_GOTREF(__pyx_t_4);
           __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
@@ -8632,7 +8793,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
         } else
         #endif
         {
-          __pyx_t_1 = PyTuple_New(2+__pyx_t_10); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 218, __pyx_L1_error)
+          __pyx_t_1 = PyTuple_New(2+__pyx_t_10); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 220, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_1);
           if (__pyx_t_11) {
             __Pyx_GIVEREF(__pyx_t_11); PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_t_11); __pyx_t_11 = NULL;
@@ -8643,7 +8804,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
           PyTuple_SET_ITEM(__pyx_t_1, 1+__pyx_t_10, __pyx_t_2);
           __pyx_t_9 = 0;
           __pyx_t_2 = 0;
-          __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_20, __pyx_t_1, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 218, __pyx_L1_error)
+          __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_20, __pyx_t_1, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 220, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_4);
           __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
         }
@@ -8651,49 +8812,49 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
         __pyx_v_pts_feat_line = __pyx_t_4;
         __pyx_t_4 = 0;
 
-        /* "LXG/replication.py":219
+        /* "LXG/replication.py":221
  *                     input_line = os.path.join(geodatabase, ds, line)
  *                     pts_feat_line = os.path.join(self.gdb_lines, f'{fc_class_name}_{line}_pts')
  *                     arcpy.GeneratePointsAlongLines_management(Input_Features=input_line,             # <<<<<<<<<<<<<<
  *                                                               Output_Feature_Class=pts_feat_line,
  *                                                               Point_Placement="PERCENTAGE",
  */
-        __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 219, __pyx_L1_error)
+        __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 221, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_4);
-        __pyx_t_20 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_GeneratePointsAlongLines_managem); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 219, __pyx_L1_error)
+        __pyx_t_20 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_GeneratePointsAlongLines_managem); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 221, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_20);
         __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-        __pyx_t_4 = __Pyx_PyDict_NewPresized(6); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 219, __pyx_L1_error)
+        __pyx_t_4 = __Pyx_PyDict_NewPresized(6); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 221, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_4);
-        if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_Input_Features, __pyx_v_input_line) < 0) __PYX_ERR(0, 219, __pyx_L1_error)
+        if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_Input_Features, __pyx_v_input_line) < 0) __PYX_ERR(0, 221, __pyx_L1_error)
 
-        /* "LXG/replication.py":220
+        /* "LXG/replication.py":222
  *                     pts_feat_line = os.path.join(self.gdb_lines, f'{fc_class_name}_{line}_pts')
  *                     arcpy.GeneratePointsAlongLines_management(Input_Features=input_line,
  *                                                               Output_Feature_Class=pts_feat_line,             # <<<<<<<<<<<<<<
  *                                                               Point_Placement="PERCENTAGE",
  *                                                               Distance="",
  */
-        if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_Output_Feature_Class, __pyx_v_pts_feat_line) < 0) __PYX_ERR(0, 219, __pyx_L1_error)
-        if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_Point_Placement, __pyx_n_s_PERCENTAGE) < 0) __PYX_ERR(0, 219, __pyx_L1_error)
-        if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_Distance, __pyx_kp_s_) < 0) __PYX_ERR(0, 219, __pyx_L1_error)
-        if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_Percentage, __pyx_int_50) < 0) __PYX_ERR(0, 219, __pyx_L1_error)
-        if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_Include_End_Points, __pyx_kp_s_) < 0) __PYX_ERR(0, 219, __pyx_L1_error)
+        if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_Output_Feature_Class, __pyx_v_pts_feat_line) < 0) __PYX_ERR(0, 221, __pyx_L1_error)
+        if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_Point_Placement, __pyx_n_s_PERCENTAGE) < 0) __PYX_ERR(0, 221, __pyx_L1_error)
+        if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_Distance, __pyx_kp_s_) < 0) __PYX_ERR(0, 221, __pyx_L1_error)
+        if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_Percentage, __pyx_int_50) < 0) __PYX_ERR(0, 221, __pyx_L1_error)
+        if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_Include_End_Points, __pyx_kp_s_) < 0) __PYX_ERR(0, 221, __pyx_L1_error)
 
-        /* "LXG/replication.py":219
+        /* "LXG/replication.py":221
  *                     input_line = os.path.join(geodatabase, ds, line)
  *                     pts_feat_line = os.path.join(self.gdb_lines, f'{fc_class_name}_{line}_pts')
  *                     arcpy.GeneratePointsAlongLines_management(Input_Features=input_line,             # <<<<<<<<<<<<<<
  *                                                               Output_Feature_Class=pts_feat_line,
  *                                                               Point_Placement="PERCENTAGE",
  */
-        __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_20, __pyx_empty_tuple, __pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 219, __pyx_L1_error)
+        __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_20, __pyx_empty_tuple, __pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 221, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_1);
         __Pyx_DECREF(__pyx_t_20); __pyx_t_20 = 0;
         __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-        /* "LXG/replication.py":225
+        /* "LXG/replication.py":227
  *                                                               Percentage=50,
  *                                                               Include_End_Points="")
  *                     try:             # <<<<<<<<<<<<<<
@@ -8709,56 +8870,56 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
           __Pyx_XGOTREF(__pyx_t_24);
           /*try:*/ {
 
-            /* "LXG/replication.py":226
+            /* "LXG/replication.py":228
  *                                                               Include_End_Points="")
  *                     try:
  *                         if geodatabase == self.gdb1:             # <<<<<<<<<<<<<<
  *                             # Execute the Buffer tool if initial geodatabase
  *                             arcpy.Buffer_analysis(pts_feat_line,
  */
-            __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_gdb1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 226, __pyx_L12_error)
+            __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_gdb1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 228, __pyx_L12_error)
             __Pyx_GOTREF(__pyx_t_1);
-            __pyx_t_4 = PyObject_RichCompare(__pyx_v_geodatabase, __pyx_t_1, Py_EQ); __Pyx_XGOTREF(__pyx_t_4); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 226, __pyx_L12_error)
+            __pyx_t_4 = PyObject_RichCompare(__pyx_v_geodatabase, __pyx_t_1, Py_EQ); __Pyx_XGOTREF(__pyx_t_4); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 228, __pyx_L12_error)
             __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-            __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_t_4); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(0, 226, __pyx_L12_error)
+            __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_t_4); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(0, 228, __pyx_L12_error)
             __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
             if (__pyx_t_3) {
 
-              /* "LXG/replication.py":228
+              /* "LXG/replication.py":230
  *                         if geodatabase == self.gdb1:
  *                             # Execute the Buffer tool if initial geodatabase
  *                             arcpy.Buffer_analysis(pts_feat_line,             # <<<<<<<<<<<<<<
  *                                                   os.path.join(self.gdb_lines, f'{fc_class_name}_{line}_buf'),
  *                                                   "0.5 meters")
  */
-              __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 228, __pyx_L12_error)
+              __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 230, __pyx_L12_error)
               __Pyx_GOTREF(__pyx_t_1);
-              __pyx_t_20 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_Buffer_analysis); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 228, __pyx_L12_error)
+              __pyx_t_20 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_Buffer_analysis); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 230, __pyx_L12_error)
               __Pyx_GOTREF(__pyx_t_20);
               __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-              /* "LXG/replication.py":229
+              /* "LXG/replication.py":231
  *                             # Execute the Buffer tool if initial geodatabase
  *                             arcpy.Buffer_analysis(pts_feat_line,
  *                                                   os.path.join(self.gdb_lines, f'{fc_class_name}_{line}_buf'),             # <<<<<<<<<<<<<<
  *                                                   "0.5 meters")
  *                             arcpy.Delete_management(pts_feat_line)
  */
-              __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_os); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 229, __pyx_L12_error)
+              __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_os); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 231, __pyx_L12_error)
               __Pyx_GOTREF(__pyx_t_2);
-              __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_path); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 229, __pyx_L12_error)
+              __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_path); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 231, __pyx_L12_error)
               __Pyx_GOTREF(__pyx_t_9);
               __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-              __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_9, __pyx_n_s_join); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 229, __pyx_L12_error)
+              __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_9, __pyx_n_s_join); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 231, __pyx_L12_error)
               __Pyx_GOTREF(__pyx_t_2);
               __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-              __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_gdb_lines); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 229, __pyx_L12_error)
+              __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_gdb_lines); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 231, __pyx_L12_error)
               __Pyx_GOTREF(__pyx_t_9);
-              __pyx_t_11 = PyTuple_New(4); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 229, __pyx_L12_error)
+              __pyx_t_11 = PyTuple_New(4); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 231, __pyx_L12_error)
               __Pyx_GOTREF(__pyx_t_11);
               __pyx_t_17 = 0;
               __pyx_t_18 = 127;
-              __pyx_t_21 = __Pyx_PyObject_FormatSimple(__pyx_v_fc_class_name, __pyx_empty_unicode); if (unlikely(!__pyx_t_21)) __PYX_ERR(0, 229, __pyx_L12_error)
+              __pyx_t_21 = __Pyx_PyObject_FormatSimple(__pyx_v_fc_class_name, __pyx_empty_unicode); if (unlikely(!__pyx_t_21)) __PYX_ERR(0, 231, __pyx_L12_error)
               __Pyx_GOTREF(__pyx_t_21);
               __pyx_t_18 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_21) > __pyx_t_18) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_21) : __pyx_t_18;
               __pyx_t_17 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_21);
@@ -8769,7 +8930,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
               __pyx_t_17 += 1;
               __Pyx_GIVEREF(__pyx_n_u__8);
               PyTuple_SET_ITEM(__pyx_t_11, 1, __pyx_n_u__8);
-              __pyx_t_21 = __Pyx_PyObject_FormatSimple(__pyx_v_line, __pyx_empty_unicode); if (unlikely(!__pyx_t_21)) __PYX_ERR(0, 229, __pyx_L12_error)
+              __pyx_t_21 = __Pyx_PyObject_FormatSimple(__pyx_v_line, __pyx_empty_unicode); if (unlikely(!__pyx_t_21)) __PYX_ERR(0, 231, __pyx_L12_error)
               __Pyx_GOTREF(__pyx_t_21);
               __pyx_t_18 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_21) > __pyx_t_18) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_21) : __pyx_t_18;
               __pyx_t_17 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_21);
@@ -8780,7 +8941,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
               __pyx_t_17 += 4;
               __Pyx_GIVEREF(__pyx_n_u_buf);
               PyTuple_SET_ITEM(__pyx_t_11, 3, __pyx_n_u_buf);
-              __pyx_t_21 = __Pyx_PyUnicode_Join(__pyx_t_11, 4, __pyx_t_17, __pyx_t_18); if (unlikely(!__pyx_t_21)) __PYX_ERR(0, 229, __pyx_L12_error)
+              __pyx_t_21 = __Pyx_PyUnicode_Join(__pyx_t_11, 4, __pyx_t_17, __pyx_t_18); if (unlikely(!__pyx_t_21)) __PYX_ERR(0, 231, __pyx_L12_error)
               __Pyx_GOTREF(__pyx_t_21);
               __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
               __pyx_t_11 = NULL;
@@ -8798,7 +8959,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
               #if CYTHON_FAST_PYCALL
               if (PyFunction_Check(__pyx_t_2)) {
                 PyObject *__pyx_temp[3] = {__pyx_t_11, __pyx_t_9, __pyx_t_21};
-                __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_10, 2+__pyx_t_10); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 229, __pyx_L12_error)
+                __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_10, 2+__pyx_t_10); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 231, __pyx_L12_error)
                 __Pyx_XDECREF(__pyx_t_11); __pyx_t_11 = 0;
                 __Pyx_GOTREF(__pyx_t_1);
                 __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
@@ -8808,7 +8969,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
               #if CYTHON_FAST_PYCCALL
               if (__Pyx_PyFastCFunction_Check(__pyx_t_2)) {
                 PyObject *__pyx_temp[3] = {__pyx_t_11, __pyx_t_9, __pyx_t_21};
-                __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_10, 2+__pyx_t_10); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 229, __pyx_L12_error)
+                __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_10, 2+__pyx_t_10); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 231, __pyx_L12_error)
                 __Pyx_XDECREF(__pyx_t_11); __pyx_t_11 = 0;
                 __Pyx_GOTREF(__pyx_t_1);
                 __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
@@ -8816,7 +8977,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
               } else
               #endif
               {
-                __pyx_t_16 = PyTuple_New(2+__pyx_t_10); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 229, __pyx_L12_error)
+                __pyx_t_16 = PyTuple_New(2+__pyx_t_10); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 231, __pyx_L12_error)
                 __Pyx_GOTREF(__pyx_t_16);
                 if (__pyx_t_11) {
                   __Pyx_GIVEREF(__pyx_t_11); PyTuple_SET_ITEM(__pyx_t_16, 0, __pyx_t_11); __pyx_t_11 = NULL;
@@ -8827,7 +8988,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
                 PyTuple_SET_ITEM(__pyx_t_16, 1+__pyx_t_10, __pyx_t_21);
                 __pyx_t_9 = 0;
                 __pyx_t_21 = 0;
-                __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_16, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 229, __pyx_L12_error)
+                __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_16, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 231, __pyx_L12_error)
                 __Pyx_GOTREF(__pyx_t_1);
                 __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
               }
@@ -8847,7 +9008,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
               #if CYTHON_FAST_PYCALL
               if (PyFunction_Check(__pyx_t_20)) {
                 PyObject *__pyx_temp[4] = {__pyx_t_2, __pyx_v_pts_feat_line, __pyx_t_1, __pyx_kp_s_0_5_meters};
-                __pyx_t_4 = __Pyx_PyFunction_FastCall(__pyx_t_20, __pyx_temp+1-__pyx_t_10, 3+__pyx_t_10); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 228, __pyx_L12_error)
+                __pyx_t_4 = __Pyx_PyFunction_FastCall(__pyx_t_20, __pyx_temp+1-__pyx_t_10, 3+__pyx_t_10); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 230, __pyx_L12_error)
                 __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
                 __Pyx_GOTREF(__pyx_t_4);
                 __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -8856,14 +9017,14 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
               #if CYTHON_FAST_PYCCALL
               if (__Pyx_PyFastCFunction_Check(__pyx_t_20)) {
                 PyObject *__pyx_temp[4] = {__pyx_t_2, __pyx_v_pts_feat_line, __pyx_t_1, __pyx_kp_s_0_5_meters};
-                __pyx_t_4 = __Pyx_PyCFunction_FastCall(__pyx_t_20, __pyx_temp+1-__pyx_t_10, 3+__pyx_t_10); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 228, __pyx_L12_error)
+                __pyx_t_4 = __Pyx_PyCFunction_FastCall(__pyx_t_20, __pyx_temp+1-__pyx_t_10, 3+__pyx_t_10); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 230, __pyx_L12_error)
                 __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
                 __Pyx_GOTREF(__pyx_t_4);
                 __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
               } else
               #endif
               {
-                __pyx_t_16 = PyTuple_New(3+__pyx_t_10); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 228, __pyx_L12_error)
+                __pyx_t_16 = PyTuple_New(3+__pyx_t_10); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 230, __pyx_L12_error)
                 __Pyx_GOTREF(__pyx_t_16);
                 if (__pyx_t_2) {
                   __Pyx_GIVEREF(__pyx_t_2); PyTuple_SET_ITEM(__pyx_t_16, 0, __pyx_t_2); __pyx_t_2 = NULL;
@@ -8877,23 +9038,23 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
                 __Pyx_GIVEREF(__pyx_kp_s_0_5_meters);
                 PyTuple_SET_ITEM(__pyx_t_16, 2+__pyx_t_10, __pyx_kp_s_0_5_meters);
                 __pyx_t_1 = 0;
-                __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_20, __pyx_t_16, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 228, __pyx_L12_error)
+                __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_20, __pyx_t_16, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 230, __pyx_L12_error)
                 __Pyx_GOTREF(__pyx_t_4);
                 __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
               }
               __Pyx_DECREF(__pyx_t_20); __pyx_t_20 = 0;
               __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-              /* "LXG/replication.py":231
+              /* "LXG/replication.py":233
  *                                                   os.path.join(self.gdb_lines, f'{fc_class_name}_{line}_buf'),
  *                                                   "0.5 meters")
  *                             arcpy.Delete_management(pts_feat_line)             # <<<<<<<<<<<<<<
  *                     except arcpy.ExecuteError as e:
  *                         arcpy.AddError(e)
  */
-              __Pyx_GetModuleGlobalName(__pyx_t_20, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 231, __pyx_L12_error)
+              __Pyx_GetModuleGlobalName(__pyx_t_20, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 233, __pyx_L12_error)
               __Pyx_GOTREF(__pyx_t_20);
-              __pyx_t_16 = __Pyx_PyObject_GetAttrStr(__pyx_t_20, __pyx_n_s_Delete_management); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 231, __pyx_L12_error)
+              __pyx_t_16 = __Pyx_PyObject_GetAttrStr(__pyx_t_20, __pyx_n_s_Delete_management); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 233, __pyx_L12_error)
               __Pyx_GOTREF(__pyx_t_16);
               __Pyx_DECREF(__pyx_t_20); __pyx_t_20 = 0;
               __pyx_t_20 = NULL;
@@ -8908,12 +9069,12 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
               }
               __pyx_t_4 = (__pyx_t_20) ? __Pyx_PyObject_Call2Args(__pyx_t_16, __pyx_t_20, __pyx_v_pts_feat_line) : __Pyx_PyObject_CallOneArg(__pyx_t_16, __pyx_v_pts_feat_line);
               __Pyx_XDECREF(__pyx_t_20); __pyx_t_20 = 0;
-              if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 231, __pyx_L12_error)
+              if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 233, __pyx_L12_error)
               __Pyx_GOTREF(__pyx_t_4);
               __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
               __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-              /* "LXG/replication.py":226
+              /* "LXG/replication.py":228
  *                                                               Include_End_Points="")
  *                     try:
  *                         if geodatabase == self.gdb1:             # <<<<<<<<<<<<<<
@@ -8922,7 +9083,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
  */
             }
 
-            /* "LXG/replication.py":225
+            /* "LXG/replication.py":227
  *                                                               Percentage=50,
  *                                                               Include_End_Points="")
  *                     try:             # <<<<<<<<<<<<<<
@@ -8946,7 +9107,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
           __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
           __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
 
-          /* "LXG/replication.py":232
+          /* "LXG/replication.py":234
  *                                                   "0.5 meters")
  *                             arcpy.Delete_management(pts_feat_line)
  *                     except arcpy.ExecuteError as e:             # <<<<<<<<<<<<<<
@@ -8954,9 +9115,9 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
  * 
  */
           __Pyx_ErrFetch(&__pyx_t_4, &__pyx_t_16, &__pyx_t_20);
-          __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 232, __pyx_L14_except_error)
+          __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 234, __pyx_L14_except_error)
           __Pyx_GOTREF(__pyx_t_1);
-          __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_ExecuteError); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 232, __pyx_L14_except_error)
+          __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_ExecuteError); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 234, __pyx_L14_except_error)
           __Pyx_GOTREF(__pyx_t_2);
           __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
           __pyx_t_10 = __Pyx_PyErr_GivenExceptionMatches(__pyx_t_4, __pyx_t_2);
@@ -8965,23 +9126,23 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
           __pyx_t_4 = 0; __pyx_t_16 = 0; __pyx_t_20 = 0;
           if (__pyx_t_10) {
             __Pyx_AddTraceback("LXGREP.AppendNewFeatures.prepare_features", __pyx_clineno, __pyx_lineno, __pyx_filename);
-            if (__Pyx_GetException(&__pyx_t_20, &__pyx_t_16, &__pyx_t_4) < 0) __PYX_ERR(0, 232, __pyx_L14_except_error)
+            if (__Pyx_GetException(&__pyx_t_20, &__pyx_t_16, &__pyx_t_4) < 0) __PYX_ERR(0, 234, __pyx_L14_except_error)
             __Pyx_GOTREF(__pyx_t_20);
             __Pyx_GOTREF(__pyx_t_16);
             __Pyx_GOTREF(__pyx_t_4);
             __Pyx_INCREF(__pyx_t_16);
             __Pyx_XDECREF_SET(__pyx_v_e, __pyx_t_16);
 
-            /* "LXG/replication.py":233
+            /* "LXG/replication.py":235
  *                             arcpy.Delete_management(pts_feat_line)
  *                     except arcpy.ExecuteError as e:
  *                         arcpy.AddError(e)             # <<<<<<<<<<<<<<
  * 
  *                     del pts_feat_line
  */
-            __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 233, __pyx_L14_except_error)
+            __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 235, __pyx_L14_except_error)
             __Pyx_GOTREF(__pyx_t_1);
-            __pyx_t_21 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_AddError); if (unlikely(!__pyx_t_21)) __PYX_ERR(0, 233, __pyx_L14_except_error)
+            __pyx_t_21 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_AddError); if (unlikely(!__pyx_t_21)) __PYX_ERR(0, 235, __pyx_L14_except_error)
             __Pyx_GOTREF(__pyx_t_21);
             __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
             __pyx_t_1 = NULL;
@@ -8996,7 +9157,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
             }
             __pyx_t_2 = (__pyx_t_1) ? __Pyx_PyObject_Call2Args(__pyx_t_21, __pyx_t_1, __pyx_v_e) : __Pyx_PyObject_CallOneArg(__pyx_t_21, __pyx_v_e);
             __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
-            if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 233, __pyx_L14_except_error)
+            if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 235, __pyx_L14_except_error)
             __Pyx_GOTREF(__pyx_t_2);
             __Pyx_DECREF(__pyx_t_21); __pyx_t_21 = 0;
             __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
@@ -9008,7 +9169,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
           goto __pyx_L14_except_error;
           __pyx_L14_except_error:;
 
-          /* "LXG/replication.py":225
+          /* "LXG/replication.py":227
  *                                                               Percentage=50,
  *                                                               Include_End_Points="")
  *                     try:             # <<<<<<<<<<<<<<
@@ -9028,7 +9189,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
           __pyx_L19_try_end:;
         }
 
-        /* "LXG/replication.py":235
+        /* "LXG/replication.py":237
  *                         arcpy.AddError(e)
  * 
  *                     del pts_feat_line             # <<<<<<<<<<<<<<
@@ -9038,7 +9199,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
         __Pyx_DECREF(__pyx_v_pts_feat_line);
         __pyx_v_pts_feat_line = NULL;
 
-        /* "LXG/replication.py":215
+        /* "LXG/replication.py":217
  *             if len(fc_lines) > 0:
  *                 pbar03 = tqdm(fc_lines, desc="Polyline", position=1, colour='Yellow', leave=False)
  *                 for line in pbar03:             # <<<<<<<<<<<<<<
@@ -9048,7 +9209,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
       }
       __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
 
-      /* "LXG/replication.py":213
+      /* "LXG/replication.py":215
  * 
  *             fc_lines = sorted(arcpy.ListFeatureClasses("", "Polyline", ds))
  *             if len(fc_lines) > 0:             # <<<<<<<<<<<<<<
@@ -9057,16 +9218,16 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
  */
     }
 
-    /* "LXG/replication.py":238
+    /* "LXG/replication.py":240
  * 
  *             # points
  *             fc_points = sorted(arcpy.ListFeatureClasses("", "Point", ds))             # <<<<<<<<<<<<<<
  *             if len(fc_points) > 0:
  *                 fc_points_list = [[os.path.join(geodatabase, ds, pts),
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_16, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 238, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_16, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 240, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_16);
-    __pyx_t_20 = __Pyx_PyObject_GetAttrStr(__pyx_t_16, __pyx_n_s_ListFeatureClasses); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 238, __pyx_L1_error)
+    __pyx_t_20 = __Pyx_PyObject_GetAttrStr(__pyx_t_16, __pyx_n_s_ListFeatureClasses); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 240, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_20);
     __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
     __pyx_t_16 = NULL;
@@ -9084,7 +9245,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
     #if CYTHON_FAST_PYCALL
     if (PyFunction_Check(__pyx_t_20)) {
       PyObject *__pyx_temp[4] = {__pyx_t_16, __pyx_kp_s_, __pyx_n_s_Point, __pyx_v_ds};
-      __pyx_t_4 = __Pyx_PyFunction_FastCall(__pyx_t_20, __pyx_temp+1-__pyx_t_10, 3+__pyx_t_10); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 238, __pyx_L1_error)
+      __pyx_t_4 = __Pyx_PyFunction_FastCall(__pyx_t_20, __pyx_temp+1-__pyx_t_10, 3+__pyx_t_10); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 240, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_16); __pyx_t_16 = 0;
       __Pyx_GOTREF(__pyx_t_4);
     } else
@@ -9092,13 +9253,13 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
     #if CYTHON_FAST_PYCCALL
     if (__Pyx_PyFastCFunction_Check(__pyx_t_20)) {
       PyObject *__pyx_temp[4] = {__pyx_t_16, __pyx_kp_s_, __pyx_n_s_Point, __pyx_v_ds};
-      __pyx_t_4 = __Pyx_PyCFunction_FastCall(__pyx_t_20, __pyx_temp+1-__pyx_t_10, 3+__pyx_t_10); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 238, __pyx_L1_error)
+      __pyx_t_4 = __Pyx_PyCFunction_FastCall(__pyx_t_20, __pyx_temp+1-__pyx_t_10, 3+__pyx_t_10); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 240, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_16); __pyx_t_16 = 0;
       __Pyx_GOTREF(__pyx_t_4);
     } else
     #endif
     {
-      __pyx_t_2 = PyTuple_New(3+__pyx_t_10); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 238, __pyx_L1_error)
+      __pyx_t_2 = PyTuple_New(3+__pyx_t_10); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 240, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
       if (__pyx_t_16) {
         __Pyx_GIVEREF(__pyx_t_16); PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_t_16); __pyx_t_16 = NULL;
@@ -9112,21 +9273,21 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
       __Pyx_INCREF(__pyx_v_ds);
       __Pyx_GIVEREF(__pyx_v_ds);
       PyTuple_SET_ITEM(__pyx_t_2, 2+__pyx_t_10, __pyx_v_ds);
-      __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_20, __pyx_t_2, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 238, __pyx_L1_error)
+      __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_20, __pyx_t_2, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 240, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     }
     __Pyx_DECREF(__pyx_t_20); __pyx_t_20 = 0;
-    __pyx_t_20 = PySequence_List(__pyx_t_4); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 238, __pyx_L1_error)
+    __pyx_t_20 = PySequence_List(__pyx_t_4); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 240, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_20);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __pyx_t_15 = ((PyObject*)__pyx_t_20);
     __pyx_t_20 = 0;
-    __pyx_t_5 = PyList_Sort(__pyx_t_15); if (unlikely(__pyx_t_5 == ((int)-1))) __PYX_ERR(0, 238, __pyx_L1_error)
+    __pyx_t_5 = PyList_Sort(__pyx_t_15); if (unlikely(__pyx_t_5 == ((int)-1))) __PYX_ERR(0, 240, __pyx_L1_error)
     __Pyx_XDECREF_SET(__pyx_v_fc_points, ((PyObject*)__pyx_t_15));
     __pyx_t_15 = 0;
 
-    /* "LXG/replication.py":239
+    /* "LXG/replication.py":241
  *             # points
  *             fc_points = sorted(arcpy.ListFeatureClasses("", "Point", ds))
  *             if len(fc_points) > 0:             # <<<<<<<<<<<<<<
@@ -9135,23 +9296,23 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
  */
     if (unlikely(__pyx_v_fc_points == Py_None)) {
       PyErr_SetString(PyExc_TypeError, "object of type 'NoneType' has no len()");
-      __PYX_ERR(0, 239, __pyx_L1_error)
+      __PYX_ERR(0, 241, __pyx_L1_error)
     }
-    __pyx_t_12 = PyList_GET_SIZE(__pyx_v_fc_points); if (unlikely(__pyx_t_12 == ((Py_ssize_t)-1))) __PYX_ERR(0, 239, __pyx_L1_error)
+    __pyx_t_12 = PyList_GET_SIZE(__pyx_v_fc_points); if (unlikely(__pyx_t_12 == ((Py_ssize_t)-1))) __PYX_ERR(0, 241, __pyx_L1_error)
     __pyx_t_3 = ((__pyx_t_12 > 0) != 0);
     if (__pyx_t_3) {
 
-      /* "LXG/replication.py":240
+      /* "LXG/replication.py":242
  *             fc_points = sorted(arcpy.ListFeatureClasses("", "Point", ds))
  *             if len(fc_points) > 0:
  *                 fc_points_list = [[os.path.join(geodatabase, ds, pts),             # <<<<<<<<<<<<<<
  *                                    geodatabase,
  *                                    os.path.join(self.gdb_points, f'{fc_class_name}_{pts}_pts'),
  */
-      __pyx_t_15 = PyList_New(0); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 240, __pyx_L1_error)
+      __pyx_t_15 = PyList_New(0); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 242, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_15);
 
-      /* "LXG/replication.py":243
+      /* "LXG/replication.py":245
  *                                    geodatabase,
  *                                    os.path.join(self.gdb_points, f'{fc_class_name}_{pts}_pts'),
  *                                    os.path.join(self.gdb_points, f'{fc_class_name}_{pts}_buf')] for pts in fc_points]             # <<<<<<<<<<<<<<
@@ -9160,33 +9321,33 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
  */
       if (unlikely(__pyx_v_fc_points == Py_None)) {
         PyErr_SetString(PyExc_TypeError, "'NoneType' object is not iterable");
-        __PYX_ERR(0, 243, __pyx_L1_error)
+        __PYX_ERR(0, 245, __pyx_L1_error)
       }
       __pyx_t_20 = __pyx_v_fc_points; __Pyx_INCREF(__pyx_t_20); __pyx_t_12 = 0;
       for (;;) {
         if (__pyx_t_12 >= PyList_GET_SIZE(__pyx_t_20)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_4 = PyList_GET_ITEM(__pyx_t_20, __pyx_t_12); __Pyx_INCREF(__pyx_t_4); __pyx_t_12++; if (unlikely(0 < 0)) __PYX_ERR(0, 243, __pyx_L1_error)
+        __pyx_t_4 = PyList_GET_ITEM(__pyx_t_20, __pyx_t_12); __Pyx_INCREF(__pyx_t_4); __pyx_t_12++; if (unlikely(0 < 0)) __PYX_ERR(0, 245, __pyx_L1_error)
         #else
-        __pyx_t_4 = PySequence_ITEM(__pyx_t_20, __pyx_t_12); __pyx_t_12++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 243, __pyx_L1_error)
+        __pyx_t_4 = PySequence_ITEM(__pyx_t_20, __pyx_t_12); __pyx_t_12++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 245, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_4);
         #endif
         __Pyx_XDECREF_SET(__pyx_v_pts, __pyx_t_4);
         __pyx_t_4 = 0;
 
-        /* "LXG/replication.py":240
+        /* "LXG/replication.py":242
  *             fc_points = sorted(arcpy.ListFeatureClasses("", "Point", ds))
  *             if len(fc_points) > 0:
  *                 fc_points_list = [[os.path.join(geodatabase, ds, pts),             # <<<<<<<<<<<<<<
  *                                    geodatabase,
  *                                    os.path.join(self.gdb_points, f'{fc_class_name}_{pts}_pts'),
  */
-        __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_os); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 240, __pyx_L1_error)
+        __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_os); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 242, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_2);
-        __pyx_t_16 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_path); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 240, __pyx_L1_error)
+        __pyx_t_16 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_path); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 242, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_16);
         __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-        __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_16, __pyx_n_s_join); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 240, __pyx_L1_error)
+        __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_16, __pyx_n_s_join); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 242, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_2);
         __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
         __pyx_t_16 = NULL;
@@ -9204,7 +9365,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
         #if CYTHON_FAST_PYCALL
         if (PyFunction_Check(__pyx_t_2)) {
           PyObject *__pyx_temp[4] = {__pyx_t_16, __pyx_v_geodatabase, __pyx_v_ds, __pyx_v_pts};
-          __pyx_t_4 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_10, 3+__pyx_t_10); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 240, __pyx_L1_error)
+          __pyx_t_4 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_10, 3+__pyx_t_10); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 242, __pyx_L1_error)
           __Pyx_XDECREF(__pyx_t_16); __pyx_t_16 = 0;
           __Pyx_GOTREF(__pyx_t_4);
         } else
@@ -9212,13 +9373,13 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
         #if CYTHON_FAST_PYCCALL
         if (__Pyx_PyFastCFunction_Check(__pyx_t_2)) {
           PyObject *__pyx_temp[4] = {__pyx_t_16, __pyx_v_geodatabase, __pyx_v_ds, __pyx_v_pts};
-          __pyx_t_4 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_10, 3+__pyx_t_10); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 240, __pyx_L1_error)
+          __pyx_t_4 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_10, 3+__pyx_t_10); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 242, __pyx_L1_error)
           __Pyx_XDECREF(__pyx_t_16); __pyx_t_16 = 0;
           __Pyx_GOTREF(__pyx_t_4);
         } else
         #endif
         {
-          __pyx_t_21 = PyTuple_New(3+__pyx_t_10); if (unlikely(!__pyx_t_21)) __PYX_ERR(0, 240, __pyx_L1_error)
+          __pyx_t_21 = PyTuple_New(3+__pyx_t_10); if (unlikely(!__pyx_t_21)) __PYX_ERR(0, 242, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_21);
           if (__pyx_t_16) {
             __Pyx_GIVEREF(__pyx_t_16); PyTuple_SET_ITEM(__pyx_t_21, 0, __pyx_t_16); __pyx_t_16 = NULL;
@@ -9232,34 +9393,34 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
           __Pyx_INCREF(__pyx_v_pts);
           __Pyx_GIVEREF(__pyx_v_pts);
           PyTuple_SET_ITEM(__pyx_t_21, 2+__pyx_t_10, __pyx_v_pts);
-          __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_21, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 240, __pyx_L1_error)
+          __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_21, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 242, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_4);
           __Pyx_DECREF(__pyx_t_21); __pyx_t_21 = 0;
         }
         __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-        /* "LXG/replication.py":242
+        /* "LXG/replication.py":244
  *                 fc_points_list = [[os.path.join(geodatabase, ds, pts),
  *                                    geodatabase,
  *                                    os.path.join(self.gdb_points, f'{fc_class_name}_{pts}_pts'),             # <<<<<<<<<<<<<<
  *                                    os.path.join(self.gdb_points, f'{fc_class_name}_{pts}_buf')] for pts in fc_points]
  *                 with mp.Pool(processes=4) as pool3:
  */
-        __Pyx_GetModuleGlobalName(__pyx_t_21, __pyx_n_s_os); if (unlikely(!__pyx_t_21)) __PYX_ERR(0, 242, __pyx_L1_error)
+        __Pyx_GetModuleGlobalName(__pyx_t_21, __pyx_n_s_os); if (unlikely(!__pyx_t_21)) __PYX_ERR(0, 244, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_21);
-        __pyx_t_16 = __Pyx_PyObject_GetAttrStr(__pyx_t_21, __pyx_n_s_path); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 242, __pyx_L1_error)
+        __pyx_t_16 = __Pyx_PyObject_GetAttrStr(__pyx_t_21, __pyx_n_s_path); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 244, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_16);
         __Pyx_DECREF(__pyx_t_21); __pyx_t_21 = 0;
-        __pyx_t_21 = __Pyx_PyObject_GetAttrStr(__pyx_t_16, __pyx_n_s_join); if (unlikely(!__pyx_t_21)) __PYX_ERR(0, 242, __pyx_L1_error)
+        __pyx_t_21 = __Pyx_PyObject_GetAttrStr(__pyx_t_16, __pyx_n_s_join); if (unlikely(!__pyx_t_21)) __PYX_ERR(0, 244, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_21);
         __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
-        __pyx_t_16 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_gdb_points); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 242, __pyx_L1_error)
+        __pyx_t_16 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_gdb_points); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 244, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_16);
-        __pyx_t_1 = PyTuple_New(4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 242, __pyx_L1_error)
+        __pyx_t_1 = PyTuple_New(4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 244, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_1);
         __pyx_t_17 = 0;
         __pyx_t_18 = 127;
-        __pyx_t_9 = __Pyx_PyObject_FormatSimple(__pyx_v_fc_class_name, __pyx_empty_unicode); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 242, __pyx_L1_error)
+        __pyx_t_9 = __Pyx_PyObject_FormatSimple(__pyx_v_fc_class_name, __pyx_empty_unicode); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 244, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_9);
         __pyx_t_18 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_9) > __pyx_t_18) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_9) : __pyx_t_18;
         __pyx_t_17 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_9);
@@ -9270,7 +9431,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
         __pyx_t_17 += 1;
         __Pyx_GIVEREF(__pyx_n_u__8);
         PyTuple_SET_ITEM(__pyx_t_1, 1, __pyx_n_u__8);
-        __pyx_t_9 = __Pyx_PyObject_FormatSimple(__pyx_v_pts, __pyx_empty_unicode); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 242, __pyx_L1_error)
+        __pyx_t_9 = __Pyx_PyObject_FormatSimple(__pyx_v_pts, __pyx_empty_unicode); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 244, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_9);
         __pyx_t_18 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_9) > __pyx_t_18) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_9) : __pyx_t_18;
         __pyx_t_17 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_9);
@@ -9281,7 +9442,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
         __pyx_t_17 += 4;
         __Pyx_GIVEREF(__pyx_n_u_pts);
         PyTuple_SET_ITEM(__pyx_t_1, 3, __pyx_n_u_pts);
-        __pyx_t_9 = __Pyx_PyUnicode_Join(__pyx_t_1, 4, __pyx_t_17, __pyx_t_18); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 242, __pyx_L1_error)
+        __pyx_t_9 = __Pyx_PyUnicode_Join(__pyx_t_1, 4, __pyx_t_17, __pyx_t_18); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 244, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_9);
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
         __pyx_t_1 = NULL;
@@ -9299,7 +9460,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
         #if CYTHON_FAST_PYCALL
         if (PyFunction_Check(__pyx_t_21)) {
           PyObject *__pyx_temp[3] = {__pyx_t_1, __pyx_t_16, __pyx_t_9};
-          __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_21, __pyx_temp+1-__pyx_t_10, 2+__pyx_t_10); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 242, __pyx_L1_error)
+          __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_21, __pyx_temp+1-__pyx_t_10, 2+__pyx_t_10); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 244, __pyx_L1_error)
           __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
           __Pyx_GOTREF(__pyx_t_2);
           __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
@@ -9309,7 +9470,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
         #if CYTHON_FAST_PYCCALL
         if (__Pyx_PyFastCFunction_Check(__pyx_t_21)) {
           PyObject *__pyx_temp[3] = {__pyx_t_1, __pyx_t_16, __pyx_t_9};
-          __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_21, __pyx_temp+1-__pyx_t_10, 2+__pyx_t_10); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 242, __pyx_L1_error)
+          __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_21, __pyx_temp+1-__pyx_t_10, 2+__pyx_t_10); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 244, __pyx_L1_error)
           __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
           __Pyx_GOTREF(__pyx_t_2);
           __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
@@ -9317,7 +9478,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
         } else
         #endif
         {
-          __pyx_t_11 = PyTuple_New(2+__pyx_t_10); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 242, __pyx_L1_error)
+          __pyx_t_11 = PyTuple_New(2+__pyx_t_10); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 244, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_11);
           if (__pyx_t_1) {
             __Pyx_GIVEREF(__pyx_t_1); PyTuple_SET_ITEM(__pyx_t_11, 0, __pyx_t_1); __pyx_t_1 = NULL;
@@ -9328,34 +9489,34 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
           PyTuple_SET_ITEM(__pyx_t_11, 1+__pyx_t_10, __pyx_t_9);
           __pyx_t_16 = 0;
           __pyx_t_9 = 0;
-          __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_21, __pyx_t_11, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 242, __pyx_L1_error)
+          __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_21, __pyx_t_11, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 244, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_2);
           __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
         }
         __Pyx_DECREF(__pyx_t_21); __pyx_t_21 = 0;
 
-        /* "LXG/replication.py":243
+        /* "LXG/replication.py":245
  *                                    geodatabase,
  *                                    os.path.join(self.gdb_points, f'{fc_class_name}_{pts}_pts'),
  *                                    os.path.join(self.gdb_points, f'{fc_class_name}_{pts}_buf')] for pts in fc_points]             # <<<<<<<<<<<<<<
  *                 with mp.Pool(processes=4) as pool3:
  *                     results = tqdm(pool3.imap(self._points, fc_points_list),
  */
-        __Pyx_GetModuleGlobalName(__pyx_t_11, __pyx_n_s_os); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 243, __pyx_L1_error)
+        __Pyx_GetModuleGlobalName(__pyx_t_11, __pyx_n_s_os); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 245, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_11);
-        __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_t_11, __pyx_n_s_path); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 243, __pyx_L1_error)
+        __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_t_11, __pyx_n_s_path); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 245, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_9);
         __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
-        __pyx_t_11 = __Pyx_PyObject_GetAttrStr(__pyx_t_9, __pyx_n_s_join); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 243, __pyx_L1_error)
+        __pyx_t_11 = __Pyx_PyObject_GetAttrStr(__pyx_t_9, __pyx_n_s_join); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 245, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_11);
         __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-        __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_gdb_points); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 243, __pyx_L1_error)
+        __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_gdb_points); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 245, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_9);
-        __pyx_t_16 = PyTuple_New(4); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 243, __pyx_L1_error)
+        __pyx_t_16 = PyTuple_New(4); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 245, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_16);
         __pyx_t_17 = 0;
         __pyx_t_18 = 127;
-        __pyx_t_1 = __Pyx_PyObject_FormatSimple(__pyx_v_fc_class_name, __pyx_empty_unicode); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 243, __pyx_L1_error)
+        __pyx_t_1 = __Pyx_PyObject_FormatSimple(__pyx_v_fc_class_name, __pyx_empty_unicode); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 245, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_1);
         __pyx_t_18 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_1) > __pyx_t_18) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_1) : __pyx_t_18;
         __pyx_t_17 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_1);
@@ -9366,7 +9527,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
         __pyx_t_17 += 1;
         __Pyx_GIVEREF(__pyx_n_u__8);
         PyTuple_SET_ITEM(__pyx_t_16, 1, __pyx_n_u__8);
-        __pyx_t_1 = __Pyx_PyObject_FormatSimple(__pyx_v_pts, __pyx_empty_unicode); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 243, __pyx_L1_error)
+        __pyx_t_1 = __Pyx_PyObject_FormatSimple(__pyx_v_pts, __pyx_empty_unicode); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 245, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_1);
         __pyx_t_18 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_1) > __pyx_t_18) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_1) : __pyx_t_18;
         __pyx_t_17 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_1);
@@ -9377,7 +9538,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
         __pyx_t_17 += 4;
         __Pyx_GIVEREF(__pyx_n_u_buf);
         PyTuple_SET_ITEM(__pyx_t_16, 3, __pyx_n_u_buf);
-        __pyx_t_1 = __Pyx_PyUnicode_Join(__pyx_t_16, 4, __pyx_t_17, __pyx_t_18); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 243, __pyx_L1_error)
+        __pyx_t_1 = __Pyx_PyUnicode_Join(__pyx_t_16, 4, __pyx_t_17, __pyx_t_18); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 245, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_1);
         __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
         __pyx_t_16 = NULL;
@@ -9395,7 +9556,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
         #if CYTHON_FAST_PYCALL
         if (PyFunction_Check(__pyx_t_11)) {
           PyObject *__pyx_temp[3] = {__pyx_t_16, __pyx_t_9, __pyx_t_1};
-          __pyx_t_21 = __Pyx_PyFunction_FastCall(__pyx_t_11, __pyx_temp+1-__pyx_t_10, 2+__pyx_t_10); if (unlikely(!__pyx_t_21)) __PYX_ERR(0, 243, __pyx_L1_error)
+          __pyx_t_21 = __Pyx_PyFunction_FastCall(__pyx_t_11, __pyx_temp+1-__pyx_t_10, 2+__pyx_t_10); if (unlikely(!__pyx_t_21)) __PYX_ERR(0, 245, __pyx_L1_error)
           __Pyx_XDECREF(__pyx_t_16); __pyx_t_16 = 0;
           __Pyx_GOTREF(__pyx_t_21);
           __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
@@ -9405,7 +9566,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
         #if CYTHON_FAST_PYCCALL
         if (__Pyx_PyFastCFunction_Check(__pyx_t_11)) {
           PyObject *__pyx_temp[3] = {__pyx_t_16, __pyx_t_9, __pyx_t_1};
-          __pyx_t_21 = __Pyx_PyCFunction_FastCall(__pyx_t_11, __pyx_temp+1-__pyx_t_10, 2+__pyx_t_10); if (unlikely(!__pyx_t_21)) __PYX_ERR(0, 243, __pyx_L1_error)
+          __pyx_t_21 = __Pyx_PyCFunction_FastCall(__pyx_t_11, __pyx_temp+1-__pyx_t_10, 2+__pyx_t_10); if (unlikely(!__pyx_t_21)) __PYX_ERR(0, 245, __pyx_L1_error)
           __Pyx_XDECREF(__pyx_t_16); __pyx_t_16 = 0;
           __Pyx_GOTREF(__pyx_t_21);
           __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
@@ -9413,7 +9574,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
         } else
         #endif
         {
-          __pyx_t_19 = PyTuple_New(2+__pyx_t_10); if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 243, __pyx_L1_error)
+          __pyx_t_19 = PyTuple_New(2+__pyx_t_10); if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 245, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_19);
           if (__pyx_t_16) {
             __Pyx_GIVEREF(__pyx_t_16); PyTuple_SET_ITEM(__pyx_t_19, 0, __pyx_t_16); __pyx_t_16 = NULL;
@@ -9424,20 +9585,20 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
           PyTuple_SET_ITEM(__pyx_t_19, 1+__pyx_t_10, __pyx_t_1);
           __pyx_t_9 = 0;
           __pyx_t_1 = 0;
-          __pyx_t_21 = __Pyx_PyObject_Call(__pyx_t_11, __pyx_t_19, NULL); if (unlikely(!__pyx_t_21)) __PYX_ERR(0, 243, __pyx_L1_error)
+          __pyx_t_21 = __Pyx_PyObject_Call(__pyx_t_11, __pyx_t_19, NULL); if (unlikely(!__pyx_t_21)) __PYX_ERR(0, 245, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_21);
           __Pyx_DECREF(__pyx_t_19); __pyx_t_19 = 0;
         }
         __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
 
-        /* "LXG/replication.py":240
+        /* "LXG/replication.py":242
  *             fc_points = sorted(arcpy.ListFeatureClasses("", "Point", ds))
  *             if len(fc_points) > 0:
  *                 fc_points_list = [[os.path.join(geodatabase, ds, pts),             # <<<<<<<<<<<<<<
  *                                    geodatabase,
  *                                    os.path.join(self.gdb_points, f'{fc_class_name}_{pts}_pts'),
  */
-        __pyx_t_11 = PyList_New(4); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 240, __pyx_L1_error)
+        __pyx_t_11 = PyList_New(4); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 242, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_11);
         __Pyx_GIVEREF(__pyx_t_4);
         PyList_SET_ITEM(__pyx_t_11, 0, __pyx_t_4);
@@ -9451,10 +9612,10 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
         __pyx_t_4 = 0;
         __pyx_t_2 = 0;
         __pyx_t_21 = 0;
-        if (unlikely(__Pyx_ListComp_Append(__pyx_t_15, (PyObject*)__pyx_t_11))) __PYX_ERR(0, 240, __pyx_L1_error)
+        if (unlikely(__Pyx_ListComp_Append(__pyx_t_15, (PyObject*)__pyx_t_11))) __PYX_ERR(0, 242, __pyx_L1_error)
         __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
 
-        /* "LXG/replication.py":243
+        /* "LXG/replication.py":245
  *                                    geodatabase,
  *                                    os.path.join(self.gdb_points, f'{fc_class_name}_{pts}_pts'),
  *                                    os.path.join(self.gdb_points, f'{fc_class_name}_{pts}_buf')] for pts in fc_points]             # <<<<<<<<<<<<<<
@@ -9466,7 +9627,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
       __Pyx_XDECREF_SET(__pyx_v_fc_points_list, ((PyObject*)__pyx_t_15));
       __pyx_t_15 = 0;
 
-      /* "LXG/replication.py":244
+      /* "LXG/replication.py":246
  *                                    os.path.join(self.gdb_points, f'{fc_class_name}_{pts}_pts'),
  *                                    os.path.join(self.gdb_points, f'{fc_class_name}_{pts}_buf')] for pts in fc_points]
  *                 with mp.Pool(processes=4) as pool3:             # <<<<<<<<<<<<<<
@@ -9474,21 +9635,21 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
  *                                    total=len(fc_points_list),
  */
       /*with:*/ {
-        __Pyx_GetModuleGlobalName(__pyx_t_15, __pyx_n_s_mp); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 244, __pyx_L1_error)
+        __Pyx_GetModuleGlobalName(__pyx_t_15, __pyx_n_s_mp); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 246, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_15);
-        __pyx_t_20 = __Pyx_PyObject_GetAttrStr(__pyx_t_15, __pyx_n_s_Pool); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 244, __pyx_L1_error)
+        __pyx_t_20 = __Pyx_PyObject_GetAttrStr(__pyx_t_15, __pyx_n_s_Pool); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 246, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_20);
         __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
-        __pyx_t_15 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 244, __pyx_L1_error)
+        __pyx_t_15 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 246, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_15);
-        if (PyDict_SetItem(__pyx_t_15, __pyx_n_s_processes, __pyx_int_4) < 0) __PYX_ERR(0, 244, __pyx_L1_error)
-        __pyx_t_11 = __Pyx_PyObject_Call(__pyx_t_20, __pyx_empty_tuple, __pyx_t_15); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 244, __pyx_L1_error)
+        if (PyDict_SetItem(__pyx_t_15, __pyx_n_s_processes, __pyx_int_4) < 0) __PYX_ERR(0, 246, __pyx_L1_error)
+        __pyx_t_11 = __Pyx_PyObject_Call(__pyx_t_20, __pyx_empty_tuple, __pyx_t_15); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 246, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_11);
         __Pyx_DECREF(__pyx_t_20); __pyx_t_20 = 0;
         __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
-        __pyx_t_24 = __Pyx_PyObject_LookupSpecial(__pyx_t_11, __pyx_n_s_exit); if (unlikely(!__pyx_t_24)) __PYX_ERR(0, 244, __pyx_L1_error)
+        __pyx_t_24 = __Pyx_PyObject_LookupSpecial(__pyx_t_11, __pyx_n_s_exit); if (unlikely(!__pyx_t_24)) __PYX_ERR(0, 246, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_24);
-        __pyx_t_20 = __Pyx_PyObject_LookupSpecial(__pyx_t_11, __pyx_n_s_enter); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 244, __pyx_L26_error)
+        __pyx_t_20 = __Pyx_PyObject_LookupSpecial(__pyx_t_11, __pyx_n_s_enter); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 246, __pyx_L26_error)
         __Pyx_GOTREF(__pyx_t_20);
         __pyx_t_21 = NULL;
         if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_20))) {
@@ -9502,7 +9663,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
         }
         __pyx_t_15 = (__pyx_t_21) ? __Pyx_PyObject_CallOneArg(__pyx_t_20, __pyx_t_21) : __Pyx_PyObject_CallNoArg(__pyx_t_20);
         __Pyx_XDECREF(__pyx_t_21); __pyx_t_21 = 0;
-        if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 244, __pyx_L26_error)
+        if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 246, __pyx_L26_error)
         __Pyx_GOTREF(__pyx_t_15);
         __Pyx_DECREF(__pyx_t_20); __pyx_t_20 = 0;
         __pyx_t_20 = __pyx_t_15;
@@ -9520,18 +9681,18 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
               __Pyx_XDECREF_SET(__pyx_v_pool3, __pyx_t_20);
               __pyx_t_20 = 0;
 
-              /* "LXG/replication.py":245
+              /* "LXG/replication.py":247
  *                                    os.path.join(self.gdb_points, f'{fc_class_name}_{pts}_buf')] for pts in fc_points]
  *                 with mp.Pool(processes=4) as pool3:
  *                     results = tqdm(pool3.imap(self._points, fc_points_list),             # <<<<<<<<<<<<<<
  *                                    total=len(fc_points_list),
  *                                    desc="Points",
  */
-              __Pyx_GetModuleGlobalName(__pyx_t_20, __pyx_n_s_tqdm); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 245, __pyx_L32_error)
+              __Pyx_GetModuleGlobalName(__pyx_t_20, __pyx_n_s_tqdm); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 247, __pyx_L32_error)
               __Pyx_GOTREF(__pyx_t_20);
-              __pyx_t_15 = __Pyx_PyObject_GetAttrStr(__pyx_v_pool3, __pyx_n_s_imap); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 245, __pyx_L32_error)
+              __pyx_t_15 = __Pyx_PyObject_GetAttrStr(__pyx_v_pool3, __pyx_n_s_imap); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 247, __pyx_L32_error)
               __Pyx_GOTREF(__pyx_t_15);
-              __pyx_t_21 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_points); if (unlikely(!__pyx_t_21)) __PYX_ERR(0, 245, __pyx_L32_error)
+              __pyx_t_21 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_points); if (unlikely(!__pyx_t_21)) __PYX_ERR(0, 247, __pyx_L32_error)
               __Pyx_GOTREF(__pyx_t_21);
               __pyx_t_2 = NULL;
               __pyx_t_10 = 0;
@@ -9548,7 +9709,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
               #if CYTHON_FAST_PYCALL
               if (PyFunction_Check(__pyx_t_15)) {
                 PyObject *__pyx_temp[3] = {__pyx_t_2, __pyx_t_21, __pyx_v_fc_points_list};
-                __pyx_t_11 = __Pyx_PyFunction_FastCall(__pyx_t_15, __pyx_temp+1-__pyx_t_10, 2+__pyx_t_10); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 245, __pyx_L32_error)
+                __pyx_t_11 = __Pyx_PyFunction_FastCall(__pyx_t_15, __pyx_temp+1-__pyx_t_10, 2+__pyx_t_10); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 247, __pyx_L32_error)
                 __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
                 __Pyx_GOTREF(__pyx_t_11);
                 __Pyx_DECREF(__pyx_t_21); __pyx_t_21 = 0;
@@ -9557,14 +9718,14 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
               #if CYTHON_FAST_PYCCALL
               if (__Pyx_PyFastCFunction_Check(__pyx_t_15)) {
                 PyObject *__pyx_temp[3] = {__pyx_t_2, __pyx_t_21, __pyx_v_fc_points_list};
-                __pyx_t_11 = __Pyx_PyCFunction_FastCall(__pyx_t_15, __pyx_temp+1-__pyx_t_10, 2+__pyx_t_10); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 245, __pyx_L32_error)
+                __pyx_t_11 = __Pyx_PyCFunction_FastCall(__pyx_t_15, __pyx_temp+1-__pyx_t_10, 2+__pyx_t_10); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 247, __pyx_L32_error)
                 __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
                 __Pyx_GOTREF(__pyx_t_11);
                 __Pyx_DECREF(__pyx_t_21); __pyx_t_21 = 0;
               } else
               #endif
               {
-                __pyx_t_4 = PyTuple_New(2+__pyx_t_10); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 245, __pyx_L32_error)
+                __pyx_t_4 = PyTuple_New(2+__pyx_t_10); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 247, __pyx_L32_error)
                 __Pyx_GOTREF(__pyx_t_4);
                 if (__pyx_t_2) {
                   __Pyx_GIVEREF(__pyx_t_2); PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_2); __pyx_t_2 = NULL;
@@ -9575,52 +9736,52 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
                 __Pyx_GIVEREF(__pyx_v_fc_points_list);
                 PyTuple_SET_ITEM(__pyx_t_4, 1+__pyx_t_10, __pyx_v_fc_points_list);
                 __pyx_t_21 = 0;
-                __pyx_t_11 = __Pyx_PyObject_Call(__pyx_t_15, __pyx_t_4, NULL); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 245, __pyx_L32_error)
+                __pyx_t_11 = __Pyx_PyObject_Call(__pyx_t_15, __pyx_t_4, NULL); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 247, __pyx_L32_error)
                 __Pyx_GOTREF(__pyx_t_11);
                 __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
               }
               __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
-              __pyx_t_15 = PyTuple_New(1); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 245, __pyx_L32_error)
+              __pyx_t_15 = PyTuple_New(1); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 247, __pyx_L32_error)
               __Pyx_GOTREF(__pyx_t_15);
               __Pyx_GIVEREF(__pyx_t_11);
               PyTuple_SET_ITEM(__pyx_t_15, 0, __pyx_t_11);
               __pyx_t_11 = 0;
 
-              /* "LXG/replication.py":246
+              /* "LXG/replication.py":248
  *                 with mp.Pool(processes=4) as pool3:
  *                     results = tqdm(pool3.imap(self._points, fc_points_list),
  *                                    total=len(fc_points_list),             # <<<<<<<<<<<<<<
  *                                    desc="Points",
  *                                    position=1,
  */
-              __pyx_t_11 = __Pyx_PyDict_NewPresized(5); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 246, __pyx_L32_error)
+              __pyx_t_11 = __Pyx_PyDict_NewPresized(5); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 248, __pyx_L32_error)
               __Pyx_GOTREF(__pyx_t_11);
-              __pyx_t_12 = PyList_GET_SIZE(__pyx_v_fc_points_list); if (unlikely(__pyx_t_12 == ((Py_ssize_t)-1))) __PYX_ERR(0, 246, __pyx_L32_error)
-              __pyx_t_4 = PyInt_FromSsize_t(__pyx_t_12); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 246, __pyx_L32_error)
+              __pyx_t_12 = PyList_GET_SIZE(__pyx_v_fc_points_list); if (unlikely(__pyx_t_12 == ((Py_ssize_t)-1))) __PYX_ERR(0, 248, __pyx_L32_error)
+              __pyx_t_4 = PyInt_FromSsize_t(__pyx_t_12); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 248, __pyx_L32_error)
               __Pyx_GOTREF(__pyx_t_4);
-              if (PyDict_SetItem(__pyx_t_11, __pyx_n_s_total, __pyx_t_4) < 0) __PYX_ERR(0, 246, __pyx_L32_error)
+              if (PyDict_SetItem(__pyx_t_11, __pyx_n_s_total, __pyx_t_4) < 0) __PYX_ERR(0, 248, __pyx_L32_error)
               __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-              if (PyDict_SetItem(__pyx_t_11, __pyx_n_s_desc, __pyx_n_s_Points) < 0) __PYX_ERR(0, 246, __pyx_L32_error)
-              if (PyDict_SetItem(__pyx_t_11, __pyx_n_s_position, __pyx_int_1) < 0) __PYX_ERR(0, 246, __pyx_L32_error)
-              if (PyDict_SetItem(__pyx_t_11, __pyx_n_s_colour, __pyx_n_s_YELLOW) < 0) __PYX_ERR(0, 246, __pyx_L32_error)
+              if (PyDict_SetItem(__pyx_t_11, __pyx_n_s_desc, __pyx_n_s_Points) < 0) __PYX_ERR(0, 248, __pyx_L32_error)
+              if (PyDict_SetItem(__pyx_t_11, __pyx_n_s_position, __pyx_int_1) < 0) __PYX_ERR(0, 248, __pyx_L32_error)
+              if (PyDict_SetItem(__pyx_t_11, __pyx_n_s_colour, __pyx_n_s_YELLOW) < 0) __PYX_ERR(0, 248, __pyx_L32_error)
 
-              /* "LXG/replication.py":249
+              /* "LXG/replication.py":251
  *                                    desc="Points",
  *                                    position=1,
  *                                    colour='YELLOW', leave=False)             # <<<<<<<<<<<<<<
  *                     tuple(results)
  *                     pool3.close()
  */
-              if (PyDict_SetItem(__pyx_t_11, __pyx_n_s_leave, Py_False) < 0) __PYX_ERR(0, 246, __pyx_L32_error)
+              if (PyDict_SetItem(__pyx_t_11, __pyx_n_s_leave, Py_False) < 0) __PYX_ERR(0, 248, __pyx_L32_error)
 
-              /* "LXG/replication.py":245
+              /* "LXG/replication.py":247
  *                                    os.path.join(self.gdb_points, f'{fc_class_name}_{pts}_buf')] for pts in fc_points]
  *                 with mp.Pool(processes=4) as pool3:
  *                     results = tqdm(pool3.imap(self._points, fc_points_list),             # <<<<<<<<<<<<<<
  *                                    total=len(fc_points_list),
  *                                    desc="Points",
  */
-              __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_20, __pyx_t_15, __pyx_t_11); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 245, __pyx_L32_error)
+              __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_20, __pyx_t_15, __pyx_t_11); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 247, __pyx_L32_error)
               __Pyx_GOTREF(__pyx_t_4);
               __Pyx_DECREF(__pyx_t_20); __pyx_t_20 = 0;
               __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
@@ -9628,25 +9789,25 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
               __Pyx_XDECREF_SET(__pyx_v_results, __pyx_t_4);
               __pyx_t_4 = 0;
 
-              /* "LXG/replication.py":250
+              /* "LXG/replication.py":252
  *                                    position=1,
  *                                    colour='YELLOW', leave=False)
  *                     tuple(results)             # <<<<<<<<<<<<<<
  *                     pool3.close()
  *                     pool3.join()
  */
-              __pyx_t_4 = __Pyx_PySequence_Tuple(__pyx_v_results); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 250, __pyx_L32_error)
+              __pyx_t_4 = __Pyx_PySequence_Tuple(__pyx_v_results); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 252, __pyx_L32_error)
               __Pyx_GOTREF(__pyx_t_4);
               __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-              /* "LXG/replication.py":251
+              /* "LXG/replication.py":253
  *                                    colour='YELLOW', leave=False)
  *                     tuple(results)
  *                     pool3.close()             # <<<<<<<<<<<<<<
  *                     pool3.join()
  * 
  */
-              __pyx_t_11 = __Pyx_PyObject_GetAttrStr(__pyx_v_pool3, __pyx_n_s_close); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 251, __pyx_L32_error)
+              __pyx_t_11 = __Pyx_PyObject_GetAttrStr(__pyx_v_pool3, __pyx_n_s_close); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 253, __pyx_L32_error)
               __Pyx_GOTREF(__pyx_t_11);
               __pyx_t_15 = NULL;
               if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_11))) {
@@ -9660,19 +9821,19 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
               }
               __pyx_t_4 = (__pyx_t_15) ? __Pyx_PyObject_CallOneArg(__pyx_t_11, __pyx_t_15) : __Pyx_PyObject_CallNoArg(__pyx_t_11);
               __Pyx_XDECREF(__pyx_t_15); __pyx_t_15 = 0;
-              if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 251, __pyx_L32_error)
+              if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 253, __pyx_L32_error)
               __Pyx_GOTREF(__pyx_t_4);
               __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
               __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-              /* "LXG/replication.py":252
+              /* "LXG/replication.py":254
  *                     tuple(results)
  *                     pool3.close()
  *                     pool3.join()             # <<<<<<<<<<<<<<
  * 
  *                     del results
  */
-              __pyx_t_11 = __Pyx_PyObject_GetAttrStr(__pyx_v_pool3, __pyx_n_s_join); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 252, __pyx_L32_error)
+              __pyx_t_11 = __Pyx_PyObject_GetAttrStr(__pyx_v_pool3, __pyx_n_s_join); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 254, __pyx_L32_error)
               __Pyx_GOTREF(__pyx_t_11);
               __pyx_t_15 = NULL;
               if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_11))) {
@@ -9686,12 +9847,12 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
               }
               __pyx_t_4 = (__pyx_t_15) ? __Pyx_PyObject_CallOneArg(__pyx_t_11, __pyx_t_15) : __Pyx_PyObject_CallNoArg(__pyx_t_11);
               __Pyx_XDECREF(__pyx_t_15); __pyx_t_15 = 0;
-              if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 252, __pyx_L32_error)
+              if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 254, __pyx_L32_error)
               __Pyx_GOTREF(__pyx_t_4);
               __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
               __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-              /* "LXG/replication.py":254
+              /* "LXG/replication.py":256
  *                     pool3.join()
  * 
  *                     del results             # <<<<<<<<<<<<<<
@@ -9701,7 +9862,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
               __Pyx_DECREF(__pyx_v_results);
               __pyx_v_results = NULL;
 
-              /* "LXG/replication.py":244
+              /* "LXG/replication.py":246
  *                                    os.path.join(self.gdb_points, f'{fc_class_name}_{pts}_pts'),
  *                                    os.path.join(self.gdb_points, f'{fc_class_name}_{pts}_buf')] for pts in fc_points]
  *                 with mp.Pool(processes=4) as pool3:             # <<<<<<<<<<<<<<
@@ -9727,20 +9888,20 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
             __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
             /*except:*/ {
               __Pyx_AddTraceback("LXGREP.AppendNewFeatures.prepare_features", __pyx_clineno, __pyx_lineno, __pyx_filename);
-              if (__Pyx_GetException(&__pyx_t_4, &__pyx_t_11, &__pyx_t_15) < 0) __PYX_ERR(0, 244, __pyx_L34_except_error)
+              if (__Pyx_GetException(&__pyx_t_4, &__pyx_t_11, &__pyx_t_15) < 0) __PYX_ERR(0, 246, __pyx_L34_except_error)
               __Pyx_GOTREF(__pyx_t_4);
               __Pyx_GOTREF(__pyx_t_11);
               __Pyx_GOTREF(__pyx_t_15);
-              __pyx_t_20 = PyTuple_Pack(3, __pyx_t_4, __pyx_t_11, __pyx_t_15); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 244, __pyx_L34_except_error)
+              __pyx_t_20 = PyTuple_Pack(3, __pyx_t_4, __pyx_t_11, __pyx_t_15); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 246, __pyx_L34_except_error)
               __Pyx_GOTREF(__pyx_t_20);
               __pyx_t_26 = __Pyx_PyObject_Call(__pyx_t_24, __pyx_t_20, NULL);
               __Pyx_DECREF(__pyx_t_24); __pyx_t_24 = 0;
               __Pyx_DECREF(__pyx_t_20); __pyx_t_20 = 0;
-              if (unlikely(!__pyx_t_26)) __PYX_ERR(0, 244, __pyx_L34_except_error)
+              if (unlikely(!__pyx_t_26)) __PYX_ERR(0, 246, __pyx_L34_except_error)
               __Pyx_GOTREF(__pyx_t_26);
               __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_t_26);
               __Pyx_DECREF(__pyx_t_26); __pyx_t_26 = 0;
-              if (__pyx_t_3 < 0) __PYX_ERR(0, 244, __pyx_L34_except_error)
+              if (__pyx_t_3 < 0) __PYX_ERR(0, 246, __pyx_L34_except_error)
               __pyx_t_27 = ((!(__pyx_t_3 != 0)) != 0);
               if (__pyx_t_27) {
                 __Pyx_GIVEREF(__pyx_t_4);
@@ -9748,7 +9909,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
                 __Pyx_XGIVEREF(__pyx_t_15);
                 __Pyx_ErrRestoreWithState(__pyx_t_4, __pyx_t_11, __pyx_t_15);
                 __pyx_t_4 = 0; __pyx_t_11 = 0; __pyx_t_15 = 0; 
-                __PYX_ERR(0, 244, __pyx_L34_except_error)
+                __PYX_ERR(0, 246, __pyx_L34_except_error)
               }
               __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
               __Pyx_XDECREF(__pyx_t_11); __pyx_t_11 = 0;
@@ -9774,7 +9935,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
             if (__pyx_t_24) {
               __pyx_t_25 = __Pyx_PyObject_Call(__pyx_t_24, __pyx_tuple__3, NULL);
               __Pyx_DECREF(__pyx_t_24); __pyx_t_24 = 0;
-              if (unlikely(!__pyx_t_25)) __PYX_ERR(0, 244, __pyx_L1_error)
+              if (unlikely(!__pyx_t_25)) __PYX_ERR(0, 246, __pyx_L1_error)
               __Pyx_GOTREF(__pyx_t_25);
               __Pyx_DECREF(__pyx_t_25); __pyx_t_25 = 0;
             }
@@ -9789,7 +9950,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
         __pyx_L43:;
       }
 
-      /* "LXG/replication.py":239
+      /* "LXG/replication.py":241
  *             # points
  *             fc_points = sorted(arcpy.ListFeatureClasses("", "Point", ds))
  *             if len(fc_points) > 0:             # <<<<<<<<<<<<<<
@@ -9798,7 +9959,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
  */
     }
 
-    /* "LXG/replication.py":199
+    /* "LXG/replication.py":201
  *         dss = sorted(arcpy.ListDatasets("", "Feature"))
  *         pbar01 = tqdm(dss, desc=f'{geodatabase}', position=0, colour='GREEN')
  *         for ds in pbar01:             # <<<<<<<<<<<<<<
@@ -9808,7 +9969,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
   }
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
 
-  /* "LXG/replication.py":256
+  /* "LXG/replication.py":258
  *                     del results
  * 
  *         del fc_class_name             # <<<<<<<<<<<<<<
@@ -9818,7 +9979,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
   __Pyx_DECREF(__pyx_v_fc_class_name);
   __pyx_v_fc_class_name = NULL;
 
-  /* "LXG/replication.py":187
+  /* "LXG/replication.py":189
  *         shutil.rmtree(current_dir)
  * 
  *     def prepare_features(self, geodatabase):             # <<<<<<<<<<<<<<
@@ -9867,7 +10028,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_2prepare_features(CYTHON_U
   return __pyx_r;
 }
 
-/* "LXG/replication.py":258
+/* "LXG/replication.py":260
  *         del fc_class_name
  * 
  *     def _polys(self, fc_list):             # <<<<<<<<<<<<<<
@@ -9910,11 +10071,11 @@ static PyObject *__pyx_pw_6LXGREP_17AppendNewFeatures_5_polys(PyObject *__pyx_se
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_fc_list)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("_polys", 1, 2, 2, 1); __PYX_ERR(0, 258, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("_polys", 1, 2, 2, 1); __PYX_ERR(0, 260, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "_polys") < 0)) __PYX_ERR(0, 258, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "_polys") < 0)) __PYX_ERR(0, 260, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
       goto __pyx_L5_argtuple_error;
@@ -9927,7 +10088,7 @@ static PyObject *__pyx_pw_6LXGREP_17AppendNewFeatures_5_polys(PyObject *__pyx_se
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("_polys", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 258, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("_polys", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 260, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("LXGREP.AppendNewFeatures._polys", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -9963,55 +10124,55 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_4_polys(CYTHON_UNUSED PyOb
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("_polys", 0);
 
-  /* "LXG/replication.py":259
+  /* "LXG/replication.py":261
  * 
  *     def _polys(self, fc_list):
  *         geodatabase = fc_list[1]             # <<<<<<<<<<<<<<
  *         pts_feat_poly = fc_list[2]
  *         buf_feat_poly = fc_list[3]
  */
-  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_fc_list, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 259, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_fc_list, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 261, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_geodatabase = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "LXG/replication.py":260
+  /* "LXG/replication.py":262
  *     def _polys(self, fc_list):
  *         geodatabase = fc_list[1]
  *         pts_feat_poly = fc_list[2]             # <<<<<<<<<<<<<<
  *         buf_feat_poly = fc_list[3]
  * 
  */
-  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_fc_list, 2, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 260, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_fc_list, 2, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 262, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_pts_feat_poly = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "LXG/replication.py":261
+  /* "LXG/replication.py":263
  *         geodatabase = fc_list[1]
  *         pts_feat_poly = fc_list[2]
  *         buf_feat_poly = fc_list[3]             # <<<<<<<<<<<<<<
  * 
  *         arcpy.FeatureToPoint_management(fc_list[0], pts_feat_poly, "CENTROID")
  */
-  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_fc_list, 3, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 261, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_fc_list, 3, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 263, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_buf_feat_poly = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "LXG/replication.py":263
+  /* "LXG/replication.py":265
  *         buf_feat_poly = fc_list[3]
  * 
  *         arcpy.FeatureToPoint_management(fc_list[0], pts_feat_poly, "CENTROID")             # <<<<<<<<<<<<<<
  *         try:
  *             if geodatabase == self.gdb1:
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 263, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 265, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_FeatureToPoint_management); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 263, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_FeatureToPoint_management); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 265, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_GetItemInt(__pyx_v_fc_list, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 263, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_GetItemInt(__pyx_v_fc_list, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 265, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_4 = NULL;
   __pyx_t_5 = 0;
@@ -10028,7 +10189,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_4_polys(CYTHON_UNUSED PyOb
   #if CYTHON_FAST_PYCALL
   if (PyFunction_Check(__pyx_t_3)) {
     PyObject *__pyx_temp[4] = {__pyx_t_4, __pyx_t_2, __pyx_v_pts_feat_poly, __pyx_n_s_CENTROID};
-    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_5, 3+__pyx_t_5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 263, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_5, 3+__pyx_t_5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 265, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
@@ -10037,14 +10198,14 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_4_polys(CYTHON_UNUSED PyOb
   #if CYTHON_FAST_PYCCALL
   if (__Pyx_PyFastCFunction_Check(__pyx_t_3)) {
     PyObject *__pyx_temp[4] = {__pyx_t_4, __pyx_t_2, __pyx_v_pts_feat_poly, __pyx_n_s_CENTROID};
-    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_5, 3+__pyx_t_5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 263, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_5, 3+__pyx_t_5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 265, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   } else
   #endif
   {
-    __pyx_t_6 = PyTuple_New(3+__pyx_t_5); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 263, __pyx_L1_error)
+    __pyx_t_6 = PyTuple_New(3+__pyx_t_5); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 265, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     if (__pyx_t_4) {
       __Pyx_GIVEREF(__pyx_t_4); PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_4); __pyx_t_4 = NULL;
@@ -10058,14 +10219,14 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_4_polys(CYTHON_UNUSED PyOb
     __Pyx_GIVEREF(__pyx_n_s_CENTROID);
     PyTuple_SET_ITEM(__pyx_t_6, 2+__pyx_t_5, __pyx_n_s_CENTROID);
     __pyx_t_2 = 0;
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_6, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 263, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_6, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 265, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
   }
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "LXG/replication.py":264
+  /* "LXG/replication.py":266
  * 
  *         arcpy.FeatureToPoint_management(fc_list[0], pts_feat_poly, "CENTROID")
  *         try:             # <<<<<<<<<<<<<<
@@ -10081,35 +10242,35 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_4_polys(CYTHON_UNUSED PyOb
     __Pyx_XGOTREF(__pyx_t_9);
     /*try:*/ {
 
-      /* "LXG/replication.py":265
+      /* "LXG/replication.py":267
  *         arcpy.FeatureToPoint_management(fc_list[0], pts_feat_poly, "CENTROID")
  *         try:
  *             if geodatabase == self.gdb1:             # <<<<<<<<<<<<<<
  *                 # Execute the Buffer tool if initial geodatabase
  *                 arcpy.Buffer_analysis(pts_feat_poly,
  */
-      __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_gdb1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 265, __pyx_L3_error)
+      __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_gdb1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 267, __pyx_L3_error)
       __Pyx_GOTREF(__pyx_t_1);
-      __pyx_t_3 = PyObject_RichCompare(__pyx_v_geodatabase, __pyx_t_1, Py_EQ); __Pyx_XGOTREF(__pyx_t_3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 265, __pyx_L3_error)
+      __pyx_t_3 = PyObject_RichCompare(__pyx_v_geodatabase, __pyx_t_1, Py_EQ); __Pyx_XGOTREF(__pyx_t_3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 267, __pyx_L3_error)
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-      __pyx_t_10 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely(__pyx_t_10 < 0)) __PYX_ERR(0, 265, __pyx_L3_error)
+      __pyx_t_10 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely(__pyx_t_10 < 0)) __PYX_ERR(0, 267, __pyx_L3_error)
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       if (__pyx_t_10) {
 
-        /* "LXG/replication.py":267
+        /* "LXG/replication.py":269
  *             if geodatabase == self.gdb1:
  *                 # Execute the Buffer tool if initial geodatabase
  *                 arcpy.Buffer_analysis(pts_feat_poly,             # <<<<<<<<<<<<<<
  *                                       buf_feat_poly,
  *                                       "0.5 meters")
  */
-        __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 267, __pyx_L3_error)
+        __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 269, __pyx_L3_error)
         __Pyx_GOTREF(__pyx_t_1);
-        __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_Buffer_analysis); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 267, __pyx_L3_error)
+        __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_Buffer_analysis); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 269, __pyx_L3_error)
         __Pyx_GOTREF(__pyx_t_6);
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-        /* "LXG/replication.py":268
+        /* "LXG/replication.py":270
  *                 # Execute the Buffer tool if initial geodatabase
  *                 arcpy.Buffer_analysis(pts_feat_poly,
  *                                       buf_feat_poly,             # <<<<<<<<<<<<<<
@@ -10131,7 +10292,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_4_polys(CYTHON_UNUSED PyOb
         #if CYTHON_FAST_PYCALL
         if (PyFunction_Check(__pyx_t_6)) {
           PyObject *__pyx_temp[4] = {__pyx_t_1, __pyx_v_pts_feat_poly, __pyx_v_buf_feat_poly, __pyx_kp_s_0_5_meters};
-          __pyx_t_3 = __Pyx_PyFunction_FastCall(__pyx_t_6, __pyx_temp+1-__pyx_t_5, 3+__pyx_t_5); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 267, __pyx_L3_error)
+          __pyx_t_3 = __Pyx_PyFunction_FastCall(__pyx_t_6, __pyx_temp+1-__pyx_t_5, 3+__pyx_t_5); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 269, __pyx_L3_error)
           __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
           __Pyx_GOTREF(__pyx_t_3);
         } else
@@ -10139,13 +10300,13 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_4_polys(CYTHON_UNUSED PyOb
         #if CYTHON_FAST_PYCCALL
         if (__Pyx_PyFastCFunction_Check(__pyx_t_6)) {
           PyObject *__pyx_temp[4] = {__pyx_t_1, __pyx_v_pts_feat_poly, __pyx_v_buf_feat_poly, __pyx_kp_s_0_5_meters};
-          __pyx_t_3 = __Pyx_PyCFunction_FastCall(__pyx_t_6, __pyx_temp+1-__pyx_t_5, 3+__pyx_t_5); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 267, __pyx_L3_error)
+          __pyx_t_3 = __Pyx_PyCFunction_FastCall(__pyx_t_6, __pyx_temp+1-__pyx_t_5, 3+__pyx_t_5); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 269, __pyx_L3_error)
           __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
           __Pyx_GOTREF(__pyx_t_3);
         } else
         #endif
         {
-          __pyx_t_2 = PyTuple_New(3+__pyx_t_5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 267, __pyx_L3_error)
+          __pyx_t_2 = PyTuple_New(3+__pyx_t_5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 269, __pyx_L3_error)
           __Pyx_GOTREF(__pyx_t_2);
           if (__pyx_t_1) {
             __Pyx_GIVEREF(__pyx_t_1); PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_t_1); __pyx_t_1 = NULL;
@@ -10159,23 +10320,23 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_4_polys(CYTHON_UNUSED PyOb
           __Pyx_INCREF(__pyx_kp_s_0_5_meters);
           __Pyx_GIVEREF(__pyx_kp_s_0_5_meters);
           PyTuple_SET_ITEM(__pyx_t_2, 2+__pyx_t_5, __pyx_kp_s_0_5_meters);
-          __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_t_2, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 267, __pyx_L3_error)
+          __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_t_2, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 269, __pyx_L3_error)
           __Pyx_GOTREF(__pyx_t_3);
           __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
         }
         __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
         __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-        /* "LXG/replication.py":270
+        /* "LXG/replication.py":272
  *                                       buf_feat_poly,
  *                                       "0.5 meters")
  *                 arcpy.Delete_management(pts_feat_poly)             # <<<<<<<<<<<<<<
  *         except arcpy.ExecuteError as e:
  *             arcpy.AddError(e)
  */
-        __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 270, __pyx_L3_error)
+        __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 272, __pyx_L3_error)
         __Pyx_GOTREF(__pyx_t_6);
-        __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_n_s_Delete_management); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 270, __pyx_L3_error)
+        __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_n_s_Delete_management); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 272, __pyx_L3_error)
         __Pyx_GOTREF(__pyx_t_2);
         __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
         __pyx_t_6 = NULL;
@@ -10190,12 +10351,12 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_4_polys(CYTHON_UNUSED PyOb
         }
         __pyx_t_3 = (__pyx_t_6) ? __Pyx_PyObject_Call2Args(__pyx_t_2, __pyx_t_6, __pyx_v_pts_feat_poly) : __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_v_pts_feat_poly);
         __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
-        if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 270, __pyx_L3_error)
+        if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 272, __pyx_L3_error)
         __Pyx_GOTREF(__pyx_t_3);
         __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
         __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-        /* "LXG/replication.py":265
+        /* "LXG/replication.py":267
  *         arcpy.FeatureToPoint_management(fc_list[0], pts_feat_poly, "CENTROID")
  *         try:
  *             if geodatabase == self.gdb1:             # <<<<<<<<<<<<<<
@@ -10204,7 +10365,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_4_polys(CYTHON_UNUSED PyOb
  */
       }
 
-      /* "LXG/replication.py":264
+      /* "LXG/replication.py":266
  * 
  *         arcpy.FeatureToPoint_management(fc_list[0], pts_feat_poly, "CENTROID")
  *         try:             # <<<<<<<<<<<<<<
@@ -10223,7 +10384,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_4_polys(CYTHON_UNUSED PyOb
     __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
 
-    /* "LXG/replication.py":271
+    /* "LXG/replication.py":273
  *                                       "0.5 meters")
  *                 arcpy.Delete_management(pts_feat_poly)
  *         except arcpy.ExecuteError as e:             # <<<<<<<<<<<<<<
@@ -10231,9 +10392,9 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_4_polys(CYTHON_UNUSED PyOb
  * 
  */
     __Pyx_ErrFetch(&__pyx_t_3, &__pyx_t_2, &__pyx_t_6);
-    __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 271, __pyx_L5_except_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 273, __pyx_L5_except_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_ExecuteError); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 271, __pyx_L5_except_error)
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_ExecuteError); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 273, __pyx_L5_except_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __pyx_t_5 = __Pyx_PyErr_GivenExceptionMatches(__pyx_t_3, __pyx_t_4);
@@ -10242,23 +10403,23 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_4_polys(CYTHON_UNUSED PyOb
     __pyx_t_3 = 0; __pyx_t_2 = 0; __pyx_t_6 = 0;
     if (__pyx_t_5) {
       __Pyx_AddTraceback("LXGREP.AppendNewFeatures._polys", __pyx_clineno, __pyx_lineno, __pyx_filename);
-      if (__Pyx_GetException(&__pyx_t_6, &__pyx_t_2, &__pyx_t_3) < 0) __PYX_ERR(0, 271, __pyx_L5_except_error)
+      if (__Pyx_GetException(&__pyx_t_6, &__pyx_t_2, &__pyx_t_3) < 0) __PYX_ERR(0, 273, __pyx_L5_except_error)
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_INCREF(__pyx_t_2);
       __pyx_v_e = __pyx_t_2;
 
-      /* "LXG/replication.py":272
+      /* "LXG/replication.py":274
  *                 arcpy.Delete_management(pts_feat_poly)
  *         except arcpy.ExecuteError as e:
  *             arcpy.AddError(e)             # <<<<<<<<<<<<<<
  * 
  *         del geodatabase, pts_feat_poly, buf_feat_poly
  */
-      __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 272, __pyx_L5_except_error)
+      __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 274, __pyx_L5_except_error)
       __Pyx_GOTREF(__pyx_t_1);
-      __pyx_t_11 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_AddError); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 272, __pyx_L5_except_error)
+      __pyx_t_11 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_AddError); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 274, __pyx_L5_except_error)
       __Pyx_GOTREF(__pyx_t_11);
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
       __pyx_t_1 = NULL;
@@ -10273,7 +10434,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_4_polys(CYTHON_UNUSED PyOb
       }
       __pyx_t_4 = (__pyx_t_1) ? __Pyx_PyObject_Call2Args(__pyx_t_11, __pyx_t_1, __pyx_v_e) : __Pyx_PyObject_CallOneArg(__pyx_t_11, __pyx_v_e);
       __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
-      if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 272, __pyx_L5_except_error)
+      if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 274, __pyx_L5_except_error)
       __Pyx_GOTREF(__pyx_t_4);
       __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
@@ -10285,7 +10446,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_4_polys(CYTHON_UNUSED PyOb
     goto __pyx_L5_except_error;
     __pyx_L5_except_error:;
 
-    /* "LXG/replication.py":264
+    /* "LXG/replication.py":266
  * 
  *         arcpy.FeatureToPoint_management(fc_list[0], pts_feat_poly, "CENTROID")
  *         try:             # <<<<<<<<<<<<<<
@@ -10305,7 +10466,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_4_polys(CYTHON_UNUSED PyOb
     __pyx_L8_try_end:;
   }
 
-  /* "LXG/replication.py":274
+  /* "LXG/replication.py":276
  *             arcpy.AddError(e)
  * 
  *         del geodatabase, pts_feat_poly, buf_feat_poly             # <<<<<<<<<<<<<<
@@ -10319,7 +10480,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_4_polys(CYTHON_UNUSED PyOb
   __Pyx_DECREF(__pyx_v_buf_feat_poly);
   __pyx_v_buf_feat_poly = NULL;
 
-  /* "LXG/replication.py":258
+  /* "LXG/replication.py":260
  *         del fc_class_name
  * 
  *     def _polys(self, fc_list):             # <<<<<<<<<<<<<<
@@ -10349,7 +10510,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_4_polys(CYTHON_UNUSED PyOb
   return __pyx_r;
 }
 
-/* "LXG/replication.py":276
+/* "LXG/replication.py":278
  *         del geodatabase, pts_feat_poly, buf_feat_poly
  * 
  *     def _lines(self, fc_list):             # <<<<<<<<<<<<<<
@@ -10392,11 +10553,11 @@ static PyObject *__pyx_pw_6LXGREP_17AppendNewFeatures_7_lines(PyObject *__pyx_se
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_fc_list)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("_lines", 1, 2, 2, 1); __PYX_ERR(0, 276, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("_lines", 1, 2, 2, 1); __PYX_ERR(0, 278, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "_lines") < 0)) __PYX_ERR(0, 276, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "_lines") < 0)) __PYX_ERR(0, 278, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
       goto __pyx_L5_argtuple_error;
@@ -10409,7 +10570,7 @@ static PyObject *__pyx_pw_6LXGREP_17AppendNewFeatures_7_lines(PyObject *__pyx_se
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("_lines", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 276, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("_lines", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 278, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("LXGREP.AppendNewFeatures._lines", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -10446,97 +10607,97 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_6_lines(CYTHON_UNUSED PyOb
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("_lines", 0);
 
-  /* "LXG/replication.py":277
+  /* "LXG/replication.py":279
  * 
  *     def _lines(self, fc_list):
  *         input_line = fc_list[0]             # <<<<<<<<<<<<<<
  *         geodatabase = fc_list[1]
  *         pts_feat_line = fc_list[2]
  */
-  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_fc_list, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 277, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_fc_list, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 279, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_input_line = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "LXG/replication.py":278
+  /* "LXG/replication.py":280
  *     def _lines(self, fc_list):
  *         input_line = fc_list[0]
  *         geodatabase = fc_list[1]             # <<<<<<<<<<<<<<
  *         pts_feat_line = fc_list[2]
  *         buf_feat_line = fc_list[3]
  */
-  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_fc_list, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 278, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_fc_list, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 280, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_geodatabase = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "LXG/replication.py":279
+  /* "LXG/replication.py":281
  *         input_line = fc_list[0]
  *         geodatabase = fc_list[1]
  *         pts_feat_line = fc_list[2]             # <<<<<<<<<<<<<<
  *         buf_feat_line = fc_list[3]
  * 
  */
-  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_fc_list, 2, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 279, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_fc_list, 2, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 281, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_pts_feat_line = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "LXG/replication.py":280
+  /* "LXG/replication.py":282
  *         geodatabase = fc_list[1]
  *         pts_feat_line = fc_list[2]
  *         buf_feat_line = fc_list[3]             # <<<<<<<<<<<<<<
  * 
  *         arcpy.GeneratePointsAlongLines_management(Input_Features=input_line,
  */
-  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_fc_list, 3, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 280, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_fc_list, 3, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 282, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_buf_feat_line = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "LXG/replication.py":282
+  /* "LXG/replication.py":284
  *         buf_feat_line = fc_list[3]
  * 
  *         arcpy.GeneratePointsAlongLines_management(Input_Features=input_line,             # <<<<<<<<<<<<<<
  *                                                   Output_Feature_Class=pts_feat_line,
  *                                                   Point_Placement="PERCENTAGE",
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 282, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 284, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_GeneratePointsAlongLines_managem); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 282, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_GeneratePointsAlongLines_managem); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 284, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyDict_NewPresized(6); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 282, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyDict_NewPresized(6); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 284, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_Input_Features, __pyx_v_input_line) < 0) __PYX_ERR(0, 282, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_Input_Features, __pyx_v_input_line) < 0) __PYX_ERR(0, 284, __pyx_L1_error)
 
-  /* "LXG/replication.py":283
+  /* "LXG/replication.py":285
  * 
  *         arcpy.GeneratePointsAlongLines_management(Input_Features=input_line,
  *                                                   Output_Feature_Class=pts_feat_line,             # <<<<<<<<<<<<<<
  *                                                   Point_Placement="PERCENTAGE",
  *                                                   Distance="",
  */
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_Output_Feature_Class, __pyx_v_pts_feat_line) < 0) __PYX_ERR(0, 282, __pyx_L1_error)
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_Point_Placement, __pyx_n_s_PERCENTAGE) < 0) __PYX_ERR(0, 282, __pyx_L1_error)
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_Distance, __pyx_kp_s_) < 0) __PYX_ERR(0, 282, __pyx_L1_error)
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_Percentage, __pyx_int_50) < 0) __PYX_ERR(0, 282, __pyx_L1_error)
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_Include_End_Points, __pyx_kp_s_) < 0) __PYX_ERR(0, 282, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_Output_Feature_Class, __pyx_v_pts_feat_line) < 0) __PYX_ERR(0, 284, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_Point_Placement, __pyx_n_s_PERCENTAGE) < 0) __PYX_ERR(0, 284, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_Distance, __pyx_kp_s_) < 0) __PYX_ERR(0, 284, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_Percentage, __pyx_int_50) < 0) __PYX_ERR(0, 284, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_Include_End_Points, __pyx_kp_s_) < 0) __PYX_ERR(0, 284, __pyx_L1_error)
 
-  /* "LXG/replication.py":282
+  /* "LXG/replication.py":284
  *         buf_feat_line = fc_list[3]
  * 
  *         arcpy.GeneratePointsAlongLines_management(Input_Features=input_line,             # <<<<<<<<<<<<<<
  *                                                   Output_Feature_Class=pts_feat_line,
  *                                                   Point_Placement="PERCENTAGE",
  */
-  __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_empty_tuple, __pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 282, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_empty_tuple, __pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 284, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "LXG/replication.py":288
+  /* "LXG/replication.py":290
  *                                                   Percentage=50,
  *                                                   Include_End_Points="")
  *         try:             # <<<<<<<<<<<<<<
@@ -10552,35 +10713,35 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_6_lines(CYTHON_UNUSED PyOb
     __Pyx_XGOTREF(__pyx_t_6);
     /*try:*/ {
 
-      /* "LXG/replication.py":289
+      /* "LXG/replication.py":291
  *                                                   Include_End_Points="")
  *         try:
  *             if geodatabase == self.gdb1:             # <<<<<<<<<<<<<<
  *                 # Execute the Buffer tool if initial geodatabase
  *                 arcpy.Buffer_analysis(pts_feat_line,
  */
-      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_gdb1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 289, __pyx_L3_error)
+      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_gdb1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 291, __pyx_L3_error)
       __Pyx_GOTREF(__pyx_t_3);
-      __pyx_t_1 = PyObject_RichCompare(__pyx_v_geodatabase, __pyx_t_3, Py_EQ); __Pyx_XGOTREF(__pyx_t_1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 289, __pyx_L3_error)
+      __pyx_t_1 = PyObject_RichCompare(__pyx_v_geodatabase, __pyx_t_3, Py_EQ); __Pyx_XGOTREF(__pyx_t_1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 291, __pyx_L3_error)
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-      __pyx_t_7 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_7 < 0)) __PYX_ERR(0, 289, __pyx_L3_error)
+      __pyx_t_7 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_7 < 0)) __PYX_ERR(0, 291, __pyx_L3_error)
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
       if (__pyx_t_7) {
 
-        /* "LXG/replication.py":291
+        /* "LXG/replication.py":293
  *             if geodatabase == self.gdb1:
  *                 # Execute the Buffer tool if initial geodatabase
  *                 arcpy.Buffer_analysis(pts_feat_line,             # <<<<<<<<<<<<<<
  *                                       buf_feat_line,
  *                                       "0.5 meters")
  */
-        __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 291, __pyx_L3_error)
+        __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 293, __pyx_L3_error)
         __Pyx_GOTREF(__pyx_t_3);
-        __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_Buffer_analysis); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 291, __pyx_L3_error)
+        __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_Buffer_analysis); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 293, __pyx_L3_error)
         __Pyx_GOTREF(__pyx_t_2);
         __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-        /* "LXG/replication.py":292
+        /* "LXG/replication.py":294
  *                 # Execute the Buffer tool if initial geodatabase
  *                 arcpy.Buffer_analysis(pts_feat_line,
  *                                       buf_feat_line,             # <<<<<<<<<<<<<<
@@ -10602,7 +10763,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_6_lines(CYTHON_UNUSED PyOb
         #if CYTHON_FAST_PYCALL
         if (PyFunction_Check(__pyx_t_2)) {
           PyObject *__pyx_temp[4] = {__pyx_t_3, __pyx_v_pts_feat_line, __pyx_v_buf_feat_line, __pyx_kp_s_0_5_meters};
-          __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_8, 3+__pyx_t_8); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 291, __pyx_L3_error)
+          __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_8, 3+__pyx_t_8); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 293, __pyx_L3_error)
           __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
           __Pyx_GOTREF(__pyx_t_1);
         } else
@@ -10610,13 +10771,13 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_6_lines(CYTHON_UNUSED PyOb
         #if CYTHON_FAST_PYCCALL
         if (__Pyx_PyFastCFunction_Check(__pyx_t_2)) {
           PyObject *__pyx_temp[4] = {__pyx_t_3, __pyx_v_pts_feat_line, __pyx_v_buf_feat_line, __pyx_kp_s_0_5_meters};
-          __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_8, 3+__pyx_t_8); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 291, __pyx_L3_error)
+          __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_8, 3+__pyx_t_8); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 293, __pyx_L3_error)
           __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
           __Pyx_GOTREF(__pyx_t_1);
         } else
         #endif
         {
-          __pyx_t_9 = PyTuple_New(3+__pyx_t_8); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 291, __pyx_L3_error)
+          __pyx_t_9 = PyTuple_New(3+__pyx_t_8); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 293, __pyx_L3_error)
           __Pyx_GOTREF(__pyx_t_9);
           if (__pyx_t_3) {
             __Pyx_GIVEREF(__pyx_t_3); PyTuple_SET_ITEM(__pyx_t_9, 0, __pyx_t_3); __pyx_t_3 = NULL;
@@ -10630,23 +10791,23 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_6_lines(CYTHON_UNUSED PyOb
           __Pyx_INCREF(__pyx_kp_s_0_5_meters);
           __Pyx_GIVEREF(__pyx_kp_s_0_5_meters);
           PyTuple_SET_ITEM(__pyx_t_9, 2+__pyx_t_8, __pyx_kp_s_0_5_meters);
-          __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_9, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 291, __pyx_L3_error)
+          __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_9, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 293, __pyx_L3_error)
           __Pyx_GOTREF(__pyx_t_1);
           __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
         }
         __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-        /* "LXG/replication.py":294
+        /* "LXG/replication.py":296
  *                                       buf_feat_line,
  *                                       "0.5 meters")
  *                 arcpy.Delete_management(pts_feat_line)             # <<<<<<<<<<<<<<
  *         except arcpy.ExecuteError as e:
  *             arcpy.AddError(e)
  */
-        __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 294, __pyx_L3_error)
+        __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 296, __pyx_L3_error)
         __Pyx_GOTREF(__pyx_t_2);
-        __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_Delete_management); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 294, __pyx_L3_error)
+        __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_Delete_management); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 296, __pyx_L3_error)
         __Pyx_GOTREF(__pyx_t_9);
         __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
         __pyx_t_2 = NULL;
@@ -10661,12 +10822,12 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_6_lines(CYTHON_UNUSED PyOb
         }
         __pyx_t_1 = (__pyx_t_2) ? __Pyx_PyObject_Call2Args(__pyx_t_9, __pyx_t_2, __pyx_v_pts_feat_line) : __Pyx_PyObject_CallOneArg(__pyx_t_9, __pyx_v_pts_feat_line);
         __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-        if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 294, __pyx_L3_error)
+        if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 296, __pyx_L3_error)
         __Pyx_GOTREF(__pyx_t_1);
         __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-        /* "LXG/replication.py":289
+        /* "LXG/replication.py":291
  *                                                   Include_End_Points="")
  *         try:
  *             if geodatabase == self.gdb1:             # <<<<<<<<<<<<<<
@@ -10675,7 +10836,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_6_lines(CYTHON_UNUSED PyOb
  */
       }
 
-      /* "LXG/replication.py":288
+      /* "LXG/replication.py":290
  *                                                   Percentage=50,
  *                                                   Include_End_Points="")
  *         try:             # <<<<<<<<<<<<<<
@@ -10693,7 +10854,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_6_lines(CYTHON_UNUSED PyOb
     __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
 
-    /* "LXG/replication.py":295
+    /* "LXG/replication.py":297
  *                                       "0.5 meters")
  *                 arcpy.Delete_management(pts_feat_line)
  *         except arcpy.ExecuteError as e:             # <<<<<<<<<<<<<<
@@ -10701,9 +10862,9 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_6_lines(CYTHON_UNUSED PyOb
  * 
  */
     __Pyx_ErrFetch(&__pyx_t_1, &__pyx_t_9, &__pyx_t_2);
-    __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 295, __pyx_L5_except_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 297, __pyx_L5_except_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_ExecuteError); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 295, __pyx_L5_except_error)
+    __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_ExecuteError); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 297, __pyx_L5_except_error)
     __Pyx_GOTREF(__pyx_t_10);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __pyx_t_8 = __Pyx_PyErr_GivenExceptionMatches(__pyx_t_1, __pyx_t_10);
@@ -10712,23 +10873,23 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_6_lines(CYTHON_UNUSED PyOb
     __pyx_t_1 = 0; __pyx_t_9 = 0; __pyx_t_2 = 0;
     if (__pyx_t_8) {
       __Pyx_AddTraceback("LXGREP.AppendNewFeatures._lines", __pyx_clineno, __pyx_lineno, __pyx_filename);
-      if (__Pyx_GetException(&__pyx_t_2, &__pyx_t_9, &__pyx_t_1) < 0) __PYX_ERR(0, 295, __pyx_L5_except_error)
+      if (__Pyx_GetException(&__pyx_t_2, &__pyx_t_9, &__pyx_t_1) < 0) __PYX_ERR(0, 297, __pyx_L5_except_error)
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_GOTREF(__pyx_t_9);
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_INCREF(__pyx_t_9);
       __pyx_v_e = __pyx_t_9;
 
-      /* "LXG/replication.py":296
+      /* "LXG/replication.py":298
  *                 arcpy.Delete_management(pts_feat_line)
  *         except arcpy.ExecuteError as e:
  *             arcpy.AddError(e)             # <<<<<<<<<<<<<<
  * 
  *         del geodatabase, pts_feat_line, buf_feat_line
  */
-      __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 296, __pyx_L5_except_error)
+      __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 298, __pyx_L5_except_error)
       __Pyx_GOTREF(__pyx_t_3);
-      __pyx_t_11 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_AddError); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 296, __pyx_L5_except_error)
+      __pyx_t_11 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_AddError); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 298, __pyx_L5_except_error)
       __Pyx_GOTREF(__pyx_t_11);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       __pyx_t_3 = NULL;
@@ -10743,7 +10904,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_6_lines(CYTHON_UNUSED PyOb
       }
       __pyx_t_10 = (__pyx_t_3) ? __Pyx_PyObject_Call2Args(__pyx_t_11, __pyx_t_3, __pyx_v_e) : __Pyx_PyObject_CallOneArg(__pyx_t_11, __pyx_v_e);
       __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-      if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 296, __pyx_L5_except_error)
+      if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 298, __pyx_L5_except_error)
       __Pyx_GOTREF(__pyx_t_10);
       __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
       __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
@@ -10755,7 +10916,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_6_lines(CYTHON_UNUSED PyOb
     goto __pyx_L5_except_error;
     __pyx_L5_except_error:;
 
-    /* "LXG/replication.py":288
+    /* "LXG/replication.py":290
  *                                                   Percentage=50,
  *                                                   Include_End_Points="")
  *         try:             # <<<<<<<<<<<<<<
@@ -10775,7 +10936,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_6_lines(CYTHON_UNUSED PyOb
     __pyx_L8_try_end:;
   }
 
-  /* "LXG/replication.py":298
+  /* "LXG/replication.py":300
  *             arcpy.AddError(e)
  * 
  *         del geodatabase, pts_feat_line, buf_feat_line             # <<<<<<<<<<<<<<
@@ -10789,7 +10950,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_6_lines(CYTHON_UNUSED PyOb
   __Pyx_DECREF(__pyx_v_buf_feat_line);
   __pyx_v_buf_feat_line = NULL;
 
-  /* "LXG/replication.py":276
+  /* "LXG/replication.py":278
  *         del geodatabase, pts_feat_poly, buf_feat_poly
  * 
  *     def _lines(self, fc_list):             # <<<<<<<<<<<<<<
@@ -10820,7 +10981,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_6_lines(CYTHON_UNUSED PyOb
   return __pyx_r;
 }
 
-/* "LXG/replication.py":300
+/* "LXG/replication.py":302
  *         del geodatabase, pts_feat_line, buf_feat_line
  * 
  *     def _points(self, fc_list):             # <<<<<<<<<<<<<<
@@ -10863,11 +11024,11 @@ static PyObject *__pyx_pw_6LXGREP_17AppendNewFeatures_9_points(PyObject *__pyx_s
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_fc_list)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("_points", 1, 2, 2, 1); __PYX_ERR(0, 300, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("_points", 1, 2, 2, 1); __PYX_ERR(0, 302, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "_points") < 0)) __PYX_ERR(0, 300, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "_points") < 0)) __PYX_ERR(0, 302, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
       goto __pyx_L5_argtuple_error;
@@ -10880,7 +11041,7 @@ static PyObject *__pyx_pw_6LXGREP_17AppendNewFeatures_9_points(PyObject *__pyx_s
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("_points", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 300, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("_points", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 302, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("LXGREP.AppendNewFeatures._points", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -10916,55 +11077,55 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_8_points(CYTHON_UNUSED PyO
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("_points", 0);
 
-  /* "LXG/replication.py":301
+  /* "LXG/replication.py":303
  * 
  *     def _points(self, fc_list):
  *         geodatabase = fc_list[1]             # <<<<<<<<<<<<<<
  *         pts_feat_pts = fc_list[2]
  *         buf_feat_pts = fc_list[3]
  */
-  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_fc_list, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 301, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_fc_list, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 303, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_geodatabase = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "LXG/replication.py":302
+  /* "LXG/replication.py":304
  *     def _points(self, fc_list):
  *         geodatabase = fc_list[1]
  *         pts_feat_pts = fc_list[2]             # <<<<<<<<<<<<<<
  *         buf_feat_pts = fc_list[3]
  * 
  */
-  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_fc_list, 2, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 302, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_fc_list, 2, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 304, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_pts_feat_pts = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "LXG/replication.py":303
+  /* "LXG/replication.py":305
  *         geodatabase = fc_list[1]
  *         pts_feat_pts = fc_list[2]
  *         buf_feat_pts = fc_list[3]             # <<<<<<<<<<<<<<
  * 
  *         arcpy.CopyFeatures_management(fc_list[0], pts_feat_pts)
  */
-  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_fc_list, 3, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 303, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_fc_list, 3, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 305, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_buf_feat_pts = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "LXG/replication.py":305
+  /* "LXG/replication.py":307
  *         buf_feat_pts = fc_list[3]
  * 
  *         arcpy.CopyFeatures_management(fc_list[0], pts_feat_pts)             # <<<<<<<<<<<<<<
  *         try:
  *             if geodatabase == self.gdb1:
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 305, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 307, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_CopyFeatures_management); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 305, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_CopyFeatures_management); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 307, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_GetItemInt(__pyx_v_fc_list, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 305, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_GetItemInt(__pyx_v_fc_list, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 307, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_4 = NULL;
   __pyx_t_5 = 0;
@@ -10981,7 +11142,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_8_points(CYTHON_UNUSED PyO
   #if CYTHON_FAST_PYCALL
   if (PyFunction_Check(__pyx_t_3)) {
     PyObject *__pyx_temp[3] = {__pyx_t_4, __pyx_t_2, __pyx_v_pts_feat_pts};
-    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_5, 2+__pyx_t_5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 305, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_5, 2+__pyx_t_5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 307, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
@@ -10990,14 +11151,14 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_8_points(CYTHON_UNUSED PyO
   #if CYTHON_FAST_PYCCALL
   if (__Pyx_PyFastCFunction_Check(__pyx_t_3)) {
     PyObject *__pyx_temp[3] = {__pyx_t_4, __pyx_t_2, __pyx_v_pts_feat_pts};
-    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_5, 2+__pyx_t_5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 305, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_5, 2+__pyx_t_5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 307, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   } else
   #endif
   {
-    __pyx_t_6 = PyTuple_New(2+__pyx_t_5); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 305, __pyx_L1_error)
+    __pyx_t_6 = PyTuple_New(2+__pyx_t_5); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 307, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     if (__pyx_t_4) {
       __Pyx_GIVEREF(__pyx_t_4); PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_4); __pyx_t_4 = NULL;
@@ -11008,14 +11169,14 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_8_points(CYTHON_UNUSED PyO
     __Pyx_GIVEREF(__pyx_v_pts_feat_pts);
     PyTuple_SET_ITEM(__pyx_t_6, 1+__pyx_t_5, __pyx_v_pts_feat_pts);
     __pyx_t_2 = 0;
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_6, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 305, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_6, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 307, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
   }
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "LXG/replication.py":306
+  /* "LXG/replication.py":308
  * 
  *         arcpy.CopyFeatures_management(fc_list[0], pts_feat_pts)
  *         try:             # <<<<<<<<<<<<<<
@@ -11031,37 +11192,37 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_8_points(CYTHON_UNUSED PyO
     __Pyx_XGOTREF(__pyx_t_9);
     /*try:*/ {
 
-      /* "LXG/replication.py":307
+      /* "LXG/replication.py":309
  *         arcpy.CopyFeatures_management(fc_list[0], pts_feat_pts)
  *         try:
  *             if geodatabase == self.gdb1:             # <<<<<<<<<<<<<<
  *                 # Execute the Buffer tool if initial geodatabase
  *                 arcpy.Buffer_analysis(fc_list[0],
  */
-      __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_gdb1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 307, __pyx_L3_error)
+      __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_gdb1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 309, __pyx_L3_error)
       __Pyx_GOTREF(__pyx_t_1);
-      __pyx_t_3 = PyObject_RichCompare(__pyx_v_geodatabase, __pyx_t_1, Py_EQ); __Pyx_XGOTREF(__pyx_t_3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 307, __pyx_L3_error)
+      __pyx_t_3 = PyObject_RichCompare(__pyx_v_geodatabase, __pyx_t_1, Py_EQ); __Pyx_XGOTREF(__pyx_t_3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 309, __pyx_L3_error)
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-      __pyx_t_10 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely(__pyx_t_10 < 0)) __PYX_ERR(0, 307, __pyx_L3_error)
+      __pyx_t_10 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely(__pyx_t_10 < 0)) __PYX_ERR(0, 309, __pyx_L3_error)
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       if (__pyx_t_10) {
 
-        /* "LXG/replication.py":309
+        /* "LXG/replication.py":311
  *             if geodatabase == self.gdb1:
  *                 # Execute the Buffer tool if initial geodatabase
  *                 arcpy.Buffer_analysis(fc_list[0],             # <<<<<<<<<<<<<<
  *                                       buf_feat_pts,
  *                                       "0.5 meters")
  */
-        __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 309, __pyx_L3_error)
+        __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 311, __pyx_L3_error)
         __Pyx_GOTREF(__pyx_t_1);
-        __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_Buffer_analysis); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 309, __pyx_L3_error)
+        __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_Buffer_analysis); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 311, __pyx_L3_error)
         __Pyx_GOTREF(__pyx_t_6);
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-        __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_fc_list, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 309, __pyx_L3_error)
+        __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_fc_list, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 311, __pyx_L3_error)
         __Pyx_GOTREF(__pyx_t_1);
 
-        /* "LXG/replication.py":310
+        /* "LXG/replication.py":312
  *                 # Execute the Buffer tool if initial geodatabase
  *                 arcpy.Buffer_analysis(fc_list[0],
  *                                       buf_feat_pts,             # <<<<<<<<<<<<<<
@@ -11083,7 +11244,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_8_points(CYTHON_UNUSED PyO
         #if CYTHON_FAST_PYCALL
         if (PyFunction_Check(__pyx_t_6)) {
           PyObject *__pyx_temp[4] = {__pyx_t_2, __pyx_t_1, __pyx_v_buf_feat_pts, __pyx_kp_s_0_5_meters};
-          __pyx_t_3 = __Pyx_PyFunction_FastCall(__pyx_t_6, __pyx_temp+1-__pyx_t_5, 3+__pyx_t_5); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 309, __pyx_L3_error)
+          __pyx_t_3 = __Pyx_PyFunction_FastCall(__pyx_t_6, __pyx_temp+1-__pyx_t_5, 3+__pyx_t_5); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 311, __pyx_L3_error)
           __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
           __Pyx_GOTREF(__pyx_t_3);
           __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -11092,14 +11253,14 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_8_points(CYTHON_UNUSED PyO
         #if CYTHON_FAST_PYCCALL
         if (__Pyx_PyFastCFunction_Check(__pyx_t_6)) {
           PyObject *__pyx_temp[4] = {__pyx_t_2, __pyx_t_1, __pyx_v_buf_feat_pts, __pyx_kp_s_0_5_meters};
-          __pyx_t_3 = __Pyx_PyCFunction_FastCall(__pyx_t_6, __pyx_temp+1-__pyx_t_5, 3+__pyx_t_5); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 309, __pyx_L3_error)
+          __pyx_t_3 = __Pyx_PyCFunction_FastCall(__pyx_t_6, __pyx_temp+1-__pyx_t_5, 3+__pyx_t_5); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 311, __pyx_L3_error)
           __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
           __Pyx_GOTREF(__pyx_t_3);
           __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
         } else
         #endif
         {
-          __pyx_t_4 = PyTuple_New(3+__pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 309, __pyx_L3_error)
+          __pyx_t_4 = PyTuple_New(3+__pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 311, __pyx_L3_error)
           __Pyx_GOTREF(__pyx_t_4);
           if (__pyx_t_2) {
             __Pyx_GIVEREF(__pyx_t_2); PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_2); __pyx_t_2 = NULL;
@@ -11113,23 +11274,23 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_8_points(CYTHON_UNUSED PyO
           __Pyx_GIVEREF(__pyx_kp_s_0_5_meters);
           PyTuple_SET_ITEM(__pyx_t_4, 2+__pyx_t_5, __pyx_kp_s_0_5_meters);
           __pyx_t_1 = 0;
-          __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_t_4, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 309, __pyx_L3_error)
+          __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_t_4, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 311, __pyx_L3_error)
           __Pyx_GOTREF(__pyx_t_3);
           __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
         }
         __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
         __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-        /* "LXG/replication.py":312
+        /* "LXG/replication.py":314
  *                                       buf_feat_pts,
  *                                       "0.5 meters")
  *                 arcpy.Delete_management(pts_feat_pts)             # <<<<<<<<<<<<<<
  *         except arcpy.ExecuteError as e:
  *             arcpy.AddError(e)
  */
-        __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 312, __pyx_L3_error)
+        __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 314, __pyx_L3_error)
         __Pyx_GOTREF(__pyx_t_6);
-        __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_n_s_Delete_management); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 312, __pyx_L3_error)
+        __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_n_s_Delete_management); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 314, __pyx_L3_error)
         __Pyx_GOTREF(__pyx_t_4);
         __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
         __pyx_t_6 = NULL;
@@ -11144,12 +11305,12 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_8_points(CYTHON_UNUSED PyO
         }
         __pyx_t_3 = (__pyx_t_6) ? __Pyx_PyObject_Call2Args(__pyx_t_4, __pyx_t_6, __pyx_v_pts_feat_pts) : __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_v_pts_feat_pts);
         __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
-        if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 312, __pyx_L3_error)
+        if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 314, __pyx_L3_error)
         __Pyx_GOTREF(__pyx_t_3);
         __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
         __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-        /* "LXG/replication.py":307
+        /* "LXG/replication.py":309
  *         arcpy.CopyFeatures_management(fc_list[0], pts_feat_pts)
  *         try:
  *             if geodatabase == self.gdb1:             # <<<<<<<<<<<<<<
@@ -11158,7 +11319,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_8_points(CYTHON_UNUSED PyO
  */
       }
 
-      /* "LXG/replication.py":306
+      /* "LXG/replication.py":308
  * 
  *         arcpy.CopyFeatures_management(fc_list[0], pts_feat_pts)
  *         try:             # <<<<<<<<<<<<<<
@@ -11177,7 +11338,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_8_points(CYTHON_UNUSED PyO
     __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
 
-    /* "LXG/replication.py":313
+    /* "LXG/replication.py":315
  *                                       "0.5 meters")
  *                 arcpy.Delete_management(pts_feat_pts)
  *         except arcpy.ExecuteError as e:             # <<<<<<<<<<<<<<
@@ -11185,9 +11346,9 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_8_points(CYTHON_UNUSED PyO
  * 
  */
     __Pyx_ErrFetch(&__pyx_t_3, &__pyx_t_4, &__pyx_t_6);
-    __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 313, __pyx_L5_except_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 315, __pyx_L5_except_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_ExecuteError); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 313, __pyx_L5_except_error)
+    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_ExecuteError); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 315, __pyx_L5_except_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __pyx_t_5 = __Pyx_PyErr_GivenExceptionMatches(__pyx_t_3, __pyx_t_2);
@@ -11196,23 +11357,23 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_8_points(CYTHON_UNUSED PyO
     __pyx_t_3 = 0; __pyx_t_4 = 0; __pyx_t_6 = 0;
     if (__pyx_t_5) {
       __Pyx_AddTraceback("LXGREP.AppendNewFeatures._points", __pyx_clineno, __pyx_lineno, __pyx_filename);
-      if (__Pyx_GetException(&__pyx_t_6, &__pyx_t_4, &__pyx_t_3) < 0) __PYX_ERR(0, 313, __pyx_L5_except_error)
+      if (__Pyx_GetException(&__pyx_t_6, &__pyx_t_4, &__pyx_t_3) < 0) __PYX_ERR(0, 315, __pyx_L5_except_error)
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_GOTREF(__pyx_t_4);
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_INCREF(__pyx_t_4);
       __pyx_v_e = __pyx_t_4;
 
-      /* "LXG/replication.py":314
+      /* "LXG/replication.py":316
  *                 arcpy.Delete_management(pts_feat_pts)
  *         except arcpy.ExecuteError as e:
  *             arcpy.AddError(e)             # <<<<<<<<<<<<<<
  * 
  *         del geodatabase, pts_feat_pts, buf_feat_pts
  */
-      __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 314, __pyx_L5_except_error)
+      __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 316, __pyx_L5_except_error)
       __Pyx_GOTREF(__pyx_t_1);
-      __pyx_t_11 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_AddError); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 314, __pyx_L5_except_error)
+      __pyx_t_11 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_AddError); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 316, __pyx_L5_except_error)
       __Pyx_GOTREF(__pyx_t_11);
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
       __pyx_t_1 = NULL;
@@ -11227,7 +11388,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_8_points(CYTHON_UNUSED PyO
       }
       __pyx_t_2 = (__pyx_t_1) ? __Pyx_PyObject_Call2Args(__pyx_t_11, __pyx_t_1, __pyx_v_e) : __Pyx_PyObject_CallOneArg(__pyx_t_11, __pyx_v_e);
       __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
-      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 314, __pyx_L5_except_error)
+      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 316, __pyx_L5_except_error)
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
@@ -11239,7 +11400,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_8_points(CYTHON_UNUSED PyO
     goto __pyx_L5_except_error;
     __pyx_L5_except_error:;
 
-    /* "LXG/replication.py":306
+    /* "LXG/replication.py":308
  * 
  *         arcpy.CopyFeatures_management(fc_list[0], pts_feat_pts)
  *         try:             # <<<<<<<<<<<<<<
@@ -11259,7 +11420,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_8_points(CYTHON_UNUSED PyO
     __pyx_L8_try_end:;
   }
 
-  /* "LXG/replication.py":316
+  /* "LXG/replication.py":318
  *             arcpy.AddError(e)
  * 
  *         del geodatabase, pts_feat_pts, buf_feat_pts             # <<<<<<<<<<<<<<
@@ -11273,7 +11434,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_8_points(CYTHON_UNUSED PyO
   __Pyx_DECREF(__pyx_v_buf_feat_pts);
   __pyx_v_buf_feat_pts = NULL;
 
-  /* "LXG/replication.py":300
+  /* "LXG/replication.py":302
  *         del geodatabase, pts_feat_line, buf_feat_line
  * 
  *     def _points(self, fc_list):             # <<<<<<<<<<<<<<
@@ -11303,7 +11464,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_8_points(CYTHON_UNUSED PyO
   return __pyx_r;
 }
 
-/* "LXG/replication.py":318
+/* "LXG/replication.py":320
  *         del geodatabase, pts_feat_pts, buf_feat_pts
  * 
  *     def intersect(self, in_layer, select_features):             # <<<<<<<<<<<<<<
@@ -11349,17 +11510,17 @@ static PyObject *__pyx_pw_6LXGREP_17AppendNewFeatures_11intersect(PyObject *__py
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_in_layer)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("intersect", 1, 3, 3, 1); __PYX_ERR(0, 318, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("intersect", 1, 3, 3, 1); __PYX_ERR(0, 320, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
         if (likely((values[2] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_select_features)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("intersect", 1, 3, 3, 2); __PYX_ERR(0, 318, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("intersect", 1, 3, 3, 2); __PYX_ERR(0, 320, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "intersect") < 0)) __PYX_ERR(0, 318, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "intersect") < 0)) __PYX_ERR(0, 320, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 3) {
       goto __pyx_L5_argtuple_error;
@@ -11374,7 +11535,7 @@ static PyObject *__pyx_pw_6LXGREP_17AppendNewFeatures_11intersect(PyObject *__py
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("intersect", 1, 3, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 318, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("intersect", 1, 3, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 320, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("LXGREP.AppendNewFeatures.intersect", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -11405,50 +11566,50 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_10intersect(CYTHON_UNUSED 
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("intersect", 0);
 
-  /* "LXG/replication.py":319
+  /* "LXG/replication.py":321
  * 
  *     def intersect(self, in_layer, select_features):
  *         _, _, selected_count = arcpy.SelectLayerByLocation_management(             # <<<<<<<<<<<<<<
  *             in_layer=in_layer,
  *             overlap_type="INTERSECT",
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 319, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 321, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_SelectLayerByLocation_management); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 319, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_SelectLayerByLocation_management); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 321, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "LXG/replication.py":320
+  /* "LXG/replication.py":322
  *     def intersect(self, in_layer, select_features):
  *         _, _, selected_count = arcpy.SelectLayerByLocation_management(
  *             in_layer=in_layer,             # <<<<<<<<<<<<<<
  *             overlap_type="INTERSECT",
  *             select_features=select_features,
  */
-  __pyx_t_1 = __Pyx_PyDict_NewPresized(5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 320, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyDict_NewPresized(5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 322, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_in_layer, __pyx_v_in_layer) < 0) __PYX_ERR(0, 320, __pyx_L1_error)
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_overlap_type, __pyx_n_s_INTERSECT) < 0) __PYX_ERR(0, 320, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_in_layer, __pyx_v_in_layer) < 0) __PYX_ERR(0, 322, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_overlap_type, __pyx_n_s_INTERSECT) < 0) __PYX_ERR(0, 322, __pyx_L1_error)
 
-  /* "LXG/replication.py":322
+  /* "LXG/replication.py":324
  *             in_layer=in_layer,
  *             overlap_type="INTERSECT",
  *             select_features=select_features,             # <<<<<<<<<<<<<<
  *             selection_type="NEW_SELECTION",
  *             invert_spatial_relationship="INVERT")
  */
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_select_features, __pyx_v_select_features) < 0) __PYX_ERR(0, 320, __pyx_L1_error)
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_selection_type, __pyx_n_s_NEW_SELECTION) < 0) __PYX_ERR(0, 320, __pyx_L1_error)
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_invert_spatial_relationship, __pyx_n_s_INVERT) < 0) __PYX_ERR(0, 320, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_select_features, __pyx_v_select_features) < 0) __PYX_ERR(0, 322, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_selection_type, __pyx_n_s_NEW_SELECTION) < 0) __PYX_ERR(0, 322, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_invert_spatial_relationship, __pyx_n_s_INVERT) < 0) __PYX_ERR(0, 322, __pyx_L1_error)
 
-  /* "LXG/replication.py":319
+  /* "LXG/replication.py":321
  * 
  *     def intersect(self, in_layer, select_features):
  *         _, _, selected_count = arcpy.SelectLayerByLocation_management(             # <<<<<<<<<<<<<<
  *             in_layer=in_layer,
  *             overlap_type="INTERSECT",
  */
-  __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_empty_tuple, __pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 319, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_empty_tuple, __pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 321, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -11458,7 +11619,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_10intersect(CYTHON_UNUSED 
     if (unlikely(size != 3)) {
       if (size > 3) __Pyx_RaiseTooManyValuesError(3);
       else if (size >= 0) __Pyx_RaiseNeedMoreValuesError(size);
-      __PYX_ERR(0, 319, __pyx_L1_error)
+      __PYX_ERR(0, 321, __pyx_L1_error)
     }
     #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
     if (likely(PyTuple_CheckExact(sequence))) {
@@ -11474,17 +11635,17 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_10intersect(CYTHON_UNUSED 
     __Pyx_INCREF(__pyx_t_2);
     __Pyx_INCREF(__pyx_t_4);
     #else
-    __pyx_t_1 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 319, __pyx_L1_error)
+    __pyx_t_1 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 321, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_2 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 319, __pyx_L1_error)
+    __pyx_t_2 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 321, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_4 = PySequence_ITEM(sequence, 2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 319, __pyx_L1_error)
+    __pyx_t_4 = PySequence_ITEM(sequence, 2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 321, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     #endif
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   } else {
     Py_ssize_t index = -1;
-    __pyx_t_5 = PyObject_GetIter(__pyx_t_3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 319, __pyx_L1_error)
+    __pyx_t_5 = PyObject_GetIter(__pyx_t_3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 321, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __pyx_t_6 = Py_TYPE(__pyx_t_5)->tp_iternext;
@@ -11494,7 +11655,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_10intersect(CYTHON_UNUSED 
     __Pyx_GOTREF(__pyx_t_2);
     index = 2; __pyx_t_4 = __pyx_t_6(__pyx_t_5); if (unlikely(!__pyx_t_4)) goto __pyx_L3_unpacking_failed;
     __Pyx_GOTREF(__pyx_t_4);
-    if (__Pyx_IternextUnpackEndCheck(__pyx_t_6(__pyx_t_5), 3) < 0) __PYX_ERR(0, 319, __pyx_L1_error)
+    if (__Pyx_IternextUnpackEndCheck(__pyx_t_6(__pyx_t_5), 3) < 0) __PYX_ERR(0, 321, __pyx_L1_error)
     __pyx_t_6 = NULL;
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     goto __pyx_L4_unpacking_done;
@@ -11502,7 +11663,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_10intersect(CYTHON_UNUSED 
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     __pyx_t_6 = NULL;
     if (__Pyx_IterFinish() == 0) __Pyx_RaiseNeedMoreValuesError(index);
-    __PYX_ERR(0, 319, __pyx_L1_error)
+    __PYX_ERR(0, 321, __pyx_L1_error)
     __pyx_L4_unpacking_done:;
   }
   __pyx_v__ = __pyx_t_1;
@@ -11512,16 +11673,16 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_10intersect(CYTHON_UNUSED 
   __pyx_v_selected_count = __pyx_t_4;
   __pyx_t_4 = 0;
 
-  /* "LXG/replication.py":326
+  /* "LXG/replication.py":328
  *             invert_spatial_relationship="INVERT")
  * 
  *         arcpy.SelectLayerByAttribute_management(select_features, "CLEAR_SELECTION")             # <<<<<<<<<<<<<<
  * 
  *         # int(arcpy.GetCount_management(fc_pts)[0])
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 326, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 328, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_SelectLayerByAttribute_managemen); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 326, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_SelectLayerByAttribute_managemen); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 328, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __pyx_t_4 = NULL;
@@ -11539,7 +11700,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_10intersect(CYTHON_UNUSED 
   #if CYTHON_FAST_PYCALL
   if (PyFunction_Check(__pyx_t_2)) {
     PyObject *__pyx_temp[3] = {__pyx_t_4, __pyx_v_select_features, __pyx_n_s_CLEAR_SELECTION};
-    __pyx_t_3 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_7, 2+__pyx_t_7); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 326, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_7, 2+__pyx_t_7); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 328, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_GOTREF(__pyx_t_3);
   } else
@@ -11547,13 +11708,13 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_10intersect(CYTHON_UNUSED 
   #if CYTHON_FAST_PYCCALL
   if (__Pyx_PyFastCFunction_Check(__pyx_t_2)) {
     PyObject *__pyx_temp[3] = {__pyx_t_4, __pyx_v_select_features, __pyx_n_s_CLEAR_SELECTION};
-    __pyx_t_3 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_7, 2+__pyx_t_7); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 326, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_7, 2+__pyx_t_7); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 328, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_GOTREF(__pyx_t_3);
   } else
   #endif
   {
-    __pyx_t_1 = PyTuple_New(2+__pyx_t_7); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 326, __pyx_L1_error)
+    __pyx_t_1 = PyTuple_New(2+__pyx_t_7); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 328, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     if (__pyx_t_4) {
       __Pyx_GIVEREF(__pyx_t_4); PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_t_4); __pyx_t_4 = NULL;
@@ -11564,57 +11725,57 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_10intersect(CYTHON_UNUSED 
     __Pyx_INCREF(__pyx_n_s_CLEAR_SELECTION);
     __Pyx_GIVEREF(__pyx_n_s_CLEAR_SELECTION);
     PyTuple_SET_ITEM(__pyx_t_1, 1+__pyx_t_7, __pyx_n_s_CLEAR_SELECTION);
-    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_1, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 326, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_1, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 328, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   }
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "LXG/replication.py":329
+  /* "LXG/replication.py":331
  * 
  *         # int(arcpy.GetCount_management(fc_pts)[0])
  *         selected_layer, _, _ = arcpy.SelectLayerByLocation_management(             # <<<<<<<<<<<<<<
  *             in_layer=in_layer,
  *             overlap_type="INTERSECT",
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 329, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 331, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_SelectLayerByLocation_management); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 329, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_SelectLayerByLocation_management); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 331, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "LXG/replication.py":330
+  /* "LXG/replication.py":332
  *         # int(arcpy.GetCount_management(fc_pts)[0])
  *         selected_layer, _, _ = arcpy.SelectLayerByLocation_management(
  *             in_layer=in_layer,             # <<<<<<<<<<<<<<
  *             overlap_type="INTERSECT",
  *             select_features=select_features,
  */
-  __pyx_t_3 = __Pyx_PyDict_NewPresized(5); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 330, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyDict_NewPresized(5); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 332, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_in_layer, __pyx_v_in_layer) < 0) __PYX_ERR(0, 330, __pyx_L1_error)
-  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_overlap_type, __pyx_n_s_INTERSECT) < 0) __PYX_ERR(0, 330, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_in_layer, __pyx_v_in_layer) < 0) __PYX_ERR(0, 332, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_overlap_type, __pyx_n_s_INTERSECT) < 0) __PYX_ERR(0, 332, __pyx_L1_error)
 
-  /* "LXG/replication.py":332
+  /* "LXG/replication.py":334
  *             in_layer=in_layer,
  *             overlap_type="INTERSECT",
  *             select_features=select_features,             # <<<<<<<<<<<<<<
  *             selection_type="NEW_SELECTION",
  *             invert_spatial_relationship="NOT_INVERT")
  */
-  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_select_features, __pyx_v_select_features) < 0) __PYX_ERR(0, 330, __pyx_L1_error)
-  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_selection_type, __pyx_n_s_NEW_SELECTION) < 0) __PYX_ERR(0, 330, __pyx_L1_error)
-  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_invert_spatial_relationship, __pyx_n_s_NOT_INVERT) < 0) __PYX_ERR(0, 330, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_select_features, __pyx_v_select_features) < 0) __PYX_ERR(0, 332, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_selection_type, __pyx_n_s_NEW_SELECTION) < 0) __PYX_ERR(0, 332, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_invert_spatial_relationship, __pyx_n_s_NOT_INVERT) < 0) __PYX_ERR(0, 332, __pyx_L1_error)
 
-  /* "LXG/replication.py":329
+  /* "LXG/replication.py":331
  * 
  *         # int(arcpy.GetCount_management(fc_pts)[0])
  *         selected_layer, _, _ = arcpy.SelectLayerByLocation_management(             # <<<<<<<<<<<<<<
  *             in_layer=in_layer,
  *             overlap_type="INTERSECT",
  */
-  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_empty_tuple, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 329, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_empty_tuple, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 331, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -11624,7 +11785,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_10intersect(CYTHON_UNUSED 
     if (unlikely(size != 3)) {
       if (size > 3) __Pyx_RaiseTooManyValuesError(3);
       else if (size >= 0) __Pyx_RaiseNeedMoreValuesError(size);
-      __PYX_ERR(0, 329, __pyx_L1_error)
+      __PYX_ERR(0, 331, __pyx_L1_error)
     }
     #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
     if (likely(PyTuple_CheckExact(sequence))) {
@@ -11640,17 +11801,17 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_10intersect(CYTHON_UNUSED 
     __Pyx_INCREF(__pyx_t_2);
     __Pyx_INCREF(__pyx_t_4);
     #else
-    __pyx_t_3 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 329, __pyx_L1_error)
+    __pyx_t_3 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 331, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_2 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 329, __pyx_L1_error)
+    __pyx_t_2 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 331, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_4 = PySequence_ITEM(sequence, 2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 329, __pyx_L1_error)
+    __pyx_t_4 = PySequence_ITEM(sequence, 2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 331, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     #endif
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   } else {
     Py_ssize_t index = -1;
-    __pyx_t_5 = PyObject_GetIter(__pyx_t_1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 329, __pyx_L1_error)
+    __pyx_t_5 = PyObject_GetIter(__pyx_t_1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 331, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __pyx_t_6 = Py_TYPE(__pyx_t_5)->tp_iternext;
@@ -11660,7 +11821,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_10intersect(CYTHON_UNUSED 
     __Pyx_GOTREF(__pyx_t_2);
     index = 2; __pyx_t_4 = __pyx_t_6(__pyx_t_5); if (unlikely(!__pyx_t_4)) goto __pyx_L5_unpacking_failed;
     __Pyx_GOTREF(__pyx_t_4);
-    if (__Pyx_IternextUnpackEndCheck(__pyx_t_6(__pyx_t_5), 3) < 0) __PYX_ERR(0, 329, __pyx_L1_error)
+    if (__Pyx_IternextUnpackEndCheck(__pyx_t_6(__pyx_t_5), 3) < 0) __PYX_ERR(0, 331, __pyx_L1_error)
     __pyx_t_6 = NULL;
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     goto __pyx_L6_unpacking_done;
@@ -11668,7 +11829,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_10intersect(CYTHON_UNUSED 
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     __pyx_t_6 = NULL;
     if (__Pyx_IterFinish() == 0) __Pyx_RaiseNeedMoreValuesError(index);
-    __PYX_ERR(0, 329, __pyx_L1_error)
+    __PYX_ERR(0, 331, __pyx_L1_error)
     __pyx_L6_unpacking_done:;
   }
   __pyx_v_selected_layer = __pyx_t_3;
@@ -11678,16 +11839,16 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_10intersect(CYTHON_UNUSED 
   __Pyx_DECREF_SET(__pyx_v__, __pyx_t_4);
   __pyx_t_4 = 0;
 
-  /* "LXG/replication.py":336
+  /* "LXG/replication.py":338
  *             invert_spatial_relationship="NOT_INVERT")
  * 
  *         arcpy.DeleteRows_management(selected_layer)             # <<<<<<<<<<<<<<
  * 
  *         return int(selected_count)
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 336, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 338, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_DeleteRows_management); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 336, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_DeleteRows_management); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 338, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __pyx_t_4 = NULL;
@@ -11702,12 +11863,12 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_10intersect(CYTHON_UNUSED 
   }
   __pyx_t_1 = (__pyx_t_4) ? __Pyx_PyObject_Call2Args(__pyx_t_2, __pyx_t_4, __pyx_v_selected_layer) : __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_v_selected_layer);
   __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
-  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 336, __pyx_L1_error)
+  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 338, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "LXG/replication.py":338
+  /* "LXG/replication.py":340
  *         arcpy.DeleteRows_management(selected_layer)
  * 
  *         return int(selected_count)             # <<<<<<<<<<<<<<
@@ -11715,13 +11876,13 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_10intersect(CYTHON_UNUSED 
  *     def check_differences(self):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyNumber_Int(__pyx_v_selected_count); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 338, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyNumber_Int(__pyx_v_selected_count); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 340, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "LXG/replication.py":318
+  /* "LXG/replication.py":320
  *         del geodatabase, pts_feat_pts, buf_feat_pts
  * 
  *     def intersect(self, in_layer, select_features):             # <<<<<<<<<<<<<<
@@ -11747,7 +11908,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_10intersect(CYTHON_UNUSED 
   return __pyx_r;
 }
 
-/* "LXG/replication.py":340
+/* "LXG/replication.py":342
  *         return int(selected_count)
  * 
  *     def check_differences(self):             # <<<<<<<<<<<<<<
@@ -11810,80 +11971,80 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("check_differences", 0);
 
-  /* "LXG/replication.py":341
+  /* "LXG/replication.py":343
  * 
  *     def check_differences(self):
  *         arcpy.env.workspace = self.gdb2             # <<<<<<<<<<<<<<
  *         new_features_list = []
  *         dss = sorted(arcpy.ListDatasets("", "ALL"))
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_gdb2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 341, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_gdb2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 343, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 341, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 343, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_env); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 341, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_env); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 343, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (__Pyx_PyObject_SetAttrStr(__pyx_t_3, __pyx_n_s_workspace, __pyx_t_1) < 0) __PYX_ERR(0, 341, __pyx_L1_error)
+  if (__Pyx_PyObject_SetAttrStr(__pyx_t_3, __pyx_n_s_workspace, __pyx_t_1) < 0) __PYX_ERR(0, 343, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "LXG/replication.py":342
+  /* "LXG/replication.py":344
  *     def check_differences(self):
  *         arcpy.env.workspace = self.gdb2
  *         new_features_list = []             # <<<<<<<<<<<<<<
  *         dss = sorted(arcpy.ListDatasets("", "ALL"))
  *         pbar01 = tqdm(dss, desc='Detect changes', position=0, colour='GREEN')
  */
-  __pyx_t_3 = PyList_New(0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 342, __pyx_L1_error)
+  __pyx_t_3 = PyList_New(0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 344, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_v_new_features_list = ((PyObject*)__pyx_t_3);
   __pyx_t_3 = 0;
 
-  /* "LXG/replication.py":343
+  /* "LXG/replication.py":345
  *         arcpy.env.workspace = self.gdb2
  *         new_features_list = []
  *         dss = sorted(arcpy.ListDatasets("", "ALL"))             # <<<<<<<<<<<<<<
  *         pbar01 = tqdm(dss, desc='Detect changes', position=0, colour='GREEN')
  *         for ds in pbar01:
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 343, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 345, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_ListDatasets); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 343, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_ListDatasets); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 345, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_tuple__2, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 343, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_tuple__2, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 345, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = PySequence_List(__pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 343, __pyx_L1_error)
+  __pyx_t_2 = PySequence_List(__pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 345, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_t_3 = ((PyObject*)__pyx_t_2);
   __pyx_t_2 = 0;
-  __pyx_t_4 = PyList_Sort(__pyx_t_3); if (unlikely(__pyx_t_4 == ((int)-1))) __PYX_ERR(0, 343, __pyx_L1_error)
+  __pyx_t_4 = PyList_Sort(__pyx_t_3); if (unlikely(__pyx_t_4 == ((int)-1))) __PYX_ERR(0, 345, __pyx_L1_error)
   __pyx_v_dss = ((PyObject*)__pyx_t_3);
   __pyx_t_3 = 0;
 
-  /* "LXG/replication.py":344
+  /* "LXG/replication.py":346
  *         new_features_list = []
  *         dss = sorted(arcpy.ListDatasets("", "ALL"))
  *         pbar01 = tqdm(dss, desc='Detect changes', position=0, colour='GREEN')             # <<<<<<<<<<<<<<
  *         for ds in pbar01:
  *             fcs = sorted(arcpy.ListFeatureClasses("", "Polygon", ds))
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_tqdm); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 344, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_tqdm); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 346, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_2 = PyTuple_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 344, __pyx_L1_error)
+  __pyx_t_2 = PyTuple_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 346, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_INCREF(__pyx_v_dss);
   __Pyx_GIVEREF(__pyx_v_dss);
   PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_v_dss);
-  __pyx_t_1 = __Pyx_PyDict_NewPresized(3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 344, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyDict_NewPresized(3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 346, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_desc, __pyx_kp_s_Detect_changes) < 0) __PYX_ERR(0, 344, __pyx_L1_error)
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_position, __pyx_int_0) < 0) __PYX_ERR(0, 344, __pyx_L1_error)
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_colour, __pyx_n_s_GREEN) < 0) __PYX_ERR(0, 344, __pyx_L1_error)
-  __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_2, __pyx_t_1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 344, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_desc, __pyx_kp_s_Detect_changes) < 0) __PYX_ERR(0, 346, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_position, __pyx_int_0) < 0) __PYX_ERR(0, 346, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_colour, __pyx_n_s_GREEN) < 0) __PYX_ERR(0, 346, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_2, __pyx_t_1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 346, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
@@ -11891,7 +12052,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
   __pyx_v_pbar01 = __pyx_t_5;
   __pyx_t_5 = 0;
 
-  /* "LXG/replication.py":345
+  /* "LXG/replication.py":347
  *         dss = sorted(arcpy.ListDatasets("", "ALL"))
  *         pbar01 = tqdm(dss, desc='Detect changes', position=0, colour='GREEN')
  *         for ds in pbar01:             # <<<<<<<<<<<<<<
@@ -11902,26 +12063,26 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
     __pyx_t_5 = __pyx_v_pbar01; __Pyx_INCREF(__pyx_t_5); __pyx_t_6 = 0;
     __pyx_t_7 = NULL;
   } else {
-    __pyx_t_6 = -1; __pyx_t_5 = PyObject_GetIter(__pyx_v_pbar01); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 345, __pyx_L1_error)
+    __pyx_t_6 = -1; __pyx_t_5 = PyObject_GetIter(__pyx_v_pbar01); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 347, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_7 = Py_TYPE(__pyx_t_5)->tp_iternext; if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 345, __pyx_L1_error)
+    __pyx_t_7 = Py_TYPE(__pyx_t_5)->tp_iternext; if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 347, __pyx_L1_error)
   }
   for (;;) {
     if (likely(!__pyx_t_7)) {
       if (likely(PyList_CheckExact(__pyx_t_5))) {
         if (__pyx_t_6 >= PyList_GET_SIZE(__pyx_t_5)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_1 = PyList_GET_ITEM(__pyx_t_5, __pyx_t_6); __Pyx_INCREF(__pyx_t_1); __pyx_t_6++; if (unlikely(0 < 0)) __PYX_ERR(0, 345, __pyx_L1_error)
+        __pyx_t_1 = PyList_GET_ITEM(__pyx_t_5, __pyx_t_6); __Pyx_INCREF(__pyx_t_1); __pyx_t_6++; if (unlikely(0 < 0)) __PYX_ERR(0, 347, __pyx_L1_error)
         #else
-        __pyx_t_1 = PySequence_ITEM(__pyx_t_5, __pyx_t_6); __pyx_t_6++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 345, __pyx_L1_error)
+        __pyx_t_1 = PySequence_ITEM(__pyx_t_5, __pyx_t_6); __pyx_t_6++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 347, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_1);
         #endif
       } else {
         if (__pyx_t_6 >= PyTuple_GET_SIZE(__pyx_t_5)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_1 = PyTuple_GET_ITEM(__pyx_t_5, __pyx_t_6); __Pyx_INCREF(__pyx_t_1); __pyx_t_6++; if (unlikely(0 < 0)) __PYX_ERR(0, 345, __pyx_L1_error)
+        __pyx_t_1 = PyTuple_GET_ITEM(__pyx_t_5, __pyx_t_6); __Pyx_INCREF(__pyx_t_1); __pyx_t_6++; if (unlikely(0 < 0)) __PYX_ERR(0, 347, __pyx_L1_error)
         #else
-        __pyx_t_1 = PySequence_ITEM(__pyx_t_5, __pyx_t_6); __pyx_t_6++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 345, __pyx_L1_error)
+        __pyx_t_1 = PySequence_ITEM(__pyx_t_5, __pyx_t_6); __pyx_t_6++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 347, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_1);
         #endif
       }
@@ -11931,7 +12092,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
           if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else __PYX_ERR(0, 345, __pyx_L1_error)
+          else __PYX_ERR(0, 347, __pyx_L1_error)
         }
         break;
       }
@@ -11940,16 +12101,16 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
     __Pyx_XDECREF_SET(__pyx_v_ds, __pyx_t_1);
     __pyx_t_1 = 0;
 
-    /* "LXG/replication.py":346
+    /* "LXG/replication.py":348
  *         pbar01 = tqdm(dss, desc='Detect changes', position=0, colour='GREEN')
  *         for ds in pbar01:
  *             fcs = sorted(arcpy.ListFeatureClasses("", "Polygon", ds))             # <<<<<<<<<<<<<<
  *             pbar02 = tqdm(fcs, position=1, colour='Yellow', leave=False)
  *             for fc in pbar02:
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 346, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 348, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_ListFeatureClasses); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 346, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_ListFeatureClasses); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 348, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __pyx_t_3 = NULL;
@@ -11967,7 +12128,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
     #if CYTHON_FAST_PYCALL
     if (PyFunction_Check(__pyx_t_8)) {
       PyObject *__pyx_temp[4] = {__pyx_t_3, __pyx_kp_s_, __pyx_n_s_Polygon, __pyx_v_ds};
-      __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_8, __pyx_temp+1-__pyx_t_9, 3+__pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 346, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_8, __pyx_temp+1-__pyx_t_9, 3+__pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 348, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
       __Pyx_GOTREF(__pyx_t_2);
     } else
@@ -11975,13 +12136,13 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
     #if CYTHON_FAST_PYCCALL
     if (__Pyx_PyFastCFunction_Check(__pyx_t_8)) {
       PyObject *__pyx_temp[4] = {__pyx_t_3, __pyx_kp_s_, __pyx_n_s_Polygon, __pyx_v_ds};
-      __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_8, __pyx_temp+1-__pyx_t_9, 3+__pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 346, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_8, __pyx_temp+1-__pyx_t_9, 3+__pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 348, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
       __Pyx_GOTREF(__pyx_t_2);
     } else
     #endif
     {
-      __pyx_t_10 = PyTuple_New(3+__pyx_t_9); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 346, __pyx_L1_error)
+      __pyx_t_10 = PyTuple_New(3+__pyx_t_9); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 348, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_10);
       if (__pyx_t_3) {
         __Pyx_GIVEREF(__pyx_t_3); PyTuple_SET_ITEM(__pyx_t_10, 0, __pyx_t_3); __pyx_t_3 = NULL;
@@ -11995,40 +12156,40 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
       __Pyx_INCREF(__pyx_v_ds);
       __Pyx_GIVEREF(__pyx_v_ds);
       PyTuple_SET_ITEM(__pyx_t_10, 2+__pyx_t_9, __pyx_v_ds);
-      __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_8, __pyx_t_10, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 346, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_8, __pyx_t_10, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 348, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
     }
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-    __pyx_t_8 = PySequence_List(__pyx_t_2); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 346, __pyx_L1_error)
+    __pyx_t_8 = PySequence_List(__pyx_t_2); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 348, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __pyx_t_1 = ((PyObject*)__pyx_t_8);
     __pyx_t_8 = 0;
-    __pyx_t_4 = PyList_Sort(__pyx_t_1); if (unlikely(__pyx_t_4 == ((int)-1))) __PYX_ERR(0, 346, __pyx_L1_error)
+    __pyx_t_4 = PyList_Sort(__pyx_t_1); if (unlikely(__pyx_t_4 == ((int)-1))) __PYX_ERR(0, 348, __pyx_L1_error)
     __Pyx_XDECREF_SET(__pyx_v_fcs, ((PyObject*)__pyx_t_1));
     __pyx_t_1 = 0;
 
-    /* "LXG/replication.py":347
+    /* "LXG/replication.py":349
  *         for ds in pbar01:
  *             fcs = sorted(arcpy.ListFeatureClasses("", "Polygon", ds))
  *             pbar02 = tqdm(fcs, position=1, colour='Yellow', leave=False)             # <<<<<<<<<<<<<<
  *             for fc in pbar02:
  *                 pbar02.set_description(fc)
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_tqdm); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 347, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_tqdm); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 349, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_8 = PyTuple_New(1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 347, __pyx_L1_error)
+    __pyx_t_8 = PyTuple_New(1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 349, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
     __Pyx_INCREF(__pyx_v_fcs);
     __Pyx_GIVEREF(__pyx_v_fcs);
     PyTuple_SET_ITEM(__pyx_t_8, 0, __pyx_v_fcs);
-    __pyx_t_2 = __Pyx_PyDict_NewPresized(3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 347, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyDict_NewPresized(3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 349, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_position, __pyx_int_1) < 0) __PYX_ERR(0, 347, __pyx_L1_error)
-    if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_colour, __pyx_n_s_Yellow) < 0) __PYX_ERR(0, 347, __pyx_L1_error)
-    if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_leave, Py_False) < 0) __PYX_ERR(0, 347, __pyx_L1_error)
-    __pyx_t_10 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_8, __pyx_t_2); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 347, __pyx_L1_error)
+    if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_position, __pyx_int_1) < 0) __PYX_ERR(0, 349, __pyx_L1_error)
+    if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_colour, __pyx_n_s_Yellow) < 0) __PYX_ERR(0, 349, __pyx_L1_error)
+    if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_leave, Py_False) < 0) __PYX_ERR(0, 349, __pyx_L1_error)
+    __pyx_t_10 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_8, __pyx_t_2); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 349, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_10);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
@@ -12036,7 +12197,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
     __Pyx_XDECREF_SET(__pyx_v_pbar02, __pyx_t_10);
     __pyx_t_10 = 0;
 
-    /* "LXG/replication.py":348
+    /* "LXG/replication.py":350
  *             fcs = sorted(arcpy.ListFeatureClasses("", "Polygon", ds))
  *             pbar02 = tqdm(fcs, position=1, colour='Yellow', leave=False)
  *             for fc in pbar02:             # <<<<<<<<<<<<<<
@@ -12047,26 +12208,26 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
       __pyx_t_10 = __pyx_v_pbar02; __Pyx_INCREF(__pyx_t_10); __pyx_t_11 = 0;
       __pyx_t_12 = NULL;
     } else {
-      __pyx_t_11 = -1; __pyx_t_10 = PyObject_GetIter(__pyx_v_pbar02); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 348, __pyx_L1_error)
+      __pyx_t_11 = -1; __pyx_t_10 = PyObject_GetIter(__pyx_v_pbar02); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 350, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_10);
-      __pyx_t_12 = Py_TYPE(__pyx_t_10)->tp_iternext; if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 348, __pyx_L1_error)
+      __pyx_t_12 = Py_TYPE(__pyx_t_10)->tp_iternext; if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 350, __pyx_L1_error)
     }
     for (;;) {
       if (likely(!__pyx_t_12)) {
         if (likely(PyList_CheckExact(__pyx_t_10))) {
           if (__pyx_t_11 >= PyList_GET_SIZE(__pyx_t_10)) break;
           #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-          __pyx_t_2 = PyList_GET_ITEM(__pyx_t_10, __pyx_t_11); __Pyx_INCREF(__pyx_t_2); __pyx_t_11++; if (unlikely(0 < 0)) __PYX_ERR(0, 348, __pyx_L1_error)
+          __pyx_t_2 = PyList_GET_ITEM(__pyx_t_10, __pyx_t_11); __Pyx_INCREF(__pyx_t_2); __pyx_t_11++; if (unlikely(0 < 0)) __PYX_ERR(0, 350, __pyx_L1_error)
           #else
-          __pyx_t_2 = PySequence_ITEM(__pyx_t_10, __pyx_t_11); __pyx_t_11++; if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 348, __pyx_L1_error)
+          __pyx_t_2 = PySequence_ITEM(__pyx_t_10, __pyx_t_11); __pyx_t_11++; if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 350, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_2);
           #endif
         } else {
           if (__pyx_t_11 >= PyTuple_GET_SIZE(__pyx_t_10)) break;
           #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-          __pyx_t_2 = PyTuple_GET_ITEM(__pyx_t_10, __pyx_t_11); __Pyx_INCREF(__pyx_t_2); __pyx_t_11++; if (unlikely(0 < 0)) __PYX_ERR(0, 348, __pyx_L1_error)
+          __pyx_t_2 = PyTuple_GET_ITEM(__pyx_t_10, __pyx_t_11); __Pyx_INCREF(__pyx_t_2); __pyx_t_11++; if (unlikely(0 < 0)) __PYX_ERR(0, 350, __pyx_L1_error)
           #else
-          __pyx_t_2 = PySequence_ITEM(__pyx_t_10, __pyx_t_11); __pyx_t_11++; if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 348, __pyx_L1_error)
+          __pyx_t_2 = PySequence_ITEM(__pyx_t_10, __pyx_t_11); __pyx_t_11++; if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 350, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_2);
           #endif
         }
@@ -12076,7 +12237,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
           PyObject* exc_type = PyErr_Occurred();
           if (exc_type) {
             if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-            else __PYX_ERR(0, 348, __pyx_L1_error)
+            else __PYX_ERR(0, 350, __pyx_L1_error)
           }
           break;
         }
@@ -12085,14 +12246,14 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
       __Pyx_XDECREF_SET(__pyx_v_fc, __pyx_t_2);
       __pyx_t_2 = 0;
 
-      /* "LXG/replication.py":349
+      /* "LXG/replication.py":351
  *             pbar02 = tqdm(fcs, position=1, colour='Yellow', leave=False)
  *             for fc in pbar02:
  *                 pbar02.set_description(fc)             # <<<<<<<<<<<<<<
  *                 fc_pts = os.path.join(self.gdb_poly, f'gdb2_{fc}_pts')
  *                 old_fc_buf = os.path.join(self.gdb_poly, f'gdb1_{fc}_buf')
  */
-      __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_v_pbar02, __pyx_n_s_set_description); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 349, __pyx_L1_error)
+      __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_v_pbar02, __pyx_n_s_set_description); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 351, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_8);
       __pyx_t_1 = NULL;
       if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_8))) {
@@ -12106,29 +12267,29 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
       }
       __pyx_t_2 = (__pyx_t_1) ? __Pyx_PyObject_Call2Args(__pyx_t_8, __pyx_t_1, __pyx_v_fc) : __Pyx_PyObject_CallOneArg(__pyx_t_8, __pyx_v_fc);
       __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
-      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 349, __pyx_L1_error)
+      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 351, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-      /* "LXG/replication.py":350
+      /* "LXG/replication.py":352
  *             for fc in pbar02:
  *                 pbar02.set_description(fc)
  *                 fc_pts = os.path.join(self.gdb_poly, f'gdb2_{fc}_pts')             # <<<<<<<<<<<<<<
  *                 old_fc_buf = os.path.join(self.gdb_poly, f'gdb1_{fc}_buf')
  *                 try:
  */
-      __Pyx_GetModuleGlobalName(__pyx_t_8, __pyx_n_s_os); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 350, __pyx_L1_error)
+      __Pyx_GetModuleGlobalName(__pyx_t_8, __pyx_n_s_os); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 352, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_8);
-      __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_8, __pyx_n_s_path); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 350, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_8, __pyx_n_s_path); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 352, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-      __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_join); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 350, __pyx_L1_error)
+      __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_join); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 352, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_8);
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-      __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_gdb_poly); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 350, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_gdb_poly); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 352, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
-      __pyx_t_3 = PyTuple_New(3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 350, __pyx_L1_error)
+      __pyx_t_3 = PyTuple_New(3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 352, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __pyx_t_13 = 0;
       __pyx_t_14 = 127;
@@ -12136,7 +12297,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
       __pyx_t_13 += 5;
       __Pyx_GIVEREF(__pyx_n_u_gdb2_2);
       PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_n_u_gdb2_2);
-      __pyx_t_15 = __Pyx_PyObject_FormatSimple(__pyx_v_fc, __pyx_empty_unicode); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 350, __pyx_L1_error)
+      __pyx_t_15 = __Pyx_PyObject_FormatSimple(__pyx_v_fc, __pyx_empty_unicode); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 352, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_15);
       __pyx_t_14 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_15) > __pyx_t_14) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_15) : __pyx_t_14;
       __pyx_t_13 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_15);
@@ -12147,7 +12308,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
       __pyx_t_13 += 4;
       __Pyx_GIVEREF(__pyx_n_u_pts);
       PyTuple_SET_ITEM(__pyx_t_3, 2, __pyx_n_u_pts);
-      __pyx_t_15 = __Pyx_PyUnicode_Join(__pyx_t_3, 3, __pyx_t_13, __pyx_t_14); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 350, __pyx_L1_error)
+      __pyx_t_15 = __Pyx_PyUnicode_Join(__pyx_t_3, 3, __pyx_t_13, __pyx_t_14); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 352, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_15);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       __pyx_t_3 = NULL;
@@ -12165,7 +12326,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
       #if CYTHON_FAST_PYCALL
       if (PyFunction_Check(__pyx_t_8)) {
         PyObject *__pyx_temp[3] = {__pyx_t_3, __pyx_t_1, __pyx_t_15};
-        __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_8, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 350, __pyx_L1_error)
+        __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_8, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 352, __pyx_L1_error)
         __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
         __Pyx_GOTREF(__pyx_t_2);
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -12175,7 +12336,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
       #if CYTHON_FAST_PYCCALL
       if (__Pyx_PyFastCFunction_Check(__pyx_t_8)) {
         PyObject *__pyx_temp[3] = {__pyx_t_3, __pyx_t_1, __pyx_t_15};
-        __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_8, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 350, __pyx_L1_error)
+        __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_8, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 352, __pyx_L1_error)
         __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
         __Pyx_GOTREF(__pyx_t_2);
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -12183,7 +12344,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
       } else
       #endif
       {
-        __pyx_t_16 = PyTuple_New(2+__pyx_t_9); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 350, __pyx_L1_error)
+        __pyx_t_16 = PyTuple_New(2+__pyx_t_9); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 352, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_16);
         if (__pyx_t_3) {
           __Pyx_GIVEREF(__pyx_t_3); PyTuple_SET_ITEM(__pyx_t_16, 0, __pyx_t_3); __pyx_t_3 = NULL;
@@ -12194,7 +12355,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
         PyTuple_SET_ITEM(__pyx_t_16, 1+__pyx_t_9, __pyx_t_15);
         __pyx_t_1 = 0;
         __pyx_t_15 = 0;
-        __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_8, __pyx_t_16, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 350, __pyx_L1_error)
+        __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_8, __pyx_t_16, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 352, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_2);
         __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
       }
@@ -12202,24 +12363,24 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
       __Pyx_XDECREF_SET(__pyx_v_fc_pts, __pyx_t_2);
       __pyx_t_2 = 0;
 
-      /* "LXG/replication.py":351
+      /* "LXG/replication.py":353
  *                 pbar02.set_description(fc)
  *                 fc_pts = os.path.join(self.gdb_poly, f'gdb2_{fc}_pts')
  *                 old_fc_buf = os.path.join(self.gdb_poly, f'gdb1_{fc}_buf')             # <<<<<<<<<<<<<<
  *                 try:
  *                     if arcpy.Exists(fc_pts):
  */
-      __Pyx_GetModuleGlobalName(__pyx_t_8, __pyx_n_s_os); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 351, __pyx_L1_error)
+      __Pyx_GetModuleGlobalName(__pyx_t_8, __pyx_n_s_os); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 353, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_8);
-      __pyx_t_16 = __Pyx_PyObject_GetAttrStr(__pyx_t_8, __pyx_n_s_path); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 351, __pyx_L1_error)
+      __pyx_t_16 = __Pyx_PyObject_GetAttrStr(__pyx_t_8, __pyx_n_s_path); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 353, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_16);
       __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-      __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_16, __pyx_n_s_join); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 351, __pyx_L1_error)
+      __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_16, __pyx_n_s_join); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 353, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_8);
       __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
-      __pyx_t_16 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_gdb_poly); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 351, __pyx_L1_error)
+      __pyx_t_16 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_gdb_poly); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 353, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_16);
-      __pyx_t_15 = PyTuple_New(3); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 351, __pyx_L1_error)
+      __pyx_t_15 = PyTuple_New(3); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 353, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_15);
       __pyx_t_13 = 0;
       __pyx_t_14 = 127;
@@ -12227,7 +12388,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
       __pyx_t_13 += 5;
       __Pyx_GIVEREF(__pyx_n_u_gdb1_2);
       PyTuple_SET_ITEM(__pyx_t_15, 0, __pyx_n_u_gdb1_2);
-      __pyx_t_1 = __Pyx_PyObject_FormatSimple(__pyx_v_fc, __pyx_empty_unicode); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 351, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyObject_FormatSimple(__pyx_v_fc, __pyx_empty_unicode); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 353, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       __pyx_t_14 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_1) > __pyx_t_14) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_1) : __pyx_t_14;
       __pyx_t_13 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_1);
@@ -12238,7 +12399,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
       __pyx_t_13 += 4;
       __Pyx_GIVEREF(__pyx_n_u_buf);
       PyTuple_SET_ITEM(__pyx_t_15, 2, __pyx_n_u_buf);
-      __pyx_t_1 = __Pyx_PyUnicode_Join(__pyx_t_15, 3, __pyx_t_13, __pyx_t_14); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 351, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyUnicode_Join(__pyx_t_15, 3, __pyx_t_13, __pyx_t_14); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 353, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
       __pyx_t_15 = NULL;
@@ -12256,7 +12417,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
       #if CYTHON_FAST_PYCALL
       if (PyFunction_Check(__pyx_t_8)) {
         PyObject *__pyx_temp[3] = {__pyx_t_15, __pyx_t_16, __pyx_t_1};
-        __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_8, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 351, __pyx_L1_error)
+        __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_8, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 353, __pyx_L1_error)
         __Pyx_XDECREF(__pyx_t_15); __pyx_t_15 = 0;
         __Pyx_GOTREF(__pyx_t_2);
         __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
@@ -12266,7 +12427,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
       #if CYTHON_FAST_PYCCALL
       if (__Pyx_PyFastCFunction_Check(__pyx_t_8)) {
         PyObject *__pyx_temp[3] = {__pyx_t_15, __pyx_t_16, __pyx_t_1};
-        __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_8, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 351, __pyx_L1_error)
+        __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_8, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 353, __pyx_L1_error)
         __Pyx_XDECREF(__pyx_t_15); __pyx_t_15 = 0;
         __Pyx_GOTREF(__pyx_t_2);
         __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
@@ -12274,7 +12435,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
       } else
       #endif
       {
-        __pyx_t_3 = PyTuple_New(2+__pyx_t_9); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 351, __pyx_L1_error)
+        __pyx_t_3 = PyTuple_New(2+__pyx_t_9); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 353, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_3);
         if (__pyx_t_15) {
           __Pyx_GIVEREF(__pyx_t_15); PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_15); __pyx_t_15 = NULL;
@@ -12285,7 +12446,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
         PyTuple_SET_ITEM(__pyx_t_3, 1+__pyx_t_9, __pyx_t_1);
         __pyx_t_16 = 0;
         __pyx_t_1 = 0;
-        __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_8, __pyx_t_3, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 351, __pyx_L1_error)
+        __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_8, __pyx_t_3, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 353, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_2);
         __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       }
@@ -12293,7 +12454,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
       __Pyx_XDECREF_SET(__pyx_v_old_fc_buf, __pyx_t_2);
       __pyx_t_2 = 0;
 
-      /* "LXG/replication.py":352
+      /* "LXG/replication.py":354
  *                 fc_pts = os.path.join(self.gdb_poly, f'gdb2_{fc}_pts')
  *                 old_fc_buf = os.path.join(self.gdb_poly, f'gdb1_{fc}_buf')
  *                 try:             # <<<<<<<<<<<<<<
@@ -12309,16 +12470,16 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
         __Pyx_XGOTREF(__pyx_t_19);
         /*try:*/ {
 
-          /* "LXG/replication.py":353
+          /* "LXG/replication.py":355
  *                 old_fc_buf = os.path.join(self.gdb_poly, f'gdb1_{fc}_buf')
  *                 try:
  *                     if arcpy.Exists(fc_pts):             # <<<<<<<<<<<<<<
  *                         if arcpy.Exists(old_fc_buf):
  *                             get_count = self.intersect(fc_pts, old_fc_buf)
  */
-          __Pyx_GetModuleGlobalName(__pyx_t_8, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 353, __pyx_L7_error)
+          __Pyx_GetModuleGlobalName(__pyx_t_8, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 355, __pyx_L7_error)
           __Pyx_GOTREF(__pyx_t_8);
-          __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_8, __pyx_n_s_Exists); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 353, __pyx_L7_error)
+          __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_8, __pyx_n_s_Exists); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 355, __pyx_L7_error)
           __Pyx_GOTREF(__pyx_t_3);
           __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
           __pyx_t_8 = NULL;
@@ -12333,23 +12494,23 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
           }
           __pyx_t_2 = (__pyx_t_8) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_8, __pyx_v_fc_pts) : __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_v_fc_pts);
           __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
-          if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 353, __pyx_L7_error)
+          if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 355, __pyx_L7_error)
           __Pyx_GOTREF(__pyx_t_2);
           __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-          __pyx_t_20 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_20 < 0)) __PYX_ERR(0, 353, __pyx_L7_error)
+          __pyx_t_20 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_20 < 0)) __PYX_ERR(0, 355, __pyx_L7_error)
           __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
           if (__pyx_t_20) {
 
-            /* "LXG/replication.py":354
+            /* "LXG/replication.py":356
  *                 try:
  *                     if arcpy.Exists(fc_pts):
  *                         if arcpy.Exists(old_fc_buf):             # <<<<<<<<<<<<<<
  *                             get_count = self.intersect(fc_pts, old_fc_buf)
  *                             if get_count > 0:
  */
-            __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 354, __pyx_L7_error)
+            __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 356, __pyx_L7_error)
             __Pyx_GOTREF(__pyx_t_3);
-            __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_Exists); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 354, __pyx_L7_error)
+            __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_Exists); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 356, __pyx_L7_error)
             __Pyx_GOTREF(__pyx_t_8);
             __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
             __pyx_t_3 = NULL;
@@ -12364,21 +12525,21 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
             }
             __pyx_t_2 = (__pyx_t_3) ? __Pyx_PyObject_Call2Args(__pyx_t_8, __pyx_t_3, __pyx_v_old_fc_buf) : __Pyx_PyObject_CallOneArg(__pyx_t_8, __pyx_v_old_fc_buf);
             __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-            if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 354, __pyx_L7_error)
+            if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 356, __pyx_L7_error)
             __Pyx_GOTREF(__pyx_t_2);
             __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-            __pyx_t_20 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_20 < 0)) __PYX_ERR(0, 354, __pyx_L7_error)
+            __pyx_t_20 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_20 < 0)) __PYX_ERR(0, 356, __pyx_L7_error)
             __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
             if (__pyx_t_20) {
 
-              /* "LXG/replication.py":355
+              /* "LXG/replication.py":357
  *                     if arcpy.Exists(fc_pts):
  *                         if arcpy.Exists(old_fc_buf):
  *                             get_count = self.intersect(fc_pts, old_fc_buf)             # <<<<<<<<<<<<<<
  *                             if get_count > 0:
  *                                 new_features_list.append((fc, get_count))
  */
-              __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_intersect); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 355, __pyx_L7_error)
+              __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_intersect); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 357, __pyx_L7_error)
               __Pyx_GOTREF(__pyx_t_8);
               __pyx_t_3 = NULL;
               __pyx_t_9 = 0;
@@ -12395,7 +12556,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
               #if CYTHON_FAST_PYCALL
               if (PyFunction_Check(__pyx_t_8)) {
                 PyObject *__pyx_temp[3] = {__pyx_t_3, __pyx_v_fc_pts, __pyx_v_old_fc_buf};
-                __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_8, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 355, __pyx_L7_error)
+                __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_8, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 357, __pyx_L7_error)
                 __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
                 __Pyx_GOTREF(__pyx_t_2);
               } else
@@ -12403,13 +12564,13 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
               #if CYTHON_FAST_PYCCALL
               if (__Pyx_PyFastCFunction_Check(__pyx_t_8)) {
                 PyObject *__pyx_temp[3] = {__pyx_t_3, __pyx_v_fc_pts, __pyx_v_old_fc_buf};
-                __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_8, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 355, __pyx_L7_error)
+                __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_8, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 357, __pyx_L7_error)
                 __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
                 __Pyx_GOTREF(__pyx_t_2);
               } else
               #endif
               {
-                __pyx_t_1 = PyTuple_New(2+__pyx_t_9); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 355, __pyx_L7_error)
+                __pyx_t_1 = PyTuple_New(2+__pyx_t_9); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 357, __pyx_L7_error)
                 __Pyx_GOTREF(__pyx_t_1);
                 if (__pyx_t_3) {
                   __Pyx_GIVEREF(__pyx_t_3); PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_t_3); __pyx_t_3 = NULL;
@@ -12420,7 +12581,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
                 __Pyx_INCREF(__pyx_v_old_fc_buf);
                 __Pyx_GIVEREF(__pyx_v_old_fc_buf);
                 PyTuple_SET_ITEM(__pyx_t_1, 1+__pyx_t_9, __pyx_v_old_fc_buf);
-                __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_8, __pyx_t_1, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 355, __pyx_L7_error)
+                __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_8, __pyx_t_1, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 357, __pyx_L7_error)
                 __Pyx_GOTREF(__pyx_t_2);
                 __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
               }
@@ -12428,26 +12589,26 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
               __Pyx_XDECREF_SET(__pyx_v_get_count, __pyx_t_2);
               __pyx_t_2 = 0;
 
-              /* "LXG/replication.py":356
+              /* "LXG/replication.py":358
  *                         if arcpy.Exists(old_fc_buf):
  *                             get_count = self.intersect(fc_pts, old_fc_buf)
  *                             if get_count > 0:             # <<<<<<<<<<<<<<
  *                                 new_features_list.append((fc, get_count))
  *                 except arcpy.ExecuteError as e:
  */
-              __pyx_t_2 = PyObject_RichCompare(__pyx_v_get_count, __pyx_int_0, Py_GT); __Pyx_XGOTREF(__pyx_t_2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 356, __pyx_L7_error)
-              __pyx_t_20 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_20 < 0)) __PYX_ERR(0, 356, __pyx_L7_error)
+              __pyx_t_2 = PyObject_RichCompare(__pyx_v_get_count, __pyx_int_0, Py_GT); __Pyx_XGOTREF(__pyx_t_2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 358, __pyx_L7_error)
+              __pyx_t_20 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_20 < 0)) __PYX_ERR(0, 358, __pyx_L7_error)
               __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
               if (__pyx_t_20) {
 
-                /* "LXG/replication.py":357
+                /* "LXG/replication.py":359
  *                             get_count = self.intersect(fc_pts, old_fc_buf)
  *                             if get_count > 0:
  *                                 new_features_list.append((fc, get_count))             # <<<<<<<<<<<<<<
  *                 except arcpy.ExecuteError as e:
  *                     arcpy.AddError(e)
  */
-                __pyx_t_2 = PyTuple_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 357, __pyx_L7_error)
+                __pyx_t_2 = PyTuple_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 359, __pyx_L7_error)
                 __Pyx_GOTREF(__pyx_t_2);
                 __Pyx_INCREF(__pyx_v_fc);
                 __Pyx_GIVEREF(__pyx_v_fc);
@@ -12455,10 +12616,10 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
                 __Pyx_INCREF(__pyx_v_get_count);
                 __Pyx_GIVEREF(__pyx_v_get_count);
                 PyTuple_SET_ITEM(__pyx_t_2, 1, __pyx_v_get_count);
-                __pyx_t_4 = __Pyx_PyList_Append(__pyx_v_new_features_list, __pyx_t_2); if (unlikely(__pyx_t_4 == ((int)-1))) __PYX_ERR(0, 357, __pyx_L7_error)
+                __pyx_t_4 = __Pyx_PyList_Append(__pyx_v_new_features_list, __pyx_t_2); if (unlikely(__pyx_t_4 == ((int)-1))) __PYX_ERR(0, 359, __pyx_L7_error)
                 __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-                /* "LXG/replication.py":356
+                /* "LXG/replication.py":358
  *                         if arcpy.Exists(old_fc_buf):
  *                             get_count = self.intersect(fc_pts, old_fc_buf)
  *                             if get_count > 0:             # <<<<<<<<<<<<<<
@@ -12467,7 +12628,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
  */
               }
 
-              /* "LXG/replication.py":354
+              /* "LXG/replication.py":356
  *                 try:
  *                     if arcpy.Exists(fc_pts):
  *                         if arcpy.Exists(old_fc_buf):             # <<<<<<<<<<<<<<
@@ -12476,7 +12637,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
  */
             }
 
-            /* "LXG/replication.py":353
+            /* "LXG/replication.py":355
  *                 old_fc_buf = os.path.join(self.gdb_poly, f'gdb1_{fc}_buf')
  *                 try:
  *                     if arcpy.Exists(fc_pts):             # <<<<<<<<<<<<<<
@@ -12485,7 +12646,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
  */
           }
 
-          /* "LXG/replication.py":352
+          /* "LXG/replication.py":354
  *                 fc_pts = os.path.join(self.gdb_poly, f'gdb2_{fc}_pts')
  *                 old_fc_buf = os.path.join(self.gdb_poly, f'gdb1_{fc}_buf')
  *                 try:             # <<<<<<<<<<<<<<
@@ -12505,7 +12666,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
         __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
         __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
 
-        /* "LXG/replication.py":358
+        /* "LXG/replication.py":360
  *                             if get_count > 0:
  *                                 new_features_list.append((fc, get_count))
  *                 except arcpy.ExecuteError as e:             # <<<<<<<<<<<<<<
@@ -12513,9 +12674,9 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
  * 
  */
         __Pyx_ErrFetch(&__pyx_t_2, &__pyx_t_8, &__pyx_t_1);
-        __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 358, __pyx_L9_except_error)
+        __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 360, __pyx_L9_except_error)
         __Pyx_GOTREF(__pyx_t_3);
-        __pyx_t_16 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_ExecuteError); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 358, __pyx_L9_except_error)
+        __pyx_t_16 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_ExecuteError); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 360, __pyx_L9_except_error)
         __Pyx_GOTREF(__pyx_t_16);
         __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
         __pyx_t_9 = __Pyx_PyErr_GivenExceptionMatches(__pyx_t_2, __pyx_t_16);
@@ -12524,23 +12685,23 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
         __pyx_t_2 = 0; __pyx_t_8 = 0; __pyx_t_1 = 0;
         if (__pyx_t_9) {
           __Pyx_AddTraceback("LXGREP.AppendNewFeatures.check_differences", __pyx_clineno, __pyx_lineno, __pyx_filename);
-          if (__Pyx_GetException(&__pyx_t_1, &__pyx_t_8, &__pyx_t_2) < 0) __PYX_ERR(0, 358, __pyx_L9_except_error)
+          if (__Pyx_GetException(&__pyx_t_1, &__pyx_t_8, &__pyx_t_2) < 0) __PYX_ERR(0, 360, __pyx_L9_except_error)
           __Pyx_GOTREF(__pyx_t_1);
           __Pyx_GOTREF(__pyx_t_8);
           __Pyx_GOTREF(__pyx_t_2);
           __Pyx_INCREF(__pyx_t_8);
           __Pyx_XDECREF_SET(__pyx_v_e, __pyx_t_8);
 
-          /* "LXG/replication.py":359
+          /* "LXG/replication.py":361
  *                                 new_features_list.append((fc, get_count))
  *                 except arcpy.ExecuteError as e:
  *                     arcpy.AddError(e)             # <<<<<<<<<<<<<<
  * 
  *             fcs = sorted(arcpy.ListFeatureClasses("", "Polyline", ds))
  */
-          __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 359, __pyx_L9_except_error)
+          __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 361, __pyx_L9_except_error)
           __Pyx_GOTREF(__pyx_t_3);
-          __pyx_t_15 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_AddError); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 359, __pyx_L9_except_error)
+          __pyx_t_15 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_AddError); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 361, __pyx_L9_except_error)
           __Pyx_GOTREF(__pyx_t_15);
           __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
           __pyx_t_3 = NULL;
@@ -12555,7 +12716,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
           }
           __pyx_t_16 = (__pyx_t_3) ? __Pyx_PyObject_Call2Args(__pyx_t_15, __pyx_t_3, __pyx_v_e) : __Pyx_PyObject_CallOneArg(__pyx_t_15, __pyx_v_e);
           __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-          if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 359, __pyx_L9_except_error)
+          if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 361, __pyx_L9_except_error)
           __Pyx_GOTREF(__pyx_t_16);
           __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
           __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
@@ -12567,7 +12728,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
         goto __pyx_L9_except_error;
         __pyx_L9_except_error:;
 
-        /* "LXG/replication.py":352
+        /* "LXG/replication.py":354
  *                 fc_pts = os.path.join(self.gdb_poly, f'gdb2_{fc}_pts')
  *                 old_fc_buf = os.path.join(self.gdb_poly, f'gdb1_{fc}_buf')
  *                 try:             # <<<<<<<<<<<<<<
@@ -12587,7 +12748,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
         __pyx_L14_try_end:;
       }
 
-      /* "LXG/replication.py":348
+      /* "LXG/replication.py":350
  *             fcs = sorted(arcpy.ListFeatureClasses("", "Polygon", ds))
  *             pbar02 = tqdm(fcs, position=1, colour='Yellow', leave=False)
  *             for fc in pbar02:             # <<<<<<<<<<<<<<
@@ -12597,16 +12758,16 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
     }
     __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
 
-    /* "LXG/replication.py":361
+    /* "LXG/replication.py":363
  *                     arcpy.AddError(e)
  * 
  *             fcs = sorted(arcpy.ListFeatureClasses("", "Polyline", ds))             # <<<<<<<<<<<<<<
  *             pbar03 = tqdm(fcs, position=1, colour='Yellow', leave=False)
  *             for fc in pbar03:
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_8, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 361, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_8, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 363, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
-    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_8, __pyx_n_s_ListFeatureClasses); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 361, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_8, __pyx_n_s_ListFeatureClasses); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 363, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
     __pyx_t_8 = NULL;
@@ -12624,7 +12785,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
     #if CYTHON_FAST_PYCALL
     if (PyFunction_Check(__pyx_t_1)) {
       PyObject *__pyx_temp[4] = {__pyx_t_8, __pyx_kp_s_, __pyx_n_s_Polyline, __pyx_v_ds};
-      __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_9, 3+__pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 361, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_9, 3+__pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 363, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
       __Pyx_GOTREF(__pyx_t_2);
     } else
@@ -12632,13 +12793,13 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
     #if CYTHON_FAST_PYCCALL
     if (__Pyx_PyFastCFunction_Check(__pyx_t_1)) {
       PyObject *__pyx_temp[4] = {__pyx_t_8, __pyx_kp_s_, __pyx_n_s_Polyline, __pyx_v_ds};
-      __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_9, 3+__pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 361, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_9, 3+__pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 363, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
       __Pyx_GOTREF(__pyx_t_2);
     } else
     #endif
     {
-      __pyx_t_16 = PyTuple_New(3+__pyx_t_9); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 361, __pyx_L1_error)
+      __pyx_t_16 = PyTuple_New(3+__pyx_t_9); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 363, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_16);
       if (__pyx_t_8) {
         __Pyx_GIVEREF(__pyx_t_8); PyTuple_SET_ITEM(__pyx_t_16, 0, __pyx_t_8); __pyx_t_8 = NULL;
@@ -12652,40 +12813,40 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
       __Pyx_INCREF(__pyx_v_ds);
       __Pyx_GIVEREF(__pyx_v_ds);
       PyTuple_SET_ITEM(__pyx_t_16, 2+__pyx_t_9, __pyx_v_ds);
-      __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_16, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 361, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_16, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 363, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
     }
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __pyx_t_1 = PySequence_List(__pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 361, __pyx_L1_error)
+    __pyx_t_1 = PySequence_List(__pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 363, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __pyx_t_10 = ((PyObject*)__pyx_t_1);
     __pyx_t_1 = 0;
-    __pyx_t_4 = PyList_Sort(__pyx_t_10); if (unlikely(__pyx_t_4 == ((int)-1))) __PYX_ERR(0, 361, __pyx_L1_error)
+    __pyx_t_4 = PyList_Sort(__pyx_t_10); if (unlikely(__pyx_t_4 == ((int)-1))) __PYX_ERR(0, 363, __pyx_L1_error)
     __Pyx_DECREF_SET(__pyx_v_fcs, ((PyObject*)__pyx_t_10));
     __pyx_t_10 = 0;
 
-    /* "LXG/replication.py":362
+    /* "LXG/replication.py":364
  * 
  *             fcs = sorted(arcpy.ListFeatureClasses("", "Polyline", ds))
  *             pbar03 = tqdm(fcs, position=1, colour='Yellow', leave=False)             # <<<<<<<<<<<<<<
  *             for fc in pbar03:
  *                 pbar03.set_description(fc)
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_10, __pyx_n_s_tqdm); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 362, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_10, __pyx_n_s_tqdm); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 364, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_10);
-    __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 362, __pyx_L1_error)
+    __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 364, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_INCREF(__pyx_v_fcs);
     __Pyx_GIVEREF(__pyx_v_fcs);
     PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_v_fcs);
-    __pyx_t_2 = __Pyx_PyDict_NewPresized(3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 362, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyDict_NewPresized(3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 364, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_position, __pyx_int_1) < 0) __PYX_ERR(0, 362, __pyx_L1_error)
-    if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_colour, __pyx_n_s_Yellow) < 0) __PYX_ERR(0, 362, __pyx_L1_error)
-    if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_leave, Py_False) < 0) __PYX_ERR(0, 362, __pyx_L1_error)
-    __pyx_t_16 = __Pyx_PyObject_Call(__pyx_t_10, __pyx_t_1, __pyx_t_2); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 362, __pyx_L1_error)
+    if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_position, __pyx_int_1) < 0) __PYX_ERR(0, 364, __pyx_L1_error)
+    if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_colour, __pyx_n_s_Yellow) < 0) __PYX_ERR(0, 364, __pyx_L1_error)
+    if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_leave, Py_False) < 0) __PYX_ERR(0, 364, __pyx_L1_error)
+    __pyx_t_16 = __Pyx_PyObject_Call(__pyx_t_10, __pyx_t_1, __pyx_t_2); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 364, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_16);
     __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -12693,7 +12854,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
     __Pyx_XDECREF_SET(__pyx_v_pbar03, __pyx_t_16);
     __pyx_t_16 = 0;
 
-    /* "LXG/replication.py":363
+    /* "LXG/replication.py":365
  *             fcs = sorted(arcpy.ListFeatureClasses("", "Polyline", ds))
  *             pbar03 = tqdm(fcs, position=1, colour='Yellow', leave=False)
  *             for fc in pbar03:             # <<<<<<<<<<<<<<
@@ -12704,26 +12865,26 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
       __pyx_t_16 = __pyx_v_pbar03; __Pyx_INCREF(__pyx_t_16); __pyx_t_11 = 0;
       __pyx_t_12 = NULL;
     } else {
-      __pyx_t_11 = -1; __pyx_t_16 = PyObject_GetIter(__pyx_v_pbar03); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 363, __pyx_L1_error)
+      __pyx_t_11 = -1; __pyx_t_16 = PyObject_GetIter(__pyx_v_pbar03); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 365, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_16);
-      __pyx_t_12 = Py_TYPE(__pyx_t_16)->tp_iternext; if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 363, __pyx_L1_error)
+      __pyx_t_12 = Py_TYPE(__pyx_t_16)->tp_iternext; if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 365, __pyx_L1_error)
     }
     for (;;) {
       if (likely(!__pyx_t_12)) {
         if (likely(PyList_CheckExact(__pyx_t_16))) {
           if (__pyx_t_11 >= PyList_GET_SIZE(__pyx_t_16)) break;
           #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-          __pyx_t_2 = PyList_GET_ITEM(__pyx_t_16, __pyx_t_11); __Pyx_INCREF(__pyx_t_2); __pyx_t_11++; if (unlikely(0 < 0)) __PYX_ERR(0, 363, __pyx_L1_error)
+          __pyx_t_2 = PyList_GET_ITEM(__pyx_t_16, __pyx_t_11); __Pyx_INCREF(__pyx_t_2); __pyx_t_11++; if (unlikely(0 < 0)) __PYX_ERR(0, 365, __pyx_L1_error)
           #else
-          __pyx_t_2 = PySequence_ITEM(__pyx_t_16, __pyx_t_11); __pyx_t_11++; if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 363, __pyx_L1_error)
+          __pyx_t_2 = PySequence_ITEM(__pyx_t_16, __pyx_t_11); __pyx_t_11++; if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 365, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_2);
           #endif
         } else {
           if (__pyx_t_11 >= PyTuple_GET_SIZE(__pyx_t_16)) break;
           #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-          __pyx_t_2 = PyTuple_GET_ITEM(__pyx_t_16, __pyx_t_11); __Pyx_INCREF(__pyx_t_2); __pyx_t_11++; if (unlikely(0 < 0)) __PYX_ERR(0, 363, __pyx_L1_error)
+          __pyx_t_2 = PyTuple_GET_ITEM(__pyx_t_16, __pyx_t_11); __Pyx_INCREF(__pyx_t_2); __pyx_t_11++; if (unlikely(0 < 0)) __PYX_ERR(0, 365, __pyx_L1_error)
           #else
-          __pyx_t_2 = PySequence_ITEM(__pyx_t_16, __pyx_t_11); __pyx_t_11++; if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 363, __pyx_L1_error)
+          __pyx_t_2 = PySequence_ITEM(__pyx_t_16, __pyx_t_11); __pyx_t_11++; if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 365, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_2);
           #endif
         }
@@ -12733,7 +12894,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
           PyObject* exc_type = PyErr_Occurred();
           if (exc_type) {
             if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-            else __PYX_ERR(0, 363, __pyx_L1_error)
+            else __PYX_ERR(0, 365, __pyx_L1_error)
           }
           break;
         }
@@ -12742,14 +12903,14 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
       __Pyx_XDECREF_SET(__pyx_v_fc, __pyx_t_2);
       __pyx_t_2 = 0;
 
-      /* "LXG/replication.py":364
+      /* "LXG/replication.py":366
  *             pbar03 = tqdm(fcs, position=1, colour='Yellow', leave=False)
  *             for fc in pbar03:
  *                 pbar03.set_description(fc)             # <<<<<<<<<<<<<<
  *                 fc_pts = os.path.join(self.gdb_lines, f'gdb2_{fc}_pts')
  *                 old_fc_buf = os.path.join(self.gdb_lines, f'gdb1_{fc}_buf')
  */
-      __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_pbar03, __pyx_n_s_set_description); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 364, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_pbar03, __pyx_n_s_set_description); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 366, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       __pyx_t_10 = NULL;
       if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_1))) {
@@ -12763,29 +12924,29 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
       }
       __pyx_t_2 = (__pyx_t_10) ? __Pyx_PyObject_Call2Args(__pyx_t_1, __pyx_t_10, __pyx_v_fc) : __Pyx_PyObject_CallOneArg(__pyx_t_1, __pyx_v_fc);
       __Pyx_XDECREF(__pyx_t_10); __pyx_t_10 = 0;
-      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 364, __pyx_L1_error)
+      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 366, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-      /* "LXG/replication.py":365
+      /* "LXG/replication.py":367
  *             for fc in pbar03:
  *                 pbar03.set_description(fc)
  *                 fc_pts = os.path.join(self.gdb_lines, f'gdb2_{fc}_pts')             # <<<<<<<<<<<<<<
  *                 old_fc_buf = os.path.join(self.gdb_lines, f'gdb1_{fc}_buf')
  *                 try:
  */
-      __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_os); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 365, __pyx_L1_error)
+      __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_os); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 367, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
-      __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_path); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 365, __pyx_L1_error)
+      __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_path); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 367, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_10);
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-      __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_10, __pyx_n_s_join); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 365, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_10, __pyx_n_s_join); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 367, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
-      __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_gdb_lines); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 365, __pyx_L1_error)
+      __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_gdb_lines); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 367, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_10);
-      __pyx_t_8 = PyTuple_New(3); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 365, __pyx_L1_error)
+      __pyx_t_8 = PyTuple_New(3); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 367, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_8);
       __pyx_t_13 = 0;
       __pyx_t_14 = 127;
@@ -12793,7 +12954,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
       __pyx_t_13 += 5;
       __Pyx_GIVEREF(__pyx_n_u_gdb2_2);
       PyTuple_SET_ITEM(__pyx_t_8, 0, __pyx_n_u_gdb2_2);
-      __pyx_t_15 = __Pyx_PyObject_FormatSimple(__pyx_v_fc, __pyx_empty_unicode); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 365, __pyx_L1_error)
+      __pyx_t_15 = __Pyx_PyObject_FormatSimple(__pyx_v_fc, __pyx_empty_unicode); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 367, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_15);
       __pyx_t_14 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_15) > __pyx_t_14) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_15) : __pyx_t_14;
       __pyx_t_13 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_15);
@@ -12804,7 +12965,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
       __pyx_t_13 += 4;
       __Pyx_GIVEREF(__pyx_n_u_pts);
       PyTuple_SET_ITEM(__pyx_t_8, 2, __pyx_n_u_pts);
-      __pyx_t_15 = __Pyx_PyUnicode_Join(__pyx_t_8, 3, __pyx_t_13, __pyx_t_14); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 365, __pyx_L1_error)
+      __pyx_t_15 = __Pyx_PyUnicode_Join(__pyx_t_8, 3, __pyx_t_13, __pyx_t_14); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 367, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_15);
       __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
       __pyx_t_8 = NULL;
@@ -12822,7 +12983,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
       #if CYTHON_FAST_PYCALL
       if (PyFunction_Check(__pyx_t_1)) {
         PyObject *__pyx_temp[3] = {__pyx_t_8, __pyx_t_10, __pyx_t_15};
-        __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 365, __pyx_L1_error)
+        __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 367, __pyx_L1_error)
         __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
         __Pyx_GOTREF(__pyx_t_2);
         __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
@@ -12832,7 +12993,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
       #if CYTHON_FAST_PYCCALL
       if (__Pyx_PyFastCFunction_Check(__pyx_t_1)) {
         PyObject *__pyx_temp[3] = {__pyx_t_8, __pyx_t_10, __pyx_t_15};
-        __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 365, __pyx_L1_error)
+        __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 367, __pyx_L1_error)
         __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
         __Pyx_GOTREF(__pyx_t_2);
         __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
@@ -12840,7 +13001,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
       } else
       #endif
       {
-        __pyx_t_3 = PyTuple_New(2+__pyx_t_9); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 365, __pyx_L1_error)
+        __pyx_t_3 = PyTuple_New(2+__pyx_t_9); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 367, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_3);
         if (__pyx_t_8) {
           __Pyx_GIVEREF(__pyx_t_8); PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_8); __pyx_t_8 = NULL;
@@ -12851,7 +13012,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
         PyTuple_SET_ITEM(__pyx_t_3, 1+__pyx_t_9, __pyx_t_15);
         __pyx_t_10 = 0;
         __pyx_t_15 = 0;
-        __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_3, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 365, __pyx_L1_error)
+        __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_3, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 367, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_2);
         __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       }
@@ -12859,24 +13020,24 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
       __Pyx_XDECREF_SET(__pyx_v_fc_pts, __pyx_t_2);
       __pyx_t_2 = 0;
 
-      /* "LXG/replication.py":366
+      /* "LXG/replication.py":368
  *                 pbar03.set_description(fc)
  *                 fc_pts = os.path.join(self.gdb_lines, f'gdb2_{fc}_pts')
  *                 old_fc_buf = os.path.join(self.gdb_lines, f'gdb1_{fc}_buf')             # <<<<<<<<<<<<<<
  *                 try:
  *                     if arcpy.Exists(fc_pts):
  */
-      __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_os); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 366, __pyx_L1_error)
+      __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_os); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 368, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
-      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_path); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 366, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_path); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 368, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-      __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_join); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 366, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_join); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 368, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_gdb_lines); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 366, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_gdb_lines); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 368, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
-      __pyx_t_15 = PyTuple_New(3); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 366, __pyx_L1_error)
+      __pyx_t_15 = PyTuple_New(3); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 368, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_15);
       __pyx_t_13 = 0;
       __pyx_t_14 = 127;
@@ -12884,7 +13045,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
       __pyx_t_13 += 5;
       __Pyx_GIVEREF(__pyx_n_u_gdb1_2);
       PyTuple_SET_ITEM(__pyx_t_15, 0, __pyx_n_u_gdb1_2);
-      __pyx_t_10 = __Pyx_PyObject_FormatSimple(__pyx_v_fc, __pyx_empty_unicode); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 366, __pyx_L1_error)
+      __pyx_t_10 = __Pyx_PyObject_FormatSimple(__pyx_v_fc, __pyx_empty_unicode); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 368, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_10);
       __pyx_t_14 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_10) > __pyx_t_14) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_10) : __pyx_t_14;
       __pyx_t_13 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_10);
@@ -12895,7 +13056,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
       __pyx_t_13 += 4;
       __Pyx_GIVEREF(__pyx_n_u_buf);
       PyTuple_SET_ITEM(__pyx_t_15, 2, __pyx_n_u_buf);
-      __pyx_t_10 = __Pyx_PyUnicode_Join(__pyx_t_15, 3, __pyx_t_13, __pyx_t_14); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 366, __pyx_L1_error)
+      __pyx_t_10 = __Pyx_PyUnicode_Join(__pyx_t_15, 3, __pyx_t_13, __pyx_t_14); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 368, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_10);
       __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
       __pyx_t_15 = NULL;
@@ -12913,7 +13074,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
       #if CYTHON_FAST_PYCALL
       if (PyFunction_Check(__pyx_t_1)) {
         PyObject *__pyx_temp[3] = {__pyx_t_15, __pyx_t_3, __pyx_t_10};
-        __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 366, __pyx_L1_error)
+        __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 368, __pyx_L1_error)
         __Pyx_XDECREF(__pyx_t_15); __pyx_t_15 = 0;
         __Pyx_GOTREF(__pyx_t_2);
         __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -12923,7 +13084,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
       #if CYTHON_FAST_PYCCALL
       if (__Pyx_PyFastCFunction_Check(__pyx_t_1)) {
         PyObject *__pyx_temp[3] = {__pyx_t_15, __pyx_t_3, __pyx_t_10};
-        __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 366, __pyx_L1_error)
+        __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 368, __pyx_L1_error)
         __Pyx_XDECREF(__pyx_t_15); __pyx_t_15 = 0;
         __Pyx_GOTREF(__pyx_t_2);
         __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -12931,7 +13092,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
       } else
       #endif
       {
-        __pyx_t_8 = PyTuple_New(2+__pyx_t_9); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 366, __pyx_L1_error)
+        __pyx_t_8 = PyTuple_New(2+__pyx_t_9); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 368, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_8);
         if (__pyx_t_15) {
           __Pyx_GIVEREF(__pyx_t_15); PyTuple_SET_ITEM(__pyx_t_8, 0, __pyx_t_15); __pyx_t_15 = NULL;
@@ -12942,7 +13103,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
         PyTuple_SET_ITEM(__pyx_t_8, 1+__pyx_t_9, __pyx_t_10);
         __pyx_t_3 = 0;
         __pyx_t_10 = 0;
-        __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_8, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 366, __pyx_L1_error)
+        __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_8, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 368, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_2);
         __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
       }
@@ -12950,7 +13111,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
       __Pyx_XDECREF_SET(__pyx_v_old_fc_buf, __pyx_t_2);
       __pyx_t_2 = 0;
 
-      /* "LXG/replication.py":367
+      /* "LXG/replication.py":369
  *                 fc_pts = os.path.join(self.gdb_lines, f'gdb2_{fc}_pts')
  *                 old_fc_buf = os.path.join(self.gdb_lines, f'gdb1_{fc}_buf')
  *                 try:             # <<<<<<<<<<<<<<
@@ -12966,16 +13127,16 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
         __Pyx_XGOTREF(__pyx_t_17);
         /*try:*/ {
 
-          /* "LXG/replication.py":368
+          /* "LXG/replication.py":370
  *                 old_fc_buf = os.path.join(self.gdb_lines, f'gdb1_{fc}_buf')
  *                 try:
  *                     if arcpy.Exists(fc_pts):             # <<<<<<<<<<<<<<
  *                         if arcpy.Exists(old_fc_buf):
  *                             get_count = self.intersect(fc_pts, old_fc_buf)
  */
-          __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 368, __pyx_L22_error)
+          __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 370, __pyx_L22_error)
           __Pyx_GOTREF(__pyx_t_1);
-          __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_Exists); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 368, __pyx_L22_error)
+          __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_Exists); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 370, __pyx_L22_error)
           __Pyx_GOTREF(__pyx_t_8);
           __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
           __pyx_t_1 = NULL;
@@ -12990,23 +13151,23 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
           }
           __pyx_t_2 = (__pyx_t_1) ? __Pyx_PyObject_Call2Args(__pyx_t_8, __pyx_t_1, __pyx_v_fc_pts) : __Pyx_PyObject_CallOneArg(__pyx_t_8, __pyx_v_fc_pts);
           __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
-          if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 368, __pyx_L22_error)
+          if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 370, __pyx_L22_error)
           __Pyx_GOTREF(__pyx_t_2);
           __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-          __pyx_t_20 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_20 < 0)) __PYX_ERR(0, 368, __pyx_L22_error)
+          __pyx_t_20 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_20 < 0)) __PYX_ERR(0, 370, __pyx_L22_error)
           __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
           if (__pyx_t_20) {
 
-            /* "LXG/replication.py":369
+            /* "LXG/replication.py":371
  *                 try:
  *                     if arcpy.Exists(fc_pts):
  *                         if arcpy.Exists(old_fc_buf):             # <<<<<<<<<<<<<<
  *                             get_count = self.intersect(fc_pts, old_fc_buf)
  *                             if get_count > 0:
  */
-            __Pyx_GetModuleGlobalName(__pyx_t_8, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 369, __pyx_L22_error)
+            __Pyx_GetModuleGlobalName(__pyx_t_8, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 371, __pyx_L22_error)
             __Pyx_GOTREF(__pyx_t_8);
-            __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_8, __pyx_n_s_Exists); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 369, __pyx_L22_error)
+            __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_8, __pyx_n_s_Exists); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 371, __pyx_L22_error)
             __Pyx_GOTREF(__pyx_t_1);
             __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
             __pyx_t_8 = NULL;
@@ -13021,21 +13182,21 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
             }
             __pyx_t_2 = (__pyx_t_8) ? __Pyx_PyObject_Call2Args(__pyx_t_1, __pyx_t_8, __pyx_v_old_fc_buf) : __Pyx_PyObject_CallOneArg(__pyx_t_1, __pyx_v_old_fc_buf);
             __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
-            if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 369, __pyx_L22_error)
+            if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 371, __pyx_L22_error)
             __Pyx_GOTREF(__pyx_t_2);
             __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-            __pyx_t_20 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_20 < 0)) __PYX_ERR(0, 369, __pyx_L22_error)
+            __pyx_t_20 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_20 < 0)) __PYX_ERR(0, 371, __pyx_L22_error)
             __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
             if (__pyx_t_20) {
 
-              /* "LXG/replication.py":370
+              /* "LXG/replication.py":372
  *                     if arcpy.Exists(fc_pts):
  *                         if arcpy.Exists(old_fc_buf):
  *                             get_count = self.intersect(fc_pts, old_fc_buf)             # <<<<<<<<<<<<<<
  *                             if get_count > 0:
  *                                 new_features_list.append((fc, get_count))
  */
-              __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_intersect); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 370, __pyx_L22_error)
+              __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_intersect); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 372, __pyx_L22_error)
               __Pyx_GOTREF(__pyx_t_1);
               __pyx_t_8 = NULL;
               __pyx_t_9 = 0;
@@ -13052,7 +13213,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
               #if CYTHON_FAST_PYCALL
               if (PyFunction_Check(__pyx_t_1)) {
                 PyObject *__pyx_temp[3] = {__pyx_t_8, __pyx_v_fc_pts, __pyx_v_old_fc_buf};
-                __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 370, __pyx_L22_error)
+                __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 372, __pyx_L22_error)
                 __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
                 __Pyx_GOTREF(__pyx_t_2);
               } else
@@ -13060,13 +13221,13 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
               #if CYTHON_FAST_PYCCALL
               if (__Pyx_PyFastCFunction_Check(__pyx_t_1)) {
                 PyObject *__pyx_temp[3] = {__pyx_t_8, __pyx_v_fc_pts, __pyx_v_old_fc_buf};
-                __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 370, __pyx_L22_error)
+                __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 372, __pyx_L22_error)
                 __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
                 __Pyx_GOTREF(__pyx_t_2);
               } else
               #endif
               {
-                __pyx_t_10 = PyTuple_New(2+__pyx_t_9); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 370, __pyx_L22_error)
+                __pyx_t_10 = PyTuple_New(2+__pyx_t_9); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 372, __pyx_L22_error)
                 __Pyx_GOTREF(__pyx_t_10);
                 if (__pyx_t_8) {
                   __Pyx_GIVEREF(__pyx_t_8); PyTuple_SET_ITEM(__pyx_t_10, 0, __pyx_t_8); __pyx_t_8 = NULL;
@@ -13077,7 +13238,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
                 __Pyx_INCREF(__pyx_v_old_fc_buf);
                 __Pyx_GIVEREF(__pyx_v_old_fc_buf);
                 PyTuple_SET_ITEM(__pyx_t_10, 1+__pyx_t_9, __pyx_v_old_fc_buf);
-                __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_10, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 370, __pyx_L22_error)
+                __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_10, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 372, __pyx_L22_error)
                 __Pyx_GOTREF(__pyx_t_2);
                 __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
               }
@@ -13085,26 +13246,26 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
               __Pyx_XDECREF_SET(__pyx_v_get_count, __pyx_t_2);
               __pyx_t_2 = 0;
 
-              /* "LXG/replication.py":371
+              /* "LXG/replication.py":373
  *                         if arcpy.Exists(old_fc_buf):
  *                             get_count = self.intersect(fc_pts, old_fc_buf)
  *                             if get_count > 0:             # <<<<<<<<<<<<<<
  *                                 new_features_list.append((fc, get_count))
  *                 except arcpy.ExecuteError as e:
  */
-              __pyx_t_2 = PyObject_RichCompare(__pyx_v_get_count, __pyx_int_0, Py_GT); __Pyx_XGOTREF(__pyx_t_2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 371, __pyx_L22_error)
-              __pyx_t_20 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_20 < 0)) __PYX_ERR(0, 371, __pyx_L22_error)
+              __pyx_t_2 = PyObject_RichCompare(__pyx_v_get_count, __pyx_int_0, Py_GT); __Pyx_XGOTREF(__pyx_t_2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 373, __pyx_L22_error)
+              __pyx_t_20 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_20 < 0)) __PYX_ERR(0, 373, __pyx_L22_error)
               __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
               if (__pyx_t_20) {
 
-                /* "LXG/replication.py":372
+                /* "LXG/replication.py":374
  *                             get_count = self.intersect(fc_pts, old_fc_buf)
  *                             if get_count > 0:
  *                                 new_features_list.append((fc, get_count))             # <<<<<<<<<<<<<<
  *                 except arcpy.ExecuteError as e:
  *                     arcpy.AddError(e)
  */
-                __pyx_t_2 = PyTuple_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 372, __pyx_L22_error)
+                __pyx_t_2 = PyTuple_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 374, __pyx_L22_error)
                 __Pyx_GOTREF(__pyx_t_2);
                 __Pyx_INCREF(__pyx_v_fc);
                 __Pyx_GIVEREF(__pyx_v_fc);
@@ -13112,10 +13273,10 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
                 __Pyx_INCREF(__pyx_v_get_count);
                 __Pyx_GIVEREF(__pyx_v_get_count);
                 PyTuple_SET_ITEM(__pyx_t_2, 1, __pyx_v_get_count);
-                __pyx_t_4 = __Pyx_PyList_Append(__pyx_v_new_features_list, __pyx_t_2); if (unlikely(__pyx_t_4 == ((int)-1))) __PYX_ERR(0, 372, __pyx_L22_error)
+                __pyx_t_4 = __Pyx_PyList_Append(__pyx_v_new_features_list, __pyx_t_2); if (unlikely(__pyx_t_4 == ((int)-1))) __PYX_ERR(0, 374, __pyx_L22_error)
                 __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-                /* "LXG/replication.py":371
+                /* "LXG/replication.py":373
  *                         if arcpy.Exists(old_fc_buf):
  *                             get_count = self.intersect(fc_pts, old_fc_buf)
  *                             if get_count > 0:             # <<<<<<<<<<<<<<
@@ -13124,7 +13285,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
  */
               }
 
-              /* "LXG/replication.py":369
+              /* "LXG/replication.py":371
  *                 try:
  *                     if arcpy.Exists(fc_pts):
  *                         if arcpy.Exists(old_fc_buf):             # <<<<<<<<<<<<<<
@@ -13133,7 +13294,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
  */
             }
 
-            /* "LXG/replication.py":368
+            /* "LXG/replication.py":370
  *                 old_fc_buf = os.path.join(self.gdb_lines, f'gdb1_{fc}_buf')
  *                 try:
  *                     if arcpy.Exists(fc_pts):             # <<<<<<<<<<<<<<
@@ -13142,7 +13303,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
  */
           }
 
-          /* "LXG/replication.py":367
+          /* "LXG/replication.py":369
  *                 fc_pts = os.path.join(self.gdb_lines, f'gdb2_{fc}_pts')
  *                 old_fc_buf = os.path.join(self.gdb_lines, f'gdb1_{fc}_buf')
  *                 try:             # <<<<<<<<<<<<<<
@@ -13162,7 +13323,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
         __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
         __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
 
-        /* "LXG/replication.py":373
+        /* "LXG/replication.py":375
  *                             if get_count > 0:
  *                                 new_features_list.append((fc, get_count))
  *                 except arcpy.ExecuteError as e:             # <<<<<<<<<<<<<<
@@ -13170,9 +13331,9 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
  * 
  */
         __Pyx_ErrFetch(&__pyx_t_2, &__pyx_t_1, &__pyx_t_10);
-        __Pyx_GetModuleGlobalName(__pyx_t_8, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 373, __pyx_L24_except_error)
+        __Pyx_GetModuleGlobalName(__pyx_t_8, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 375, __pyx_L24_except_error)
         __Pyx_GOTREF(__pyx_t_8);
-        __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_8, __pyx_n_s_ExecuteError); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 373, __pyx_L24_except_error)
+        __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_8, __pyx_n_s_ExecuteError); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 375, __pyx_L24_except_error)
         __Pyx_GOTREF(__pyx_t_3);
         __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
         __pyx_t_9 = __Pyx_PyErr_GivenExceptionMatches(__pyx_t_2, __pyx_t_3);
@@ -13181,23 +13342,23 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
         __pyx_t_2 = 0; __pyx_t_1 = 0; __pyx_t_10 = 0;
         if (__pyx_t_9) {
           __Pyx_AddTraceback("LXGREP.AppendNewFeatures.check_differences", __pyx_clineno, __pyx_lineno, __pyx_filename);
-          if (__Pyx_GetException(&__pyx_t_10, &__pyx_t_1, &__pyx_t_2) < 0) __PYX_ERR(0, 373, __pyx_L24_except_error)
+          if (__Pyx_GetException(&__pyx_t_10, &__pyx_t_1, &__pyx_t_2) < 0) __PYX_ERR(0, 375, __pyx_L24_except_error)
           __Pyx_GOTREF(__pyx_t_10);
           __Pyx_GOTREF(__pyx_t_1);
           __Pyx_GOTREF(__pyx_t_2);
           __Pyx_INCREF(__pyx_t_1);
           __Pyx_XDECREF_SET(__pyx_v_e, __pyx_t_1);
 
-          /* "LXG/replication.py":374
+          /* "LXG/replication.py":376
  *                                 new_features_list.append((fc, get_count))
  *                 except arcpy.ExecuteError as e:
  *                     arcpy.AddError(e)             # <<<<<<<<<<<<<<
  * 
  *             fcs = sorted(arcpy.ListFeatureClasses("", "Point", ds))
  */
-          __Pyx_GetModuleGlobalName(__pyx_t_8, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 374, __pyx_L24_except_error)
+          __Pyx_GetModuleGlobalName(__pyx_t_8, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 376, __pyx_L24_except_error)
           __Pyx_GOTREF(__pyx_t_8);
-          __pyx_t_15 = __Pyx_PyObject_GetAttrStr(__pyx_t_8, __pyx_n_s_AddError); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 374, __pyx_L24_except_error)
+          __pyx_t_15 = __Pyx_PyObject_GetAttrStr(__pyx_t_8, __pyx_n_s_AddError); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 376, __pyx_L24_except_error)
           __Pyx_GOTREF(__pyx_t_15);
           __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
           __pyx_t_8 = NULL;
@@ -13212,7 +13373,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
           }
           __pyx_t_3 = (__pyx_t_8) ? __Pyx_PyObject_Call2Args(__pyx_t_15, __pyx_t_8, __pyx_v_e) : __Pyx_PyObject_CallOneArg(__pyx_t_15, __pyx_v_e);
           __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
-          if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 374, __pyx_L24_except_error)
+          if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 376, __pyx_L24_except_error)
           __Pyx_GOTREF(__pyx_t_3);
           __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
           __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -13224,7 +13385,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
         goto __pyx_L24_except_error;
         __pyx_L24_except_error:;
 
-        /* "LXG/replication.py":367
+        /* "LXG/replication.py":369
  *                 fc_pts = os.path.join(self.gdb_lines, f'gdb2_{fc}_pts')
  *                 old_fc_buf = os.path.join(self.gdb_lines, f'gdb1_{fc}_buf')
  *                 try:             # <<<<<<<<<<<<<<
@@ -13244,7 +13405,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
         __pyx_L29_try_end:;
       }
 
-      /* "LXG/replication.py":363
+      /* "LXG/replication.py":365
  *             fcs = sorted(arcpy.ListFeatureClasses("", "Polyline", ds))
  *             pbar03 = tqdm(fcs, position=1, colour='Yellow', leave=False)
  *             for fc in pbar03:             # <<<<<<<<<<<<<<
@@ -13254,16 +13415,16 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
     }
     __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
 
-    /* "LXG/replication.py":376
+    /* "LXG/replication.py":378
  *                     arcpy.AddError(e)
  * 
  *             fcs = sorted(arcpy.ListFeatureClasses("", "Point", ds))             # <<<<<<<<<<<<<<
  *             pbar04 = tqdm(fcs, position=1, colour='Yellow', leave=False)
  *             for fc in pbar04:
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 376, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 378, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_ListFeatureClasses); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 376, __pyx_L1_error)
+    __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_ListFeatureClasses); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 378, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_10);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __pyx_t_1 = NULL;
@@ -13281,7 +13442,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
     #if CYTHON_FAST_PYCALL
     if (PyFunction_Check(__pyx_t_10)) {
       PyObject *__pyx_temp[4] = {__pyx_t_1, __pyx_kp_s_, __pyx_n_s_Point, __pyx_v_ds};
-      __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_10, __pyx_temp+1-__pyx_t_9, 3+__pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 376, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_10, __pyx_temp+1-__pyx_t_9, 3+__pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 378, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
       __Pyx_GOTREF(__pyx_t_2);
     } else
@@ -13289,13 +13450,13 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
     #if CYTHON_FAST_PYCCALL
     if (__Pyx_PyFastCFunction_Check(__pyx_t_10)) {
       PyObject *__pyx_temp[4] = {__pyx_t_1, __pyx_kp_s_, __pyx_n_s_Point, __pyx_v_ds};
-      __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_10, __pyx_temp+1-__pyx_t_9, 3+__pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 376, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_10, __pyx_temp+1-__pyx_t_9, 3+__pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 378, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
       __Pyx_GOTREF(__pyx_t_2);
     } else
     #endif
     {
-      __pyx_t_3 = PyTuple_New(3+__pyx_t_9); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 376, __pyx_L1_error)
+      __pyx_t_3 = PyTuple_New(3+__pyx_t_9); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 378, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       if (__pyx_t_1) {
         __Pyx_GIVEREF(__pyx_t_1); PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_1); __pyx_t_1 = NULL;
@@ -13309,40 +13470,40 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
       __Pyx_INCREF(__pyx_v_ds);
       __Pyx_GIVEREF(__pyx_v_ds);
       PyTuple_SET_ITEM(__pyx_t_3, 2+__pyx_t_9, __pyx_v_ds);
-      __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_10, __pyx_t_3, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 376, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_10, __pyx_t_3, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 378, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     }
     __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
-    __pyx_t_10 = PySequence_List(__pyx_t_2); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 376, __pyx_L1_error)
+    __pyx_t_10 = PySequence_List(__pyx_t_2); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 378, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_10);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __pyx_t_16 = ((PyObject*)__pyx_t_10);
     __pyx_t_10 = 0;
-    __pyx_t_4 = PyList_Sort(__pyx_t_16); if (unlikely(__pyx_t_4 == ((int)-1))) __PYX_ERR(0, 376, __pyx_L1_error)
+    __pyx_t_4 = PyList_Sort(__pyx_t_16); if (unlikely(__pyx_t_4 == ((int)-1))) __PYX_ERR(0, 378, __pyx_L1_error)
     __Pyx_DECREF_SET(__pyx_v_fcs, ((PyObject*)__pyx_t_16));
     __pyx_t_16 = 0;
 
-    /* "LXG/replication.py":377
+    /* "LXG/replication.py":379
  * 
  *             fcs = sorted(arcpy.ListFeatureClasses("", "Point", ds))
  *             pbar04 = tqdm(fcs, position=1, colour='Yellow', leave=False)             # <<<<<<<<<<<<<<
  *             for fc in pbar04:
  *                 pbar04.set_description(fc)
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_16, __pyx_n_s_tqdm); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 377, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_16, __pyx_n_s_tqdm); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 379, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_16);
-    __pyx_t_10 = PyTuple_New(1); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 377, __pyx_L1_error)
+    __pyx_t_10 = PyTuple_New(1); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 379, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_10);
     __Pyx_INCREF(__pyx_v_fcs);
     __Pyx_GIVEREF(__pyx_v_fcs);
     PyTuple_SET_ITEM(__pyx_t_10, 0, __pyx_v_fcs);
-    __pyx_t_2 = __Pyx_PyDict_NewPresized(3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 377, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyDict_NewPresized(3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 379, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_position, __pyx_int_1) < 0) __PYX_ERR(0, 377, __pyx_L1_error)
-    if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_colour, __pyx_n_s_Yellow) < 0) __PYX_ERR(0, 377, __pyx_L1_error)
-    if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_leave, Py_False) < 0) __PYX_ERR(0, 377, __pyx_L1_error)
-    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_16, __pyx_t_10, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 377, __pyx_L1_error)
+    if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_position, __pyx_int_1) < 0) __PYX_ERR(0, 379, __pyx_L1_error)
+    if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_colour, __pyx_n_s_Yellow) < 0) __PYX_ERR(0, 379, __pyx_L1_error)
+    if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_leave, Py_False) < 0) __PYX_ERR(0, 379, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_16, __pyx_t_10, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 379, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
     __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
@@ -13350,7 +13511,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
     __Pyx_XDECREF_SET(__pyx_v_pbar04, __pyx_t_3);
     __pyx_t_3 = 0;
 
-    /* "LXG/replication.py":378
+    /* "LXG/replication.py":380
  *             fcs = sorted(arcpy.ListFeatureClasses("", "Point", ds))
  *             pbar04 = tqdm(fcs, position=1, colour='Yellow', leave=False)
  *             for fc in pbar04:             # <<<<<<<<<<<<<<
@@ -13361,26 +13522,26 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
       __pyx_t_3 = __pyx_v_pbar04; __Pyx_INCREF(__pyx_t_3); __pyx_t_11 = 0;
       __pyx_t_12 = NULL;
     } else {
-      __pyx_t_11 = -1; __pyx_t_3 = PyObject_GetIter(__pyx_v_pbar04); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 378, __pyx_L1_error)
+      __pyx_t_11 = -1; __pyx_t_3 = PyObject_GetIter(__pyx_v_pbar04); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 380, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
-      __pyx_t_12 = Py_TYPE(__pyx_t_3)->tp_iternext; if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 378, __pyx_L1_error)
+      __pyx_t_12 = Py_TYPE(__pyx_t_3)->tp_iternext; if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 380, __pyx_L1_error)
     }
     for (;;) {
       if (likely(!__pyx_t_12)) {
         if (likely(PyList_CheckExact(__pyx_t_3))) {
           if (__pyx_t_11 >= PyList_GET_SIZE(__pyx_t_3)) break;
           #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-          __pyx_t_2 = PyList_GET_ITEM(__pyx_t_3, __pyx_t_11); __Pyx_INCREF(__pyx_t_2); __pyx_t_11++; if (unlikely(0 < 0)) __PYX_ERR(0, 378, __pyx_L1_error)
+          __pyx_t_2 = PyList_GET_ITEM(__pyx_t_3, __pyx_t_11); __Pyx_INCREF(__pyx_t_2); __pyx_t_11++; if (unlikely(0 < 0)) __PYX_ERR(0, 380, __pyx_L1_error)
           #else
-          __pyx_t_2 = PySequence_ITEM(__pyx_t_3, __pyx_t_11); __pyx_t_11++; if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 378, __pyx_L1_error)
+          __pyx_t_2 = PySequence_ITEM(__pyx_t_3, __pyx_t_11); __pyx_t_11++; if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 380, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_2);
           #endif
         } else {
           if (__pyx_t_11 >= PyTuple_GET_SIZE(__pyx_t_3)) break;
           #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-          __pyx_t_2 = PyTuple_GET_ITEM(__pyx_t_3, __pyx_t_11); __Pyx_INCREF(__pyx_t_2); __pyx_t_11++; if (unlikely(0 < 0)) __PYX_ERR(0, 378, __pyx_L1_error)
+          __pyx_t_2 = PyTuple_GET_ITEM(__pyx_t_3, __pyx_t_11); __Pyx_INCREF(__pyx_t_2); __pyx_t_11++; if (unlikely(0 < 0)) __PYX_ERR(0, 380, __pyx_L1_error)
           #else
-          __pyx_t_2 = PySequence_ITEM(__pyx_t_3, __pyx_t_11); __pyx_t_11++; if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 378, __pyx_L1_error)
+          __pyx_t_2 = PySequence_ITEM(__pyx_t_3, __pyx_t_11); __pyx_t_11++; if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 380, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_2);
           #endif
         }
@@ -13390,7 +13551,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
           PyObject* exc_type = PyErr_Occurred();
           if (exc_type) {
             if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-            else __PYX_ERR(0, 378, __pyx_L1_error)
+            else __PYX_ERR(0, 380, __pyx_L1_error)
           }
           break;
         }
@@ -13399,14 +13560,14 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
       __Pyx_XDECREF_SET(__pyx_v_fc, __pyx_t_2);
       __pyx_t_2 = 0;
 
-      /* "LXG/replication.py":379
+      /* "LXG/replication.py":381
  *             pbar04 = tqdm(fcs, position=1, colour='Yellow', leave=False)
  *             for fc in pbar04:
  *                 pbar04.set_description(fc)             # <<<<<<<<<<<<<<
  *                 fc_pts = os.path.join(self.gdb_points, f'gdb2_{fc}_pts')
  *                 old_fc_buf = os.path.join(self.gdb_points, f'gdb1_{fc}_buf')
  */
-      __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_v_pbar04, __pyx_n_s_set_description); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 379, __pyx_L1_error)
+      __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_v_pbar04, __pyx_n_s_set_description); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 381, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_10);
       __pyx_t_16 = NULL;
       if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_10))) {
@@ -13420,29 +13581,29 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
       }
       __pyx_t_2 = (__pyx_t_16) ? __Pyx_PyObject_Call2Args(__pyx_t_10, __pyx_t_16, __pyx_v_fc) : __Pyx_PyObject_CallOneArg(__pyx_t_10, __pyx_v_fc);
       __Pyx_XDECREF(__pyx_t_16); __pyx_t_16 = 0;
-      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 379, __pyx_L1_error)
+      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 381, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-      /* "LXG/replication.py":380
+      /* "LXG/replication.py":382
  *             for fc in pbar04:
  *                 pbar04.set_description(fc)
  *                 fc_pts = os.path.join(self.gdb_points, f'gdb2_{fc}_pts')             # <<<<<<<<<<<<<<
  *                 old_fc_buf = os.path.join(self.gdb_points, f'gdb1_{fc}_buf')
  *                 try:
  */
-      __Pyx_GetModuleGlobalName(__pyx_t_10, __pyx_n_s_os); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 380, __pyx_L1_error)
+      __Pyx_GetModuleGlobalName(__pyx_t_10, __pyx_n_s_os); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 382, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_10);
-      __pyx_t_16 = __Pyx_PyObject_GetAttrStr(__pyx_t_10, __pyx_n_s_path); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 380, __pyx_L1_error)
+      __pyx_t_16 = __Pyx_PyObject_GetAttrStr(__pyx_t_10, __pyx_n_s_path); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 382, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_16);
       __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
-      __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_t_16, __pyx_n_s_join); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 380, __pyx_L1_error)
+      __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_t_16, __pyx_n_s_join); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 382, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_10);
       __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
-      __pyx_t_16 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_gdb_points); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 380, __pyx_L1_error)
+      __pyx_t_16 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_gdb_points); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 382, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_16);
-      __pyx_t_1 = PyTuple_New(3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 380, __pyx_L1_error)
+      __pyx_t_1 = PyTuple_New(3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 382, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       __pyx_t_13 = 0;
       __pyx_t_14 = 127;
@@ -13450,7 +13611,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
       __pyx_t_13 += 5;
       __Pyx_GIVEREF(__pyx_n_u_gdb2_2);
       PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_n_u_gdb2_2);
-      __pyx_t_15 = __Pyx_PyObject_FormatSimple(__pyx_v_fc, __pyx_empty_unicode); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 380, __pyx_L1_error)
+      __pyx_t_15 = __Pyx_PyObject_FormatSimple(__pyx_v_fc, __pyx_empty_unicode); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 382, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_15);
       __pyx_t_14 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_15) > __pyx_t_14) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_15) : __pyx_t_14;
       __pyx_t_13 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_15);
@@ -13461,7 +13622,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
       __pyx_t_13 += 4;
       __Pyx_GIVEREF(__pyx_n_u_pts);
       PyTuple_SET_ITEM(__pyx_t_1, 2, __pyx_n_u_pts);
-      __pyx_t_15 = __Pyx_PyUnicode_Join(__pyx_t_1, 3, __pyx_t_13, __pyx_t_14); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 380, __pyx_L1_error)
+      __pyx_t_15 = __Pyx_PyUnicode_Join(__pyx_t_1, 3, __pyx_t_13, __pyx_t_14); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 382, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_15);
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
       __pyx_t_1 = NULL;
@@ -13479,7 +13640,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
       #if CYTHON_FAST_PYCALL
       if (PyFunction_Check(__pyx_t_10)) {
         PyObject *__pyx_temp[3] = {__pyx_t_1, __pyx_t_16, __pyx_t_15};
-        __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_10, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 380, __pyx_L1_error)
+        __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_10, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 382, __pyx_L1_error)
         __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
         __Pyx_GOTREF(__pyx_t_2);
         __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
@@ -13489,7 +13650,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
       #if CYTHON_FAST_PYCCALL
       if (__Pyx_PyFastCFunction_Check(__pyx_t_10)) {
         PyObject *__pyx_temp[3] = {__pyx_t_1, __pyx_t_16, __pyx_t_15};
-        __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_10, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 380, __pyx_L1_error)
+        __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_10, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 382, __pyx_L1_error)
         __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
         __Pyx_GOTREF(__pyx_t_2);
         __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
@@ -13497,7 +13658,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
       } else
       #endif
       {
-        __pyx_t_8 = PyTuple_New(2+__pyx_t_9); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 380, __pyx_L1_error)
+        __pyx_t_8 = PyTuple_New(2+__pyx_t_9); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 382, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_8);
         if (__pyx_t_1) {
           __Pyx_GIVEREF(__pyx_t_1); PyTuple_SET_ITEM(__pyx_t_8, 0, __pyx_t_1); __pyx_t_1 = NULL;
@@ -13508,7 +13669,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
         PyTuple_SET_ITEM(__pyx_t_8, 1+__pyx_t_9, __pyx_t_15);
         __pyx_t_16 = 0;
         __pyx_t_15 = 0;
-        __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_10, __pyx_t_8, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 380, __pyx_L1_error)
+        __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_10, __pyx_t_8, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 382, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_2);
         __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
       }
@@ -13516,24 +13677,24 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
       __Pyx_XDECREF_SET(__pyx_v_fc_pts, __pyx_t_2);
       __pyx_t_2 = 0;
 
-      /* "LXG/replication.py":381
+      /* "LXG/replication.py":383
  *                 pbar04.set_description(fc)
  *                 fc_pts = os.path.join(self.gdb_points, f'gdb2_{fc}_pts')
  *                 old_fc_buf = os.path.join(self.gdb_points, f'gdb1_{fc}_buf')             # <<<<<<<<<<<<<<
  *                 try:
  *                     if arcpy.Exists(fc_pts):
  */
-      __Pyx_GetModuleGlobalName(__pyx_t_10, __pyx_n_s_os); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 381, __pyx_L1_error)
+      __Pyx_GetModuleGlobalName(__pyx_t_10, __pyx_n_s_os); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 383, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_10);
-      __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_10, __pyx_n_s_path); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 381, __pyx_L1_error)
+      __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_10, __pyx_n_s_path); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 383, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_8);
       __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
-      __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_t_8, __pyx_n_s_join); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 381, __pyx_L1_error)
+      __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_t_8, __pyx_n_s_join); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 383, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_10);
       __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-      __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_gdb_points); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 381, __pyx_L1_error)
+      __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_gdb_points); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 383, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_8);
-      __pyx_t_15 = PyTuple_New(3); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 381, __pyx_L1_error)
+      __pyx_t_15 = PyTuple_New(3); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 383, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_15);
       __pyx_t_13 = 0;
       __pyx_t_14 = 127;
@@ -13541,7 +13702,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
       __pyx_t_13 += 5;
       __Pyx_GIVEREF(__pyx_n_u_gdb1_2);
       PyTuple_SET_ITEM(__pyx_t_15, 0, __pyx_n_u_gdb1_2);
-      __pyx_t_16 = __Pyx_PyObject_FormatSimple(__pyx_v_fc, __pyx_empty_unicode); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 381, __pyx_L1_error)
+      __pyx_t_16 = __Pyx_PyObject_FormatSimple(__pyx_v_fc, __pyx_empty_unicode); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 383, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_16);
       __pyx_t_14 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_16) > __pyx_t_14) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_16) : __pyx_t_14;
       __pyx_t_13 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_16);
@@ -13552,7 +13713,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
       __pyx_t_13 += 4;
       __Pyx_GIVEREF(__pyx_n_u_buf);
       PyTuple_SET_ITEM(__pyx_t_15, 2, __pyx_n_u_buf);
-      __pyx_t_16 = __Pyx_PyUnicode_Join(__pyx_t_15, 3, __pyx_t_13, __pyx_t_14); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 381, __pyx_L1_error)
+      __pyx_t_16 = __Pyx_PyUnicode_Join(__pyx_t_15, 3, __pyx_t_13, __pyx_t_14); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 383, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_16);
       __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
       __pyx_t_15 = NULL;
@@ -13570,7 +13731,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
       #if CYTHON_FAST_PYCALL
       if (PyFunction_Check(__pyx_t_10)) {
         PyObject *__pyx_temp[3] = {__pyx_t_15, __pyx_t_8, __pyx_t_16};
-        __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_10, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 381, __pyx_L1_error)
+        __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_10, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 383, __pyx_L1_error)
         __Pyx_XDECREF(__pyx_t_15); __pyx_t_15 = 0;
         __Pyx_GOTREF(__pyx_t_2);
         __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
@@ -13580,7 +13741,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
       #if CYTHON_FAST_PYCCALL
       if (__Pyx_PyFastCFunction_Check(__pyx_t_10)) {
         PyObject *__pyx_temp[3] = {__pyx_t_15, __pyx_t_8, __pyx_t_16};
-        __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_10, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 381, __pyx_L1_error)
+        __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_10, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 383, __pyx_L1_error)
         __Pyx_XDECREF(__pyx_t_15); __pyx_t_15 = 0;
         __Pyx_GOTREF(__pyx_t_2);
         __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
@@ -13588,7 +13749,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
       } else
       #endif
       {
-        __pyx_t_1 = PyTuple_New(2+__pyx_t_9); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 381, __pyx_L1_error)
+        __pyx_t_1 = PyTuple_New(2+__pyx_t_9); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 383, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_1);
         if (__pyx_t_15) {
           __Pyx_GIVEREF(__pyx_t_15); PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_t_15); __pyx_t_15 = NULL;
@@ -13599,7 +13760,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
         PyTuple_SET_ITEM(__pyx_t_1, 1+__pyx_t_9, __pyx_t_16);
         __pyx_t_8 = 0;
         __pyx_t_16 = 0;
-        __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_10, __pyx_t_1, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 381, __pyx_L1_error)
+        __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_10, __pyx_t_1, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 383, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_2);
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
       }
@@ -13607,7 +13768,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
       __Pyx_XDECREF_SET(__pyx_v_old_fc_buf, __pyx_t_2);
       __pyx_t_2 = 0;
 
-      /* "LXG/replication.py":382
+      /* "LXG/replication.py":384
  *                 fc_pts = os.path.join(self.gdb_points, f'gdb2_{fc}_pts')
  *                 old_fc_buf = os.path.join(self.gdb_points, f'gdb1_{fc}_buf')
  *                 try:             # <<<<<<<<<<<<<<
@@ -13623,16 +13784,16 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
         __Pyx_XGOTREF(__pyx_t_19);
         /*try:*/ {
 
-          /* "LXG/replication.py":383
+          /* "LXG/replication.py":385
  *                 old_fc_buf = os.path.join(self.gdb_points, f'gdb1_{fc}_buf')
  *                 try:
  *                     if arcpy.Exists(fc_pts):             # <<<<<<<<<<<<<<
  *                         if arcpy.Exists(old_fc_buf):
  *                             get_count = self.intersect(fc_pts, old_fc_buf)
  */
-          __Pyx_GetModuleGlobalName(__pyx_t_10, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 383, __pyx_L37_error)
+          __Pyx_GetModuleGlobalName(__pyx_t_10, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 385, __pyx_L37_error)
           __Pyx_GOTREF(__pyx_t_10);
-          __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_10, __pyx_n_s_Exists); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 383, __pyx_L37_error)
+          __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_10, __pyx_n_s_Exists); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 385, __pyx_L37_error)
           __Pyx_GOTREF(__pyx_t_1);
           __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
           __pyx_t_10 = NULL;
@@ -13647,23 +13808,23 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
           }
           __pyx_t_2 = (__pyx_t_10) ? __Pyx_PyObject_Call2Args(__pyx_t_1, __pyx_t_10, __pyx_v_fc_pts) : __Pyx_PyObject_CallOneArg(__pyx_t_1, __pyx_v_fc_pts);
           __Pyx_XDECREF(__pyx_t_10); __pyx_t_10 = 0;
-          if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 383, __pyx_L37_error)
+          if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 385, __pyx_L37_error)
           __Pyx_GOTREF(__pyx_t_2);
           __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-          __pyx_t_20 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_20 < 0)) __PYX_ERR(0, 383, __pyx_L37_error)
+          __pyx_t_20 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_20 < 0)) __PYX_ERR(0, 385, __pyx_L37_error)
           __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
           if (__pyx_t_20) {
 
-            /* "LXG/replication.py":384
+            /* "LXG/replication.py":386
  *                 try:
  *                     if arcpy.Exists(fc_pts):
  *                         if arcpy.Exists(old_fc_buf):             # <<<<<<<<<<<<<<
  *                             get_count = self.intersect(fc_pts, old_fc_buf)
  *                             if get_count > 0:
  */
-            __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 384, __pyx_L37_error)
+            __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 386, __pyx_L37_error)
             __Pyx_GOTREF(__pyx_t_1);
-            __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_Exists); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 384, __pyx_L37_error)
+            __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_Exists); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 386, __pyx_L37_error)
             __Pyx_GOTREF(__pyx_t_10);
             __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
             __pyx_t_1 = NULL;
@@ -13678,21 +13839,21 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
             }
             __pyx_t_2 = (__pyx_t_1) ? __Pyx_PyObject_Call2Args(__pyx_t_10, __pyx_t_1, __pyx_v_old_fc_buf) : __Pyx_PyObject_CallOneArg(__pyx_t_10, __pyx_v_old_fc_buf);
             __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
-            if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 384, __pyx_L37_error)
+            if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 386, __pyx_L37_error)
             __Pyx_GOTREF(__pyx_t_2);
             __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
-            __pyx_t_20 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_20 < 0)) __PYX_ERR(0, 384, __pyx_L37_error)
+            __pyx_t_20 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_20 < 0)) __PYX_ERR(0, 386, __pyx_L37_error)
             __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
             if (__pyx_t_20) {
 
-              /* "LXG/replication.py":385
+              /* "LXG/replication.py":387
  *                     if arcpy.Exists(fc_pts):
  *                         if arcpy.Exists(old_fc_buf):
  *                             get_count = self.intersect(fc_pts, old_fc_buf)             # <<<<<<<<<<<<<<
  *                             if get_count > 0:
  *                                 new_features_list.append((fc, get_count))
  */
-              __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_intersect); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 385, __pyx_L37_error)
+              __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_intersect); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 387, __pyx_L37_error)
               __Pyx_GOTREF(__pyx_t_10);
               __pyx_t_1 = NULL;
               __pyx_t_9 = 0;
@@ -13709,7 +13870,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
               #if CYTHON_FAST_PYCALL
               if (PyFunction_Check(__pyx_t_10)) {
                 PyObject *__pyx_temp[3] = {__pyx_t_1, __pyx_v_fc_pts, __pyx_v_old_fc_buf};
-                __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_10, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 385, __pyx_L37_error)
+                __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_10, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 387, __pyx_L37_error)
                 __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
                 __Pyx_GOTREF(__pyx_t_2);
               } else
@@ -13717,13 +13878,13 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
               #if CYTHON_FAST_PYCCALL
               if (__Pyx_PyFastCFunction_Check(__pyx_t_10)) {
                 PyObject *__pyx_temp[3] = {__pyx_t_1, __pyx_v_fc_pts, __pyx_v_old_fc_buf};
-                __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_10, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 385, __pyx_L37_error)
+                __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_10, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 387, __pyx_L37_error)
                 __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
                 __Pyx_GOTREF(__pyx_t_2);
               } else
               #endif
               {
-                __pyx_t_16 = PyTuple_New(2+__pyx_t_9); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 385, __pyx_L37_error)
+                __pyx_t_16 = PyTuple_New(2+__pyx_t_9); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 387, __pyx_L37_error)
                 __Pyx_GOTREF(__pyx_t_16);
                 if (__pyx_t_1) {
                   __Pyx_GIVEREF(__pyx_t_1); PyTuple_SET_ITEM(__pyx_t_16, 0, __pyx_t_1); __pyx_t_1 = NULL;
@@ -13734,7 +13895,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
                 __Pyx_INCREF(__pyx_v_old_fc_buf);
                 __Pyx_GIVEREF(__pyx_v_old_fc_buf);
                 PyTuple_SET_ITEM(__pyx_t_16, 1+__pyx_t_9, __pyx_v_old_fc_buf);
-                __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_10, __pyx_t_16, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 385, __pyx_L37_error)
+                __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_10, __pyx_t_16, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 387, __pyx_L37_error)
                 __Pyx_GOTREF(__pyx_t_2);
                 __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
               }
@@ -13742,26 +13903,26 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
               __Pyx_XDECREF_SET(__pyx_v_get_count, __pyx_t_2);
               __pyx_t_2 = 0;
 
-              /* "LXG/replication.py":386
+              /* "LXG/replication.py":388
  *                         if arcpy.Exists(old_fc_buf):
  *                             get_count = self.intersect(fc_pts, old_fc_buf)
  *                             if get_count > 0:             # <<<<<<<<<<<<<<
  *                                 new_features_list.append((fc, get_count))
  *                 except arcpy.ExecuteError as e:
  */
-              __pyx_t_2 = PyObject_RichCompare(__pyx_v_get_count, __pyx_int_0, Py_GT); __Pyx_XGOTREF(__pyx_t_2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 386, __pyx_L37_error)
-              __pyx_t_20 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_20 < 0)) __PYX_ERR(0, 386, __pyx_L37_error)
+              __pyx_t_2 = PyObject_RichCompare(__pyx_v_get_count, __pyx_int_0, Py_GT); __Pyx_XGOTREF(__pyx_t_2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 388, __pyx_L37_error)
+              __pyx_t_20 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_20 < 0)) __PYX_ERR(0, 388, __pyx_L37_error)
               __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
               if (__pyx_t_20) {
 
-                /* "LXG/replication.py":387
+                /* "LXG/replication.py":389
  *                             get_count = self.intersect(fc_pts, old_fc_buf)
  *                             if get_count > 0:
  *                                 new_features_list.append((fc, get_count))             # <<<<<<<<<<<<<<
  *                 except arcpy.ExecuteError as e:
  *                     arcpy.AddError(e)
  */
-                __pyx_t_2 = PyTuple_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 387, __pyx_L37_error)
+                __pyx_t_2 = PyTuple_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 389, __pyx_L37_error)
                 __Pyx_GOTREF(__pyx_t_2);
                 __Pyx_INCREF(__pyx_v_fc);
                 __Pyx_GIVEREF(__pyx_v_fc);
@@ -13769,10 +13930,10 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
                 __Pyx_INCREF(__pyx_v_get_count);
                 __Pyx_GIVEREF(__pyx_v_get_count);
                 PyTuple_SET_ITEM(__pyx_t_2, 1, __pyx_v_get_count);
-                __pyx_t_4 = __Pyx_PyList_Append(__pyx_v_new_features_list, __pyx_t_2); if (unlikely(__pyx_t_4 == ((int)-1))) __PYX_ERR(0, 387, __pyx_L37_error)
+                __pyx_t_4 = __Pyx_PyList_Append(__pyx_v_new_features_list, __pyx_t_2); if (unlikely(__pyx_t_4 == ((int)-1))) __PYX_ERR(0, 389, __pyx_L37_error)
                 __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-                /* "LXG/replication.py":386
+                /* "LXG/replication.py":388
  *                         if arcpy.Exists(old_fc_buf):
  *                             get_count = self.intersect(fc_pts, old_fc_buf)
  *                             if get_count > 0:             # <<<<<<<<<<<<<<
@@ -13781,7 +13942,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
  */
               }
 
-              /* "LXG/replication.py":384
+              /* "LXG/replication.py":386
  *                 try:
  *                     if arcpy.Exists(fc_pts):
  *                         if arcpy.Exists(old_fc_buf):             # <<<<<<<<<<<<<<
@@ -13790,7 +13951,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
  */
             }
 
-            /* "LXG/replication.py":383
+            /* "LXG/replication.py":385
  *                 old_fc_buf = os.path.join(self.gdb_points, f'gdb1_{fc}_buf')
  *                 try:
  *                     if arcpy.Exists(fc_pts):             # <<<<<<<<<<<<<<
@@ -13799,7 +13960,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
  */
           }
 
-          /* "LXG/replication.py":382
+          /* "LXG/replication.py":384
  *                 fc_pts = os.path.join(self.gdb_points, f'gdb2_{fc}_pts')
  *                 old_fc_buf = os.path.join(self.gdb_points, f'gdb1_{fc}_buf')
  *                 try:             # <<<<<<<<<<<<<<
@@ -13819,7 +13980,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
         __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
         __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
 
-        /* "LXG/replication.py":388
+        /* "LXG/replication.py":390
  *                             if get_count > 0:
  *                                 new_features_list.append((fc, get_count))
  *                 except arcpy.ExecuteError as e:             # <<<<<<<<<<<<<<
@@ -13827,9 +13988,9 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
  * 
  */
         __Pyx_ErrFetch(&__pyx_t_2, &__pyx_t_10, &__pyx_t_16);
-        __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 388, __pyx_L39_except_error)
+        __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 390, __pyx_L39_except_error)
         __Pyx_GOTREF(__pyx_t_1);
-        __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_ExecuteError); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 388, __pyx_L39_except_error)
+        __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_ExecuteError); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 390, __pyx_L39_except_error)
         __Pyx_GOTREF(__pyx_t_8);
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
         __pyx_t_9 = __Pyx_PyErr_GivenExceptionMatches(__pyx_t_2, __pyx_t_8);
@@ -13838,23 +13999,23 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
         __pyx_t_2 = 0; __pyx_t_10 = 0; __pyx_t_16 = 0;
         if (__pyx_t_9) {
           __Pyx_AddTraceback("LXGREP.AppendNewFeatures.check_differences", __pyx_clineno, __pyx_lineno, __pyx_filename);
-          if (__Pyx_GetException(&__pyx_t_16, &__pyx_t_10, &__pyx_t_2) < 0) __PYX_ERR(0, 388, __pyx_L39_except_error)
+          if (__Pyx_GetException(&__pyx_t_16, &__pyx_t_10, &__pyx_t_2) < 0) __PYX_ERR(0, 390, __pyx_L39_except_error)
           __Pyx_GOTREF(__pyx_t_16);
           __Pyx_GOTREF(__pyx_t_10);
           __Pyx_GOTREF(__pyx_t_2);
           __Pyx_INCREF(__pyx_t_10);
           __Pyx_XDECREF_SET(__pyx_v_e, __pyx_t_10);
 
-          /* "LXG/replication.py":389
+          /* "LXG/replication.py":391
  *                                 new_features_list.append((fc, get_count))
  *                 except arcpy.ExecuteError as e:
  *                     arcpy.AddError(e)             # <<<<<<<<<<<<<<
  * 
  *         return new_features_list
  */
-          __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 389, __pyx_L39_except_error)
+          __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 391, __pyx_L39_except_error)
           __Pyx_GOTREF(__pyx_t_1);
-          __pyx_t_15 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_AddError); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 389, __pyx_L39_except_error)
+          __pyx_t_15 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_AddError); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 391, __pyx_L39_except_error)
           __Pyx_GOTREF(__pyx_t_15);
           __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
           __pyx_t_1 = NULL;
@@ -13869,7 +14030,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
           }
           __pyx_t_8 = (__pyx_t_1) ? __Pyx_PyObject_Call2Args(__pyx_t_15, __pyx_t_1, __pyx_v_e) : __Pyx_PyObject_CallOneArg(__pyx_t_15, __pyx_v_e);
           __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
-          if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 389, __pyx_L39_except_error)
+          if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 391, __pyx_L39_except_error)
           __Pyx_GOTREF(__pyx_t_8);
           __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
           __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
@@ -13881,7 +14042,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
         goto __pyx_L39_except_error;
         __pyx_L39_except_error:;
 
-        /* "LXG/replication.py":382
+        /* "LXG/replication.py":384
  *                 fc_pts = os.path.join(self.gdb_points, f'gdb2_{fc}_pts')
  *                 old_fc_buf = os.path.join(self.gdb_points, f'gdb1_{fc}_buf')
  *                 try:             # <<<<<<<<<<<<<<
@@ -13901,7 +14062,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
         __pyx_L44_try_end:;
       }
 
-      /* "LXG/replication.py":378
+      /* "LXG/replication.py":380
  *             fcs = sorted(arcpy.ListFeatureClasses("", "Point", ds))
  *             pbar04 = tqdm(fcs, position=1, colour='Yellow', leave=False)
  *             for fc in pbar04:             # <<<<<<<<<<<<<<
@@ -13911,7 +14072,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
     }
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-    /* "LXG/replication.py":345
+    /* "LXG/replication.py":347
  *         dss = sorted(arcpy.ListDatasets("", "ALL"))
  *         pbar01 = tqdm(dss, desc='Detect changes', position=0, colour='GREEN')
  *         for ds in pbar01:             # <<<<<<<<<<<<<<
@@ -13921,7 +14082,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
   }
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
 
-  /* "LXG/replication.py":391
+  /* "LXG/replication.py":393
  *                     arcpy.AddError(e)
  * 
  *         return new_features_list             # <<<<<<<<<<<<<<
@@ -13933,7 +14094,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
   __pyx_r = __pyx_v_new_features_list;
   goto __pyx_L0;
 
-  /* "LXG/replication.py":340
+  /* "LXG/replication.py":342
  *         return int(selected_count)
  * 
  *     def check_differences(self):             # <<<<<<<<<<<<<<
@@ -13972,7 +14133,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_12check_differences(CYTHON
   return __pyx_r;
 }
 
-/* "LXG/replication.py":393
+/* "LXG/replication.py":395
  *         return new_features_list
  * 
  *     def field_mappings(self, source_feature, target_feature, point_feat_dir):             # <<<<<<<<<<<<<<
@@ -14021,23 +14182,23 @@ static PyObject *__pyx_pw_6LXGREP_17AppendNewFeatures_15field_mappings(PyObject 
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_source_feature)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("field_mappings", 1, 4, 4, 1); __PYX_ERR(0, 393, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("field_mappings", 1, 4, 4, 1); __PYX_ERR(0, 395, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
         if (likely((values[2] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_target_feature)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("field_mappings", 1, 4, 4, 2); __PYX_ERR(0, 393, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("field_mappings", 1, 4, 4, 2); __PYX_ERR(0, 395, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  3:
         if (likely((values[3] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_point_feat_dir)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("field_mappings", 1, 4, 4, 3); __PYX_ERR(0, 393, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("field_mappings", 1, 4, 4, 3); __PYX_ERR(0, 395, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "field_mappings") < 0)) __PYX_ERR(0, 393, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "field_mappings") < 0)) __PYX_ERR(0, 395, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 4) {
       goto __pyx_L5_argtuple_error;
@@ -14054,7 +14215,7 @@ static PyObject *__pyx_pw_6LXGREP_17AppendNewFeatures_15field_mappings(PyObject 
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("field_mappings", 1, 4, 4, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 393, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("field_mappings", 1, 4, 4, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 395, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("LXGREP.AppendNewFeatures.field_mappings", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -14102,16 +14263,16 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_14field_mappings(CYTHON_UN
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("field_mappings", 0);
 
-  /* "LXG/replication.py":394
+  /* "LXG/replication.py":396
  * 
  *     def field_mappings(self, source_feature, target_feature, point_feat_dir):
  *         field_src = arcpy.ListFields(source_feature)             # <<<<<<<<<<<<<<
  *         field_tgt = arcpy.ListFields(target_feature)
  *         namelist_tgt = []
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 394, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 396, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_ListFields); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 394, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_ListFields); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 396, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_t_2 = NULL;
@@ -14126,22 +14287,22 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_14field_mappings(CYTHON_UN
   }
   __pyx_t_1 = (__pyx_t_2) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_2, __pyx_v_source_feature) : __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_v_source_feature);
   __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 394, __pyx_L1_error)
+  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 396, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_v_field_src = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "LXG/replication.py":395
+  /* "LXG/replication.py":397
  *     def field_mappings(self, source_feature, target_feature, point_feat_dir):
  *         field_src = arcpy.ListFields(source_feature)
  *         field_tgt = arcpy.ListFields(target_feature)             # <<<<<<<<<<<<<<
  *         namelist_tgt = []
  *         namelist_src = []
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 395, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 397, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_ListFields); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 395, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_ListFields); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 397, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_t_3 = NULL;
@@ -14156,44 +14317,44 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_14field_mappings(CYTHON_UN
   }
   __pyx_t_1 = (__pyx_t_3) ? __Pyx_PyObject_Call2Args(__pyx_t_2, __pyx_t_3, __pyx_v_target_feature) : __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_v_target_feature);
   __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 395, __pyx_L1_error)
+  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 397, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_v_field_tgt = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "LXG/replication.py":396
+  /* "LXG/replication.py":398
  *         field_src = arcpy.ListFields(source_feature)
  *         field_tgt = arcpy.ListFields(target_feature)
  *         namelist_tgt = []             # <<<<<<<<<<<<<<
  *         namelist_src = []
  *         exclude_list = ['OBJECT_ID', 'OBJECTID', 'OBJECT_ID1', 'OBJECT_ID2', 'SHAPE']
  */
-  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 396, __pyx_L1_error)
+  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 398, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_namelist_tgt = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "LXG/replication.py":397
+  /* "LXG/replication.py":399
  *         field_tgt = arcpy.ListFields(target_feature)
  *         namelist_tgt = []
  *         namelist_src = []             # <<<<<<<<<<<<<<
  *         exclude_list = ['OBJECT_ID', 'OBJECTID', 'OBJECT_ID1', 'OBJECT_ID2', 'SHAPE']
  * 
  */
-  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 397, __pyx_L1_error)
+  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 399, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_namelist_src = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "LXG/replication.py":398
+  /* "LXG/replication.py":400
  *         namelist_tgt = []
  *         namelist_src = []
  *         exclude_list = ['OBJECT_ID', 'OBJECTID', 'OBJECT_ID1', 'OBJECT_ID2', 'SHAPE']             # <<<<<<<<<<<<<<
  * 
  *         for fd in field_tgt:
  */
-  __pyx_t_1 = PyList_New(5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 398, __pyx_L1_error)
+  __pyx_t_1 = PyList_New(5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 400, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_INCREF(__pyx_n_s_OBJECT_ID);
   __Pyx_GIVEREF(__pyx_n_s_OBJECT_ID);
@@ -14213,7 +14374,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_14field_mappings(CYTHON_UN
   __pyx_v_exclude_list = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "LXG/replication.py":400
+  /* "LXG/replication.py":402
  *         exclude_list = ['OBJECT_ID', 'OBJECTID', 'OBJECT_ID1', 'OBJECT_ID2', 'SHAPE']
  * 
  *         for fd in field_tgt:             # <<<<<<<<<<<<<<
@@ -14224,26 +14385,26 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_14field_mappings(CYTHON_UN
     __pyx_t_1 = __pyx_v_field_tgt; __Pyx_INCREF(__pyx_t_1); __pyx_t_4 = 0;
     __pyx_t_5 = NULL;
   } else {
-    __pyx_t_4 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_v_field_tgt); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 400, __pyx_L1_error)
+    __pyx_t_4 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_v_field_tgt); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 402, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_5 = Py_TYPE(__pyx_t_1)->tp_iternext; if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 400, __pyx_L1_error)
+    __pyx_t_5 = Py_TYPE(__pyx_t_1)->tp_iternext; if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 402, __pyx_L1_error)
   }
   for (;;) {
     if (likely(!__pyx_t_5)) {
       if (likely(PyList_CheckExact(__pyx_t_1))) {
         if (__pyx_t_4 >= PyList_GET_SIZE(__pyx_t_1)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_2 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_4); __Pyx_INCREF(__pyx_t_2); __pyx_t_4++; if (unlikely(0 < 0)) __PYX_ERR(0, 400, __pyx_L1_error)
+        __pyx_t_2 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_4); __Pyx_INCREF(__pyx_t_2); __pyx_t_4++; if (unlikely(0 < 0)) __PYX_ERR(0, 402, __pyx_L1_error)
         #else
-        __pyx_t_2 = PySequence_ITEM(__pyx_t_1, __pyx_t_4); __pyx_t_4++; if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 400, __pyx_L1_error)
+        __pyx_t_2 = PySequence_ITEM(__pyx_t_1, __pyx_t_4); __pyx_t_4++; if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 402, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_2);
         #endif
       } else {
         if (__pyx_t_4 >= PyTuple_GET_SIZE(__pyx_t_1)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_2 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_4); __Pyx_INCREF(__pyx_t_2); __pyx_t_4++; if (unlikely(0 < 0)) __PYX_ERR(0, 400, __pyx_L1_error)
+        __pyx_t_2 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_4); __Pyx_INCREF(__pyx_t_2); __pyx_t_4++; if (unlikely(0 < 0)) __PYX_ERR(0, 402, __pyx_L1_error)
         #else
-        __pyx_t_2 = PySequence_ITEM(__pyx_t_1, __pyx_t_4); __pyx_t_4++; if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 400, __pyx_L1_error)
+        __pyx_t_2 = PySequence_ITEM(__pyx_t_1, __pyx_t_4); __pyx_t_4++; if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 402, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_2);
         #endif
       }
@@ -14253,7 +14414,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_14field_mappings(CYTHON_UN
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
           if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else __PYX_ERR(0, 400, __pyx_L1_error)
+          else __PYX_ERR(0, 402, __pyx_L1_error)
         }
         break;
       }
@@ -14262,33 +14423,33 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_14field_mappings(CYTHON_UN
     __Pyx_XDECREF_SET(__pyx_v_fd, __pyx_t_2);
     __pyx_t_2 = 0;
 
-    /* "LXG/replication.py":401
+    /* "LXG/replication.py":403
  * 
  *         for fd in field_tgt:
  *             if fd.name not in exclude_list:             # <<<<<<<<<<<<<<
  *                 namelist_tgt.append(fd.name)
  * 
  */
-    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_fd, __pyx_n_s_name); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 401, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_fd, __pyx_n_s_name); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 403, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_6 = (__Pyx_PySequence_ContainsTF(__pyx_t_2, __pyx_v_exclude_list, Py_NE)); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 401, __pyx_L1_error)
+    __pyx_t_6 = (__Pyx_PySequence_ContainsTF(__pyx_t_2, __pyx_v_exclude_list, Py_NE)); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 403, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __pyx_t_7 = (__pyx_t_6 != 0);
     if (__pyx_t_7) {
 
-      /* "LXG/replication.py":402
+      /* "LXG/replication.py":404
  *         for fd in field_tgt:
  *             if fd.name not in exclude_list:
  *                 namelist_tgt.append(fd.name)             # <<<<<<<<<<<<<<
  * 
  *         for fd2 in field_src:
  */
-      __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_fd, __pyx_n_s_name); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 402, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_fd, __pyx_n_s_name); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 404, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
-      __pyx_t_8 = __Pyx_PyList_Append(__pyx_v_namelist_tgt, __pyx_t_2); if (unlikely(__pyx_t_8 == ((int)-1))) __PYX_ERR(0, 402, __pyx_L1_error)
+      __pyx_t_8 = __Pyx_PyList_Append(__pyx_v_namelist_tgt, __pyx_t_2); if (unlikely(__pyx_t_8 == ((int)-1))) __PYX_ERR(0, 404, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-      /* "LXG/replication.py":401
+      /* "LXG/replication.py":403
  * 
  *         for fd in field_tgt:
  *             if fd.name not in exclude_list:             # <<<<<<<<<<<<<<
@@ -14297,7 +14458,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_14field_mappings(CYTHON_UN
  */
     }
 
-    /* "LXG/replication.py":400
+    /* "LXG/replication.py":402
  *         exclude_list = ['OBJECT_ID', 'OBJECTID', 'OBJECT_ID1', 'OBJECT_ID2', 'SHAPE']
  * 
  *         for fd in field_tgt:             # <<<<<<<<<<<<<<
@@ -14307,7 +14468,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_14field_mappings(CYTHON_UN
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "LXG/replication.py":404
+  /* "LXG/replication.py":406
  *                 namelist_tgt.append(fd.name)
  * 
  *         for fd2 in field_src:             # <<<<<<<<<<<<<<
@@ -14318,26 +14479,26 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_14field_mappings(CYTHON_UN
     __pyx_t_1 = __pyx_v_field_src; __Pyx_INCREF(__pyx_t_1); __pyx_t_4 = 0;
     __pyx_t_5 = NULL;
   } else {
-    __pyx_t_4 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_v_field_src); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 404, __pyx_L1_error)
+    __pyx_t_4 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_v_field_src); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 406, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_5 = Py_TYPE(__pyx_t_1)->tp_iternext; if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 404, __pyx_L1_error)
+    __pyx_t_5 = Py_TYPE(__pyx_t_1)->tp_iternext; if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 406, __pyx_L1_error)
   }
   for (;;) {
     if (likely(!__pyx_t_5)) {
       if (likely(PyList_CheckExact(__pyx_t_1))) {
         if (__pyx_t_4 >= PyList_GET_SIZE(__pyx_t_1)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_2 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_4); __Pyx_INCREF(__pyx_t_2); __pyx_t_4++; if (unlikely(0 < 0)) __PYX_ERR(0, 404, __pyx_L1_error)
+        __pyx_t_2 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_4); __Pyx_INCREF(__pyx_t_2); __pyx_t_4++; if (unlikely(0 < 0)) __PYX_ERR(0, 406, __pyx_L1_error)
         #else
-        __pyx_t_2 = PySequence_ITEM(__pyx_t_1, __pyx_t_4); __pyx_t_4++; if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 404, __pyx_L1_error)
+        __pyx_t_2 = PySequence_ITEM(__pyx_t_1, __pyx_t_4); __pyx_t_4++; if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 406, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_2);
         #endif
       } else {
         if (__pyx_t_4 >= PyTuple_GET_SIZE(__pyx_t_1)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_2 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_4); __Pyx_INCREF(__pyx_t_2); __pyx_t_4++; if (unlikely(0 < 0)) __PYX_ERR(0, 404, __pyx_L1_error)
+        __pyx_t_2 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_4); __Pyx_INCREF(__pyx_t_2); __pyx_t_4++; if (unlikely(0 < 0)) __PYX_ERR(0, 406, __pyx_L1_error)
         #else
-        __pyx_t_2 = PySequence_ITEM(__pyx_t_1, __pyx_t_4); __pyx_t_4++; if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 404, __pyx_L1_error)
+        __pyx_t_2 = PySequence_ITEM(__pyx_t_1, __pyx_t_4); __pyx_t_4++; if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 406, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_2);
         #endif
       }
@@ -14347,7 +14508,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_14field_mappings(CYTHON_UN
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
           if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else __PYX_ERR(0, 404, __pyx_L1_error)
+          else __PYX_ERR(0, 406, __pyx_L1_error)
         }
         break;
       }
@@ -14356,36 +14517,36 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_14field_mappings(CYTHON_UN
     __Pyx_XDECREF_SET(__pyx_v_fd2, __pyx_t_2);
     __pyx_t_2 = 0;
 
-    /* "LXG/replication.py":405
+    /* "LXG/replication.py":407
  * 
  *         for fd2 in field_src:
  *             if fd2.name in namelist_tgt:             # <<<<<<<<<<<<<<
  *                 namelist_src.append((fd2.name, fd2.aliasName, fd2.type, fd2.length))
  * 
  */
-    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_fd2, __pyx_n_s_name); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 405, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_fd2, __pyx_n_s_name); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 407, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_7 = (__Pyx_PySequence_ContainsTF(__pyx_t_2, __pyx_v_namelist_tgt, Py_EQ)); if (unlikely(__pyx_t_7 < 0)) __PYX_ERR(0, 405, __pyx_L1_error)
+    __pyx_t_7 = (__Pyx_PySequence_ContainsTF(__pyx_t_2, __pyx_v_namelist_tgt, Py_EQ)); if (unlikely(__pyx_t_7 < 0)) __PYX_ERR(0, 407, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __pyx_t_6 = (__pyx_t_7 != 0);
     if (__pyx_t_6) {
 
-      /* "LXG/replication.py":406
+      /* "LXG/replication.py":408
  *         for fd2 in field_src:
  *             if fd2.name in namelist_tgt:
  *                 namelist_src.append((fd2.name, fd2.aliasName, fd2.type, fd2.length))             # <<<<<<<<<<<<<<
  * 
  *         fd_mapping = ""
  */
-      __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_fd2, __pyx_n_s_name); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 406, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_fd2, __pyx_n_s_name); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 408, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
-      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_fd2, __pyx_n_s_aliasName); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 406, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_fd2, __pyx_n_s_aliasName); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 408, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
-      __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_v_fd2, __pyx_n_s_type); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 406, __pyx_L1_error)
+      __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_v_fd2, __pyx_n_s_type); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 408, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_9);
-      __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_v_fd2, __pyx_n_s_length); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 406, __pyx_L1_error)
+      __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_v_fd2, __pyx_n_s_length); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 408, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_10);
-      __pyx_t_11 = PyTuple_New(4); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 406, __pyx_L1_error)
+      __pyx_t_11 = PyTuple_New(4); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 408, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_11);
       __Pyx_GIVEREF(__pyx_t_2);
       PyTuple_SET_ITEM(__pyx_t_11, 0, __pyx_t_2);
@@ -14399,10 +14560,10 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_14field_mappings(CYTHON_UN
       __pyx_t_3 = 0;
       __pyx_t_9 = 0;
       __pyx_t_10 = 0;
-      __pyx_t_8 = __Pyx_PyList_Append(__pyx_v_namelist_src, __pyx_t_11); if (unlikely(__pyx_t_8 == ((int)-1))) __PYX_ERR(0, 406, __pyx_L1_error)
+      __pyx_t_8 = __Pyx_PyList_Append(__pyx_v_namelist_src, __pyx_t_11); if (unlikely(__pyx_t_8 == ((int)-1))) __PYX_ERR(0, 408, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
 
-      /* "LXG/replication.py":405
+      /* "LXG/replication.py":407
  * 
  *         for fd2 in field_src:
  *             if fd2.name in namelist_tgt:             # <<<<<<<<<<<<<<
@@ -14411,7 +14572,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_14field_mappings(CYTHON_UN
  */
     }
 
-    /* "LXG/replication.py":404
+    /* "LXG/replication.py":406
  *                 namelist_tgt.append(fd.name)
  * 
  *         for fd2 in field_src:             # <<<<<<<<<<<<<<
@@ -14421,7 +14582,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_14field_mappings(CYTHON_UN
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "LXG/replication.py":408
+  /* "LXG/replication.py":410
  *                 namelist_src.append((fd2.name, fd2.aliasName, fd2.type, fd2.length))
  * 
  *         fd_mapping = ""             # <<<<<<<<<<<<<<
@@ -14431,7 +14592,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_14field_mappings(CYTHON_UN
   __Pyx_INCREF(__pyx_kp_s_);
   __pyx_v_fd_mapping = __pyx_kp_s_;
 
-  /* "LXG/replication.py":409
+  /* "LXG/replication.py":411
  * 
  *         fd_mapping = ""
  *         for name, alias, _type, _len in namelist_src:             # <<<<<<<<<<<<<<
@@ -14442,9 +14603,9 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_14field_mappings(CYTHON_UN
   for (;;) {
     if (__pyx_t_4 >= PyList_GET_SIZE(__pyx_t_1)) break;
     #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-    __pyx_t_11 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_4); __Pyx_INCREF(__pyx_t_11); __pyx_t_4++; if (unlikely(0 < 0)) __PYX_ERR(0, 409, __pyx_L1_error)
+    __pyx_t_11 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_4); __Pyx_INCREF(__pyx_t_11); __pyx_t_4++; if (unlikely(0 < 0)) __PYX_ERR(0, 411, __pyx_L1_error)
     #else
-    __pyx_t_11 = PySequence_ITEM(__pyx_t_1, __pyx_t_4); __pyx_t_4++; if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 409, __pyx_L1_error)
+    __pyx_t_11 = PySequence_ITEM(__pyx_t_1, __pyx_t_4); __pyx_t_4++; if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 411, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_11);
     #endif
     if ((likely(PyTuple_CheckExact(__pyx_t_11))) || (PyList_CheckExact(__pyx_t_11))) {
@@ -14453,7 +14614,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_14field_mappings(CYTHON_UN
       if (unlikely(size != 4)) {
         if (size > 4) __Pyx_RaiseTooManyValuesError(4);
         else if (size >= 0) __Pyx_RaiseNeedMoreValuesError(size);
-        __PYX_ERR(0, 409, __pyx_L1_error)
+        __PYX_ERR(0, 411, __pyx_L1_error)
       }
       #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
       if (likely(PyTuple_CheckExact(sequence))) {
@@ -14476,7 +14637,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_14field_mappings(CYTHON_UN
         Py_ssize_t i;
         PyObject** temps[4] = {&__pyx_t_10,&__pyx_t_9,&__pyx_t_3,&__pyx_t_2};
         for (i=0; i < 4; i++) {
-          PyObject* item = PySequence_ITEM(sequence, i); if (unlikely(!item)) __PYX_ERR(0, 409, __pyx_L1_error)
+          PyObject* item = PySequence_ITEM(sequence, i); if (unlikely(!item)) __PYX_ERR(0, 411, __pyx_L1_error)
           __Pyx_GOTREF(item);
           *(temps[i]) = item;
         }
@@ -14486,7 +14647,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_14field_mappings(CYTHON_UN
     } else {
       Py_ssize_t index = -1;
       PyObject** temps[4] = {&__pyx_t_10,&__pyx_t_9,&__pyx_t_3,&__pyx_t_2};
-      __pyx_t_12 = PyObject_GetIter(__pyx_t_11); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 409, __pyx_L1_error)
+      __pyx_t_12 = PyObject_GetIter(__pyx_t_11); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 411, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_12);
       __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
       __pyx_t_13 = Py_TYPE(__pyx_t_12)->tp_iternext;
@@ -14495,7 +14656,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_14field_mappings(CYTHON_UN
         __Pyx_GOTREF(item);
         *(temps[index]) = item;
       }
-      if (__Pyx_IternextUnpackEndCheck(__pyx_t_13(__pyx_t_12), 4) < 0) __PYX_ERR(0, 409, __pyx_L1_error)
+      if (__Pyx_IternextUnpackEndCheck(__pyx_t_13(__pyx_t_12), 4) < 0) __PYX_ERR(0, 411, __pyx_L1_error)
       __pyx_t_13 = NULL;
       __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
       goto __pyx_L12_unpacking_done;
@@ -14503,7 +14664,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_14field_mappings(CYTHON_UN
       __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
       __pyx_t_13 = NULL;
       if (__Pyx_IterFinish() == 0) __Pyx_RaiseNeedMoreValuesError(index);
-      __PYX_ERR(0, 409, __pyx_L1_error)
+      __PYX_ERR(0, 411, __pyx_L1_error)
       __pyx_L12_unpacking_done:;
     }
     __Pyx_XDECREF_SET(__pyx_v_name, __pyx_t_10);
@@ -14515,18 +14676,18 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_14field_mappings(CYTHON_UN
     __Pyx_XDECREF_SET(__pyx_v__len, __pyx_t_2);
     __pyx_t_2 = 0;
 
-    /* "LXG/replication.py":410
+    /* "LXG/replication.py":412
  *         fd_mapping = ""
  *         for name, alias, _type, _len in namelist_src:
  *             fd_mapping += f'{name} "{alias}" true true false {_len} {_type} 0 0,First,#,{point_feat_dir},{name},0,{_len};'             # <<<<<<<<<<<<<<
  * 
  *         return fd_mapping
  */
-    __pyx_t_11 = PyTuple_New(14); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 410, __pyx_L1_error)
+    __pyx_t_11 = PyTuple_New(14); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 412, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_11);
     __pyx_t_14 = 0;
     __pyx_t_15 = 127;
-    __pyx_t_2 = __Pyx_PyObject_FormatSimple(__pyx_v_name, __pyx_empty_unicode); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 410, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_FormatSimple(__pyx_v_name, __pyx_empty_unicode); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 412, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __pyx_t_15 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_2) > __pyx_t_15) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_2) : __pyx_t_15;
     __pyx_t_14 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_2);
@@ -14537,7 +14698,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_14field_mappings(CYTHON_UN
     __pyx_t_14 += 2;
     __Pyx_GIVEREF(__pyx_kp_u__9);
     PyTuple_SET_ITEM(__pyx_t_11, 1, __pyx_kp_u__9);
-    __pyx_t_2 = __Pyx_PyObject_FormatSimple(__pyx_v_alias, __pyx_empty_unicode); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 410, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_FormatSimple(__pyx_v_alias, __pyx_empty_unicode); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 412, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __pyx_t_15 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_2) > __pyx_t_15) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_2) : __pyx_t_15;
     __pyx_t_14 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_2);
@@ -14548,7 +14709,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_14field_mappings(CYTHON_UN
     __pyx_t_14 += 18;
     __Pyx_GIVEREF(__pyx_kp_u_true_true_false);
     PyTuple_SET_ITEM(__pyx_t_11, 3, __pyx_kp_u_true_true_false);
-    __pyx_t_2 = __Pyx_PyObject_FormatSimple(__pyx_v__len, __pyx_empty_unicode); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 410, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_FormatSimple(__pyx_v__len, __pyx_empty_unicode); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 412, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __pyx_t_15 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_2) > __pyx_t_15) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_2) : __pyx_t_15;
     __pyx_t_14 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_2);
@@ -14559,7 +14720,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_14field_mappings(CYTHON_UN
     __pyx_t_14 += 1;
     __Pyx_GIVEREF(__pyx_kp_u__5);
     PyTuple_SET_ITEM(__pyx_t_11, 5, __pyx_kp_u__5);
-    __pyx_t_2 = __Pyx_PyObject_FormatSimple(__pyx_v__type, __pyx_empty_unicode); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 410, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_FormatSimple(__pyx_v__type, __pyx_empty_unicode); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 412, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __pyx_t_15 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_2) > __pyx_t_15) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_2) : __pyx_t_15;
     __pyx_t_14 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_2);
@@ -14570,7 +14731,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_14field_mappings(CYTHON_UN
     __pyx_t_14 += 13;
     __Pyx_GIVEREF(__pyx_kp_u_0_0_First);
     PyTuple_SET_ITEM(__pyx_t_11, 7, __pyx_kp_u_0_0_First);
-    __pyx_t_2 = __Pyx_PyObject_FormatSimple(__pyx_v_point_feat_dir, __pyx_empty_unicode); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 410, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_FormatSimple(__pyx_v_point_feat_dir, __pyx_empty_unicode); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 412, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __pyx_t_15 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_2) > __pyx_t_15) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_2) : __pyx_t_15;
     __pyx_t_14 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_2);
@@ -14581,7 +14742,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_14field_mappings(CYTHON_UN
     __pyx_t_14 += 1;
     __Pyx_GIVEREF(__pyx_kp_u__10);
     PyTuple_SET_ITEM(__pyx_t_11, 9, __pyx_kp_u__10);
-    __pyx_t_2 = __Pyx_PyObject_FormatSimple(__pyx_v_name, __pyx_empty_unicode); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 410, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_FormatSimple(__pyx_v_name, __pyx_empty_unicode); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 412, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __pyx_t_15 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_2) > __pyx_t_15) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_2) : __pyx_t_15;
     __pyx_t_14 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_2);
@@ -14592,7 +14753,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_14field_mappings(CYTHON_UN
     __pyx_t_14 += 3;
     __Pyx_GIVEREF(__pyx_kp_u_0);
     PyTuple_SET_ITEM(__pyx_t_11, 11, __pyx_kp_u_0);
-    __pyx_t_2 = __Pyx_PyObject_FormatSimple(__pyx_v__len, __pyx_empty_unicode); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 410, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_FormatSimple(__pyx_v__len, __pyx_empty_unicode); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 412, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __pyx_t_15 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_2) > __pyx_t_15) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_2) : __pyx_t_15;
     __pyx_t_14 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_2);
@@ -14603,16 +14764,16 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_14field_mappings(CYTHON_UN
     __pyx_t_14 += 1;
     __Pyx_GIVEREF(__pyx_kp_u__11);
     PyTuple_SET_ITEM(__pyx_t_11, 13, __pyx_kp_u__11);
-    __pyx_t_2 = __Pyx_PyUnicode_Join(__pyx_t_11, 14, __pyx_t_14, __pyx_t_15); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 410, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyUnicode_Join(__pyx_t_11, 14, __pyx_t_14, __pyx_t_15); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 412, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
-    __pyx_t_11 = PyNumber_InPlaceAdd(__pyx_v_fd_mapping, __pyx_t_2); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 410, __pyx_L1_error)
+    __pyx_t_11 = PyNumber_InPlaceAdd(__pyx_v_fd_mapping, __pyx_t_2); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 412, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_11);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_DECREF_SET(__pyx_v_fd_mapping, __pyx_t_11);
     __pyx_t_11 = 0;
 
-    /* "LXG/replication.py":409
+    /* "LXG/replication.py":411
  * 
  *         fd_mapping = ""
  *         for name, alias, _type, _len in namelist_src:             # <<<<<<<<<<<<<<
@@ -14622,7 +14783,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_14field_mappings(CYTHON_UN
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "LXG/replication.py":412
+  /* "LXG/replication.py":414
  *             fd_mapping += f'{name} "{alias}" true true false {_len} {_type} 0 0,First,#,{point_feat_dir},{name},0,{_len};'
  * 
  *         return fd_mapping             # <<<<<<<<<<<<<<
@@ -14634,7 +14795,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_14field_mappings(CYTHON_UN
   __pyx_r = __pyx_v_fd_mapping;
   goto __pyx_L0;
 
-  /* "LXG/replication.py":393
+  /* "LXG/replication.py":395
  *         return new_features_list
  * 
  *     def field_mappings(self, source_feature, target_feature, point_feat_dir):             # <<<<<<<<<<<<<<
@@ -14671,7 +14832,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_14field_mappings(CYTHON_UN
   return __pyx_r;
 }
 
-/* "LXG/replication.py":414
+/* "LXG/replication.py":416
  *         return fd_mapping
  * 
  *     def append_latest(self, featureclass_list):             # <<<<<<<<<<<<<<
@@ -14714,11 +14875,11 @@ static PyObject *__pyx_pw_6LXGREP_17AppendNewFeatures_17append_latest(PyObject *
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_featureclass_list)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("append_latest", 1, 2, 2, 1); __PYX_ERR(0, 414, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("append_latest", 1, 2, 2, 1); __PYX_ERR(0, 416, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "append_latest") < 0)) __PYX_ERR(0, 414, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "append_latest") < 0)) __PYX_ERR(0, 416, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
       goto __pyx_L5_argtuple_error;
@@ -14731,7 +14892,7 @@ static PyObject *__pyx_pw_6LXGREP_17AppendNewFeatures_17append_latest(PyObject *
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("append_latest", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 414, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("append_latest", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 416, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("LXGREP.AppendNewFeatures.append_latest", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -14788,16 +14949,16 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
   __Pyx_RefNannySetupContext("append_latest", 0);
   __Pyx_INCREF(__pyx_v_featureclass_list);
 
-  /* "LXG/replication.py":415
+  /* "LXG/replication.py":417
  * 
  *     def append_latest(self, featureclass_list):
  *         featureclass_list = np.array(featureclass_list)             # <<<<<<<<<<<<<<
  *         arcpy.env.workspace = self.gdb2
  * 
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 415, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 417, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_array); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 415, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_array); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 417, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_t_2 = NULL;
@@ -14812,74 +14973,74 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
   }
   __pyx_t_1 = (__pyx_t_2) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_2, __pyx_v_featureclass_list) : __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_v_featureclass_list);
   __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 415, __pyx_L1_error)
+  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 417, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF_SET(__pyx_v_featureclass_list, __pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "LXG/replication.py":416
+  /* "LXG/replication.py":418
  *     def append_latest(self, featureclass_list):
  *         featureclass_list = np.array(featureclass_list)
  *         arcpy.env.workspace = self.gdb2             # <<<<<<<<<<<<<<
  * 
  *         dss = sorted(arcpy.ListDatasets("", "ALL"))
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_gdb2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 416, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_gdb2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 418, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 416, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 418, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_env); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 416, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_env); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 418, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  if (__Pyx_PyObject_SetAttrStr(__pyx_t_2, __pyx_n_s_workspace, __pyx_t_1) < 0) __PYX_ERR(0, 416, __pyx_L1_error)
+  if (__Pyx_PyObject_SetAttrStr(__pyx_t_2, __pyx_n_s_workspace, __pyx_t_1) < 0) __PYX_ERR(0, 418, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "LXG/replication.py":418
+  /* "LXG/replication.py":420
  *         arcpy.env.workspace = self.gdb2
  * 
  *         dss = sorted(arcpy.ListDatasets("", "ALL"))             # <<<<<<<<<<<<<<
  *         pbar01 = tqdm(dss, desc='Append', position=0, colour='GREEN')
  *         for ds in pbar01:
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 418, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 420, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_ListDatasets); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 418, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_ListDatasets); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 420, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_tuple__2, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 418, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_tuple__2, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 420, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = PySequence_List(__pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 418, __pyx_L1_error)
+  __pyx_t_3 = PySequence_List(__pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 420, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_t_2 = ((PyObject*)__pyx_t_3);
   __pyx_t_3 = 0;
-  __pyx_t_4 = PyList_Sort(__pyx_t_2); if (unlikely(__pyx_t_4 == ((int)-1))) __PYX_ERR(0, 418, __pyx_L1_error)
+  __pyx_t_4 = PyList_Sort(__pyx_t_2); if (unlikely(__pyx_t_4 == ((int)-1))) __PYX_ERR(0, 420, __pyx_L1_error)
   __pyx_v_dss = ((PyObject*)__pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "LXG/replication.py":419
+  /* "LXG/replication.py":421
  * 
  *         dss = sorted(arcpy.ListDatasets("", "ALL"))
  *         pbar01 = tqdm(dss, desc='Append', position=0, colour='GREEN')             # <<<<<<<<<<<<<<
  *         for ds in pbar01:
  *             fcs = sorted(arcpy.ListFeatureClasses("", "Polygon", ds))
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_tqdm); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 419, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_tqdm); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 421, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 419, __pyx_L1_error)
+  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 421, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_INCREF(__pyx_v_dss);
   __Pyx_GIVEREF(__pyx_v_dss);
   PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_v_dss);
-  __pyx_t_1 = __Pyx_PyDict_NewPresized(3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 419, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyDict_NewPresized(3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 421, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_desc, __pyx_n_s_Append) < 0) __PYX_ERR(0, 419, __pyx_L1_error)
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_position, __pyx_int_0) < 0) __PYX_ERR(0, 419, __pyx_L1_error)
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_colour, __pyx_n_s_GREEN) < 0) __PYX_ERR(0, 419, __pyx_L1_error)
-  __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_3, __pyx_t_1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 419, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_desc, __pyx_n_s_Append) < 0) __PYX_ERR(0, 421, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_position, __pyx_int_0) < 0) __PYX_ERR(0, 421, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_colour, __pyx_n_s_GREEN) < 0) __PYX_ERR(0, 421, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_3, __pyx_t_1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 421, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -14887,7 +15048,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
   __pyx_v_pbar01 = __pyx_t_5;
   __pyx_t_5 = 0;
 
-  /* "LXG/replication.py":420
+  /* "LXG/replication.py":422
  *         dss = sorted(arcpy.ListDatasets("", "ALL"))
  *         pbar01 = tqdm(dss, desc='Append', position=0, colour='GREEN')
  *         for ds in pbar01:             # <<<<<<<<<<<<<<
@@ -14898,26 +15059,26 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
     __pyx_t_5 = __pyx_v_pbar01; __Pyx_INCREF(__pyx_t_5); __pyx_t_6 = 0;
     __pyx_t_7 = NULL;
   } else {
-    __pyx_t_6 = -1; __pyx_t_5 = PyObject_GetIter(__pyx_v_pbar01); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 420, __pyx_L1_error)
+    __pyx_t_6 = -1; __pyx_t_5 = PyObject_GetIter(__pyx_v_pbar01); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 422, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_7 = Py_TYPE(__pyx_t_5)->tp_iternext; if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 420, __pyx_L1_error)
+    __pyx_t_7 = Py_TYPE(__pyx_t_5)->tp_iternext; if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 422, __pyx_L1_error)
   }
   for (;;) {
     if (likely(!__pyx_t_7)) {
       if (likely(PyList_CheckExact(__pyx_t_5))) {
         if (__pyx_t_6 >= PyList_GET_SIZE(__pyx_t_5)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_1 = PyList_GET_ITEM(__pyx_t_5, __pyx_t_6); __Pyx_INCREF(__pyx_t_1); __pyx_t_6++; if (unlikely(0 < 0)) __PYX_ERR(0, 420, __pyx_L1_error)
+        __pyx_t_1 = PyList_GET_ITEM(__pyx_t_5, __pyx_t_6); __Pyx_INCREF(__pyx_t_1); __pyx_t_6++; if (unlikely(0 < 0)) __PYX_ERR(0, 422, __pyx_L1_error)
         #else
-        __pyx_t_1 = PySequence_ITEM(__pyx_t_5, __pyx_t_6); __pyx_t_6++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 420, __pyx_L1_error)
+        __pyx_t_1 = PySequence_ITEM(__pyx_t_5, __pyx_t_6); __pyx_t_6++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 422, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_1);
         #endif
       } else {
         if (__pyx_t_6 >= PyTuple_GET_SIZE(__pyx_t_5)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_1 = PyTuple_GET_ITEM(__pyx_t_5, __pyx_t_6); __Pyx_INCREF(__pyx_t_1); __pyx_t_6++; if (unlikely(0 < 0)) __PYX_ERR(0, 420, __pyx_L1_error)
+        __pyx_t_1 = PyTuple_GET_ITEM(__pyx_t_5, __pyx_t_6); __Pyx_INCREF(__pyx_t_1); __pyx_t_6++; if (unlikely(0 < 0)) __PYX_ERR(0, 422, __pyx_L1_error)
         #else
-        __pyx_t_1 = PySequence_ITEM(__pyx_t_5, __pyx_t_6); __pyx_t_6++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 420, __pyx_L1_error)
+        __pyx_t_1 = PySequence_ITEM(__pyx_t_5, __pyx_t_6); __pyx_t_6++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 422, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_1);
         #endif
       }
@@ -14927,7 +15088,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
           if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else __PYX_ERR(0, 420, __pyx_L1_error)
+          else __PYX_ERR(0, 422, __pyx_L1_error)
         }
         break;
       }
@@ -14936,16 +15097,16 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
     __Pyx_XDECREF_SET(__pyx_v_ds, __pyx_t_1);
     __pyx_t_1 = 0;
 
-    /* "LXG/replication.py":421
+    /* "LXG/replication.py":423
  *         pbar01 = tqdm(dss, desc='Append', position=0, colour='GREEN')
  *         for ds in pbar01:
  *             fcs = sorted(arcpy.ListFeatureClasses("", "Polygon", ds))             # <<<<<<<<<<<<<<
  *             if len(fcs) > 0:
  *                 try:
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 421, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 423, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_ListFeatureClasses); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 421, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_ListFeatureClasses); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 423, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __pyx_t_2 = NULL;
@@ -14963,7 +15124,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
     #if CYTHON_FAST_PYCALL
     if (PyFunction_Check(__pyx_t_8)) {
       PyObject *__pyx_temp[4] = {__pyx_t_2, __pyx_kp_s_, __pyx_n_s_Polygon, __pyx_v_ds};
-      __pyx_t_3 = __Pyx_PyFunction_FastCall(__pyx_t_8, __pyx_temp+1-__pyx_t_9, 3+__pyx_t_9); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 421, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyFunction_FastCall(__pyx_t_8, __pyx_temp+1-__pyx_t_9, 3+__pyx_t_9); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 423, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
       __Pyx_GOTREF(__pyx_t_3);
     } else
@@ -14971,13 +15132,13 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
     #if CYTHON_FAST_PYCCALL
     if (__Pyx_PyFastCFunction_Check(__pyx_t_8)) {
       PyObject *__pyx_temp[4] = {__pyx_t_2, __pyx_kp_s_, __pyx_n_s_Polygon, __pyx_v_ds};
-      __pyx_t_3 = __Pyx_PyCFunction_FastCall(__pyx_t_8, __pyx_temp+1-__pyx_t_9, 3+__pyx_t_9); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 421, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyCFunction_FastCall(__pyx_t_8, __pyx_temp+1-__pyx_t_9, 3+__pyx_t_9); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 423, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
       __Pyx_GOTREF(__pyx_t_3);
     } else
     #endif
     {
-      __pyx_t_10 = PyTuple_New(3+__pyx_t_9); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 421, __pyx_L1_error)
+      __pyx_t_10 = PyTuple_New(3+__pyx_t_9); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 423, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_10);
       if (__pyx_t_2) {
         __Pyx_GIVEREF(__pyx_t_2); PyTuple_SET_ITEM(__pyx_t_10, 0, __pyx_t_2); __pyx_t_2 = NULL;
@@ -14991,21 +15152,21 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
       __Pyx_INCREF(__pyx_v_ds);
       __Pyx_GIVEREF(__pyx_v_ds);
       PyTuple_SET_ITEM(__pyx_t_10, 2+__pyx_t_9, __pyx_v_ds);
-      __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_8, __pyx_t_10, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 421, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_8, __pyx_t_10, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 423, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
     }
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-    __pyx_t_8 = PySequence_List(__pyx_t_3); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 421, __pyx_L1_error)
+    __pyx_t_8 = PySequence_List(__pyx_t_3); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 423, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __pyx_t_1 = ((PyObject*)__pyx_t_8);
     __pyx_t_8 = 0;
-    __pyx_t_4 = PyList_Sort(__pyx_t_1); if (unlikely(__pyx_t_4 == ((int)-1))) __PYX_ERR(0, 421, __pyx_L1_error)
+    __pyx_t_4 = PyList_Sort(__pyx_t_1); if (unlikely(__pyx_t_4 == ((int)-1))) __PYX_ERR(0, 423, __pyx_L1_error)
     __pyx_v_fcs = ((PyObject*)__pyx_t_1);
     __pyx_t_1 = 0;
 
-    /* "LXG/replication.py":422
+    /* "LXG/replication.py":424
  *         for ds in pbar01:
  *             fcs = sorted(arcpy.ListFeatureClasses("", "Polygon", ds))
  *             if len(fcs) > 0:             # <<<<<<<<<<<<<<
@@ -15014,13 +15175,13 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
  */
     if (unlikely(__pyx_v_fcs == Py_None)) {
       PyErr_SetString(PyExc_TypeError, "object of type 'NoneType' has no len()");
-      __PYX_ERR(0, 422, __pyx_L1_error)
+      __PYX_ERR(0, 424, __pyx_L1_error)
     }
-    __pyx_t_11 = PyList_GET_SIZE(__pyx_v_fcs); if (unlikely(__pyx_t_11 == ((Py_ssize_t)-1))) __PYX_ERR(0, 422, __pyx_L1_error)
+    __pyx_t_11 = PyList_GET_SIZE(__pyx_v_fcs); if (unlikely(__pyx_t_11 == ((Py_ssize_t)-1))) __PYX_ERR(0, 424, __pyx_L1_error)
     __pyx_t_12 = ((__pyx_t_11 > 0) != 0);
     if (__pyx_t_12) {
 
-      /* "LXG/replication.py":423
+      /* "LXG/replication.py":425
  *             fcs = sorted(arcpy.ListFeatureClasses("", "Polygon", ds))
  *             if len(fcs) > 0:
  *                 try:             # <<<<<<<<<<<<<<
@@ -15036,17 +15197,17 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
         __Pyx_XGOTREF(__pyx_t_15);
         /*try:*/ {
 
-          /* "LXG/replication.py":424
+          /* "LXG/replication.py":426
  *             if len(fcs) > 0:
  *                 try:
  *                     fc_list = [[os.path.join(self.gdb1, ds, fc),             # <<<<<<<<<<<<<<
  *                                 os.path.join(self.gdb2, ds, fc),
  *                                 self.gdb_poly] for fc in fcs if fc in featureclass_list[:, 0]]
  */
-          __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 424, __pyx_L6_error)
+          __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 426, __pyx_L6_error)
           __Pyx_GOTREF(__pyx_t_1);
 
-          /* "LXG/replication.py":426
+          /* "LXG/replication.py":428
  *                     fc_list = [[os.path.join(self.gdb1, ds, fc),
  *                                 os.path.join(self.gdb2, ds, fc),
  *                                 self.gdb_poly] for fc in fcs if fc in featureclass_list[:, 0]]             # <<<<<<<<<<<<<<
@@ -15055,42 +15216,42 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
  */
           if (unlikely(__pyx_v_fcs == Py_None)) {
             PyErr_SetString(PyExc_TypeError, "'NoneType' object is not iterable");
-            __PYX_ERR(0, 426, __pyx_L6_error)
+            __PYX_ERR(0, 428, __pyx_L6_error)
           }
           __pyx_t_8 = __pyx_v_fcs; __Pyx_INCREF(__pyx_t_8); __pyx_t_11 = 0;
           for (;;) {
             if (__pyx_t_11 >= PyList_GET_SIZE(__pyx_t_8)) break;
             #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-            __pyx_t_3 = PyList_GET_ITEM(__pyx_t_8, __pyx_t_11); __Pyx_INCREF(__pyx_t_3); __pyx_t_11++; if (unlikely(0 < 0)) __PYX_ERR(0, 426, __pyx_L6_error)
+            __pyx_t_3 = PyList_GET_ITEM(__pyx_t_8, __pyx_t_11); __Pyx_INCREF(__pyx_t_3); __pyx_t_11++; if (unlikely(0 < 0)) __PYX_ERR(0, 428, __pyx_L6_error)
             #else
-            __pyx_t_3 = PySequence_ITEM(__pyx_t_8, __pyx_t_11); __pyx_t_11++; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 426, __pyx_L6_error)
+            __pyx_t_3 = PySequence_ITEM(__pyx_t_8, __pyx_t_11); __pyx_t_11++; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 428, __pyx_L6_error)
             __Pyx_GOTREF(__pyx_t_3);
             #endif
             __Pyx_XDECREF_SET(__pyx_v_fc, __pyx_t_3);
             __pyx_t_3 = 0;
-            __pyx_t_3 = __Pyx_PyObject_GetItem(__pyx_v_featureclass_list, __pyx_tuple__13); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 426, __pyx_L6_error)
+            __pyx_t_3 = __Pyx_PyObject_GetItem(__pyx_v_featureclass_list, __pyx_tuple__13); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 428, __pyx_L6_error)
             __Pyx_GOTREF(__pyx_t_3);
-            __pyx_t_12 = (__Pyx_PySequence_ContainsTF(__pyx_v_fc, __pyx_t_3, Py_EQ)); if (unlikely(__pyx_t_12 < 0)) __PYX_ERR(0, 426, __pyx_L6_error)
+            __pyx_t_12 = (__Pyx_PySequence_ContainsTF(__pyx_v_fc, __pyx_t_3, Py_EQ)); if (unlikely(__pyx_t_12 < 0)) __PYX_ERR(0, 428, __pyx_L6_error)
             __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
             __pyx_t_16 = (__pyx_t_12 != 0);
             if (__pyx_t_16) {
 
-              /* "LXG/replication.py":424
+              /* "LXG/replication.py":426
  *             if len(fcs) > 0:
  *                 try:
  *                     fc_list = [[os.path.join(self.gdb1, ds, fc),             # <<<<<<<<<<<<<<
  *                                 os.path.join(self.gdb2, ds, fc),
  *                                 self.gdb_poly] for fc in fcs if fc in featureclass_list[:, 0]]
  */
-              __Pyx_GetModuleGlobalName(__pyx_t_10, __pyx_n_s_os); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 424, __pyx_L6_error)
+              __Pyx_GetModuleGlobalName(__pyx_t_10, __pyx_n_s_os); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 426, __pyx_L6_error)
               __Pyx_GOTREF(__pyx_t_10);
-              __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_10, __pyx_n_s_path); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 424, __pyx_L6_error)
+              __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_10, __pyx_n_s_path); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 426, __pyx_L6_error)
               __Pyx_GOTREF(__pyx_t_2);
               __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
-              __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_join); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 424, __pyx_L6_error)
+              __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_join); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 426, __pyx_L6_error)
               __Pyx_GOTREF(__pyx_t_10);
               __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-              __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_gdb1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 424, __pyx_L6_error)
+              __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_gdb1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 426, __pyx_L6_error)
               __Pyx_GOTREF(__pyx_t_2);
               __pyx_t_17 = NULL;
               __pyx_t_9 = 0;
@@ -15107,7 +15268,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
               #if CYTHON_FAST_PYCALL
               if (PyFunction_Check(__pyx_t_10)) {
                 PyObject *__pyx_temp[4] = {__pyx_t_17, __pyx_t_2, __pyx_v_ds, __pyx_v_fc};
-                __pyx_t_3 = __Pyx_PyFunction_FastCall(__pyx_t_10, __pyx_temp+1-__pyx_t_9, 3+__pyx_t_9); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 424, __pyx_L6_error)
+                __pyx_t_3 = __Pyx_PyFunction_FastCall(__pyx_t_10, __pyx_temp+1-__pyx_t_9, 3+__pyx_t_9); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 426, __pyx_L6_error)
                 __Pyx_XDECREF(__pyx_t_17); __pyx_t_17 = 0;
                 __Pyx_GOTREF(__pyx_t_3);
                 __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
@@ -15116,14 +15277,14 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
               #if CYTHON_FAST_PYCCALL
               if (__Pyx_PyFastCFunction_Check(__pyx_t_10)) {
                 PyObject *__pyx_temp[4] = {__pyx_t_17, __pyx_t_2, __pyx_v_ds, __pyx_v_fc};
-                __pyx_t_3 = __Pyx_PyCFunction_FastCall(__pyx_t_10, __pyx_temp+1-__pyx_t_9, 3+__pyx_t_9); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 424, __pyx_L6_error)
+                __pyx_t_3 = __Pyx_PyCFunction_FastCall(__pyx_t_10, __pyx_temp+1-__pyx_t_9, 3+__pyx_t_9); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 426, __pyx_L6_error)
                 __Pyx_XDECREF(__pyx_t_17); __pyx_t_17 = 0;
                 __Pyx_GOTREF(__pyx_t_3);
                 __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
               } else
               #endif
               {
-                __pyx_t_18 = PyTuple_New(3+__pyx_t_9); if (unlikely(!__pyx_t_18)) __PYX_ERR(0, 424, __pyx_L6_error)
+                __pyx_t_18 = PyTuple_New(3+__pyx_t_9); if (unlikely(!__pyx_t_18)) __PYX_ERR(0, 426, __pyx_L6_error)
                 __Pyx_GOTREF(__pyx_t_18);
                 if (__pyx_t_17) {
                   __Pyx_GIVEREF(__pyx_t_17); PyTuple_SET_ITEM(__pyx_t_18, 0, __pyx_t_17); __pyx_t_17 = NULL;
@@ -15137,28 +15298,28 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
                 __Pyx_GIVEREF(__pyx_v_fc);
                 PyTuple_SET_ITEM(__pyx_t_18, 2+__pyx_t_9, __pyx_v_fc);
                 __pyx_t_2 = 0;
-                __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_10, __pyx_t_18, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 424, __pyx_L6_error)
+                __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_10, __pyx_t_18, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 426, __pyx_L6_error)
                 __Pyx_GOTREF(__pyx_t_3);
                 __Pyx_DECREF(__pyx_t_18); __pyx_t_18 = 0;
               }
               __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
 
-              /* "LXG/replication.py":425
+              /* "LXG/replication.py":427
  *                 try:
  *                     fc_list = [[os.path.join(self.gdb1, ds, fc),
  *                                 os.path.join(self.gdb2, ds, fc),             # <<<<<<<<<<<<<<
  *                                 self.gdb_poly] for fc in fcs if fc in featureclass_list[:, 0]]
  *                     with mp.Pool(processes=4) as pool1:
  */
-              __Pyx_GetModuleGlobalName(__pyx_t_18, __pyx_n_s_os); if (unlikely(!__pyx_t_18)) __PYX_ERR(0, 425, __pyx_L6_error)
+              __Pyx_GetModuleGlobalName(__pyx_t_18, __pyx_n_s_os); if (unlikely(!__pyx_t_18)) __PYX_ERR(0, 427, __pyx_L6_error)
               __Pyx_GOTREF(__pyx_t_18);
-              __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_18, __pyx_n_s_path); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 425, __pyx_L6_error)
+              __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_18, __pyx_n_s_path); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 427, __pyx_L6_error)
               __Pyx_GOTREF(__pyx_t_2);
               __Pyx_DECREF(__pyx_t_18); __pyx_t_18 = 0;
-              __pyx_t_18 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_join); if (unlikely(!__pyx_t_18)) __PYX_ERR(0, 425, __pyx_L6_error)
+              __pyx_t_18 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_join); if (unlikely(!__pyx_t_18)) __PYX_ERR(0, 427, __pyx_L6_error)
               __Pyx_GOTREF(__pyx_t_18);
               __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-              __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_gdb2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 425, __pyx_L6_error)
+              __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_gdb2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 427, __pyx_L6_error)
               __Pyx_GOTREF(__pyx_t_2);
               __pyx_t_17 = NULL;
               __pyx_t_9 = 0;
@@ -15175,7 +15336,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
               #if CYTHON_FAST_PYCALL
               if (PyFunction_Check(__pyx_t_18)) {
                 PyObject *__pyx_temp[4] = {__pyx_t_17, __pyx_t_2, __pyx_v_ds, __pyx_v_fc};
-                __pyx_t_10 = __Pyx_PyFunction_FastCall(__pyx_t_18, __pyx_temp+1-__pyx_t_9, 3+__pyx_t_9); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 425, __pyx_L6_error)
+                __pyx_t_10 = __Pyx_PyFunction_FastCall(__pyx_t_18, __pyx_temp+1-__pyx_t_9, 3+__pyx_t_9); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 427, __pyx_L6_error)
                 __Pyx_XDECREF(__pyx_t_17); __pyx_t_17 = 0;
                 __Pyx_GOTREF(__pyx_t_10);
                 __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
@@ -15184,14 +15345,14 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
               #if CYTHON_FAST_PYCCALL
               if (__Pyx_PyFastCFunction_Check(__pyx_t_18)) {
                 PyObject *__pyx_temp[4] = {__pyx_t_17, __pyx_t_2, __pyx_v_ds, __pyx_v_fc};
-                __pyx_t_10 = __Pyx_PyCFunction_FastCall(__pyx_t_18, __pyx_temp+1-__pyx_t_9, 3+__pyx_t_9); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 425, __pyx_L6_error)
+                __pyx_t_10 = __Pyx_PyCFunction_FastCall(__pyx_t_18, __pyx_temp+1-__pyx_t_9, 3+__pyx_t_9); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 427, __pyx_L6_error)
                 __Pyx_XDECREF(__pyx_t_17); __pyx_t_17 = 0;
                 __Pyx_GOTREF(__pyx_t_10);
                 __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
               } else
               #endif
               {
-                __pyx_t_19 = PyTuple_New(3+__pyx_t_9); if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 425, __pyx_L6_error)
+                __pyx_t_19 = PyTuple_New(3+__pyx_t_9); if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 427, __pyx_L6_error)
                 __Pyx_GOTREF(__pyx_t_19);
                 if (__pyx_t_17) {
                   __Pyx_GIVEREF(__pyx_t_17); PyTuple_SET_ITEM(__pyx_t_19, 0, __pyx_t_17); __pyx_t_17 = NULL;
@@ -15205,30 +15366,30 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
                 __Pyx_GIVEREF(__pyx_v_fc);
                 PyTuple_SET_ITEM(__pyx_t_19, 2+__pyx_t_9, __pyx_v_fc);
                 __pyx_t_2 = 0;
-                __pyx_t_10 = __Pyx_PyObject_Call(__pyx_t_18, __pyx_t_19, NULL); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 425, __pyx_L6_error)
+                __pyx_t_10 = __Pyx_PyObject_Call(__pyx_t_18, __pyx_t_19, NULL); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 427, __pyx_L6_error)
                 __Pyx_GOTREF(__pyx_t_10);
                 __Pyx_DECREF(__pyx_t_19); __pyx_t_19 = 0;
               }
               __Pyx_DECREF(__pyx_t_18); __pyx_t_18 = 0;
 
-              /* "LXG/replication.py":426
+              /* "LXG/replication.py":428
  *                     fc_list = [[os.path.join(self.gdb1, ds, fc),
  *                                 os.path.join(self.gdb2, ds, fc),
  *                                 self.gdb_poly] for fc in fcs if fc in featureclass_list[:, 0]]             # <<<<<<<<<<<<<<
  *                     with mp.Pool(processes=4) as pool1:
  *                         results = tqdm(pool1.imap(self.fast_poly_append, fc_list),
  */
-              __pyx_t_18 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_gdb_poly); if (unlikely(!__pyx_t_18)) __PYX_ERR(0, 426, __pyx_L6_error)
+              __pyx_t_18 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_gdb_poly); if (unlikely(!__pyx_t_18)) __PYX_ERR(0, 428, __pyx_L6_error)
               __Pyx_GOTREF(__pyx_t_18);
 
-              /* "LXG/replication.py":424
+              /* "LXG/replication.py":426
  *             if len(fcs) > 0:
  *                 try:
  *                     fc_list = [[os.path.join(self.gdb1, ds, fc),             # <<<<<<<<<<<<<<
  *                                 os.path.join(self.gdb2, ds, fc),
  *                                 self.gdb_poly] for fc in fcs if fc in featureclass_list[:, 0]]
  */
-              __pyx_t_19 = PyList_New(3); if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 424, __pyx_L6_error)
+              __pyx_t_19 = PyList_New(3); if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 426, __pyx_L6_error)
               __Pyx_GOTREF(__pyx_t_19);
               __Pyx_GIVEREF(__pyx_t_3);
               PyList_SET_ITEM(__pyx_t_19, 0, __pyx_t_3);
@@ -15239,10 +15400,10 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
               __pyx_t_3 = 0;
               __pyx_t_10 = 0;
               __pyx_t_18 = 0;
-              if (unlikely(__Pyx_ListComp_Append(__pyx_t_1, (PyObject*)__pyx_t_19))) __PYX_ERR(0, 424, __pyx_L6_error)
+              if (unlikely(__Pyx_ListComp_Append(__pyx_t_1, (PyObject*)__pyx_t_19))) __PYX_ERR(0, 426, __pyx_L6_error)
               __Pyx_DECREF(__pyx_t_19); __pyx_t_19 = 0;
 
-              /* "LXG/replication.py":426
+              /* "LXG/replication.py":428
  *                     fc_list = [[os.path.join(self.gdb1, ds, fc),
  *                                 os.path.join(self.gdb2, ds, fc),
  *                                 self.gdb_poly] for fc in fcs if fc in featureclass_list[:, 0]]             # <<<<<<<<<<<<<<
@@ -15255,7 +15416,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
           __Pyx_XDECREF_SET(__pyx_v_fc_list, ((PyObject*)__pyx_t_1));
           __pyx_t_1 = 0;
 
-          /* "LXG/replication.py":427
+          /* "LXG/replication.py":429
  *                                 os.path.join(self.gdb2, ds, fc),
  *                                 self.gdb_poly] for fc in fcs if fc in featureclass_list[:, 0]]
  *                     with mp.Pool(processes=4) as pool1:             # <<<<<<<<<<<<<<
@@ -15263,21 +15424,21 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
  *                                        total=len(fc_list),
  */
           /*with:*/ {
-            __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_mp); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 427, __pyx_L6_error)
+            __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_mp); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 429, __pyx_L6_error)
             __Pyx_GOTREF(__pyx_t_1);
-            __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_Pool); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 427, __pyx_L6_error)
+            __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_Pool); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 429, __pyx_L6_error)
             __Pyx_GOTREF(__pyx_t_8);
             __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-            __pyx_t_1 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 427, __pyx_L6_error)
+            __pyx_t_1 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 429, __pyx_L6_error)
             __Pyx_GOTREF(__pyx_t_1);
-            if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_processes, __pyx_int_4) < 0) __PYX_ERR(0, 427, __pyx_L6_error)
-            __pyx_t_19 = __Pyx_PyObject_Call(__pyx_t_8, __pyx_empty_tuple, __pyx_t_1); if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 427, __pyx_L6_error)
+            if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_processes, __pyx_int_4) < 0) __PYX_ERR(0, 429, __pyx_L6_error)
+            __pyx_t_19 = __Pyx_PyObject_Call(__pyx_t_8, __pyx_empty_tuple, __pyx_t_1); if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 429, __pyx_L6_error)
             __Pyx_GOTREF(__pyx_t_19);
             __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
             __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-            __pyx_t_20 = __Pyx_PyObject_LookupSpecial(__pyx_t_19, __pyx_n_s_exit); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 427, __pyx_L6_error)
+            __pyx_t_20 = __Pyx_PyObject_LookupSpecial(__pyx_t_19, __pyx_n_s_exit); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 429, __pyx_L6_error)
             __Pyx_GOTREF(__pyx_t_20);
-            __pyx_t_8 = __Pyx_PyObject_LookupSpecial(__pyx_t_19, __pyx_n_s_enter); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 427, __pyx_L17_error)
+            __pyx_t_8 = __Pyx_PyObject_LookupSpecial(__pyx_t_19, __pyx_n_s_enter); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 429, __pyx_L17_error)
             __Pyx_GOTREF(__pyx_t_8);
             __pyx_t_18 = NULL;
             if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_8))) {
@@ -15291,7 +15452,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
             }
             __pyx_t_1 = (__pyx_t_18) ? __Pyx_PyObject_CallOneArg(__pyx_t_8, __pyx_t_18) : __Pyx_PyObject_CallNoArg(__pyx_t_8);
             __Pyx_XDECREF(__pyx_t_18); __pyx_t_18 = 0;
-            if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 427, __pyx_L17_error)
+            if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 429, __pyx_L17_error)
             __Pyx_GOTREF(__pyx_t_1);
             __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
             __pyx_t_8 = __pyx_t_1;
@@ -15309,18 +15470,18 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
                   __Pyx_XDECREF_SET(__pyx_v_pool1, __pyx_t_8);
                   __pyx_t_8 = 0;
 
-                  /* "LXG/replication.py":428
+                  /* "LXG/replication.py":430
  *                                 self.gdb_poly] for fc in fcs if fc in featureclass_list[:, 0]]
  *                     with mp.Pool(processes=4) as pool1:
  *                         results = tqdm(pool1.imap(self.fast_poly_append, fc_list),             # <<<<<<<<<<<<<<
  *                                        total=len(fc_list),
  *                                        desc='Append FeatureClasses',
  */
-                  __Pyx_GetModuleGlobalName(__pyx_t_8, __pyx_n_s_tqdm); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 428, __pyx_L23_error)
+                  __Pyx_GetModuleGlobalName(__pyx_t_8, __pyx_n_s_tqdm); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 430, __pyx_L23_error)
                   __Pyx_GOTREF(__pyx_t_8);
-                  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_pool1, __pyx_n_s_imap); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 428, __pyx_L23_error)
+                  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_pool1, __pyx_n_s_imap); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 430, __pyx_L23_error)
                   __Pyx_GOTREF(__pyx_t_1);
-                  __pyx_t_18 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_fast_poly_append); if (unlikely(!__pyx_t_18)) __PYX_ERR(0, 428, __pyx_L23_error)
+                  __pyx_t_18 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_fast_poly_append); if (unlikely(!__pyx_t_18)) __PYX_ERR(0, 430, __pyx_L23_error)
                   __Pyx_GOTREF(__pyx_t_18);
                   __pyx_t_10 = NULL;
                   __pyx_t_9 = 0;
@@ -15337,7 +15498,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
                   #if CYTHON_FAST_PYCALL
                   if (PyFunction_Check(__pyx_t_1)) {
                     PyObject *__pyx_temp[3] = {__pyx_t_10, __pyx_t_18, __pyx_v_fc_list};
-                    __pyx_t_19 = __Pyx_PyFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 428, __pyx_L23_error)
+                    __pyx_t_19 = __Pyx_PyFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 430, __pyx_L23_error)
                     __Pyx_XDECREF(__pyx_t_10); __pyx_t_10 = 0;
                     __Pyx_GOTREF(__pyx_t_19);
                     __Pyx_DECREF(__pyx_t_18); __pyx_t_18 = 0;
@@ -15346,14 +15507,14 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
                   #if CYTHON_FAST_PYCCALL
                   if (__Pyx_PyFastCFunction_Check(__pyx_t_1)) {
                     PyObject *__pyx_temp[3] = {__pyx_t_10, __pyx_t_18, __pyx_v_fc_list};
-                    __pyx_t_19 = __Pyx_PyCFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 428, __pyx_L23_error)
+                    __pyx_t_19 = __Pyx_PyCFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 430, __pyx_L23_error)
                     __Pyx_XDECREF(__pyx_t_10); __pyx_t_10 = 0;
                     __Pyx_GOTREF(__pyx_t_19);
                     __Pyx_DECREF(__pyx_t_18); __pyx_t_18 = 0;
                   } else
                   #endif
                   {
-                    __pyx_t_3 = PyTuple_New(2+__pyx_t_9); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 428, __pyx_L23_error)
+                    __pyx_t_3 = PyTuple_New(2+__pyx_t_9); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 430, __pyx_L23_error)
                     __Pyx_GOTREF(__pyx_t_3);
                     if (__pyx_t_10) {
                       __Pyx_GIVEREF(__pyx_t_10); PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_10); __pyx_t_10 = NULL;
@@ -15364,51 +15525,51 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
                     __Pyx_GIVEREF(__pyx_v_fc_list);
                     PyTuple_SET_ITEM(__pyx_t_3, 1+__pyx_t_9, __pyx_v_fc_list);
                     __pyx_t_18 = 0;
-                    __pyx_t_19 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_3, NULL); if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 428, __pyx_L23_error)
+                    __pyx_t_19 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_3, NULL); if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 430, __pyx_L23_error)
                     __Pyx_GOTREF(__pyx_t_19);
                     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
                   }
                   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-                  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 428, __pyx_L23_error)
+                  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 430, __pyx_L23_error)
                   __Pyx_GOTREF(__pyx_t_1);
                   __Pyx_GIVEREF(__pyx_t_19);
                   PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_t_19);
                   __pyx_t_19 = 0;
 
-                  /* "LXG/replication.py":429
+                  /* "LXG/replication.py":431
  *                     with mp.Pool(processes=4) as pool1:
  *                         results = tqdm(pool1.imap(self.fast_poly_append, fc_list),
  *                                        total=len(fc_list),             # <<<<<<<<<<<<<<
  *                                        desc='Append FeatureClasses',
  *                                        colour='Yellow',
  */
-                  __pyx_t_19 = __Pyx_PyDict_NewPresized(4); if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 429, __pyx_L23_error)
+                  __pyx_t_19 = __Pyx_PyDict_NewPresized(4); if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 431, __pyx_L23_error)
                   __Pyx_GOTREF(__pyx_t_19);
-                  __pyx_t_11 = PyList_GET_SIZE(__pyx_v_fc_list); if (unlikely(__pyx_t_11 == ((Py_ssize_t)-1))) __PYX_ERR(0, 429, __pyx_L23_error)
-                  __pyx_t_3 = PyInt_FromSsize_t(__pyx_t_11); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 429, __pyx_L23_error)
+                  __pyx_t_11 = PyList_GET_SIZE(__pyx_v_fc_list); if (unlikely(__pyx_t_11 == ((Py_ssize_t)-1))) __PYX_ERR(0, 431, __pyx_L23_error)
+                  __pyx_t_3 = PyInt_FromSsize_t(__pyx_t_11); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 431, __pyx_L23_error)
                   __Pyx_GOTREF(__pyx_t_3);
-                  if (PyDict_SetItem(__pyx_t_19, __pyx_n_s_total, __pyx_t_3) < 0) __PYX_ERR(0, 429, __pyx_L23_error)
+                  if (PyDict_SetItem(__pyx_t_19, __pyx_n_s_total, __pyx_t_3) < 0) __PYX_ERR(0, 431, __pyx_L23_error)
                   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-                  if (PyDict_SetItem(__pyx_t_19, __pyx_n_s_desc, __pyx_kp_s_Append_FeatureClasses) < 0) __PYX_ERR(0, 429, __pyx_L23_error)
-                  if (PyDict_SetItem(__pyx_t_19, __pyx_n_s_colour, __pyx_n_s_Yellow) < 0) __PYX_ERR(0, 429, __pyx_L23_error)
+                  if (PyDict_SetItem(__pyx_t_19, __pyx_n_s_desc, __pyx_kp_s_Append_FeatureClasses) < 0) __PYX_ERR(0, 431, __pyx_L23_error)
+                  if (PyDict_SetItem(__pyx_t_19, __pyx_n_s_colour, __pyx_n_s_Yellow) < 0) __PYX_ERR(0, 431, __pyx_L23_error)
 
-                  /* "LXG/replication.py":432
+                  /* "LXG/replication.py":434
  *                                        desc='Append FeatureClasses',
  *                                        colour='Yellow',
  *                                        leave=False)             # <<<<<<<<<<<<<<
  *                         tuple(results)
  *                         pool1.close()
  */
-                  if (PyDict_SetItem(__pyx_t_19, __pyx_n_s_leave, Py_False) < 0) __PYX_ERR(0, 429, __pyx_L23_error)
+                  if (PyDict_SetItem(__pyx_t_19, __pyx_n_s_leave, Py_False) < 0) __PYX_ERR(0, 431, __pyx_L23_error)
 
-                  /* "LXG/replication.py":428
+                  /* "LXG/replication.py":430
  *                                 self.gdb_poly] for fc in fcs if fc in featureclass_list[:, 0]]
  *                     with mp.Pool(processes=4) as pool1:
  *                         results = tqdm(pool1.imap(self.fast_poly_append, fc_list),             # <<<<<<<<<<<<<<
  *                                        total=len(fc_list),
  *                                        desc='Append FeatureClasses',
  */
-                  __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_8, __pyx_t_1, __pyx_t_19); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 428, __pyx_L23_error)
+                  __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_8, __pyx_t_1, __pyx_t_19); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 430, __pyx_L23_error)
                   __Pyx_GOTREF(__pyx_t_3);
                   __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
                   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -15416,25 +15577,25 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
                   __Pyx_XDECREF_SET(__pyx_v_results, __pyx_t_3);
                   __pyx_t_3 = 0;
 
-                  /* "LXG/replication.py":433
+                  /* "LXG/replication.py":435
  *                                        colour='Yellow',
  *                                        leave=False)
  *                         tuple(results)             # <<<<<<<<<<<<<<
  *                         pool1.close()
  *                         pool1.join()
  */
-                  __pyx_t_3 = __Pyx_PySequence_Tuple(__pyx_v_results); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 433, __pyx_L23_error)
+                  __pyx_t_3 = __Pyx_PySequence_Tuple(__pyx_v_results); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 435, __pyx_L23_error)
                   __Pyx_GOTREF(__pyx_t_3);
                   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-                  /* "LXG/replication.py":434
+                  /* "LXG/replication.py":436
  *                                        leave=False)
  *                         tuple(results)
  *                         pool1.close()             # <<<<<<<<<<<<<<
  *                         pool1.join()
  *                 except Exception as e:
  */
-                  __pyx_t_19 = __Pyx_PyObject_GetAttrStr(__pyx_v_pool1, __pyx_n_s_close); if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 434, __pyx_L23_error)
+                  __pyx_t_19 = __Pyx_PyObject_GetAttrStr(__pyx_v_pool1, __pyx_n_s_close); if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 436, __pyx_L23_error)
                   __Pyx_GOTREF(__pyx_t_19);
                   __pyx_t_1 = NULL;
                   if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_19))) {
@@ -15448,19 +15609,19 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
                   }
                   __pyx_t_3 = (__pyx_t_1) ? __Pyx_PyObject_CallOneArg(__pyx_t_19, __pyx_t_1) : __Pyx_PyObject_CallNoArg(__pyx_t_19);
                   __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
-                  if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 434, __pyx_L23_error)
+                  if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 436, __pyx_L23_error)
                   __Pyx_GOTREF(__pyx_t_3);
                   __Pyx_DECREF(__pyx_t_19); __pyx_t_19 = 0;
                   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-                  /* "LXG/replication.py":435
+                  /* "LXG/replication.py":437
  *                         tuple(results)
  *                         pool1.close()
  *                         pool1.join()             # <<<<<<<<<<<<<<
  *                 except Exception as e:
  *                     arcpy.AddError(e)
  */
-                  __pyx_t_19 = __Pyx_PyObject_GetAttrStr(__pyx_v_pool1, __pyx_n_s_join); if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 435, __pyx_L23_error)
+                  __pyx_t_19 = __Pyx_PyObject_GetAttrStr(__pyx_v_pool1, __pyx_n_s_join); if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 437, __pyx_L23_error)
                   __Pyx_GOTREF(__pyx_t_19);
                   __pyx_t_1 = NULL;
                   if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_19))) {
@@ -15474,12 +15635,12 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
                   }
                   __pyx_t_3 = (__pyx_t_1) ? __Pyx_PyObject_CallOneArg(__pyx_t_19, __pyx_t_1) : __Pyx_PyObject_CallNoArg(__pyx_t_19);
                   __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
-                  if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 435, __pyx_L23_error)
+                  if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 437, __pyx_L23_error)
                   __Pyx_GOTREF(__pyx_t_3);
                   __Pyx_DECREF(__pyx_t_19); __pyx_t_19 = 0;
                   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-                  /* "LXG/replication.py":427
+                  /* "LXG/replication.py":429
  *                                 os.path.join(self.gdb2, ds, fc),
  *                                 self.gdb_poly] for fc in fcs if fc in featureclass_list[:, 0]]
  *                     with mp.Pool(processes=4) as pool1:             # <<<<<<<<<<<<<<
@@ -15502,20 +15663,20 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
                 __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
                 /*except:*/ {
                   __Pyx_AddTraceback("LXGREP.AppendNewFeatures.append_latest", __pyx_clineno, __pyx_lineno, __pyx_filename);
-                  if (__Pyx_GetException(&__pyx_t_3, &__pyx_t_19, &__pyx_t_1) < 0) __PYX_ERR(0, 427, __pyx_L25_except_error)
+                  if (__Pyx_GetException(&__pyx_t_3, &__pyx_t_19, &__pyx_t_1) < 0) __PYX_ERR(0, 429, __pyx_L25_except_error)
                   __Pyx_GOTREF(__pyx_t_3);
                   __Pyx_GOTREF(__pyx_t_19);
                   __Pyx_GOTREF(__pyx_t_1);
-                  __pyx_t_8 = PyTuple_Pack(3, __pyx_t_3, __pyx_t_19, __pyx_t_1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 427, __pyx_L25_except_error)
+                  __pyx_t_8 = PyTuple_Pack(3, __pyx_t_3, __pyx_t_19, __pyx_t_1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 429, __pyx_L25_except_error)
                   __Pyx_GOTREF(__pyx_t_8);
                   __pyx_t_24 = __Pyx_PyObject_Call(__pyx_t_20, __pyx_t_8, NULL);
                   __Pyx_DECREF(__pyx_t_20); __pyx_t_20 = 0;
                   __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-                  if (unlikely(!__pyx_t_24)) __PYX_ERR(0, 427, __pyx_L25_except_error)
+                  if (unlikely(!__pyx_t_24)) __PYX_ERR(0, 429, __pyx_L25_except_error)
                   __Pyx_GOTREF(__pyx_t_24);
                   __pyx_t_16 = __Pyx_PyObject_IsTrue(__pyx_t_24);
                   __Pyx_DECREF(__pyx_t_24); __pyx_t_24 = 0;
-                  if (__pyx_t_16 < 0) __PYX_ERR(0, 427, __pyx_L25_except_error)
+                  if (__pyx_t_16 < 0) __PYX_ERR(0, 429, __pyx_L25_except_error)
                   __pyx_t_12 = ((!(__pyx_t_16 != 0)) != 0);
                   if (__pyx_t_12) {
                     __Pyx_GIVEREF(__pyx_t_3);
@@ -15523,7 +15684,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
                     __Pyx_XGIVEREF(__pyx_t_1);
                     __Pyx_ErrRestoreWithState(__pyx_t_3, __pyx_t_19, __pyx_t_1);
                     __pyx_t_3 = 0; __pyx_t_19 = 0; __pyx_t_1 = 0; 
-                    __PYX_ERR(0, 427, __pyx_L25_except_error)
+                    __PYX_ERR(0, 429, __pyx_L25_except_error)
                   }
                   __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
                   __Pyx_XDECREF(__pyx_t_19); __pyx_t_19 = 0;
@@ -15549,7 +15710,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
                 if (__pyx_t_20) {
                   __pyx_t_23 = __Pyx_PyObject_Call(__pyx_t_20, __pyx_tuple__3, NULL);
                   __Pyx_DECREF(__pyx_t_20); __pyx_t_20 = 0;
-                  if (unlikely(!__pyx_t_23)) __PYX_ERR(0, 427, __pyx_L6_error)
+                  if (unlikely(!__pyx_t_23)) __PYX_ERR(0, 429, __pyx_L6_error)
                   __Pyx_GOTREF(__pyx_t_23);
                   __Pyx_DECREF(__pyx_t_23); __pyx_t_23 = 0;
                 }
@@ -15564,7 +15725,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
             __pyx_L34:;
           }
 
-          /* "LXG/replication.py":423
+          /* "LXG/replication.py":425
  *             fcs = sorted(arcpy.ListFeatureClasses("", "Polygon", ds))
  *             if len(fcs) > 0:
  *                 try:             # <<<<<<<<<<<<<<
@@ -15586,7 +15747,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
         __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
         __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
 
-        /* "LXG/replication.py":436
+        /* "LXG/replication.py":438
  *                         pool1.close()
  *                         pool1.join()
  *                 except Exception as e:             # <<<<<<<<<<<<<<
@@ -15596,23 +15757,23 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
         __pyx_t_9 = __Pyx_PyErr_ExceptionMatches(((PyObject *)(&((PyTypeObject*)PyExc_Exception)[0])));
         if (__pyx_t_9) {
           __Pyx_AddTraceback("LXGREP.AppendNewFeatures.append_latest", __pyx_clineno, __pyx_lineno, __pyx_filename);
-          if (__Pyx_GetException(&__pyx_t_1, &__pyx_t_19, &__pyx_t_3) < 0) __PYX_ERR(0, 436, __pyx_L8_except_error)
+          if (__Pyx_GetException(&__pyx_t_1, &__pyx_t_19, &__pyx_t_3) < 0) __PYX_ERR(0, 438, __pyx_L8_except_error)
           __Pyx_GOTREF(__pyx_t_1);
           __Pyx_GOTREF(__pyx_t_19);
           __Pyx_GOTREF(__pyx_t_3);
           __Pyx_INCREF(__pyx_t_19);
           __Pyx_XDECREF_SET(__pyx_v_e, __pyx_t_19);
 
-          /* "LXG/replication.py":437
+          /* "LXG/replication.py":439
  *                         pool1.join()
  *                 except Exception as e:
  *                     arcpy.AddError(e)             # <<<<<<<<<<<<<<
  * 
  *             del fcs
  */
-          __Pyx_GetModuleGlobalName(__pyx_t_18, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_18)) __PYX_ERR(0, 437, __pyx_L8_except_error)
+          __Pyx_GetModuleGlobalName(__pyx_t_18, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_18)) __PYX_ERR(0, 439, __pyx_L8_except_error)
           __Pyx_GOTREF(__pyx_t_18);
-          __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_t_18, __pyx_n_s_AddError); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 437, __pyx_L8_except_error)
+          __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_t_18, __pyx_n_s_AddError); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 439, __pyx_L8_except_error)
           __Pyx_GOTREF(__pyx_t_10);
           __Pyx_DECREF(__pyx_t_18); __pyx_t_18 = 0;
           __pyx_t_18 = NULL;
@@ -15627,7 +15788,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
           }
           __pyx_t_8 = (__pyx_t_18) ? __Pyx_PyObject_Call2Args(__pyx_t_10, __pyx_t_18, __pyx_v_e) : __Pyx_PyObject_CallOneArg(__pyx_t_10, __pyx_v_e);
           __Pyx_XDECREF(__pyx_t_18); __pyx_t_18 = 0;
-          if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 437, __pyx_L8_except_error)
+          if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 439, __pyx_L8_except_error)
           __Pyx_GOTREF(__pyx_t_8);
           __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
           __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
@@ -15639,7 +15800,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
         goto __pyx_L8_except_error;
         __pyx_L8_except_error:;
 
-        /* "LXG/replication.py":423
+        /* "LXG/replication.py":425
  *             fcs = sorted(arcpy.ListFeatureClasses("", "Polygon", ds))
  *             if len(fcs) > 0:
  *                 try:             # <<<<<<<<<<<<<<
@@ -15659,7 +15820,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
         __pyx_L13_try_end:;
       }
 
-      /* "LXG/replication.py":422
+      /* "LXG/replication.py":424
  *         for ds in pbar01:
  *             fcs = sorted(arcpy.ListFeatureClasses("", "Polygon", ds))
  *             if len(fcs) > 0:             # <<<<<<<<<<<<<<
@@ -15668,7 +15829,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
  */
     }
 
-    /* "LXG/replication.py":439
+    /* "LXG/replication.py":441
  *                     arcpy.AddError(e)
  * 
  *             del fcs             # <<<<<<<<<<<<<<
@@ -15678,16 +15839,16 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
     __Pyx_DECREF(__pyx_v_fcs);
     __pyx_v_fcs = NULL;
 
-    /* "LXG/replication.py":441
+    /* "LXG/replication.py":443
  *             del fcs
  * 
  *             fcs = sorted(arcpy.ListFeatureClasses("", "Polyline", ds))             # <<<<<<<<<<<<<<
  *             if len(fcs) > 0:
  *                 fc_list = [[os.path.join(self.gdb1, ds, fc),
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 441, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 443, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_ListFeatureClasses); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 441, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_ListFeatureClasses); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 443, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __pyx_t_1 = NULL;
@@ -15705,7 +15866,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
     #if CYTHON_FAST_PYCALL
     if (PyFunction_Check(__pyx_t_8)) {
       PyObject *__pyx_temp[4] = {__pyx_t_1, __pyx_kp_s_, __pyx_n_s_Polyline, __pyx_v_ds};
-      __pyx_t_19 = __Pyx_PyFunction_FastCall(__pyx_t_8, __pyx_temp+1-__pyx_t_9, 3+__pyx_t_9); if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 441, __pyx_L1_error)
+      __pyx_t_19 = __Pyx_PyFunction_FastCall(__pyx_t_8, __pyx_temp+1-__pyx_t_9, 3+__pyx_t_9); if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 443, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
       __Pyx_GOTREF(__pyx_t_19);
     } else
@@ -15713,13 +15874,13 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
     #if CYTHON_FAST_PYCCALL
     if (__Pyx_PyFastCFunction_Check(__pyx_t_8)) {
       PyObject *__pyx_temp[4] = {__pyx_t_1, __pyx_kp_s_, __pyx_n_s_Polyline, __pyx_v_ds};
-      __pyx_t_19 = __Pyx_PyCFunction_FastCall(__pyx_t_8, __pyx_temp+1-__pyx_t_9, 3+__pyx_t_9); if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 441, __pyx_L1_error)
+      __pyx_t_19 = __Pyx_PyCFunction_FastCall(__pyx_t_8, __pyx_temp+1-__pyx_t_9, 3+__pyx_t_9); if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 443, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
       __Pyx_GOTREF(__pyx_t_19);
     } else
     #endif
     {
-      __pyx_t_10 = PyTuple_New(3+__pyx_t_9); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 441, __pyx_L1_error)
+      __pyx_t_10 = PyTuple_New(3+__pyx_t_9); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 443, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_10);
       if (__pyx_t_1) {
         __Pyx_GIVEREF(__pyx_t_1); PyTuple_SET_ITEM(__pyx_t_10, 0, __pyx_t_1); __pyx_t_1 = NULL;
@@ -15733,21 +15894,21 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
       __Pyx_INCREF(__pyx_v_ds);
       __Pyx_GIVEREF(__pyx_v_ds);
       PyTuple_SET_ITEM(__pyx_t_10, 2+__pyx_t_9, __pyx_v_ds);
-      __pyx_t_19 = __Pyx_PyObject_Call(__pyx_t_8, __pyx_t_10, NULL); if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 441, __pyx_L1_error)
+      __pyx_t_19 = __Pyx_PyObject_Call(__pyx_t_8, __pyx_t_10, NULL); if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 443, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_19);
       __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
     }
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-    __pyx_t_8 = PySequence_List(__pyx_t_19); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 441, __pyx_L1_error)
+    __pyx_t_8 = PySequence_List(__pyx_t_19); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 443, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
     __Pyx_DECREF(__pyx_t_19); __pyx_t_19 = 0;
     __pyx_t_3 = ((PyObject*)__pyx_t_8);
     __pyx_t_8 = 0;
-    __pyx_t_4 = PyList_Sort(__pyx_t_3); if (unlikely(__pyx_t_4 == ((int)-1))) __PYX_ERR(0, 441, __pyx_L1_error)
+    __pyx_t_4 = PyList_Sort(__pyx_t_3); if (unlikely(__pyx_t_4 == ((int)-1))) __PYX_ERR(0, 443, __pyx_L1_error)
     __pyx_v_fcs = ((PyObject*)__pyx_t_3);
     __pyx_t_3 = 0;
 
-    /* "LXG/replication.py":442
+    /* "LXG/replication.py":444
  * 
  *             fcs = sorted(arcpy.ListFeatureClasses("", "Polyline", ds))
  *             if len(fcs) > 0:             # <<<<<<<<<<<<<<
@@ -15756,23 +15917,23 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
  */
     if (unlikely(__pyx_v_fcs == Py_None)) {
       PyErr_SetString(PyExc_TypeError, "object of type 'NoneType' has no len()");
-      __PYX_ERR(0, 442, __pyx_L1_error)
+      __PYX_ERR(0, 444, __pyx_L1_error)
     }
-    __pyx_t_11 = PyList_GET_SIZE(__pyx_v_fcs); if (unlikely(__pyx_t_11 == ((Py_ssize_t)-1))) __PYX_ERR(0, 442, __pyx_L1_error)
+    __pyx_t_11 = PyList_GET_SIZE(__pyx_v_fcs); if (unlikely(__pyx_t_11 == ((Py_ssize_t)-1))) __PYX_ERR(0, 444, __pyx_L1_error)
     __pyx_t_12 = ((__pyx_t_11 > 0) != 0);
     if (__pyx_t_12) {
 
-      /* "LXG/replication.py":443
+      /* "LXG/replication.py":445
  *             fcs = sorted(arcpy.ListFeatureClasses("", "Polyline", ds))
  *             if len(fcs) > 0:
  *                 fc_list = [[os.path.join(self.gdb1, ds, fc),             # <<<<<<<<<<<<<<
  *                             os.path.join(self.gdb2, ds, fc),
  *                             self.gdb_lines] for fc in fcs if fc in featureclass_list[:, 0]]
  */
-      __pyx_t_3 = PyList_New(0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 443, __pyx_L1_error)
+      __pyx_t_3 = PyList_New(0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 445, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
 
-      /* "LXG/replication.py":445
+      /* "LXG/replication.py":447
  *                 fc_list = [[os.path.join(self.gdb1, ds, fc),
  *                             os.path.join(self.gdb2, ds, fc),
  *                             self.gdb_lines] for fc in fcs if fc in featureclass_list[:, 0]]             # <<<<<<<<<<<<<<
@@ -15781,42 +15942,42 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
  */
       if (unlikely(__pyx_v_fcs == Py_None)) {
         PyErr_SetString(PyExc_TypeError, "'NoneType' object is not iterable");
-        __PYX_ERR(0, 445, __pyx_L1_error)
+        __PYX_ERR(0, 447, __pyx_L1_error)
       }
       __pyx_t_8 = __pyx_v_fcs; __Pyx_INCREF(__pyx_t_8); __pyx_t_11 = 0;
       for (;;) {
         if (__pyx_t_11 >= PyList_GET_SIZE(__pyx_t_8)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_19 = PyList_GET_ITEM(__pyx_t_8, __pyx_t_11); __Pyx_INCREF(__pyx_t_19); __pyx_t_11++; if (unlikely(0 < 0)) __PYX_ERR(0, 445, __pyx_L1_error)
+        __pyx_t_19 = PyList_GET_ITEM(__pyx_t_8, __pyx_t_11); __Pyx_INCREF(__pyx_t_19); __pyx_t_11++; if (unlikely(0 < 0)) __PYX_ERR(0, 447, __pyx_L1_error)
         #else
-        __pyx_t_19 = PySequence_ITEM(__pyx_t_8, __pyx_t_11); __pyx_t_11++; if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 445, __pyx_L1_error)
+        __pyx_t_19 = PySequence_ITEM(__pyx_t_8, __pyx_t_11); __pyx_t_11++; if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 447, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_19);
         #endif
         __Pyx_XDECREF_SET(__pyx_v_fc, __pyx_t_19);
         __pyx_t_19 = 0;
-        __pyx_t_19 = __Pyx_PyObject_GetItem(__pyx_v_featureclass_list, __pyx_tuple__13); if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 445, __pyx_L1_error)
+        __pyx_t_19 = __Pyx_PyObject_GetItem(__pyx_v_featureclass_list, __pyx_tuple__13); if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 447, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_19);
-        __pyx_t_12 = (__Pyx_PySequence_ContainsTF(__pyx_v_fc, __pyx_t_19, Py_EQ)); if (unlikely(__pyx_t_12 < 0)) __PYX_ERR(0, 445, __pyx_L1_error)
+        __pyx_t_12 = (__Pyx_PySequence_ContainsTF(__pyx_v_fc, __pyx_t_19, Py_EQ)); if (unlikely(__pyx_t_12 < 0)) __PYX_ERR(0, 447, __pyx_L1_error)
         __Pyx_DECREF(__pyx_t_19); __pyx_t_19 = 0;
         __pyx_t_16 = (__pyx_t_12 != 0);
         if (__pyx_t_16) {
 
-          /* "LXG/replication.py":443
+          /* "LXG/replication.py":445
  *             fcs = sorted(arcpy.ListFeatureClasses("", "Polyline", ds))
  *             if len(fcs) > 0:
  *                 fc_list = [[os.path.join(self.gdb1, ds, fc),             # <<<<<<<<<<<<<<
  *                             os.path.join(self.gdb2, ds, fc),
  *                             self.gdb_lines] for fc in fcs if fc in featureclass_list[:, 0]]
  */
-          __Pyx_GetModuleGlobalName(__pyx_t_10, __pyx_n_s_os); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 443, __pyx_L1_error)
+          __Pyx_GetModuleGlobalName(__pyx_t_10, __pyx_n_s_os); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 445, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_10);
-          __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_10, __pyx_n_s_path); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 443, __pyx_L1_error)
+          __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_10, __pyx_n_s_path); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 445, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_1);
           __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
-          __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_join); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 443, __pyx_L1_error)
+          __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_join); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 445, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_10);
           __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-          __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_gdb1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 443, __pyx_L1_error)
+          __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_gdb1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 445, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_1);
           __pyx_t_18 = NULL;
           __pyx_t_9 = 0;
@@ -15833,7 +15994,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
           #if CYTHON_FAST_PYCALL
           if (PyFunction_Check(__pyx_t_10)) {
             PyObject *__pyx_temp[4] = {__pyx_t_18, __pyx_t_1, __pyx_v_ds, __pyx_v_fc};
-            __pyx_t_19 = __Pyx_PyFunction_FastCall(__pyx_t_10, __pyx_temp+1-__pyx_t_9, 3+__pyx_t_9); if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 443, __pyx_L1_error)
+            __pyx_t_19 = __Pyx_PyFunction_FastCall(__pyx_t_10, __pyx_temp+1-__pyx_t_9, 3+__pyx_t_9); if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 445, __pyx_L1_error)
             __Pyx_XDECREF(__pyx_t_18); __pyx_t_18 = 0;
             __Pyx_GOTREF(__pyx_t_19);
             __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -15842,14 +16003,14 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
           #if CYTHON_FAST_PYCCALL
           if (__Pyx_PyFastCFunction_Check(__pyx_t_10)) {
             PyObject *__pyx_temp[4] = {__pyx_t_18, __pyx_t_1, __pyx_v_ds, __pyx_v_fc};
-            __pyx_t_19 = __Pyx_PyCFunction_FastCall(__pyx_t_10, __pyx_temp+1-__pyx_t_9, 3+__pyx_t_9); if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 443, __pyx_L1_error)
+            __pyx_t_19 = __Pyx_PyCFunction_FastCall(__pyx_t_10, __pyx_temp+1-__pyx_t_9, 3+__pyx_t_9); if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 445, __pyx_L1_error)
             __Pyx_XDECREF(__pyx_t_18); __pyx_t_18 = 0;
             __Pyx_GOTREF(__pyx_t_19);
             __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
           } else
           #endif
           {
-            __pyx_t_2 = PyTuple_New(3+__pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 443, __pyx_L1_error)
+            __pyx_t_2 = PyTuple_New(3+__pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 445, __pyx_L1_error)
             __Pyx_GOTREF(__pyx_t_2);
             if (__pyx_t_18) {
               __Pyx_GIVEREF(__pyx_t_18); PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_t_18); __pyx_t_18 = NULL;
@@ -15863,28 +16024,28 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
             __Pyx_GIVEREF(__pyx_v_fc);
             PyTuple_SET_ITEM(__pyx_t_2, 2+__pyx_t_9, __pyx_v_fc);
             __pyx_t_1 = 0;
-            __pyx_t_19 = __Pyx_PyObject_Call(__pyx_t_10, __pyx_t_2, NULL); if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 443, __pyx_L1_error)
+            __pyx_t_19 = __Pyx_PyObject_Call(__pyx_t_10, __pyx_t_2, NULL); if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 445, __pyx_L1_error)
             __Pyx_GOTREF(__pyx_t_19);
             __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
           }
           __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
 
-          /* "LXG/replication.py":444
+          /* "LXG/replication.py":446
  *             if len(fcs) > 0:
  *                 fc_list = [[os.path.join(self.gdb1, ds, fc),
  *                             os.path.join(self.gdb2, ds, fc),             # <<<<<<<<<<<<<<
  *                             self.gdb_lines] for fc in fcs if fc in featureclass_list[:, 0]]
  *                 with mp.Pool(processes=4) as pool2:
  */
-          __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_os); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 444, __pyx_L1_error)
+          __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_os); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 446, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_2);
-          __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_path); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 444, __pyx_L1_error)
+          __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_path); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 446, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_1);
           __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-          __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_join); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 444, __pyx_L1_error)
+          __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_join); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 446, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_2);
           __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-          __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_gdb2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 444, __pyx_L1_error)
+          __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_gdb2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 446, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_1);
           __pyx_t_18 = NULL;
           __pyx_t_9 = 0;
@@ -15901,7 +16062,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
           #if CYTHON_FAST_PYCALL
           if (PyFunction_Check(__pyx_t_2)) {
             PyObject *__pyx_temp[4] = {__pyx_t_18, __pyx_t_1, __pyx_v_ds, __pyx_v_fc};
-            __pyx_t_10 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_9, 3+__pyx_t_9); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 444, __pyx_L1_error)
+            __pyx_t_10 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_9, 3+__pyx_t_9); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 446, __pyx_L1_error)
             __Pyx_XDECREF(__pyx_t_18); __pyx_t_18 = 0;
             __Pyx_GOTREF(__pyx_t_10);
             __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -15910,14 +16071,14 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
           #if CYTHON_FAST_PYCCALL
           if (__Pyx_PyFastCFunction_Check(__pyx_t_2)) {
             PyObject *__pyx_temp[4] = {__pyx_t_18, __pyx_t_1, __pyx_v_ds, __pyx_v_fc};
-            __pyx_t_10 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_9, 3+__pyx_t_9); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 444, __pyx_L1_error)
+            __pyx_t_10 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_9, 3+__pyx_t_9); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 446, __pyx_L1_error)
             __Pyx_XDECREF(__pyx_t_18); __pyx_t_18 = 0;
             __Pyx_GOTREF(__pyx_t_10);
             __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
           } else
           #endif
           {
-            __pyx_t_17 = PyTuple_New(3+__pyx_t_9); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 444, __pyx_L1_error)
+            __pyx_t_17 = PyTuple_New(3+__pyx_t_9); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 446, __pyx_L1_error)
             __Pyx_GOTREF(__pyx_t_17);
             if (__pyx_t_18) {
               __Pyx_GIVEREF(__pyx_t_18); PyTuple_SET_ITEM(__pyx_t_17, 0, __pyx_t_18); __pyx_t_18 = NULL;
@@ -15931,30 +16092,30 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
             __Pyx_GIVEREF(__pyx_v_fc);
             PyTuple_SET_ITEM(__pyx_t_17, 2+__pyx_t_9, __pyx_v_fc);
             __pyx_t_1 = 0;
-            __pyx_t_10 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_17, NULL); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 444, __pyx_L1_error)
+            __pyx_t_10 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_17, NULL); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 446, __pyx_L1_error)
             __Pyx_GOTREF(__pyx_t_10);
             __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
           }
           __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-          /* "LXG/replication.py":445
+          /* "LXG/replication.py":447
  *                 fc_list = [[os.path.join(self.gdb1, ds, fc),
  *                             os.path.join(self.gdb2, ds, fc),
  *                             self.gdb_lines] for fc in fcs if fc in featureclass_list[:, 0]]             # <<<<<<<<<<<<<<
  *                 with mp.Pool(processes=4) as pool2:
  *                     results = tqdm(pool2.imap(self.fast_append, fc_list),
  */
-          __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_gdb_lines); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 445, __pyx_L1_error)
+          __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_gdb_lines); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 447, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_2);
 
-          /* "LXG/replication.py":443
+          /* "LXG/replication.py":445
  *             fcs = sorted(arcpy.ListFeatureClasses("", "Polyline", ds))
  *             if len(fcs) > 0:
  *                 fc_list = [[os.path.join(self.gdb1, ds, fc),             # <<<<<<<<<<<<<<
  *                             os.path.join(self.gdb2, ds, fc),
  *                             self.gdb_lines] for fc in fcs if fc in featureclass_list[:, 0]]
  */
-          __pyx_t_17 = PyList_New(3); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 443, __pyx_L1_error)
+          __pyx_t_17 = PyList_New(3); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 445, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_17);
           __Pyx_GIVEREF(__pyx_t_19);
           PyList_SET_ITEM(__pyx_t_17, 0, __pyx_t_19);
@@ -15965,10 +16126,10 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
           __pyx_t_19 = 0;
           __pyx_t_10 = 0;
           __pyx_t_2 = 0;
-          if (unlikely(__Pyx_ListComp_Append(__pyx_t_3, (PyObject*)__pyx_t_17))) __PYX_ERR(0, 443, __pyx_L1_error)
+          if (unlikely(__Pyx_ListComp_Append(__pyx_t_3, (PyObject*)__pyx_t_17))) __PYX_ERR(0, 445, __pyx_L1_error)
           __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
 
-          /* "LXG/replication.py":445
+          /* "LXG/replication.py":447
  *                 fc_list = [[os.path.join(self.gdb1, ds, fc),
  *                             os.path.join(self.gdb2, ds, fc),
  *                             self.gdb_lines] for fc in fcs if fc in featureclass_list[:, 0]]             # <<<<<<<<<<<<<<
@@ -15981,7 +16142,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
       __Pyx_XDECREF_SET(__pyx_v_fc_list, ((PyObject*)__pyx_t_3));
       __pyx_t_3 = 0;
 
-      /* "LXG/replication.py":446
+      /* "LXG/replication.py":448
  *                             os.path.join(self.gdb2, ds, fc),
  *                             self.gdb_lines] for fc in fcs if fc in featureclass_list[:, 0]]
  *                 with mp.Pool(processes=4) as pool2:             # <<<<<<<<<<<<<<
@@ -15989,21 +16150,21 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
  *                                    total=len(fc_list),
  */
       /*with:*/ {
-        __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_mp); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 446, __pyx_L1_error)
+        __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_mp); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 448, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_3);
-        __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_Pool); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 446, __pyx_L1_error)
+        __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_Pool); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 448, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_8);
         __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-        __pyx_t_3 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 446, __pyx_L1_error)
+        __pyx_t_3 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 448, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_3);
-        if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_processes, __pyx_int_4) < 0) __PYX_ERR(0, 446, __pyx_L1_error)
-        __pyx_t_17 = __Pyx_PyObject_Call(__pyx_t_8, __pyx_empty_tuple, __pyx_t_3); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 446, __pyx_L1_error)
+        if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_processes, __pyx_int_4) < 0) __PYX_ERR(0, 448, __pyx_L1_error)
+        __pyx_t_17 = __Pyx_PyObject_Call(__pyx_t_8, __pyx_empty_tuple, __pyx_t_3); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 448, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_17);
         __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
         __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-        __pyx_t_15 = __Pyx_PyObject_LookupSpecial(__pyx_t_17, __pyx_n_s_exit); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 446, __pyx_L1_error)
+        __pyx_t_15 = __Pyx_PyObject_LookupSpecial(__pyx_t_17, __pyx_n_s_exit); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 448, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_15);
-        __pyx_t_8 = __Pyx_PyObject_LookupSpecial(__pyx_t_17, __pyx_n_s_enter); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 446, __pyx_L41_error)
+        __pyx_t_8 = __Pyx_PyObject_LookupSpecial(__pyx_t_17, __pyx_n_s_enter); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 448, __pyx_L41_error)
         __Pyx_GOTREF(__pyx_t_8);
         __pyx_t_2 = NULL;
         if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_8))) {
@@ -16017,7 +16178,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
         }
         __pyx_t_3 = (__pyx_t_2) ? __Pyx_PyObject_CallOneArg(__pyx_t_8, __pyx_t_2) : __Pyx_PyObject_CallNoArg(__pyx_t_8);
         __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-        if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 446, __pyx_L41_error)
+        if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 448, __pyx_L41_error)
         __Pyx_GOTREF(__pyx_t_3);
         __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
         __pyx_t_8 = __pyx_t_3;
@@ -16035,18 +16196,18 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
               __Pyx_XDECREF_SET(__pyx_v_pool2, __pyx_t_8);
               __pyx_t_8 = 0;
 
-              /* "LXG/replication.py":447
+              /* "LXG/replication.py":449
  *                             self.gdb_lines] for fc in fcs if fc in featureclass_list[:, 0]]
  *                 with mp.Pool(processes=4) as pool2:
  *                     results = tqdm(pool2.imap(self.fast_append, fc_list),             # <<<<<<<<<<<<<<
  *                                    total=len(fc_list),
  *                                    desc='Append FeatureClasses',
  */
-              __Pyx_GetModuleGlobalName(__pyx_t_8, __pyx_n_s_tqdm); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 447, __pyx_L47_error)
+              __Pyx_GetModuleGlobalName(__pyx_t_8, __pyx_n_s_tqdm); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 449, __pyx_L47_error)
               __Pyx_GOTREF(__pyx_t_8);
-              __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_pool2, __pyx_n_s_imap); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 447, __pyx_L47_error)
+              __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_pool2, __pyx_n_s_imap); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 449, __pyx_L47_error)
               __Pyx_GOTREF(__pyx_t_3);
-              __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_fast_append); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 447, __pyx_L47_error)
+              __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_fast_append); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 449, __pyx_L47_error)
               __Pyx_GOTREF(__pyx_t_2);
               __pyx_t_10 = NULL;
               __pyx_t_9 = 0;
@@ -16063,7 +16224,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
               #if CYTHON_FAST_PYCALL
               if (PyFunction_Check(__pyx_t_3)) {
                 PyObject *__pyx_temp[3] = {__pyx_t_10, __pyx_t_2, __pyx_v_fc_list};
-                __pyx_t_17 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 447, __pyx_L47_error)
+                __pyx_t_17 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 449, __pyx_L47_error)
                 __Pyx_XDECREF(__pyx_t_10); __pyx_t_10 = 0;
                 __Pyx_GOTREF(__pyx_t_17);
                 __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
@@ -16072,14 +16233,14 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
               #if CYTHON_FAST_PYCCALL
               if (__Pyx_PyFastCFunction_Check(__pyx_t_3)) {
                 PyObject *__pyx_temp[3] = {__pyx_t_10, __pyx_t_2, __pyx_v_fc_list};
-                __pyx_t_17 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 447, __pyx_L47_error)
+                __pyx_t_17 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 449, __pyx_L47_error)
                 __Pyx_XDECREF(__pyx_t_10); __pyx_t_10 = 0;
                 __Pyx_GOTREF(__pyx_t_17);
                 __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
               } else
               #endif
               {
-                __pyx_t_19 = PyTuple_New(2+__pyx_t_9); if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 447, __pyx_L47_error)
+                __pyx_t_19 = PyTuple_New(2+__pyx_t_9); if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 449, __pyx_L47_error)
                 __Pyx_GOTREF(__pyx_t_19);
                 if (__pyx_t_10) {
                   __Pyx_GIVEREF(__pyx_t_10); PyTuple_SET_ITEM(__pyx_t_19, 0, __pyx_t_10); __pyx_t_10 = NULL;
@@ -16090,52 +16251,52 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
                 __Pyx_GIVEREF(__pyx_v_fc_list);
                 PyTuple_SET_ITEM(__pyx_t_19, 1+__pyx_t_9, __pyx_v_fc_list);
                 __pyx_t_2 = 0;
-                __pyx_t_17 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_19, NULL); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 447, __pyx_L47_error)
+                __pyx_t_17 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_19, NULL); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 449, __pyx_L47_error)
                 __Pyx_GOTREF(__pyx_t_17);
                 __Pyx_DECREF(__pyx_t_19); __pyx_t_19 = 0;
               }
               __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-              __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 447, __pyx_L47_error)
+              __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 449, __pyx_L47_error)
               __Pyx_GOTREF(__pyx_t_3);
               __Pyx_GIVEREF(__pyx_t_17);
               PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_17);
               __pyx_t_17 = 0;
 
-              /* "LXG/replication.py":448
+              /* "LXG/replication.py":450
  *                 with mp.Pool(processes=4) as pool2:
  *                     results = tqdm(pool2.imap(self.fast_append, fc_list),
  *                                    total=len(fc_list),             # <<<<<<<<<<<<<<
  *                                    desc='Append FeatureClasses',
  *                                    colour='Yellow',
  */
-              __pyx_t_17 = __Pyx_PyDict_NewPresized(5); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 448, __pyx_L47_error)
+              __pyx_t_17 = __Pyx_PyDict_NewPresized(5); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 450, __pyx_L47_error)
               __Pyx_GOTREF(__pyx_t_17);
-              __pyx_t_11 = PyList_GET_SIZE(__pyx_v_fc_list); if (unlikely(__pyx_t_11 == ((Py_ssize_t)-1))) __PYX_ERR(0, 448, __pyx_L47_error)
-              __pyx_t_19 = PyInt_FromSsize_t(__pyx_t_11); if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 448, __pyx_L47_error)
+              __pyx_t_11 = PyList_GET_SIZE(__pyx_v_fc_list); if (unlikely(__pyx_t_11 == ((Py_ssize_t)-1))) __PYX_ERR(0, 450, __pyx_L47_error)
+              __pyx_t_19 = PyInt_FromSsize_t(__pyx_t_11); if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 450, __pyx_L47_error)
               __Pyx_GOTREF(__pyx_t_19);
-              if (PyDict_SetItem(__pyx_t_17, __pyx_n_s_total, __pyx_t_19) < 0) __PYX_ERR(0, 448, __pyx_L47_error)
+              if (PyDict_SetItem(__pyx_t_17, __pyx_n_s_total, __pyx_t_19) < 0) __PYX_ERR(0, 450, __pyx_L47_error)
               __Pyx_DECREF(__pyx_t_19); __pyx_t_19 = 0;
-              if (PyDict_SetItem(__pyx_t_17, __pyx_n_s_desc, __pyx_kp_s_Append_FeatureClasses) < 0) __PYX_ERR(0, 448, __pyx_L47_error)
-              if (PyDict_SetItem(__pyx_t_17, __pyx_n_s_colour, __pyx_n_s_Yellow) < 0) __PYX_ERR(0, 448, __pyx_L47_error)
-              if (PyDict_SetItem(__pyx_t_17, __pyx_n_s_position, __pyx_int_1) < 0) __PYX_ERR(0, 448, __pyx_L47_error)
+              if (PyDict_SetItem(__pyx_t_17, __pyx_n_s_desc, __pyx_kp_s_Append_FeatureClasses) < 0) __PYX_ERR(0, 450, __pyx_L47_error)
+              if (PyDict_SetItem(__pyx_t_17, __pyx_n_s_colour, __pyx_n_s_Yellow) < 0) __PYX_ERR(0, 450, __pyx_L47_error)
+              if (PyDict_SetItem(__pyx_t_17, __pyx_n_s_position, __pyx_int_1) < 0) __PYX_ERR(0, 450, __pyx_L47_error)
 
-              /* "LXG/replication.py":452
+              /* "LXG/replication.py":454
  *                                    colour='Yellow',
  *                                    position=1,
  *                                    leave=False)             # <<<<<<<<<<<<<<
  *                     tuple(results)
  *                     pool2.close()
  */
-              if (PyDict_SetItem(__pyx_t_17, __pyx_n_s_leave, Py_False) < 0) __PYX_ERR(0, 448, __pyx_L47_error)
+              if (PyDict_SetItem(__pyx_t_17, __pyx_n_s_leave, Py_False) < 0) __PYX_ERR(0, 450, __pyx_L47_error)
 
-              /* "LXG/replication.py":447
+              /* "LXG/replication.py":449
  *                             self.gdb_lines] for fc in fcs if fc in featureclass_list[:, 0]]
  *                 with mp.Pool(processes=4) as pool2:
  *                     results = tqdm(pool2.imap(self.fast_append, fc_list),             # <<<<<<<<<<<<<<
  *                                    total=len(fc_list),
  *                                    desc='Append FeatureClasses',
  */
-              __pyx_t_19 = __Pyx_PyObject_Call(__pyx_t_8, __pyx_t_3, __pyx_t_17); if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 447, __pyx_L47_error)
+              __pyx_t_19 = __Pyx_PyObject_Call(__pyx_t_8, __pyx_t_3, __pyx_t_17); if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 449, __pyx_L47_error)
               __Pyx_GOTREF(__pyx_t_19);
               __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
               __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -16143,25 +16304,25 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
               __Pyx_XDECREF_SET(__pyx_v_results, __pyx_t_19);
               __pyx_t_19 = 0;
 
-              /* "LXG/replication.py":453
+              /* "LXG/replication.py":455
  *                                    position=1,
  *                                    leave=False)
  *                     tuple(results)             # <<<<<<<<<<<<<<
  *                     pool2.close()
  *                     pool2.join()
  */
-              __pyx_t_19 = __Pyx_PySequence_Tuple(__pyx_v_results); if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 453, __pyx_L47_error)
+              __pyx_t_19 = __Pyx_PySequence_Tuple(__pyx_v_results); if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 455, __pyx_L47_error)
               __Pyx_GOTREF(__pyx_t_19);
               __Pyx_DECREF(__pyx_t_19); __pyx_t_19 = 0;
 
-              /* "LXG/replication.py":454
+              /* "LXG/replication.py":456
  *                                    leave=False)
  *                     tuple(results)
  *                     pool2.close()             # <<<<<<<<<<<<<<
  *                     pool2.join()
  * 
  */
-              __pyx_t_17 = __Pyx_PyObject_GetAttrStr(__pyx_v_pool2, __pyx_n_s_close); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 454, __pyx_L47_error)
+              __pyx_t_17 = __Pyx_PyObject_GetAttrStr(__pyx_v_pool2, __pyx_n_s_close); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 456, __pyx_L47_error)
               __Pyx_GOTREF(__pyx_t_17);
               __pyx_t_3 = NULL;
               if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_17))) {
@@ -16175,19 +16336,19 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
               }
               __pyx_t_19 = (__pyx_t_3) ? __Pyx_PyObject_CallOneArg(__pyx_t_17, __pyx_t_3) : __Pyx_PyObject_CallNoArg(__pyx_t_17);
               __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-              if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 454, __pyx_L47_error)
+              if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 456, __pyx_L47_error)
               __Pyx_GOTREF(__pyx_t_19);
               __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
               __Pyx_DECREF(__pyx_t_19); __pyx_t_19 = 0;
 
-              /* "LXG/replication.py":455
+              /* "LXG/replication.py":457
  *                     tuple(results)
  *                     pool2.close()
  *                     pool2.join()             # <<<<<<<<<<<<<<
  * 
  *             del fcs
  */
-              __pyx_t_17 = __Pyx_PyObject_GetAttrStr(__pyx_v_pool2, __pyx_n_s_join); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 455, __pyx_L47_error)
+              __pyx_t_17 = __Pyx_PyObject_GetAttrStr(__pyx_v_pool2, __pyx_n_s_join); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 457, __pyx_L47_error)
               __Pyx_GOTREF(__pyx_t_17);
               __pyx_t_3 = NULL;
               if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_17))) {
@@ -16201,12 +16362,12 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
               }
               __pyx_t_19 = (__pyx_t_3) ? __Pyx_PyObject_CallOneArg(__pyx_t_17, __pyx_t_3) : __Pyx_PyObject_CallNoArg(__pyx_t_17);
               __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-              if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 455, __pyx_L47_error)
+              if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 457, __pyx_L47_error)
               __Pyx_GOTREF(__pyx_t_19);
               __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
               __Pyx_DECREF(__pyx_t_19); __pyx_t_19 = 0;
 
-              /* "LXG/replication.py":446
+              /* "LXG/replication.py":448
  *                             os.path.join(self.gdb2, ds, fc),
  *                             self.gdb_lines] for fc in fcs if fc in featureclass_list[:, 0]]
  *                 with mp.Pool(processes=4) as pool2:             # <<<<<<<<<<<<<<
@@ -16229,20 +16390,20 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
             __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
             /*except:*/ {
               __Pyx_AddTraceback("LXGREP.AppendNewFeatures.append_latest", __pyx_clineno, __pyx_lineno, __pyx_filename);
-              if (__Pyx_GetException(&__pyx_t_19, &__pyx_t_17, &__pyx_t_3) < 0) __PYX_ERR(0, 446, __pyx_L49_except_error)
+              if (__Pyx_GetException(&__pyx_t_19, &__pyx_t_17, &__pyx_t_3) < 0) __PYX_ERR(0, 448, __pyx_L49_except_error)
               __Pyx_GOTREF(__pyx_t_19);
               __Pyx_GOTREF(__pyx_t_17);
               __Pyx_GOTREF(__pyx_t_3);
-              __pyx_t_8 = PyTuple_Pack(3, __pyx_t_19, __pyx_t_17, __pyx_t_3); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 446, __pyx_L49_except_error)
+              __pyx_t_8 = PyTuple_Pack(3, __pyx_t_19, __pyx_t_17, __pyx_t_3); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 448, __pyx_L49_except_error)
               __Pyx_GOTREF(__pyx_t_8);
               __pyx_t_23 = __Pyx_PyObject_Call(__pyx_t_15, __pyx_t_8, NULL);
               __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
               __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-              if (unlikely(!__pyx_t_23)) __PYX_ERR(0, 446, __pyx_L49_except_error)
+              if (unlikely(!__pyx_t_23)) __PYX_ERR(0, 448, __pyx_L49_except_error)
               __Pyx_GOTREF(__pyx_t_23);
               __pyx_t_16 = __Pyx_PyObject_IsTrue(__pyx_t_23);
               __Pyx_DECREF(__pyx_t_23); __pyx_t_23 = 0;
-              if (__pyx_t_16 < 0) __PYX_ERR(0, 446, __pyx_L49_except_error)
+              if (__pyx_t_16 < 0) __PYX_ERR(0, 448, __pyx_L49_except_error)
               __pyx_t_12 = ((!(__pyx_t_16 != 0)) != 0);
               if (__pyx_t_12) {
                 __Pyx_GIVEREF(__pyx_t_19);
@@ -16250,7 +16411,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
                 __Pyx_XGIVEREF(__pyx_t_3);
                 __Pyx_ErrRestoreWithState(__pyx_t_19, __pyx_t_17, __pyx_t_3);
                 __pyx_t_19 = 0; __pyx_t_17 = 0; __pyx_t_3 = 0; 
-                __PYX_ERR(0, 446, __pyx_L49_except_error)
+                __PYX_ERR(0, 448, __pyx_L49_except_error)
               }
               __Pyx_XDECREF(__pyx_t_19); __pyx_t_19 = 0;
               __Pyx_XDECREF(__pyx_t_17); __pyx_t_17 = 0;
@@ -16276,7 +16437,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
             if (__pyx_t_15) {
               __pyx_t_20 = __Pyx_PyObject_Call(__pyx_t_15, __pyx_tuple__3, NULL);
               __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
-              if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 446, __pyx_L1_error)
+              if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 448, __pyx_L1_error)
               __Pyx_GOTREF(__pyx_t_20);
               __Pyx_DECREF(__pyx_t_20); __pyx_t_20 = 0;
             }
@@ -16291,7 +16452,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
         __pyx_L58:;
       }
 
-      /* "LXG/replication.py":442
+      /* "LXG/replication.py":444
  * 
  *             fcs = sorted(arcpy.ListFeatureClasses("", "Polyline", ds))
  *             if len(fcs) > 0:             # <<<<<<<<<<<<<<
@@ -16300,7 +16461,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
  */
     }
 
-    /* "LXG/replication.py":457
+    /* "LXG/replication.py":459
  *                     pool2.join()
  * 
  *             del fcs             # <<<<<<<<<<<<<<
@@ -16310,16 +16471,16 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
     __Pyx_DECREF(__pyx_v_fcs);
     __pyx_v_fcs = NULL;
 
-    /* "LXG/replication.py":459
+    /* "LXG/replication.py":461
  *             del fcs
  * 
  *             fcs = sorted(arcpy.ListFeatureClasses("", "Point", ds))             # <<<<<<<<<<<<<<
  *             if len(fcs) > 0:
  *                 fc_list = [[os.path.join(self.gdb1, ds, fc),
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_19, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 459, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_19, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 461, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_19);
-    __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_19, __pyx_n_s_ListFeatureClasses); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 459, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_19, __pyx_n_s_ListFeatureClasses); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 461, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
     __Pyx_DECREF(__pyx_t_19); __pyx_t_19 = 0;
     __pyx_t_19 = NULL;
@@ -16337,7 +16498,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
     #if CYTHON_FAST_PYCALL
     if (PyFunction_Check(__pyx_t_8)) {
       PyObject *__pyx_temp[4] = {__pyx_t_19, __pyx_kp_s_, __pyx_n_s_Point, __pyx_v_ds};
-      __pyx_t_17 = __Pyx_PyFunction_FastCall(__pyx_t_8, __pyx_temp+1-__pyx_t_9, 3+__pyx_t_9); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 459, __pyx_L1_error)
+      __pyx_t_17 = __Pyx_PyFunction_FastCall(__pyx_t_8, __pyx_temp+1-__pyx_t_9, 3+__pyx_t_9); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 461, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_19); __pyx_t_19 = 0;
       __Pyx_GOTREF(__pyx_t_17);
     } else
@@ -16345,13 +16506,13 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
     #if CYTHON_FAST_PYCCALL
     if (__Pyx_PyFastCFunction_Check(__pyx_t_8)) {
       PyObject *__pyx_temp[4] = {__pyx_t_19, __pyx_kp_s_, __pyx_n_s_Point, __pyx_v_ds};
-      __pyx_t_17 = __Pyx_PyCFunction_FastCall(__pyx_t_8, __pyx_temp+1-__pyx_t_9, 3+__pyx_t_9); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 459, __pyx_L1_error)
+      __pyx_t_17 = __Pyx_PyCFunction_FastCall(__pyx_t_8, __pyx_temp+1-__pyx_t_9, 3+__pyx_t_9); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 461, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_19); __pyx_t_19 = 0;
       __Pyx_GOTREF(__pyx_t_17);
     } else
     #endif
     {
-      __pyx_t_2 = PyTuple_New(3+__pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 459, __pyx_L1_error)
+      __pyx_t_2 = PyTuple_New(3+__pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 461, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
       if (__pyx_t_19) {
         __Pyx_GIVEREF(__pyx_t_19); PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_t_19); __pyx_t_19 = NULL;
@@ -16365,21 +16526,21 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
       __Pyx_INCREF(__pyx_v_ds);
       __Pyx_GIVEREF(__pyx_v_ds);
       PyTuple_SET_ITEM(__pyx_t_2, 2+__pyx_t_9, __pyx_v_ds);
-      __pyx_t_17 = __Pyx_PyObject_Call(__pyx_t_8, __pyx_t_2, NULL); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 459, __pyx_L1_error)
+      __pyx_t_17 = __Pyx_PyObject_Call(__pyx_t_8, __pyx_t_2, NULL); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 461, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_17);
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     }
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-    __pyx_t_8 = PySequence_List(__pyx_t_17); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 459, __pyx_L1_error)
+    __pyx_t_8 = PySequence_List(__pyx_t_17); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 461, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
     __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
     __pyx_t_3 = ((PyObject*)__pyx_t_8);
     __pyx_t_8 = 0;
-    __pyx_t_4 = PyList_Sort(__pyx_t_3); if (unlikely(__pyx_t_4 == ((int)-1))) __PYX_ERR(0, 459, __pyx_L1_error)
+    __pyx_t_4 = PyList_Sort(__pyx_t_3); if (unlikely(__pyx_t_4 == ((int)-1))) __PYX_ERR(0, 461, __pyx_L1_error)
     __pyx_v_fcs = ((PyObject*)__pyx_t_3);
     __pyx_t_3 = 0;
 
-    /* "LXG/replication.py":460
+    /* "LXG/replication.py":462
  * 
  *             fcs = sorted(arcpy.ListFeatureClasses("", "Point", ds))
  *             if len(fcs) > 0:             # <<<<<<<<<<<<<<
@@ -16388,23 +16549,23 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
  */
     if (unlikely(__pyx_v_fcs == Py_None)) {
       PyErr_SetString(PyExc_TypeError, "object of type 'NoneType' has no len()");
-      __PYX_ERR(0, 460, __pyx_L1_error)
+      __PYX_ERR(0, 462, __pyx_L1_error)
     }
-    __pyx_t_11 = PyList_GET_SIZE(__pyx_v_fcs); if (unlikely(__pyx_t_11 == ((Py_ssize_t)-1))) __PYX_ERR(0, 460, __pyx_L1_error)
+    __pyx_t_11 = PyList_GET_SIZE(__pyx_v_fcs); if (unlikely(__pyx_t_11 == ((Py_ssize_t)-1))) __PYX_ERR(0, 462, __pyx_L1_error)
     __pyx_t_12 = ((__pyx_t_11 > 0) != 0);
     if (__pyx_t_12) {
 
-      /* "LXG/replication.py":461
+      /* "LXG/replication.py":463
  *             fcs = sorted(arcpy.ListFeatureClasses("", "Point", ds))
  *             if len(fcs) > 0:
  *                 fc_list = [[os.path.join(self.gdb1, ds, fc),             # <<<<<<<<<<<<<<
  *                             os.path.join(self.gdb2, ds, fc),
  *                             self.gdb_points] for fc in fcs if fc in featureclass_list[:, 0]]
  */
-      __pyx_t_3 = PyList_New(0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 461, __pyx_L1_error)
+      __pyx_t_3 = PyList_New(0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 463, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
 
-      /* "LXG/replication.py":463
+      /* "LXG/replication.py":465
  *                 fc_list = [[os.path.join(self.gdb1, ds, fc),
  *                             os.path.join(self.gdb2, ds, fc),
  *                             self.gdb_points] for fc in fcs if fc in featureclass_list[:, 0]]             # <<<<<<<<<<<<<<
@@ -16413,42 +16574,42 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
  */
       if (unlikely(__pyx_v_fcs == Py_None)) {
         PyErr_SetString(PyExc_TypeError, "'NoneType' object is not iterable");
-        __PYX_ERR(0, 463, __pyx_L1_error)
+        __PYX_ERR(0, 465, __pyx_L1_error)
       }
       __pyx_t_8 = __pyx_v_fcs; __Pyx_INCREF(__pyx_t_8); __pyx_t_11 = 0;
       for (;;) {
         if (__pyx_t_11 >= PyList_GET_SIZE(__pyx_t_8)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_17 = PyList_GET_ITEM(__pyx_t_8, __pyx_t_11); __Pyx_INCREF(__pyx_t_17); __pyx_t_11++; if (unlikely(0 < 0)) __PYX_ERR(0, 463, __pyx_L1_error)
+        __pyx_t_17 = PyList_GET_ITEM(__pyx_t_8, __pyx_t_11); __Pyx_INCREF(__pyx_t_17); __pyx_t_11++; if (unlikely(0 < 0)) __PYX_ERR(0, 465, __pyx_L1_error)
         #else
-        __pyx_t_17 = PySequence_ITEM(__pyx_t_8, __pyx_t_11); __pyx_t_11++; if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 463, __pyx_L1_error)
+        __pyx_t_17 = PySequence_ITEM(__pyx_t_8, __pyx_t_11); __pyx_t_11++; if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 465, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_17);
         #endif
         __Pyx_XDECREF_SET(__pyx_v_fc, __pyx_t_17);
         __pyx_t_17 = 0;
-        __pyx_t_17 = __Pyx_PyObject_GetItem(__pyx_v_featureclass_list, __pyx_tuple__13); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 463, __pyx_L1_error)
+        __pyx_t_17 = __Pyx_PyObject_GetItem(__pyx_v_featureclass_list, __pyx_tuple__13); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 465, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_17);
-        __pyx_t_12 = (__Pyx_PySequence_ContainsTF(__pyx_v_fc, __pyx_t_17, Py_EQ)); if (unlikely(__pyx_t_12 < 0)) __PYX_ERR(0, 463, __pyx_L1_error)
+        __pyx_t_12 = (__Pyx_PySequence_ContainsTF(__pyx_v_fc, __pyx_t_17, Py_EQ)); if (unlikely(__pyx_t_12 < 0)) __PYX_ERR(0, 465, __pyx_L1_error)
         __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
         __pyx_t_16 = (__pyx_t_12 != 0);
         if (__pyx_t_16) {
 
-          /* "LXG/replication.py":461
+          /* "LXG/replication.py":463
  *             fcs = sorted(arcpy.ListFeatureClasses("", "Point", ds))
  *             if len(fcs) > 0:
  *                 fc_list = [[os.path.join(self.gdb1, ds, fc),             # <<<<<<<<<<<<<<
  *                             os.path.join(self.gdb2, ds, fc),
  *                             self.gdb_points] for fc in fcs if fc in featureclass_list[:, 0]]
  */
-          __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_os); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 461, __pyx_L1_error)
+          __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_os); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 463, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_2);
-          __pyx_t_19 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_path); if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 461, __pyx_L1_error)
+          __pyx_t_19 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_path); if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 463, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_19);
           __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-          __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_19, __pyx_n_s_join); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 461, __pyx_L1_error)
+          __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_19, __pyx_n_s_join); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 463, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_2);
           __Pyx_DECREF(__pyx_t_19); __pyx_t_19 = 0;
-          __pyx_t_19 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_gdb1); if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 461, __pyx_L1_error)
+          __pyx_t_19 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_gdb1); if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 463, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_19);
           __pyx_t_10 = NULL;
           __pyx_t_9 = 0;
@@ -16465,7 +16626,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
           #if CYTHON_FAST_PYCALL
           if (PyFunction_Check(__pyx_t_2)) {
             PyObject *__pyx_temp[4] = {__pyx_t_10, __pyx_t_19, __pyx_v_ds, __pyx_v_fc};
-            __pyx_t_17 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_9, 3+__pyx_t_9); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 461, __pyx_L1_error)
+            __pyx_t_17 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_9, 3+__pyx_t_9); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 463, __pyx_L1_error)
             __Pyx_XDECREF(__pyx_t_10); __pyx_t_10 = 0;
             __Pyx_GOTREF(__pyx_t_17);
             __Pyx_DECREF(__pyx_t_19); __pyx_t_19 = 0;
@@ -16474,14 +16635,14 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
           #if CYTHON_FAST_PYCCALL
           if (__Pyx_PyFastCFunction_Check(__pyx_t_2)) {
             PyObject *__pyx_temp[4] = {__pyx_t_10, __pyx_t_19, __pyx_v_ds, __pyx_v_fc};
-            __pyx_t_17 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_9, 3+__pyx_t_9); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 461, __pyx_L1_error)
+            __pyx_t_17 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_9, 3+__pyx_t_9); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 463, __pyx_L1_error)
             __Pyx_XDECREF(__pyx_t_10); __pyx_t_10 = 0;
             __Pyx_GOTREF(__pyx_t_17);
             __Pyx_DECREF(__pyx_t_19); __pyx_t_19 = 0;
           } else
           #endif
           {
-            __pyx_t_1 = PyTuple_New(3+__pyx_t_9); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 461, __pyx_L1_error)
+            __pyx_t_1 = PyTuple_New(3+__pyx_t_9); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 463, __pyx_L1_error)
             __Pyx_GOTREF(__pyx_t_1);
             if (__pyx_t_10) {
               __Pyx_GIVEREF(__pyx_t_10); PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_t_10); __pyx_t_10 = NULL;
@@ -16495,28 +16656,28 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
             __Pyx_GIVEREF(__pyx_v_fc);
             PyTuple_SET_ITEM(__pyx_t_1, 2+__pyx_t_9, __pyx_v_fc);
             __pyx_t_19 = 0;
-            __pyx_t_17 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_1, NULL); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 461, __pyx_L1_error)
+            __pyx_t_17 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_1, NULL); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 463, __pyx_L1_error)
             __Pyx_GOTREF(__pyx_t_17);
             __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
           }
           __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-          /* "LXG/replication.py":462
+          /* "LXG/replication.py":464
  *             if len(fcs) > 0:
  *                 fc_list = [[os.path.join(self.gdb1, ds, fc),
  *                             os.path.join(self.gdb2, ds, fc),             # <<<<<<<<<<<<<<
  *                             self.gdb_points] for fc in fcs if fc in featureclass_list[:, 0]]
  *                 with mp.Pool(processes=4) as pool3:
  */
-          __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_os); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 462, __pyx_L1_error)
+          __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_os); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 464, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_1);
-          __pyx_t_19 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_path); if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 462, __pyx_L1_error)
+          __pyx_t_19 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_path); if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 464, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_19);
           __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-          __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_19, __pyx_n_s_join); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 462, __pyx_L1_error)
+          __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_19, __pyx_n_s_join); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 464, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_1);
           __Pyx_DECREF(__pyx_t_19); __pyx_t_19 = 0;
-          __pyx_t_19 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_gdb2); if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 462, __pyx_L1_error)
+          __pyx_t_19 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_gdb2); if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 464, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_19);
           __pyx_t_10 = NULL;
           __pyx_t_9 = 0;
@@ -16533,7 +16694,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
           #if CYTHON_FAST_PYCALL
           if (PyFunction_Check(__pyx_t_1)) {
             PyObject *__pyx_temp[4] = {__pyx_t_10, __pyx_t_19, __pyx_v_ds, __pyx_v_fc};
-            __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_9, 3+__pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 462, __pyx_L1_error)
+            __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_9, 3+__pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 464, __pyx_L1_error)
             __Pyx_XDECREF(__pyx_t_10); __pyx_t_10 = 0;
             __Pyx_GOTREF(__pyx_t_2);
             __Pyx_DECREF(__pyx_t_19); __pyx_t_19 = 0;
@@ -16542,14 +16703,14 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
           #if CYTHON_FAST_PYCCALL
           if (__Pyx_PyFastCFunction_Check(__pyx_t_1)) {
             PyObject *__pyx_temp[4] = {__pyx_t_10, __pyx_t_19, __pyx_v_ds, __pyx_v_fc};
-            __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_9, 3+__pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 462, __pyx_L1_error)
+            __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_9, 3+__pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 464, __pyx_L1_error)
             __Pyx_XDECREF(__pyx_t_10); __pyx_t_10 = 0;
             __Pyx_GOTREF(__pyx_t_2);
             __Pyx_DECREF(__pyx_t_19); __pyx_t_19 = 0;
           } else
           #endif
           {
-            __pyx_t_18 = PyTuple_New(3+__pyx_t_9); if (unlikely(!__pyx_t_18)) __PYX_ERR(0, 462, __pyx_L1_error)
+            __pyx_t_18 = PyTuple_New(3+__pyx_t_9); if (unlikely(!__pyx_t_18)) __PYX_ERR(0, 464, __pyx_L1_error)
             __Pyx_GOTREF(__pyx_t_18);
             if (__pyx_t_10) {
               __Pyx_GIVEREF(__pyx_t_10); PyTuple_SET_ITEM(__pyx_t_18, 0, __pyx_t_10); __pyx_t_10 = NULL;
@@ -16563,30 +16724,30 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
             __Pyx_GIVEREF(__pyx_v_fc);
             PyTuple_SET_ITEM(__pyx_t_18, 2+__pyx_t_9, __pyx_v_fc);
             __pyx_t_19 = 0;
-            __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_18, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 462, __pyx_L1_error)
+            __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_18, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 464, __pyx_L1_error)
             __Pyx_GOTREF(__pyx_t_2);
             __Pyx_DECREF(__pyx_t_18); __pyx_t_18 = 0;
           }
           __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-          /* "LXG/replication.py":463
+          /* "LXG/replication.py":465
  *                 fc_list = [[os.path.join(self.gdb1, ds, fc),
  *                             os.path.join(self.gdb2, ds, fc),
  *                             self.gdb_points] for fc in fcs if fc in featureclass_list[:, 0]]             # <<<<<<<<<<<<<<
  *                 with mp.Pool(processes=4) as pool3:
  *                     results = tqdm(pool3.imap(self.fast_append, fc_list),
  */
-          __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_gdb_points); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 463, __pyx_L1_error)
+          __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_gdb_points); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 465, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_1);
 
-          /* "LXG/replication.py":461
+          /* "LXG/replication.py":463
  *             fcs = sorted(arcpy.ListFeatureClasses("", "Point", ds))
  *             if len(fcs) > 0:
  *                 fc_list = [[os.path.join(self.gdb1, ds, fc),             # <<<<<<<<<<<<<<
  *                             os.path.join(self.gdb2, ds, fc),
  *                             self.gdb_points] for fc in fcs if fc in featureclass_list[:, 0]]
  */
-          __pyx_t_18 = PyList_New(3); if (unlikely(!__pyx_t_18)) __PYX_ERR(0, 461, __pyx_L1_error)
+          __pyx_t_18 = PyList_New(3); if (unlikely(!__pyx_t_18)) __PYX_ERR(0, 463, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_18);
           __Pyx_GIVEREF(__pyx_t_17);
           PyList_SET_ITEM(__pyx_t_18, 0, __pyx_t_17);
@@ -16597,10 +16758,10 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
           __pyx_t_17 = 0;
           __pyx_t_2 = 0;
           __pyx_t_1 = 0;
-          if (unlikely(__Pyx_ListComp_Append(__pyx_t_3, (PyObject*)__pyx_t_18))) __PYX_ERR(0, 461, __pyx_L1_error)
+          if (unlikely(__Pyx_ListComp_Append(__pyx_t_3, (PyObject*)__pyx_t_18))) __PYX_ERR(0, 463, __pyx_L1_error)
           __Pyx_DECREF(__pyx_t_18); __pyx_t_18 = 0;
 
-          /* "LXG/replication.py":463
+          /* "LXG/replication.py":465
  *                 fc_list = [[os.path.join(self.gdb1, ds, fc),
  *                             os.path.join(self.gdb2, ds, fc),
  *                             self.gdb_points] for fc in fcs if fc in featureclass_list[:, 0]]             # <<<<<<<<<<<<<<
@@ -16613,7 +16774,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
       __Pyx_XDECREF_SET(__pyx_v_fc_list, ((PyObject*)__pyx_t_3));
       __pyx_t_3 = 0;
 
-      /* "LXG/replication.py":464
+      /* "LXG/replication.py":466
  *                             os.path.join(self.gdb2, ds, fc),
  *                             self.gdb_points] for fc in fcs if fc in featureclass_list[:, 0]]
  *                 with mp.Pool(processes=4) as pool3:             # <<<<<<<<<<<<<<
@@ -16621,21 +16782,21 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
  *                                    total=len(fc_list),
  */
       /*with:*/ {
-        __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_mp); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 464, __pyx_L1_error)
+        __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_mp); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 466, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_3);
-        __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_Pool); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 464, __pyx_L1_error)
+        __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_Pool); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 466, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_8);
         __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-        __pyx_t_3 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 464, __pyx_L1_error)
+        __pyx_t_3 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 466, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_3);
-        if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_processes, __pyx_int_4) < 0) __PYX_ERR(0, 464, __pyx_L1_error)
-        __pyx_t_18 = __Pyx_PyObject_Call(__pyx_t_8, __pyx_empty_tuple, __pyx_t_3); if (unlikely(!__pyx_t_18)) __PYX_ERR(0, 464, __pyx_L1_error)
+        if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_processes, __pyx_int_4) < 0) __PYX_ERR(0, 466, __pyx_L1_error)
+        __pyx_t_18 = __Pyx_PyObject_Call(__pyx_t_8, __pyx_empty_tuple, __pyx_t_3); if (unlikely(!__pyx_t_18)) __PYX_ERR(0, 466, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_18);
         __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
         __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-        __pyx_t_15 = __Pyx_PyObject_LookupSpecial(__pyx_t_18, __pyx_n_s_exit); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 464, __pyx_L1_error)
+        __pyx_t_15 = __Pyx_PyObject_LookupSpecial(__pyx_t_18, __pyx_n_s_exit); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 466, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_15);
-        __pyx_t_8 = __Pyx_PyObject_LookupSpecial(__pyx_t_18, __pyx_n_s_enter); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 464, __pyx_L63_error)
+        __pyx_t_8 = __Pyx_PyObject_LookupSpecial(__pyx_t_18, __pyx_n_s_enter); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 466, __pyx_L63_error)
         __Pyx_GOTREF(__pyx_t_8);
         __pyx_t_1 = NULL;
         if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_8))) {
@@ -16649,7 +16810,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
         }
         __pyx_t_3 = (__pyx_t_1) ? __Pyx_PyObject_CallOneArg(__pyx_t_8, __pyx_t_1) : __Pyx_PyObject_CallNoArg(__pyx_t_8);
         __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
-        if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 464, __pyx_L63_error)
+        if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 466, __pyx_L63_error)
         __Pyx_GOTREF(__pyx_t_3);
         __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
         __pyx_t_8 = __pyx_t_3;
@@ -16667,18 +16828,18 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
               __Pyx_XDECREF_SET(__pyx_v_pool3, __pyx_t_8);
               __pyx_t_8 = 0;
 
-              /* "LXG/replication.py":465
+              /* "LXG/replication.py":467
  *                             self.gdb_points] for fc in fcs if fc in featureclass_list[:, 0]]
  *                 with mp.Pool(processes=4) as pool3:
  *                     results = tqdm(pool3.imap(self.fast_append, fc_list),             # <<<<<<<<<<<<<<
  *                                    total=len(fc_list),
  *                                    desc='Append FeatureClasses',
  */
-              __Pyx_GetModuleGlobalName(__pyx_t_8, __pyx_n_s_tqdm); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 465, __pyx_L69_error)
+              __Pyx_GetModuleGlobalName(__pyx_t_8, __pyx_n_s_tqdm); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 467, __pyx_L69_error)
               __Pyx_GOTREF(__pyx_t_8);
-              __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_pool3, __pyx_n_s_imap); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 465, __pyx_L69_error)
+              __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_pool3, __pyx_n_s_imap); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 467, __pyx_L69_error)
               __Pyx_GOTREF(__pyx_t_3);
-              __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_fast_append); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 465, __pyx_L69_error)
+              __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_fast_append); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 467, __pyx_L69_error)
               __Pyx_GOTREF(__pyx_t_1);
               __pyx_t_2 = NULL;
               __pyx_t_9 = 0;
@@ -16695,7 +16856,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
               #if CYTHON_FAST_PYCALL
               if (PyFunction_Check(__pyx_t_3)) {
                 PyObject *__pyx_temp[3] = {__pyx_t_2, __pyx_t_1, __pyx_v_fc_list};
-                __pyx_t_18 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_18)) __PYX_ERR(0, 465, __pyx_L69_error)
+                __pyx_t_18 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_18)) __PYX_ERR(0, 467, __pyx_L69_error)
                 __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
                 __Pyx_GOTREF(__pyx_t_18);
                 __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -16704,14 +16865,14 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
               #if CYTHON_FAST_PYCCALL
               if (__Pyx_PyFastCFunction_Check(__pyx_t_3)) {
                 PyObject *__pyx_temp[3] = {__pyx_t_2, __pyx_t_1, __pyx_v_fc_list};
-                __pyx_t_18 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_18)) __PYX_ERR(0, 465, __pyx_L69_error)
+                __pyx_t_18 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_18)) __PYX_ERR(0, 467, __pyx_L69_error)
                 __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
                 __Pyx_GOTREF(__pyx_t_18);
                 __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
               } else
               #endif
               {
-                __pyx_t_17 = PyTuple_New(2+__pyx_t_9); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 465, __pyx_L69_error)
+                __pyx_t_17 = PyTuple_New(2+__pyx_t_9); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 467, __pyx_L69_error)
                 __Pyx_GOTREF(__pyx_t_17);
                 if (__pyx_t_2) {
                   __Pyx_GIVEREF(__pyx_t_2); PyTuple_SET_ITEM(__pyx_t_17, 0, __pyx_t_2); __pyx_t_2 = NULL;
@@ -16722,52 +16883,52 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
                 __Pyx_GIVEREF(__pyx_v_fc_list);
                 PyTuple_SET_ITEM(__pyx_t_17, 1+__pyx_t_9, __pyx_v_fc_list);
                 __pyx_t_1 = 0;
-                __pyx_t_18 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_17, NULL); if (unlikely(!__pyx_t_18)) __PYX_ERR(0, 465, __pyx_L69_error)
+                __pyx_t_18 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_17, NULL); if (unlikely(!__pyx_t_18)) __PYX_ERR(0, 467, __pyx_L69_error)
                 __Pyx_GOTREF(__pyx_t_18);
                 __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
               }
               __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-              __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 465, __pyx_L69_error)
+              __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 467, __pyx_L69_error)
               __Pyx_GOTREF(__pyx_t_3);
               __Pyx_GIVEREF(__pyx_t_18);
               PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_18);
               __pyx_t_18 = 0;
 
-              /* "LXG/replication.py":466
+              /* "LXG/replication.py":468
  *                 with mp.Pool(processes=4) as pool3:
  *                     results = tqdm(pool3.imap(self.fast_append, fc_list),
  *                                    total=len(fc_list),             # <<<<<<<<<<<<<<
  *                                    desc='Append FeatureClasses',
  *                                    colour='Yellow',
  */
-              __pyx_t_18 = __Pyx_PyDict_NewPresized(5); if (unlikely(!__pyx_t_18)) __PYX_ERR(0, 466, __pyx_L69_error)
+              __pyx_t_18 = __Pyx_PyDict_NewPresized(5); if (unlikely(!__pyx_t_18)) __PYX_ERR(0, 468, __pyx_L69_error)
               __Pyx_GOTREF(__pyx_t_18);
-              __pyx_t_11 = PyList_GET_SIZE(__pyx_v_fc_list); if (unlikely(__pyx_t_11 == ((Py_ssize_t)-1))) __PYX_ERR(0, 466, __pyx_L69_error)
-              __pyx_t_17 = PyInt_FromSsize_t(__pyx_t_11); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 466, __pyx_L69_error)
+              __pyx_t_11 = PyList_GET_SIZE(__pyx_v_fc_list); if (unlikely(__pyx_t_11 == ((Py_ssize_t)-1))) __PYX_ERR(0, 468, __pyx_L69_error)
+              __pyx_t_17 = PyInt_FromSsize_t(__pyx_t_11); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 468, __pyx_L69_error)
               __Pyx_GOTREF(__pyx_t_17);
-              if (PyDict_SetItem(__pyx_t_18, __pyx_n_s_total, __pyx_t_17) < 0) __PYX_ERR(0, 466, __pyx_L69_error)
+              if (PyDict_SetItem(__pyx_t_18, __pyx_n_s_total, __pyx_t_17) < 0) __PYX_ERR(0, 468, __pyx_L69_error)
               __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
-              if (PyDict_SetItem(__pyx_t_18, __pyx_n_s_desc, __pyx_kp_s_Append_FeatureClasses) < 0) __PYX_ERR(0, 466, __pyx_L69_error)
-              if (PyDict_SetItem(__pyx_t_18, __pyx_n_s_colour, __pyx_n_s_Yellow) < 0) __PYX_ERR(0, 466, __pyx_L69_error)
-              if (PyDict_SetItem(__pyx_t_18, __pyx_n_s_position, __pyx_int_1) < 0) __PYX_ERR(0, 466, __pyx_L69_error)
+              if (PyDict_SetItem(__pyx_t_18, __pyx_n_s_desc, __pyx_kp_s_Append_FeatureClasses) < 0) __PYX_ERR(0, 468, __pyx_L69_error)
+              if (PyDict_SetItem(__pyx_t_18, __pyx_n_s_colour, __pyx_n_s_Yellow) < 0) __PYX_ERR(0, 468, __pyx_L69_error)
+              if (PyDict_SetItem(__pyx_t_18, __pyx_n_s_position, __pyx_int_1) < 0) __PYX_ERR(0, 468, __pyx_L69_error)
 
-              /* "LXG/replication.py":470
+              /* "LXG/replication.py":472
  *                                    colour='Yellow',
  *                                    position=1,
  *                                    leave=False)             # <<<<<<<<<<<<<<
  *                     tuple(results)
  *                     pool3.close()
  */
-              if (PyDict_SetItem(__pyx_t_18, __pyx_n_s_leave, Py_False) < 0) __PYX_ERR(0, 466, __pyx_L69_error)
+              if (PyDict_SetItem(__pyx_t_18, __pyx_n_s_leave, Py_False) < 0) __PYX_ERR(0, 468, __pyx_L69_error)
 
-              /* "LXG/replication.py":465
+              /* "LXG/replication.py":467
  *                             self.gdb_points] for fc in fcs if fc in featureclass_list[:, 0]]
  *                 with mp.Pool(processes=4) as pool3:
  *                     results = tqdm(pool3.imap(self.fast_append, fc_list),             # <<<<<<<<<<<<<<
  *                                    total=len(fc_list),
  *                                    desc='Append FeatureClasses',
  */
-              __pyx_t_17 = __Pyx_PyObject_Call(__pyx_t_8, __pyx_t_3, __pyx_t_18); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 465, __pyx_L69_error)
+              __pyx_t_17 = __Pyx_PyObject_Call(__pyx_t_8, __pyx_t_3, __pyx_t_18); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 467, __pyx_L69_error)
               __Pyx_GOTREF(__pyx_t_17);
               __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
               __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -16775,25 +16936,25 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
               __Pyx_XDECREF_SET(__pyx_v_results, __pyx_t_17);
               __pyx_t_17 = 0;
 
-              /* "LXG/replication.py":471
+              /* "LXG/replication.py":473
  *                                    position=1,
  *                                    leave=False)
  *                     tuple(results)             # <<<<<<<<<<<<<<
  *                     pool3.close()
  *                     pool3.join()
  */
-              __pyx_t_17 = __Pyx_PySequence_Tuple(__pyx_v_results); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 471, __pyx_L69_error)
+              __pyx_t_17 = __Pyx_PySequence_Tuple(__pyx_v_results); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 473, __pyx_L69_error)
               __Pyx_GOTREF(__pyx_t_17);
               __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
 
-              /* "LXG/replication.py":472
+              /* "LXG/replication.py":474
  *                                    leave=False)
  *                     tuple(results)
  *                     pool3.close()             # <<<<<<<<<<<<<<
  *                     pool3.join()
  * 
  */
-              __pyx_t_18 = __Pyx_PyObject_GetAttrStr(__pyx_v_pool3, __pyx_n_s_close); if (unlikely(!__pyx_t_18)) __PYX_ERR(0, 472, __pyx_L69_error)
+              __pyx_t_18 = __Pyx_PyObject_GetAttrStr(__pyx_v_pool3, __pyx_n_s_close); if (unlikely(!__pyx_t_18)) __PYX_ERR(0, 474, __pyx_L69_error)
               __Pyx_GOTREF(__pyx_t_18);
               __pyx_t_3 = NULL;
               if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_18))) {
@@ -16807,19 +16968,19 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
               }
               __pyx_t_17 = (__pyx_t_3) ? __Pyx_PyObject_CallOneArg(__pyx_t_18, __pyx_t_3) : __Pyx_PyObject_CallNoArg(__pyx_t_18);
               __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-              if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 472, __pyx_L69_error)
+              if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 474, __pyx_L69_error)
               __Pyx_GOTREF(__pyx_t_17);
               __Pyx_DECREF(__pyx_t_18); __pyx_t_18 = 0;
               __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
 
-              /* "LXG/replication.py":473
+              /* "LXG/replication.py":475
  *                     tuple(results)
  *                     pool3.close()
  *                     pool3.join()             # <<<<<<<<<<<<<<
  * 
  *             del fcs
  */
-              __pyx_t_18 = __Pyx_PyObject_GetAttrStr(__pyx_v_pool3, __pyx_n_s_join); if (unlikely(!__pyx_t_18)) __PYX_ERR(0, 473, __pyx_L69_error)
+              __pyx_t_18 = __Pyx_PyObject_GetAttrStr(__pyx_v_pool3, __pyx_n_s_join); if (unlikely(!__pyx_t_18)) __PYX_ERR(0, 475, __pyx_L69_error)
               __Pyx_GOTREF(__pyx_t_18);
               __pyx_t_3 = NULL;
               if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_18))) {
@@ -16833,12 +16994,12 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
               }
               __pyx_t_17 = (__pyx_t_3) ? __Pyx_PyObject_CallOneArg(__pyx_t_18, __pyx_t_3) : __Pyx_PyObject_CallNoArg(__pyx_t_18);
               __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-              if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 473, __pyx_L69_error)
+              if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 475, __pyx_L69_error)
               __Pyx_GOTREF(__pyx_t_17);
               __Pyx_DECREF(__pyx_t_18); __pyx_t_18 = 0;
               __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
 
-              /* "LXG/replication.py":464
+              /* "LXG/replication.py":466
  *                             os.path.join(self.gdb2, ds, fc),
  *                             self.gdb_points] for fc in fcs if fc in featureclass_list[:, 0]]
  *                 with mp.Pool(processes=4) as pool3:             # <<<<<<<<<<<<<<
@@ -16861,20 +17022,20 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
             __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
             /*except:*/ {
               __Pyx_AddTraceback("LXGREP.AppendNewFeatures.append_latest", __pyx_clineno, __pyx_lineno, __pyx_filename);
-              if (__Pyx_GetException(&__pyx_t_17, &__pyx_t_18, &__pyx_t_3) < 0) __PYX_ERR(0, 464, __pyx_L71_except_error)
+              if (__Pyx_GetException(&__pyx_t_17, &__pyx_t_18, &__pyx_t_3) < 0) __PYX_ERR(0, 466, __pyx_L71_except_error)
               __Pyx_GOTREF(__pyx_t_17);
               __Pyx_GOTREF(__pyx_t_18);
               __Pyx_GOTREF(__pyx_t_3);
-              __pyx_t_8 = PyTuple_Pack(3, __pyx_t_17, __pyx_t_18, __pyx_t_3); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 464, __pyx_L71_except_error)
+              __pyx_t_8 = PyTuple_Pack(3, __pyx_t_17, __pyx_t_18, __pyx_t_3); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 466, __pyx_L71_except_error)
               __Pyx_GOTREF(__pyx_t_8);
               __pyx_t_23 = __Pyx_PyObject_Call(__pyx_t_15, __pyx_t_8, NULL);
               __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
               __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-              if (unlikely(!__pyx_t_23)) __PYX_ERR(0, 464, __pyx_L71_except_error)
+              if (unlikely(!__pyx_t_23)) __PYX_ERR(0, 466, __pyx_L71_except_error)
               __Pyx_GOTREF(__pyx_t_23);
               __pyx_t_16 = __Pyx_PyObject_IsTrue(__pyx_t_23);
               __Pyx_DECREF(__pyx_t_23); __pyx_t_23 = 0;
-              if (__pyx_t_16 < 0) __PYX_ERR(0, 464, __pyx_L71_except_error)
+              if (__pyx_t_16 < 0) __PYX_ERR(0, 466, __pyx_L71_except_error)
               __pyx_t_12 = ((!(__pyx_t_16 != 0)) != 0);
               if (__pyx_t_12) {
                 __Pyx_GIVEREF(__pyx_t_17);
@@ -16882,7 +17043,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
                 __Pyx_XGIVEREF(__pyx_t_3);
                 __Pyx_ErrRestoreWithState(__pyx_t_17, __pyx_t_18, __pyx_t_3);
                 __pyx_t_17 = 0; __pyx_t_18 = 0; __pyx_t_3 = 0; 
-                __PYX_ERR(0, 464, __pyx_L71_except_error)
+                __PYX_ERR(0, 466, __pyx_L71_except_error)
               }
               __Pyx_XDECREF(__pyx_t_17); __pyx_t_17 = 0;
               __Pyx_XDECREF(__pyx_t_18); __pyx_t_18 = 0;
@@ -16908,7 +17069,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
             if (__pyx_t_15) {
               __pyx_t_14 = __Pyx_PyObject_Call(__pyx_t_15, __pyx_tuple__3, NULL);
               __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
-              if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 464, __pyx_L1_error)
+              if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 466, __pyx_L1_error)
               __Pyx_GOTREF(__pyx_t_14);
               __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
             }
@@ -16923,7 +17084,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
         __pyx_L80:;
       }
 
-      /* "LXG/replication.py":460
+      /* "LXG/replication.py":462
  * 
  *             fcs = sorted(arcpy.ListFeatureClasses("", "Point", ds))
  *             if len(fcs) > 0:             # <<<<<<<<<<<<<<
@@ -16932,7 +17093,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
  */
     }
 
-    /* "LXG/replication.py":475
+    /* "LXG/replication.py":477
  *                     pool3.join()
  * 
  *             del fcs             # <<<<<<<<<<<<<<
@@ -16942,7 +17103,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
     __Pyx_DECREF(__pyx_v_fcs);
     __pyx_v_fcs = NULL;
 
-    /* "LXG/replication.py":420
+    /* "LXG/replication.py":422
  *         dss = sorted(arcpy.ListDatasets("", "ALL"))
  *         pbar01 = tqdm(dss, desc='Append', position=0, colour='GREEN')
  *         for ds in pbar01:             # <<<<<<<<<<<<<<
@@ -16952,7 +17113,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
   }
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
 
-  /* "LXG/replication.py":414
+  /* "LXG/replication.py":416
  *         return fd_mapping
  * 
  *     def append_latest(self, featureclass_list):             # <<<<<<<<<<<<<<
@@ -16993,7 +17154,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16append_latest(CYTHON_UNU
   return __pyx_r;
 }
 
-/* "LXG/replication.py":477
+/* "LXG/replication.py":479
  *             del fcs
  * 
  *     def fast_append(self, fc):             # <<<<<<<<<<<<<<
@@ -17036,11 +17197,11 @@ static PyObject *__pyx_pw_6LXGREP_17AppendNewFeatures_19fast_append(PyObject *__
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_fc)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("fast_append", 1, 2, 2, 1); __PYX_ERR(0, 477, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("fast_append", 1, 2, 2, 1); __PYX_ERR(0, 479, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "fast_append") < 0)) __PYX_ERR(0, 477, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "fast_append") < 0)) __PYX_ERR(0, 479, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
       goto __pyx_L5_argtuple_error;
@@ -17053,7 +17214,7 @@ static PyObject *__pyx_pw_6LXGREP_17AppendNewFeatures_19fast_append(PyObject *__
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("fast_append", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 477, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("fast_append", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 479, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("LXGREP.AppendNewFeatures.fast_append", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -17093,22 +17254,22 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_18fast_append(CYTHON_UNUSE
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("fast_append", 0);
 
-  /* "LXG/replication.py":478
+  /* "LXG/replication.py":480
  * 
  *     def fast_append(self, fc):
  *         _fc = os.path.basename(fc[1])             # <<<<<<<<<<<<<<
  * 
  *         fc_pts = os.path.join(fc[2], f'gdb2_{_fc}_pts')
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_os); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 478, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_os); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 480, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_path); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 478, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_path); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 480, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_basename); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 478, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_basename); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 480, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = __Pyx_GetItemInt(__pyx_v_fc, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 478, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_GetItemInt(__pyx_v_fc, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 480, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_t_4 = NULL;
   if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_2))) {
@@ -17123,30 +17284,30 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_18fast_append(CYTHON_UNUSE
   __pyx_t_1 = (__pyx_t_4) ? __Pyx_PyObject_Call2Args(__pyx_t_2, __pyx_t_4, __pyx_t_3) : __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_3);
   __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 478, __pyx_L1_error)
+  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 480, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_v__fc = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "LXG/replication.py":480
+  /* "LXG/replication.py":482
  *         _fc = os.path.basename(fc[1])
  * 
  *         fc_pts = os.path.join(fc[2], f'gdb2_{_fc}_pts')             # <<<<<<<<<<<<<<
  * 
  *         # Select the points that are touching the buffer using the Select Layer By Location tool
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_os); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 480, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_os); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 482, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_path); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 480, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_path); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 482, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_join); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 480, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_join); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 482, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = __Pyx_GetItemInt(__pyx_v_fc, 2, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 480, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_GetItemInt(__pyx_v_fc, 2, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 482, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = PyTuple_New(3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 480, __pyx_L1_error)
+  __pyx_t_4 = PyTuple_New(3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 482, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __pyx_t_5 = 0;
   __pyx_t_6 = 127;
@@ -17154,7 +17315,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_18fast_append(CYTHON_UNUSE
   __pyx_t_5 += 5;
   __Pyx_GIVEREF(__pyx_n_u_gdb2_2);
   PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_n_u_gdb2_2);
-  __pyx_t_7 = __Pyx_PyObject_FormatSimple(__pyx_v__fc, __pyx_empty_unicode); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 480, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyObject_FormatSimple(__pyx_v__fc, __pyx_empty_unicode); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 482, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __pyx_t_6 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_7) > __pyx_t_6) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_7) : __pyx_t_6;
   __pyx_t_5 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_7);
@@ -17165,7 +17326,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_18fast_append(CYTHON_UNUSE
   __pyx_t_5 += 4;
   __Pyx_GIVEREF(__pyx_n_u_pts);
   PyTuple_SET_ITEM(__pyx_t_4, 2, __pyx_n_u_pts);
-  __pyx_t_7 = __Pyx_PyUnicode_Join(__pyx_t_4, 3, __pyx_t_5, __pyx_t_6); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 480, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyUnicode_Join(__pyx_t_4, 3, __pyx_t_5, __pyx_t_6); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 482, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __pyx_t_4 = NULL;
@@ -17183,7 +17344,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_18fast_append(CYTHON_UNUSE
   #if CYTHON_FAST_PYCALL
   if (PyFunction_Check(__pyx_t_2)) {
     PyObject *__pyx_temp[3] = {__pyx_t_4, __pyx_t_3, __pyx_t_7};
-    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_8, 2+__pyx_t_8); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 480, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_8, 2+__pyx_t_8); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 482, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -17193,7 +17354,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_18fast_append(CYTHON_UNUSE
   #if CYTHON_FAST_PYCCALL
   if (__Pyx_PyFastCFunction_Check(__pyx_t_2)) {
     PyObject *__pyx_temp[3] = {__pyx_t_4, __pyx_t_3, __pyx_t_7};
-    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_8, 2+__pyx_t_8); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 480, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_8, 2+__pyx_t_8); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 482, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -17201,7 +17362,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_18fast_append(CYTHON_UNUSE
   } else
   #endif
   {
-    __pyx_t_9 = PyTuple_New(2+__pyx_t_8); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 480, __pyx_L1_error)
+    __pyx_t_9 = PyTuple_New(2+__pyx_t_8); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 482, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_9);
     if (__pyx_t_4) {
       __Pyx_GIVEREF(__pyx_t_4); PyTuple_SET_ITEM(__pyx_t_9, 0, __pyx_t_4); __pyx_t_4 = NULL;
@@ -17212,7 +17373,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_18fast_append(CYTHON_UNUSE
     PyTuple_SET_ITEM(__pyx_t_9, 1+__pyx_t_8, __pyx_t_7);
     __pyx_t_3 = 0;
     __pyx_t_7 = 0;
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_9, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 480, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_9, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 482, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
   }
@@ -17220,22 +17381,22 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_18fast_append(CYTHON_UNUSE
   __pyx_v_fc_pts = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "LXG/replication.py":483
+  /* "LXG/replication.py":485
  * 
  *         # Select the points that are touching the buffer using the Select Layer By Location tool
  *         selected_layer, _, _ = arcpy.SelectLayerByLocation_management(fc[1],             # <<<<<<<<<<<<<<
  *                                                                       "INTERSECT",
  *                                                                       fc_pts)
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 483, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 485, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_SelectLayerByLocation_management); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 483, __pyx_L1_error)
+  __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_SelectLayerByLocation_management); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 485, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_9);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_GetItemInt(__pyx_v_fc, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 483, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_GetItemInt(__pyx_v_fc, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 485, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
 
-  /* "LXG/replication.py":485
+  /* "LXG/replication.py":487
  *         selected_layer, _, _ = arcpy.SelectLayerByLocation_management(fc[1],
  *                                                                       "INTERSECT",
  *                                                                       fc_pts)             # <<<<<<<<<<<<<<
@@ -17257,7 +17418,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_18fast_append(CYTHON_UNUSE
   #if CYTHON_FAST_PYCALL
   if (PyFunction_Check(__pyx_t_9)) {
     PyObject *__pyx_temp[4] = {__pyx_t_7, __pyx_t_2, __pyx_n_s_INTERSECT, __pyx_v_fc_pts};
-    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_9, __pyx_temp+1-__pyx_t_8, 3+__pyx_t_8); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 483, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_9, __pyx_temp+1-__pyx_t_8, 3+__pyx_t_8); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 485, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
@@ -17266,14 +17427,14 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_18fast_append(CYTHON_UNUSE
   #if CYTHON_FAST_PYCCALL
   if (__Pyx_PyFastCFunction_Check(__pyx_t_9)) {
     PyObject *__pyx_temp[4] = {__pyx_t_7, __pyx_t_2, __pyx_n_s_INTERSECT, __pyx_v_fc_pts};
-    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_9, __pyx_temp+1-__pyx_t_8, 3+__pyx_t_8); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 483, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_9, __pyx_temp+1-__pyx_t_8, 3+__pyx_t_8); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 485, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   } else
   #endif
   {
-    __pyx_t_3 = PyTuple_New(3+__pyx_t_8); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 483, __pyx_L1_error)
+    __pyx_t_3 = PyTuple_New(3+__pyx_t_8); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 485, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     if (__pyx_t_7) {
       __Pyx_GIVEREF(__pyx_t_7); PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_7); __pyx_t_7 = NULL;
@@ -17287,7 +17448,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_18fast_append(CYTHON_UNUSE
     __Pyx_GIVEREF(__pyx_v_fc_pts);
     PyTuple_SET_ITEM(__pyx_t_3, 2+__pyx_t_8, __pyx_v_fc_pts);
     __pyx_t_2 = 0;
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_9, __pyx_t_3, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 483, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_9, __pyx_t_3, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 485, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   }
@@ -17298,7 +17459,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_18fast_append(CYTHON_UNUSE
     if (unlikely(size != 3)) {
       if (size > 3) __Pyx_RaiseTooManyValuesError(3);
       else if (size >= 0) __Pyx_RaiseNeedMoreValuesError(size);
-      __PYX_ERR(0, 483, __pyx_L1_error)
+      __PYX_ERR(0, 485, __pyx_L1_error)
     }
     #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
     if (likely(PyTuple_CheckExact(sequence))) {
@@ -17314,17 +17475,17 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_18fast_append(CYTHON_UNUSE
     __Pyx_INCREF(__pyx_t_3);
     __Pyx_INCREF(__pyx_t_2);
     #else
-    __pyx_t_9 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 483, __pyx_L1_error)
+    __pyx_t_9 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 485, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_9);
-    __pyx_t_3 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 483, __pyx_L1_error)
+    __pyx_t_3 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 485, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_2 = PySequence_ITEM(sequence, 2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 483, __pyx_L1_error)
+    __pyx_t_2 = PySequence_ITEM(sequence, 2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 485, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     #endif
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   } else {
     Py_ssize_t index = -1;
-    __pyx_t_7 = PyObject_GetIter(__pyx_t_1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 483, __pyx_L1_error)
+    __pyx_t_7 = PyObject_GetIter(__pyx_t_1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 485, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __pyx_t_10 = Py_TYPE(__pyx_t_7)->tp_iternext;
@@ -17334,7 +17495,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_18fast_append(CYTHON_UNUSE
     __Pyx_GOTREF(__pyx_t_3);
     index = 2; __pyx_t_2 = __pyx_t_10(__pyx_t_7); if (unlikely(!__pyx_t_2)) goto __pyx_L3_unpacking_failed;
     __Pyx_GOTREF(__pyx_t_2);
-    if (__Pyx_IternextUnpackEndCheck(__pyx_t_10(__pyx_t_7), 3) < 0) __PYX_ERR(0, 483, __pyx_L1_error)
+    if (__Pyx_IternextUnpackEndCheck(__pyx_t_10(__pyx_t_7), 3) < 0) __PYX_ERR(0, 485, __pyx_L1_error)
     __pyx_t_10 = NULL;
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
     goto __pyx_L4_unpacking_done;
@@ -17342,11 +17503,11 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_18fast_append(CYTHON_UNUSE
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
     __pyx_t_10 = NULL;
     if (__Pyx_IterFinish() == 0) __Pyx_RaiseNeedMoreValuesError(index);
-    __PYX_ERR(0, 483, __pyx_L1_error)
+    __PYX_ERR(0, 485, __pyx_L1_error)
     __pyx_L4_unpacking_done:;
   }
 
-  /* "LXG/replication.py":483
+  /* "LXG/replication.py":485
  * 
  *         # Select the points that are touching the buffer using the Select Layer By Location tool
  *         selected_layer, _, _ = arcpy.SelectLayerByLocation_management(fc[1],             # <<<<<<<<<<<<<<
@@ -17360,55 +17521,55 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_18fast_append(CYTHON_UNUSE
   __Pyx_DECREF_SET(__pyx_v__, __pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "LXG/replication.py":486
+  /* "LXG/replication.py":488
  *                                                                       "INTERSECT",
  *                                                                       fc_pts)
  *         _params = self.field_mappings(source_feature=selected_layer,             # <<<<<<<<<<<<<<
  *                                       target_feature=fc[1],
  *                                       point_feat_dir=fc_pts)
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_field_mappings); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 486, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_field_mappings); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 488, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyDict_NewPresized(3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 486, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyDict_NewPresized(3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 488, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_source_feature, __pyx_v_selected_layer) < 0) __PYX_ERR(0, 486, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_source_feature, __pyx_v_selected_layer) < 0) __PYX_ERR(0, 488, __pyx_L1_error)
 
-  /* "LXG/replication.py":487
+  /* "LXG/replication.py":489
  *                                                                       fc_pts)
  *         _params = self.field_mappings(source_feature=selected_layer,
  *                                       target_feature=fc[1],             # <<<<<<<<<<<<<<
  *                                       point_feat_dir=fc_pts)
  * 
  */
-  __pyx_t_3 = __Pyx_GetItemInt(__pyx_v_fc, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 487, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_GetItemInt(__pyx_v_fc, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 489, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_target_feature, __pyx_t_3) < 0) __PYX_ERR(0, 486, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_target_feature, __pyx_t_3) < 0) __PYX_ERR(0, 488, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "LXG/replication.py":488
+  /* "LXG/replication.py":490
  *         _params = self.field_mappings(source_feature=selected_layer,
  *                                       target_feature=fc[1],
  *                                       point_feat_dir=fc_pts)             # <<<<<<<<<<<<<<
  * 
  *         try:
  */
-  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_point_feat_dir, __pyx_v_fc_pts) < 0) __PYX_ERR(0, 486, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_point_feat_dir, __pyx_v_fc_pts) < 0) __PYX_ERR(0, 488, __pyx_L1_error)
 
-  /* "LXG/replication.py":486
+  /* "LXG/replication.py":488
  *                                                                       "INTERSECT",
  *                                                                       fc_pts)
  *         _params = self.field_mappings(source_feature=selected_layer,             # <<<<<<<<<<<<<<
  *                                       target_feature=fc[1],
  *                                       point_feat_dir=fc_pts)
  */
-  __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_empty_tuple, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 486, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_empty_tuple, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 488, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_v__params = __pyx_t_3;
   __pyx_t_3 = 0;
 
-  /* "LXG/replication.py":490
+  /* "LXG/replication.py":492
  *                                       point_feat_dir=fc_pts)
  * 
  *         try:             # <<<<<<<<<<<<<<
@@ -17424,30 +17585,30 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_18fast_append(CYTHON_UNUSE
     __Pyx_XGOTREF(__pyx_t_13);
     /*try:*/ {
 
-      /* "LXG/replication.py":492
+      /* "LXG/replication.py":494
  *         try:
  *             # Append selected points to a old version of feature class
  *             arcpy.Append_management(selected_layer,             # <<<<<<<<<<<<<<
  *                                     fc[0],
  *                                     "NO_TEST",
  */
-      __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 492, __pyx_L5_error)
+      __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 494, __pyx_L5_error)
       __Pyx_GOTREF(__pyx_t_2);
-      __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_Append_management); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 492, __pyx_L5_error)
+      __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_Append_management); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 494, __pyx_L5_error)
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-      /* "LXG/replication.py":493
+      /* "LXG/replication.py":495
  *             # Append selected points to a old version of feature class
  *             arcpy.Append_management(selected_layer,
  *                                     fc[0],             # <<<<<<<<<<<<<<
  *                                     "NO_TEST",
  *                                     _params
  */
-      __pyx_t_2 = __Pyx_GetItemInt(__pyx_v_fc, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 493, __pyx_L5_error)
+      __pyx_t_2 = __Pyx_GetItemInt(__pyx_v_fc, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 495, __pyx_L5_error)
       __Pyx_GOTREF(__pyx_t_2);
 
-      /* "LXG/replication.py":495
+      /* "LXG/replication.py":497
  *                                     fc[0],
  *                                     "NO_TEST",
  *                                     _params             # <<<<<<<<<<<<<<
@@ -17469,7 +17630,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_18fast_append(CYTHON_UNUSE
       #if CYTHON_FAST_PYCALL
       if (PyFunction_Check(__pyx_t_1)) {
         PyObject *__pyx_temp[5] = {__pyx_t_9, __pyx_v_selected_layer, __pyx_t_2, __pyx_n_s_NO_TEST, __pyx_v__params};
-        __pyx_t_3 = __Pyx_PyFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_8, 4+__pyx_t_8); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 492, __pyx_L5_error)
+        __pyx_t_3 = __Pyx_PyFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_8, 4+__pyx_t_8); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 494, __pyx_L5_error)
         __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
         __Pyx_GOTREF(__pyx_t_3);
         __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
@@ -17478,14 +17639,14 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_18fast_append(CYTHON_UNUSE
       #if CYTHON_FAST_PYCCALL
       if (__Pyx_PyFastCFunction_Check(__pyx_t_1)) {
         PyObject *__pyx_temp[5] = {__pyx_t_9, __pyx_v_selected_layer, __pyx_t_2, __pyx_n_s_NO_TEST, __pyx_v__params};
-        __pyx_t_3 = __Pyx_PyCFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_8, 4+__pyx_t_8); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 492, __pyx_L5_error)
+        __pyx_t_3 = __Pyx_PyCFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_8, 4+__pyx_t_8); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 494, __pyx_L5_error)
         __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
         __Pyx_GOTREF(__pyx_t_3);
         __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
       } else
       #endif
       {
-        __pyx_t_7 = PyTuple_New(4+__pyx_t_8); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 492, __pyx_L5_error)
+        __pyx_t_7 = PyTuple_New(4+__pyx_t_8); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 494, __pyx_L5_error)
         __Pyx_GOTREF(__pyx_t_7);
         if (__pyx_t_9) {
           __Pyx_GIVEREF(__pyx_t_9); PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_t_9); __pyx_t_9 = NULL;
@@ -17502,14 +17663,14 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_18fast_append(CYTHON_UNUSE
         __Pyx_GIVEREF(__pyx_v__params);
         PyTuple_SET_ITEM(__pyx_t_7, 3+__pyx_t_8, __pyx_v__params);
         __pyx_t_2 = 0;
-        __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_7, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 492, __pyx_L5_error)
+        __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_7, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 494, __pyx_L5_error)
         __Pyx_GOTREF(__pyx_t_3);
         __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
       }
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-      /* "LXG/replication.py":490
+      /* "LXG/replication.py":492
  *                                       point_feat_dir=fc_pts)
  * 
  *         try:             # <<<<<<<<<<<<<<
@@ -17529,7 +17690,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_18fast_append(CYTHON_UNUSE
     __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
     __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
 
-    /* "LXG/replication.py":497
+    /* "LXG/replication.py":499
  *                                     _params
  *                                     )
  *         except arcpy.ExecuteError as e:             # <<<<<<<<<<<<<<
@@ -17537,9 +17698,9 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_18fast_append(CYTHON_UNUSE
  * 
  */
     __Pyx_ErrFetch(&__pyx_t_3, &__pyx_t_1, &__pyx_t_7);
-    __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 497, __pyx_L7_except_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 499, __pyx_L7_except_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_ExecuteError); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 497, __pyx_L7_except_error)
+    __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_ExecuteError); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 499, __pyx_L7_except_error)
     __Pyx_GOTREF(__pyx_t_9);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __pyx_t_8 = __Pyx_PyErr_GivenExceptionMatches(__pyx_t_3, __pyx_t_9);
@@ -17548,23 +17709,23 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_18fast_append(CYTHON_UNUSE
     __pyx_t_3 = 0; __pyx_t_1 = 0; __pyx_t_7 = 0;
     if (__pyx_t_8) {
       __Pyx_AddTraceback("LXGREP.AppendNewFeatures.fast_append", __pyx_clineno, __pyx_lineno, __pyx_filename);
-      if (__Pyx_GetException(&__pyx_t_7, &__pyx_t_1, &__pyx_t_3) < 0) __PYX_ERR(0, 497, __pyx_L7_except_error)
+      if (__Pyx_GetException(&__pyx_t_7, &__pyx_t_1, &__pyx_t_3) < 0) __PYX_ERR(0, 499, __pyx_L7_except_error)
       __Pyx_GOTREF(__pyx_t_7);
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_INCREF(__pyx_t_1);
       __pyx_v_e = __pyx_t_1;
 
-      /* "LXG/replication.py":498
+      /* "LXG/replication.py":500
  *                                     )
  *         except arcpy.ExecuteError as e:
  *             arcpy.AddError(e)             # <<<<<<<<<<<<<<
  * 
  *         del _params
  */
-      __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 498, __pyx_L7_except_error)
+      __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 500, __pyx_L7_except_error)
       __Pyx_GOTREF(__pyx_t_2);
-      __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_AddError); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 498, __pyx_L7_except_error)
+      __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_AddError); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 500, __pyx_L7_except_error)
       __Pyx_GOTREF(__pyx_t_4);
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
       __pyx_t_2 = NULL;
@@ -17579,7 +17740,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_18fast_append(CYTHON_UNUSE
       }
       __pyx_t_9 = (__pyx_t_2) ? __Pyx_PyObject_Call2Args(__pyx_t_4, __pyx_t_2, __pyx_v_e) : __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_v_e);
       __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-      if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 498, __pyx_L7_except_error)
+      if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 500, __pyx_L7_except_error)
       __Pyx_GOTREF(__pyx_t_9);
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
       __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
@@ -17591,7 +17752,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_18fast_append(CYTHON_UNUSE
     goto __pyx_L7_except_error;
     __pyx_L7_except_error:;
 
-    /* "LXG/replication.py":490
+    /* "LXG/replication.py":492
  *                                       point_feat_dir=fc_pts)
  * 
  *         try:             # <<<<<<<<<<<<<<
@@ -17611,7 +17772,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_18fast_append(CYTHON_UNUSE
     __pyx_L10_try_end:;
   }
 
-  /* "LXG/replication.py":500
+  /* "LXG/replication.py":502
  *             arcpy.AddError(e)
  * 
  *         del _params             # <<<<<<<<<<<<<<
@@ -17621,7 +17782,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_18fast_append(CYTHON_UNUSE
   __Pyx_DECREF(__pyx_v__params);
   __pyx_v__params = NULL;
 
-  /* "LXG/replication.py":477
+  /* "LXG/replication.py":479
  *             del fcs
  * 
  *     def fast_append(self, fc):             # <<<<<<<<<<<<<<
@@ -17653,7 +17814,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_18fast_append(CYTHON_UNUSE
   return __pyx_r;
 }
 
-/* "LXG/replication.py":502
+/* "LXG/replication.py":504
  *         del _params
  * 
  *     def fast_poly_append(self, fc):             # <<<<<<<<<<<<<<
@@ -17696,11 +17857,11 @@ static PyObject *__pyx_pw_6LXGREP_17AppendNewFeatures_21fast_poly_append(PyObjec
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_fc)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("fast_poly_append", 1, 2, 2, 1); __PYX_ERR(0, 502, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("fast_poly_append", 1, 2, 2, 1); __PYX_ERR(0, 504, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "fast_poly_append") < 0)) __PYX_ERR(0, 502, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "fast_poly_append") < 0)) __PYX_ERR(0, 504, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
       goto __pyx_L5_argtuple_error;
@@ -17713,7 +17874,7 @@ static PyObject *__pyx_pw_6LXGREP_17AppendNewFeatures_21fast_poly_append(PyObjec
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("fast_poly_append", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 502, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("fast_poly_append", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 504, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("LXGREP.AppendNewFeatures.fast_poly_append", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -17727,7 +17888,7 @@ static PyObject *__pyx_pw_6LXGREP_17AppendNewFeatures_21fast_poly_append(PyObjec
 }
 static PyObject *__pyx_gb_6LXGREP_17AppendNewFeatures_16fast_poly_append_2generator(__pyx_CoroutineObject *__pyx_generator, CYTHON_UNUSED PyThreadState *__pyx_tstate, PyObject *__pyx_sent_value); /* proto */
 
-/* "LXG/replication.py":534
+/* "LXG/replication.py":536
  *             try:
  *                 # Start an edit operation
  *                 query = f"{oid_fieldname} IN ({', '.join(str(x) for x in oid_nums)})"             # <<<<<<<<<<<<<<
@@ -17747,7 +17908,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16fast_poly_append_genexpr
   if (unlikely(!__pyx_cur_scope)) {
     __pyx_cur_scope = ((struct __pyx_obj_6LXGREP___pyx_scope_struct_1_genexpr *)Py_None);
     __Pyx_INCREF(Py_None);
-    __PYX_ERR(0, 534, __pyx_L1_error)
+    __PYX_ERR(0, 536, __pyx_L1_error)
   } else {
     __Pyx_GOTREF(__pyx_cur_scope);
   }
@@ -17755,7 +17916,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_16fast_poly_append_genexpr
   __Pyx_INCREF(((PyObject *)__pyx_cur_scope->__pyx_outer_scope));
   __Pyx_GIVEREF(__pyx_cur_scope->__pyx_outer_scope);
   {
-    __pyx_CoroutineObject *gen = __Pyx_Generator_New((__pyx_coroutine_body_t) __pyx_gb_6LXGREP_17AppendNewFeatures_16fast_poly_append_2generator, NULL, (PyObject *) __pyx_cur_scope, __pyx_n_s_genexpr, __pyx_n_s_AppendNewFeatures_fast_poly_appe, __pyx_n_s_LXGREP); if (unlikely(!gen)) __PYX_ERR(0, 534, __pyx_L1_error)
+    __pyx_CoroutineObject *gen = __Pyx_Generator_New((__pyx_coroutine_body_t) __pyx_gb_6LXGREP_17AppendNewFeatures_16fast_poly_append_2generator, NULL, (PyObject *) __pyx_cur_scope, __pyx_n_s_genexpr, __pyx_n_s_AppendNewFeatures_fast_poly_appe, __pyx_n_s_LXGREP); if (unlikely(!gen)) __PYX_ERR(0, 536, __pyx_L1_error)
     __Pyx_DECREF(__pyx_cur_scope);
     __Pyx_RefNannyFinishContext();
     return (PyObject *) gen;
@@ -17791,26 +17952,26 @@ static PyObject *__pyx_gb_6LXGREP_17AppendNewFeatures_16fast_poly_append_2genera
     return NULL;
   }
   __pyx_L3_first_run:;
-  if (unlikely(!__pyx_sent_value)) __PYX_ERR(0, 534, __pyx_L1_error)
-  if (unlikely(!__pyx_cur_scope->__pyx_outer_scope->__pyx_v_oid_nums)) { __Pyx_RaiseClosureNameError("oid_nums"); __PYX_ERR(0, 534, __pyx_L1_error) }
+  if (unlikely(!__pyx_sent_value)) __PYX_ERR(0, 536, __pyx_L1_error)
+  if (unlikely(!__pyx_cur_scope->__pyx_outer_scope->__pyx_v_oid_nums)) { __Pyx_RaiseClosureNameError("oid_nums"); __PYX_ERR(0, 536, __pyx_L1_error) }
   if (unlikely(__pyx_cur_scope->__pyx_outer_scope->__pyx_v_oid_nums == Py_None)) {
     PyErr_SetString(PyExc_TypeError, "'NoneType' object is not iterable");
-    __PYX_ERR(0, 534, __pyx_L1_error)
+    __PYX_ERR(0, 536, __pyx_L1_error)
   }
   __pyx_t_1 = __pyx_cur_scope->__pyx_outer_scope->__pyx_v_oid_nums; __Pyx_INCREF(__pyx_t_1); __pyx_t_2 = 0;
   for (;;) {
     if (__pyx_t_2 >= PyList_GET_SIZE(__pyx_t_1)) break;
     #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-    __pyx_t_3 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_3); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(0, 534, __pyx_L1_error)
+    __pyx_t_3 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_3); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(0, 536, __pyx_L1_error)
     #else
-    __pyx_t_3 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 534, __pyx_L1_error)
+    __pyx_t_3 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 536, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     #endif
     __Pyx_XGOTREF(__pyx_cur_scope->__pyx_v_x);
     __Pyx_XDECREF_SET(__pyx_cur_scope->__pyx_v_x, __pyx_t_3);
     __Pyx_GIVEREF(__pyx_t_3);
     __pyx_t_3 = 0;
-    __pyx_t_3 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyString_Type)), __pyx_cur_scope->__pyx_v_x); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 534, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyString_Type)), __pyx_cur_scope->__pyx_v_x); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 536, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __pyx_r = __pyx_t_3;
     __pyx_t_3 = 0;
@@ -17828,7 +17989,7 @@ static PyObject *__pyx_gb_6LXGREP_17AppendNewFeatures_16fast_poly_append_2genera
     __pyx_cur_scope->__pyx_t_0 = 0;
     __Pyx_XGOTREF(__pyx_t_1);
     __pyx_t_2 = __pyx_cur_scope->__pyx_t_1;
-    if (unlikely(!__pyx_sent_value)) __PYX_ERR(0, 534, __pyx_L1_error)
+    if (unlikely(!__pyx_sent_value)) __PYX_ERR(0, 536, __pyx_L1_error)
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   CYTHON_MAYBE_UNUSED_VAR(__pyx_cur_scope);
@@ -17851,7 +18012,7 @@ static PyObject *__pyx_gb_6LXGREP_17AppendNewFeatures_16fast_poly_append_2genera
   return __pyx_r;
 }
 
-/* "LXG/replication.py":502
+/* "LXG/replication.py":504
  *         del _params
  * 
  *     def fast_poly_append(self, fc):             # <<<<<<<<<<<<<<
@@ -17906,27 +18067,27 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
   if (unlikely(!__pyx_cur_scope)) {
     __pyx_cur_scope = ((struct __pyx_obj_6LXGREP___pyx_scope_struct__fast_poly_append *)Py_None);
     __Pyx_INCREF(Py_None);
-    __PYX_ERR(0, 502, __pyx_L1_error)
+    __PYX_ERR(0, 504, __pyx_L1_error)
   } else {
     __Pyx_GOTREF(__pyx_cur_scope);
   }
 
-  /* "LXG/replication.py":503
+  /* "LXG/replication.py":505
  * 
  *     def fast_poly_append(self, fc):
  *         _fc = os.path.basename(fc[1])             # <<<<<<<<<<<<<<
  *         fc_pts = os.path.join(fc[2], f'gdb2_{_fc}_pts')
  * 
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_os); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 503, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_os); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 505, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_path); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 503, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_path); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 505, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_basename); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 503, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_basename); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 505, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = __Pyx_GetItemInt(__pyx_v_fc, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 503, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_GetItemInt(__pyx_v_fc, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 505, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_t_4 = NULL;
   if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_2))) {
@@ -17941,30 +18102,30 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
   __pyx_t_1 = (__pyx_t_4) ? __Pyx_PyObject_Call2Args(__pyx_t_2, __pyx_t_4, __pyx_t_3) : __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_3);
   __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 503, __pyx_L1_error)
+  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 505, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_v__fc = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "LXG/replication.py":504
+  /* "LXG/replication.py":506
  *     def fast_poly_append(self, fc):
  *         _fc = os.path.basename(fc[1])
  *         fc_pts = os.path.join(fc[2], f'gdb2_{_fc}_pts')             # <<<<<<<<<<<<<<
  * 
  *         arcpy.SelectLayerByAttribute_management(fc[0], "CLEAR_SELECTION")
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_os); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 504, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_os); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 506, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_path); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 504, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_path); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 506, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_join); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 504, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_join); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 506, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = __Pyx_GetItemInt(__pyx_v_fc, 2, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 504, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_GetItemInt(__pyx_v_fc, 2, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 506, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = PyTuple_New(3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 504, __pyx_L1_error)
+  __pyx_t_4 = PyTuple_New(3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 506, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __pyx_t_5 = 0;
   __pyx_t_6 = 127;
@@ -17972,7 +18133,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
   __pyx_t_5 += 5;
   __Pyx_GIVEREF(__pyx_n_u_gdb2_2);
   PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_n_u_gdb2_2);
-  __pyx_t_7 = __Pyx_PyObject_FormatSimple(__pyx_v__fc, __pyx_empty_unicode); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 504, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyObject_FormatSimple(__pyx_v__fc, __pyx_empty_unicode); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 506, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __pyx_t_6 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_7) > __pyx_t_6) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_7) : __pyx_t_6;
   __pyx_t_5 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_7);
@@ -17983,7 +18144,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
   __pyx_t_5 += 4;
   __Pyx_GIVEREF(__pyx_n_u_pts);
   PyTuple_SET_ITEM(__pyx_t_4, 2, __pyx_n_u_pts);
-  __pyx_t_7 = __Pyx_PyUnicode_Join(__pyx_t_4, 3, __pyx_t_5, __pyx_t_6); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 504, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyUnicode_Join(__pyx_t_4, 3, __pyx_t_5, __pyx_t_6); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 506, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __pyx_t_4 = NULL;
@@ -18001,7 +18162,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
   #if CYTHON_FAST_PYCALL
   if (PyFunction_Check(__pyx_t_2)) {
     PyObject *__pyx_temp[3] = {__pyx_t_4, __pyx_t_3, __pyx_t_7};
-    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_8, 2+__pyx_t_8); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 504, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_8, 2+__pyx_t_8); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 506, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -18011,7 +18172,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
   #if CYTHON_FAST_PYCCALL
   if (__Pyx_PyFastCFunction_Check(__pyx_t_2)) {
     PyObject *__pyx_temp[3] = {__pyx_t_4, __pyx_t_3, __pyx_t_7};
-    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_8, 2+__pyx_t_8); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 504, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_8, 2+__pyx_t_8); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 506, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -18019,7 +18180,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
   } else
   #endif
   {
-    __pyx_t_9 = PyTuple_New(2+__pyx_t_8); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 504, __pyx_L1_error)
+    __pyx_t_9 = PyTuple_New(2+__pyx_t_8); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 506, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_9);
     if (__pyx_t_4) {
       __Pyx_GIVEREF(__pyx_t_4); PyTuple_SET_ITEM(__pyx_t_9, 0, __pyx_t_4); __pyx_t_4 = NULL;
@@ -18030,7 +18191,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
     PyTuple_SET_ITEM(__pyx_t_9, 1+__pyx_t_8, __pyx_t_7);
     __pyx_t_3 = 0;
     __pyx_t_7 = 0;
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_9, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 504, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_9, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 506, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
   }
@@ -18038,19 +18199,19 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
   __pyx_v_fc_pts = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "LXG/replication.py":506
+  /* "LXG/replication.py":508
  *         fc_pts = os.path.join(fc[2], f'gdb2_{_fc}_pts')
  * 
  *         arcpy.SelectLayerByAttribute_management(fc[0], "CLEAR_SELECTION")             # <<<<<<<<<<<<<<
  *         arcpy.SelectLayerByAttribute_management(fc[1], "CLEAR_SELECTION")
  * 
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 506, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 508, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_SelectLayerByAttribute_managemen); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 506, __pyx_L1_error)
+  __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_SelectLayerByAttribute_managemen); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 508, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_9);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_GetItemInt(__pyx_v_fc, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 506, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_GetItemInt(__pyx_v_fc, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 508, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_7 = NULL;
   __pyx_t_8 = 0;
@@ -18067,7 +18228,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
   #if CYTHON_FAST_PYCALL
   if (PyFunction_Check(__pyx_t_9)) {
     PyObject *__pyx_temp[3] = {__pyx_t_7, __pyx_t_2, __pyx_n_s_CLEAR_SELECTION};
-    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_9, __pyx_temp+1-__pyx_t_8, 2+__pyx_t_8); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 506, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_9, __pyx_temp+1-__pyx_t_8, 2+__pyx_t_8); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 508, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
@@ -18076,14 +18237,14 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
   #if CYTHON_FAST_PYCCALL
   if (__Pyx_PyFastCFunction_Check(__pyx_t_9)) {
     PyObject *__pyx_temp[3] = {__pyx_t_7, __pyx_t_2, __pyx_n_s_CLEAR_SELECTION};
-    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_9, __pyx_temp+1-__pyx_t_8, 2+__pyx_t_8); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 506, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_9, __pyx_temp+1-__pyx_t_8, 2+__pyx_t_8); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 508, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   } else
   #endif
   {
-    __pyx_t_3 = PyTuple_New(2+__pyx_t_8); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 506, __pyx_L1_error)
+    __pyx_t_3 = PyTuple_New(2+__pyx_t_8); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 508, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     if (__pyx_t_7) {
       __Pyx_GIVEREF(__pyx_t_7); PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_7); __pyx_t_7 = NULL;
@@ -18094,26 +18255,26 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
     __Pyx_GIVEREF(__pyx_n_s_CLEAR_SELECTION);
     PyTuple_SET_ITEM(__pyx_t_3, 1+__pyx_t_8, __pyx_n_s_CLEAR_SELECTION);
     __pyx_t_2 = 0;
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_9, __pyx_t_3, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 506, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_9, __pyx_t_3, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 508, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   }
   __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "LXG/replication.py":507
+  /* "LXG/replication.py":509
  * 
  *         arcpy.SelectLayerByAttribute_management(fc[0], "CLEAR_SELECTION")
  *         arcpy.SelectLayerByAttribute_management(fc[1], "CLEAR_SELECTION")             # <<<<<<<<<<<<<<
  * 
  *         selected_layer01, _, _ = arcpy.SelectLayerByLocation_management(fc[1],
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_9, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 507, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_9, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 509, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_9);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_9, __pyx_n_s_SelectLayerByAttribute_managemen); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 507, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_9, __pyx_n_s_SelectLayerByAttribute_managemen); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 509, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-  __pyx_t_9 = __Pyx_GetItemInt(__pyx_v_fc, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 507, __pyx_L1_error)
+  __pyx_t_9 = __Pyx_GetItemInt(__pyx_v_fc, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 509, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_9);
   __pyx_t_2 = NULL;
   __pyx_t_8 = 0;
@@ -18130,7 +18291,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
   #if CYTHON_FAST_PYCALL
   if (PyFunction_Check(__pyx_t_3)) {
     PyObject *__pyx_temp[3] = {__pyx_t_2, __pyx_t_9, __pyx_n_s_CLEAR_SELECTION};
-    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_8, 2+__pyx_t_8); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 507, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_8, 2+__pyx_t_8); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 509, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
@@ -18139,14 +18300,14 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
   #if CYTHON_FAST_PYCCALL
   if (__Pyx_PyFastCFunction_Check(__pyx_t_3)) {
     PyObject *__pyx_temp[3] = {__pyx_t_2, __pyx_t_9, __pyx_n_s_CLEAR_SELECTION};
-    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_8, 2+__pyx_t_8); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 507, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_8, 2+__pyx_t_8); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 509, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
   } else
   #endif
   {
-    __pyx_t_7 = PyTuple_New(2+__pyx_t_8); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 507, __pyx_L1_error)
+    __pyx_t_7 = PyTuple_New(2+__pyx_t_8); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 509, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
     if (__pyx_t_2) {
       __Pyx_GIVEREF(__pyx_t_2); PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_t_2); __pyx_t_2 = NULL;
@@ -18157,29 +18318,29 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
     __Pyx_GIVEREF(__pyx_n_s_CLEAR_SELECTION);
     PyTuple_SET_ITEM(__pyx_t_7, 1+__pyx_t_8, __pyx_n_s_CLEAR_SELECTION);
     __pyx_t_9 = 0;
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_7, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 507, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_7, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 509, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
   }
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "LXG/replication.py":509
+  /* "LXG/replication.py":511
  *         arcpy.SelectLayerByAttribute_management(fc[1], "CLEAR_SELECTION")
  * 
  *         selected_layer01, _, _ = arcpy.SelectLayerByLocation_management(fc[1],             # <<<<<<<<<<<<<<
  *                                                                         "INTERSECT",
  *                                                                         fc_pts,
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 509, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 511, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_SelectLayerByLocation_management); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 509, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_SelectLayerByLocation_management); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 511, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = __Pyx_GetItemInt(__pyx_v_fc, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 509, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_GetItemInt(__pyx_v_fc, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 511, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
 
-  /* "LXG/replication.py":512
+  /* "LXG/replication.py":514
  *                                                                         "INTERSECT",
  *                                                                         fc_pts,
  *                                                                         None,             # <<<<<<<<<<<<<<
@@ -18201,7 +18362,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
   #if CYTHON_FAST_PYCALL
   if (PyFunction_Check(__pyx_t_7)) {
     PyObject *__pyx_temp[7] = {__pyx_t_9, __pyx_t_3, __pyx_n_s_INTERSECT, __pyx_v_fc_pts, Py_None, __pyx_n_s_NEW_SELECTION, __pyx_n_s_NOT_INVERT};
-    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_7, __pyx_temp+1-__pyx_t_8, 6+__pyx_t_8); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 509, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_7, __pyx_temp+1-__pyx_t_8, 6+__pyx_t_8); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 511, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -18210,14 +18371,14 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
   #if CYTHON_FAST_PYCCALL
   if (__Pyx_PyFastCFunction_Check(__pyx_t_7)) {
     PyObject *__pyx_temp[7] = {__pyx_t_9, __pyx_t_3, __pyx_n_s_INTERSECT, __pyx_v_fc_pts, Py_None, __pyx_n_s_NEW_SELECTION, __pyx_n_s_NOT_INVERT};
-    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_7, __pyx_temp+1-__pyx_t_8, 6+__pyx_t_8); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 509, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_7, __pyx_temp+1-__pyx_t_8, 6+__pyx_t_8); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 511, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   } else
   #endif
   {
-    __pyx_t_2 = PyTuple_New(6+__pyx_t_8); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 509, __pyx_L1_error)
+    __pyx_t_2 = PyTuple_New(6+__pyx_t_8); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 511, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     if (__pyx_t_9) {
       __Pyx_GIVEREF(__pyx_t_9); PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_t_9); __pyx_t_9 = NULL;
@@ -18240,7 +18401,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
     __Pyx_GIVEREF(__pyx_n_s_NOT_INVERT);
     PyTuple_SET_ITEM(__pyx_t_2, 5+__pyx_t_8, __pyx_n_s_NOT_INVERT);
     __pyx_t_3 = 0;
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_7, __pyx_t_2, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 509, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_7, __pyx_t_2, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 511, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   }
@@ -18251,7 +18412,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
     if (unlikely(size != 3)) {
       if (size > 3) __Pyx_RaiseTooManyValuesError(3);
       else if (size >= 0) __Pyx_RaiseNeedMoreValuesError(size);
-      __PYX_ERR(0, 509, __pyx_L1_error)
+      __PYX_ERR(0, 511, __pyx_L1_error)
     }
     #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
     if (likely(PyTuple_CheckExact(sequence))) {
@@ -18267,17 +18428,17 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
     __Pyx_INCREF(__pyx_t_2);
     __Pyx_INCREF(__pyx_t_3);
     #else
-    __pyx_t_7 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 509, __pyx_L1_error)
+    __pyx_t_7 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 511, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
-    __pyx_t_2 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 509, __pyx_L1_error)
+    __pyx_t_2 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 511, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_3 = PySequence_ITEM(sequence, 2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 509, __pyx_L1_error)
+    __pyx_t_3 = PySequence_ITEM(sequence, 2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 511, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     #endif
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   } else {
     Py_ssize_t index = -1;
-    __pyx_t_9 = PyObject_GetIter(__pyx_t_1); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 509, __pyx_L1_error)
+    __pyx_t_9 = PyObject_GetIter(__pyx_t_1); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 511, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_9);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __pyx_t_10 = Py_TYPE(__pyx_t_9)->tp_iternext;
@@ -18287,7 +18448,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
     __Pyx_GOTREF(__pyx_t_2);
     index = 2; __pyx_t_3 = __pyx_t_10(__pyx_t_9); if (unlikely(!__pyx_t_3)) goto __pyx_L3_unpacking_failed;
     __Pyx_GOTREF(__pyx_t_3);
-    if (__Pyx_IternextUnpackEndCheck(__pyx_t_10(__pyx_t_9), 3) < 0) __PYX_ERR(0, 509, __pyx_L1_error)
+    if (__Pyx_IternextUnpackEndCheck(__pyx_t_10(__pyx_t_9), 3) < 0) __PYX_ERR(0, 511, __pyx_L1_error)
     __pyx_t_10 = NULL;
     __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
     goto __pyx_L4_unpacking_done;
@@ -18295,11 +18456,11 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
     __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
     __pyx_t_10 = NULL;
     if (__Pyx_IterFinish() == 0) __Pyx_RaiseNeedMoreValuesError(index);
-    __PYX_ERR(0, 509, __pyx_L1_error)
+    __PYX_ERR(0, 511, __pyx_L1_error)
     __pyx_L4_unpacking_done:;
   }
 
-  /* "LXG/replication.py":509
+  /* "LXG/replication.py":511
  *         arcpy.SelectLayerByAttribute_management(fc[1], "CLEAR_SELECTION")
  * 
  *         selected_layer01, _, _ = arcpy.SelectLayerByLocation_management(fc[1],             # <<<<<<<<<<<<<<
@@ -18313,22 +18474,22 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
   __Pyx_DECREF_SET(__pyx_v__, __pyx_t_3);
   __pyx_t_3 = 0;
 
-  /* "LXG/replication.py":516
+  /* "LXG/replication.py":518
  *                                                                         "NOT_INVERT")
  *         # second round to avoid duplicate at the same place
  *         selected_layer02, _, _ = arcpy.SelectLayerByLocation_management(fc[0],             # <<<<<<<<<<<<<<
  *                                                                         "HAVE_THEIR_CENTER_IN",
  *                                                                         selected_layer01,
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 516, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 518, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_SelectLayerByLocation_management); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 516, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_SelectLayerByLocation_management); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 518, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = __Pyx_GetItemInt(__pyx_v_fc, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 516, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_GetItemInt(__pyx_v_fc, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 518, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
 
-  /* "LXG/replication.py":518
+  /* "LXG/replication.py":520
  *         selected_layer02, _, _ = arcpy.SelectLayerByLocation_management(fc[0],
  *                                                                         "HAVE_THEIR_CENTER_IN",
  *                                                                         selected_layer01,             # <<<<<<<<<<<<<<
@@ -18350,7 +18511,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
   #if CYTHON_FAST_PYCALL
   if (PyFunction_Check(__pyx_t_2)) {
     PyObject *__pyx_temp[7] = {__pyx_t_7, __pyx_t_3, __pyx_n_s_HAVE_THEIR_CENTER_IN, __pyx_v_selected_layer01, __pyx_kp_s_0_2_Meters, __pyx_n_s_NEW_SELECTION, __pyx_n_s_NOT_INVERT};
-    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_8, 6+__pyx_t_8); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 516, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_8, 6+__pyx_t_8); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 518, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -18359,14 +18520,14 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
   #if CYTHON_FAST_PYCCALL
   if (__Pyx_PyFastCFunction_Check(__pyx_t_2)) {
     PyObject *__pyx_temp[7] = {__pyx_t_7, __pyx_t_3, __pyx_n_s_HAVE_THEIR_CENTER_IN, __pyx_v_selected_layer01, __pyx_kp_s_0_2_Meters, __pyx_n_s_NEW_SELECTION, __pyx_n_s_NOT_INVERT};
-    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_8, 6+__pyx_t_8); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 516, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_8, 6+__pyx_t_8); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 518, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   } else
   #endif
   {
-    __pyx_t_9 = PyTuple_New(6+__pyx_t_8); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 516, __pyx_L1_error)
+    __pyx_t_9 = PyTuple_New(6+__pyx_t_8); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 518, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_9);
     if (__pyx_t_7) {
       __Pyx_GIVEREF(__pyx_t_7); PyTuple_SET_ITEM(__pyx_t_9, 0, __pyx_t_7); __pyx_t_7 = NULL;
@@ -18389,7 +18550,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
     __Pyx_GIVEREF(__pyx_n_s_NOT_INVERT);
     PyTuple_SET_ITEM(__pyx_t_9, 5+__pyx_t_8, __pyx_n_s_NOT_INVERT);
     __pyx_t_3 = 0;
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_9, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 516, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_9, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 518, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
   }
@@ -18400,7 +18561,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
     if (unlikely(size != 3)) {
       if (size > 3) __Pyx_RaiseTooManyValuesError(3);
       else if (size >= 0) __Pyx_RaiseNeedMoreValuesError(size);
-      __PYX_ERR(0, 516, __pyx_L1_error)
+      __PYX_ERR(0, 518, __pyx_L1_error)
     }
     #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
     if (likely(PyTuple_CheckExact(sequence))) {
@@ -18416,17 +18577,17 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
     __Pyx_INCREF(__pyx_t_9);
     __Pyx_INCREF(__pyx_t_3);
     #else
-    __pyx_t_2 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 516, __pyx_L1_error)
+    __pyx_t_2 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 518, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_9 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 516, __pyx_L1_error)
+    __pyx_t_9 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 518, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_9);
-    __pyx_t_3 = PySequence_ITEM(sequence, 2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 516, __pyx_L1_error)
+    __pyx_t_3 = PySequence_ITEM(sequence, 2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 518, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     #endif
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   } else {
     Py_ssize_t index = -1;
-    __pyx_t_7 = PyObject_GetIter(__pyx_t_1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 516, __pyx_L1_error)
+    __pyx_t_7 = PyObject_GetIter(__pyx_t_1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 518, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __pyx_t_10 = Py_TYPE(__pyx_t_7)->tp_iternext;
@@ -18436,7 +18597,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
     __Pyx_GOTREF(__pyx_t_9);
     index = 2; __pyx_t_3 = __pyx_t_10(__pyx_t_7); if (unlikely(!__pyx_t_3)) goto __pyx_L5_unpacking_failed;
     __Pyx_GOTREF(__pyx_t_3);
-    if (__Pyx_IternextUnpackEndCheck(__pyx_t_10(__pyx_t_7), 3) < 0) __PYX_ERR(0, 516, __pyx_L1_error)
+    if (__Pyx_IternextUnpackEndCheck(__pyx_t_10(__pyx_t_7), 3) < 0) __PYX_ERR(0, 518, __pyx_L1_error)
     __pyx_t_10 = NULL;
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
     goto __pyx_L6_unpacking_done;
@@ -18444,11 +18605,11 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
     __pyx_t_10 = NULL;
     if (__Pyx_IterFinish() == 0) __Pyx_RaiseNeedMoreValuesError(index);
-    __PYX_ERR(0, 516, __pyx_L1_error)
+    __PYX_ERR(0, 518, __pyx_L1_error)
     __pyx_L6_unpacking_done:;
   }
 
-  /* "LXG/replication.py":516
+  /* "LXG/replication.py":518
  *                                                                         "NOT_INVERT")
  *         # second round to avoid duplicate at the same place
  *         selected_layer02, _, _ = arcpy.SelectLayerByLocation_management(fc[0],             # <<<<<<<<<<<<<<
@@ -18462,22 +18623,22 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
   __Pyx_DECREF_SET(__pyx_v__, __pyx_t_3);
   __pyx_t_3 = 0;
 
-  /* "LXG/replication.py":524
+  /* "LXG/replication.py":526
  * 
  *         # Start an edit session. Must provide the workspace.
  *         edit = arcpy.da.Editor(self.gdb1)             # <<<<<<<<<<<<<<
  *         edit.startEditing(False, False)
  * 
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 524, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 526, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_da); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 524, __pyx_L1_error)
+  __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_da); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 526, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_9);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_9, __pyx_n_s_Editor); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 524, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_9, __pyx_n_s_Editor); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 526, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-  __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_gdb1); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 524, __pyx_L1_error)
+  __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_gdb1); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 526, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_9);
   __pyx_t_2 = NULL;
   if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_3))) {
@@ -18492,38 +18653,38 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
   __pyx_t_1 = (__pyx_t_2) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_2, __pyx_t_9) : __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_9);
   __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 524, __pyx_L1_error)
+  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 526, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_v_edit = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "LXG/replication.py":525
+  /* "LXG/replication.py":527
  *         # Start an edit session. Must provide the workspace.
  *         edit = arcpy.da.Editor(self.gdb1)
  *         edit.startEditing(False, False)             # <<<<<<<<<<<<<<
  * 
  *         # delete selected layer for old data
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_edit, __pyx_n_s_startEditing); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 525, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_edit, __pyx_n_s_startEditing); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 527, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_tuple__14, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 525, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_tuple__14, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 527, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "LXG/replication.py":528
+  /* "LXG/replication.py":530
  * 
  *         # delete selected layer for old data
  *         oid_nums = [int(fid) for fid in arcpy.Describe(selected_layer02).FIDSet.split(";") if fid != '']             # <<<<<<<<<<<<<<
  *         oid_fieldname = arcpy.Describe(selected_layer02).OIDFieldName
  *         edit.startOperation()
  */
-  __pyx_t_3 = PyList_New(0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 528, __pyx_L1_error)
+  __pyx_t_3 = PyList_New(0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 530, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 528, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 530, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_Describe); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 528, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_Describe); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 530, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_t_2 = NULL;
@@ -18538,13 +18699,13 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
   }
   __pyx_t_9 = (__pyx_t_2) ? __Pyx_PyObject_Call2Args(__pyx_t_7, __pyx_t_2, __pyx_v_selected_layer02) : __Pyx_PyObject_CallOneArg(__pyx_t_7, __pyx_v_selected_layer02);
   __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 528, __pyx_L1_error)
+  if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 530, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_9);
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_9, __pyx_n_s_FIDSet); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 528, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_9, __pyx_n_s_FIDSet); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 530, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-  __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_n_s_split); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 528, __pyx_L1_error)
+  __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_n_s_split); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 530, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_9);
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
   __pyx_t_7 = NULL;
@@ -18559,16 +18720,16 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
   }
   __pyx_t_1 = (__pyx_t_7) ? __Pyx_PyObject_Call2Args(__pyx_t_9, __pyx_t_7, __pyx_kp_s__11) : __Pyx_PyObject_CallOneArg(__pyx_t_9, __pyx_kp_s__11);
   __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
-  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 528, __pyx_L1_error)
+  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 530, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
   if (likely(PyList_CheckExact(__pyx_t_1)) || PyTuple_CheckExact(__pyx_t_1)) {
     __pyx_t_9 = __pyx_t_1; __Pyx_INCREF(__pyx_t_9); __pyx_t_5 = 0;
     __pyx_t_11 = NULL;
   } else {
-    __pyx_t_5 = -1; __pyx_t_9 = PyObject_GetIter(__pyx_t_1); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 528, __pyx_L1_error)
+    __pyx_t_5 = -1; __pyx_t_9 = PyObject_GetIter(__pyx_t_1); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 530, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_9);
-    __pyx_t_11 = Py_TYPE(__pyx_t_9)->tp_iternext; if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 528, __pyx_L1_error)
+    __pyx_t_11 = Py_TYPE(__pyx_t_9)->tp_iternext; if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 530, __pyx_L1_error)
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   for (;;) {
@@ -18576,17 +18737,17 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
       if (likely(PyList_CheckExact(__pyx_t_9))) {
         if (__pyx_t_5 >= PyList_GET_SIZE(__pyx_t_9)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_1 = PyList_GET_ITEM(__pyx_t_9, __pyx_t_5); __Pyx_INCREF(__pyx_t_1); __pyx_t_5++; if (unlikely(0 < 0)) __PYX_ERR(0, 528, __pyx_L1_error)
+        __pyx_t_1 = PyList_GET_ITEM(__pyx_t_9, __pyx_t_5); __Pyx_INCREF(__pyx_t_1); __pyx_t_5++; if (unlikely(0 < 0)) __PYX_ERR(0, 530, __pyx_L1_error)
         #else
-        __pyx_t_1 = PySequence_ITEM(__pyx_t_9, __pyx_t_5); __pyx_t_5++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 528, __pyx_L1_error)
+        __pyx_t_1 = PySequence_ITEM(__pyx_t_9, __pyx_t_5); __pyx_t_5++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 530, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_1);
         #endif
       } else {
         if (__pyx_t_5 >= PyTuple_GET_SIZE(__pyx_t_9)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_1 = PyTuple_GET_ITEM(__pyx_t_9, __pyx_t_5); __Pyx_INCREF(__pyx_t_1); __pyx_t_5++; if (unlikely(0 < 0)) __PYX_ERR(0, 528, __pyx_L1_error)
+        __pyx_t_1 = PyTuple_GET_ITEM(__pyx_t_9, __pyx_t_5); __Pyx_INCREF(__pyx_t_1); __pyx_t_5++; if (unlikely(0 < 0)) __PYX_ERR(0, 530, __pyx_L1_error)
         #else
-        __pyx_t_1 = PySequence_ITEM(__pyx_t_9, __pyx_t_5); __pyx_t_5++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 528, __pyx_L1_error)
+        __pyx_t_1 = PySequence_ITEM(__pyx_t_9, __pyx_t_5); __pyx_t_5++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 530, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_1);
         #endif
       }
@@ -18596,7 +18757,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
           if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else __PYX_ERR(0, 528, __pyx_L1_error)
+          else __PYX_ERR(0, 530, __pyx_L1_error)
         }
         break;
       }
@@ -18604,11 +18765,11 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
     }
     __Pyx_XDECREF_SET(__pyx_v_fid, __pyx_t_1);
     __pyx_t_1 = 0;
-    __pyx_t_12 = (__Pyx_PyString_Equals(__pyx_v_fid, __pyx_kp_s_, Py_NE)); if (unlikely(__pyx_t_12 < 0)) __PYX_ERR(0, 528, __pyx_L1_error)
+    __pyx_t_12 = (__Pyx_PyString_Equals(__pyx_v_fid, __pyx_kp_s_, Py_NE)); if (unlikely(__pyx_t_12 < 0)) __PYX_ERR(0, 530, __pyx_L1_error)
     if (__pyx_t_12) {
-      __pyx_t_1 = __Pyx_PyNumber_Int(__pyx_v_fid); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 528, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyNumber_Int(__pyx_v_fid); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 530, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
-      if (unlikely(__Pyx_ListComp_Append(__pyx_t_3, (PyObject*)__pyx_t_1))) __PYX_ERR(0, 528, __pyx_L1_error)
+      if (unlikely(__Pyx_ListComp_Append(__pyx_t_3, (PyObject*)__pyx_t_1))) __PYX_ERR(0, 530, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     }
   }
@@ -18617,16 +18778,16 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
   __pyx_cur_scope->__pyx_v_oid_nums = ((PyObject*)__pyx_t_3);
   __pyx_t_3 = 0;
 
-  /* "LXG/replication.py":529
+  /* "LXG/replication.py":531
  *         # delete selected layer for old data
  *         oid_nums = [int(fid) for fid in arcpy.Describe(selected_layer02).FIDSet.split(";") if fid != '']
  *         oid_fieldname = arcpy.Describe(selected_layer02).OIDFieldName             # <<<<<<<<<<<<<<
  *         edit.startOperation()
  *         if len(oid_nums) > 0:
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_9, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 529, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_9, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 531, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_9);
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_9, __pyx_n_s_Describe); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 529, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_9, __pyx_n_s_Describe); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 531, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
   __pyx_t_9 = NULL;
@@ -18641,23 +18802,23 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
   }
   __pyx_t_3 = (__pyx_t_9) ? __Pyx_PyObject_Call2Args(__pyx_t_1, __pyx_t_9, __pyx_v_selected_layer02) : __Pyx_PyObject_CallOneArg(__pyx_t_1, __pyx_v_selected_layer02);
   __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
-  if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 529, __pyx_L1_error)
+  if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 531, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_OIDFieldName); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 529, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_OIDFieldName); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 531, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_v_oid_fieldname = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "LXG/replication.py":530
+  /* "LXG/replication.py":532
  *         oid_nums = [int(fid) for fid in arcpy.Describe(selected_layer02).FIDSet.split(";") if fid != '']
  *         oid_fieldname = arcpy.Describe(selected_layer02).OIDFieldName
  *         edit.startOperation()             # <<<<<<<<<<<<<<
  *         if len(oid_nums) > 0:
  *             try:
  */
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_edit, __pyx_n_s_startOperation); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 530, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_edit, __pyx_n_s_startOperation); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 532, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_t_9 = NULL;
   if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_3))) {
@@ -18671,12 +18832,12 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
   }
   __pyx_t_1 = (__pyx_t_9) ? __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_9) : __Pyx_PyObject_CallNoArg(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
-  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 530, __pyx_L1_error)
+  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 532, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "LXG/replication.py":531
+  /* "LXG/replication.py":533
  *         oid_fieldname = arcpy.Describe(selected_layer02).OIDFieldName
  *         edit.startOperation()
  *         if len(oid_nums) > 0:             # <<<<<<<<<<<<<<
@@ -18687,14 +18848,14 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
   __Pyx_INCREF(__pyx_t_1);
   if (unlikely(__pyx_t_1 == Py_None)) {
     PyErr_SetString(PyExc_TypeError, "object of type 'NoneType' has no len()");
-    __PYX_ERR(0, 531, __pyx_L1_error)
+    __PYX_ERR(0, 533, __pyx_L1_error)
   }
-  __pyx_t_5 = PyList_GET_SIZE(__pyx_t_1); if (unlikely(__pyx_t_5 == ((Py_ssize_t)-1))) __PYX_ERR(0, 531, __pyx_L1_error)
+  __pyx_t_5 = PyList_GET_SIZE(__pyx_t_1); if (unlikely(__pyx_t_5 == ((Py_ssize_t)-1))) __PYX_ERR(0, 533, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_t_12 = ((__pyx_t_5 > 0) != 0);
   if (__pyx_t_12) {
 
-    /* "LXG/replication.py":532
+    /* "LXG/replication.py":534
  *         edit.startOperation()
  *         if len(oid_nums) > 0:
  *             try:             # <<<<<<<<<<<<<<
@@ -18710,18 +18871,18 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
       __Pyx_XGOTREF(__pyx_t_15);
       /*try:*/ {
 
-        /* "LXG/replication.py":534
+        /* "LXG/replication.py":536
  *             try:
  *                 # Start an edit operation
  *                 query = f"{oid_fieldname} IN ({', '.join(str(x) for x in oid_nums)})"             # <<<<<<<<<<<<<<
  *                 with arcpy.da.UpdateCursor(fc[0], [f"{oid_fieldname}"], where_clause=query) as rows:
  *                     for row in rows:
  */
-        __pyx_t_1 = PyTuple_New(4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 534, __pyx_L11_error)
+        __pyx_t_1 = PyTuple_New(4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 536, __pyx_L11_error)
         __Pyx_GOTREF(__pyx_t_1);
         __pyx_t_5 = 0;
         __pyx_t_6 = 127;
-        __pyx_t_3 = __Pyx_PyObject_FormatSimple(__pyx_v_oid_fieldname, __pyx_empty_unicode); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 534, __pyx_L11_error)
+        __pyx_t_3 = __Pyx_PyObject_FormatSimple(__pyx_v_oid_fieldname, __pyx_empty_unicode); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 536, __pyx_L11_error)
         __Pyx_GOTREF(__pyx_t_3);
         __pyx_t_6 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_3) > __pyx_t_6) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_3) : __pyx_t_6;
         __pyx_t_5 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_3);
@@ -18732,12 +18893,12 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
         __pyx_t_5 += 5;
         __Pyx_GIVEREF(__pyx_kp_u_IN);
         PyTuple_SET_ITEM(__pyx_t_1, 1, __pyx_kp_u_IN);
-        __pyx_t_3 = __pyx_pf_6LXGREP_17AppendNewFeatures_16fast_poly_append_genexpr(((PyObject*)__pyx_cur_scope)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 534, __pyx_L11_error)
+        __pyx_t_3 = __pyx_pf_6LXGREP_17AppendNewFeatures_16fast_poly_append_genexpr(((PyObject*)__pyx_cur_scope)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 536, __pyx_L11_error)
         __Pyx_GOTREF(__pyx_t_3);
-        __pyx_t_9 = __Pyx_PyString_Join(__pyx_kp_s__15, __pyx_t_3); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 534, __pyx_L11_error)
+        __pyx_t_9 = __Pyx_PyString_Join(__pyx_kp_s__15, __pyx_t_3); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 536, __pyx_L11_error)
         __Pyx_GOTREF(__pyx_t_9);
         __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-        __pyx_t_3 = __Pyx_PyObject_FormatSimple(__pyx_t_9, __pyx_empty_unicode); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 534, __pyx_L11_error)
+        __pyx_t_3 = __Pyx_PyObject_FormatSimple(__pyx_t_9, __pyx_empty_unicode); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 536, __pyx_L11_error)
         __Pyx_GOTREF(__pyx_t_3);
         __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
         __pyx_t_6 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_3) > __pyx_t_6) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_3) : __pyx_t_6;
@@ -18749,13 +18910,13 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
         __pyx_t_5 += 1;
         __Pyx_GIVEREF(__pyx_kp_u__16);
         PyTuple_SET_ITEM(__pyx_t_1, 3, __pyx_kp_u__16);
-        __pyx_t_3 = __Pyx_PyUnicode_Join(__pyx_t_1, 4, __pyx_t_5, __pyx_t_6); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 534, __pyx_L11_error)
+        __pyx_t_3 = __Pyx_PyUnicode_Join(__pyx_t_1, 4, __pyx_t_5, __pyx_t_6); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 536, __pyx_L11_error)
         __Pyx_GOTREF(__pyx_t_3);
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
         __pyx_v_query = ((PyObject*)__pyx_t_3);
         __pyx_t_3 = 0;
 
-        /* "LXG/replication.py":535
+        /* "LXG/replication.py":537
  *                 # Start an edit operation
  *                 query = f"{oid_fieldname} IN ({', '.join(str(x) for x in oid_nums)})"
  *                 with arcpy.da.UpdateCursor(fc[0], [f"{oid_fieldname}"], where_clause=query) as rows:             # <<<<<<<<<<<<<<
@@ -18763,24 +18924,24 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
  *                         rows.deleteRow()
  */
         /*with:*/ {
-          __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 535, __pyx_L11_error)
+          __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 537, __pyx_L11_error)
           __Pyx_GOTREF(__pyx_t_3);
-          __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_da); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 535, __pyx_L11_error)
+          __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_da); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 537, __pyx_L11_error)
           __Pyx_GOTREF(__pyx_t_1);
           __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-          __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_UpdateCursor); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 535, __pyx_L11_error)
+          __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_UpdateCursor); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 537, __pyx_L11_error)
           __Pyx_GOTREF(__pyx_t_3);
           __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-          __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_fc, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 535, __pyx_L11_error)
+          __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_fc, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 537, __pyx_L11_error)
           __Pyx_GOTREF(__pyx_t_1);
-          __pyx_t_9 = __Pyx_PyObject_FormatSimple(__pyx_v_oid_fieldname, __pyx_empty_unicode); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 535, __pyx_L11_error)
+          __pyx_t_9 = __Pyx_PyObject_FormatSimple(__pyx_v_oid_fieldname, __pyx_empty_unicode); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 537, __pyx_L11_error)
           __Pyx_GOTREF(__pyx_t_9);
-          __pyx_t_7 = PyList_New(1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 535, __pyx_L11_error)
+          __pyx_t_7 = PyList_New(1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 537, __pyx_L11_error)
           __Pyx_GOTREF(__pyx_t_7);
           __Pyx_GIVEREF(__pyx_t_9);
           PyList_SET_ITEM(__pyx_t_7, 0, __pyx_t_9);
           __pyx_t_9 = 0;
-          __pyx_t_9 = PyTuple_New(2); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 535, __pyx_L11_error)
+          __pyx_t_9 = PyTuple_New(2); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 537, __pyx_L11_error)
           __Pyx_GOTREF(__pyx_t_9);
           __Pyx_GIVEREF(__pyx_t_1);
           PyTuple_SET_ITEM(__pyx_t_9, 0, __pyx_t_1);
@@ -18788,17 +18949,17 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
           PyTuple_SET_ITEM(__pyx_t_9, 1, __pyx_t_7);
           __pyx_t_1 = 0;
           __pyx_t_7 = 0;
-          __pyx_t_7 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 535, __pyx_L11_error)
+          __pyx_t_7 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 537, __pyx_L11_error)
           __Pyx_GOTREF(__pyx_t_7);
-          if (PyDict_SetItem(__pyx_t_7, __pyx_n_s_where_clause, __pyx_v_query) < 0) __PYX_ERR(0, 535, __pyx_L11_error)
-          __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_9, __pyx_t_7); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 535, __pyx_L11_error)
+          if (PyDict_SetItem(__pyx_t_7, __pyx_n_s_where_clause, __pyx_v_query) < 0) __PYX_ERR(0, 537, __pyx_L11_error)
+          __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_9, __pyx_t_7); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 537, __pyx_L11_error)
           __Pyx_GOTREF(__pyx_t_1);
           __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
           __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
           __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-          __pyx_t_16 = __Pyx_PyObject_LookupSpecial(__pyx_t_1, __pyx_n_s_exit); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 535, __pyx_L11_error)
+          __pyx_t_16 = __Pyx_PyObject_LookupSpecial(__pyx_t_1, __pyx_n_s_exit); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 537, __pyx_L11_error)
           __Pyx_GOTREF(__pyx_t_16);
-          __pyx_t_9 = __Pyx_PyObject_LookupSpecial(__pyx_t_1, __pyx_n_s_enter); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 535, __pyx_L17_error)
+          __pyx_t_9 = __Pyx_PyObject_LookupSpecial(__pyx_t_1, __pyx_n_s_enter); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 537, __pyx_L17_error)
           __Pyx_GOTREF(__pyx_t_9);
           __pyx_t_3 = NULL;
           if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_9))) {
@@ -18812,7 +18973,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
           }
           __pyx_t_7 = (__pyx_t_3) ? __Pyx_PyObject_CallOneArg(__pyx_t_9, __pyx_t_3) : __Pyx_PyObject_CallNoArg(__pyx_t_9);
           __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-          if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 535, __pyx_L17_error)
+          if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 537, __pyx_L17_error)
           __Pyx_GOTREF(__pyx_t_7);
           __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
           __pyx_t_9 = __pyx_t_7;
@@ -18830,7 +18991,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
                 __pyx_v_rows = __pyx_t_9;
                 __pyx_t_9 = 0;
 
-                /* "LXG/replication.py":536
+                /* "LXG/replication.py":538
  *                 query = f"{oid_fieldname} IN ({', '.join(str(x) for x in oid_nums)})"
  *                 with arcpy.da.UpdateCursor(fc[0], [f"{oid_fieldname}"], where_clause=query) as rows:
  *                     for row in rows:             # <<<<<<<<<<<<<<
@@ -18841,26 +19002,26 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
                   __pyx_t_9 = __pyx_v_rows; __Pyx_INCREF(__pyx_t_9); __pyx_t_5 = 0;
                   __pyx_t_11 = NULL;
                 } else {
-                  __pyx_t_5 = -1; __pyx_t_9 = PyObject_GetIter(__pyx_v_rows); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 536, __pyx_L21_error)
+                  __pyx_t_5 = -1; __pyx_t_9 = PyObject_GetIter(__pyx_v_rows); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 538, __pyx_L21_error)
                   __Pyx_GOTREF(__pyx_t_9);
-                  __pyx_t_11 = Py_TYPE(__pyx_t_9)->tp_iternext; if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 536, __pyx_L21_error)
+                  __pyx_t_11 = Py_TYPE(__pyx_t_9)->tp_iternext; if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 538, __pyx_L21_error)
                 }
                 for (;;) {
                   if (likely(!__pyx_t_11)) {
                     if (likely(PyList_CheckExact(__pyx_t_9))) {
                       if (__pyx_t_5 >= PyList_GET_SIZE(__pyx_t_9)) break;
                       #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-                      __pyx_t_1 = PyList_GET_ITEM(__pyx_t_9, __pyx_t_5); __Pyx_INCREF(__pyx_t_1); __pyx_t_5++; if (unlikely(0 < 0)) __PYX_ERR(0, 536, __pyx_L21_error)
+                      __pyx_t_1 = PyList_GET_ITEM(__pyx_t_9, __pyx_t_5); __Pyx_INCREF(__pyx_t_1); __pyx_t_5++; if (unlikely(0 < 0)) __PYX_ERR(0, 538, __pyx_L21_error)
                       #else
-                      __pyx_t_1 = PySequence_ITEM(__pyx_t_9, __pyx_t_5); __pyx_t_5++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 536, __pyx_L21_error)
+                      __pyx_t_1 = PySequence_ITEM(__pyx_t_9, __pyx_t_5); __pyx_t_5++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 538, __pyx_L21_error)
                       __Pyx_GOTREF(__pyx_t_1);
                       #endif
                     } else {
                       if (__pyx_t_5 >= PyTuple_GET_SIZE(__pyx_t_9)) break;
                       #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-                      __pyx_t_1 = PyTuple_GET_ITEM(__pyx_t_9, __pyx_t_5); __Pyx_INCREF(__pyx_t_1); __pyx_t_5++; if (unlikely(0 < 0)) __PYX_ERR(0, 536, __pyx_L21_error)
+                      __pyx_t_1 = PyTuple_GET_ITEM(__pyx_t_9, __pyx_t_5); __Pyx_INCREF(__pyx_t_1); __pyx_t_5++; if (unlikely(0 < 0)) __PYX_ERR(0, 538, __pyx_L21_error)
                       #else
-                      __pyx_t_1 = PySequence_ITEM(__pyx_t_9, __pyx_t_5); __pyx_t_5++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 536, __pyx_L21_error)
+                      __pyx_t_1 = PySequence_ITEM(__pyx_t_9, __pyx_t_5); __pyx_t_5++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 538, __pyx_L21_error)
                       __Pyx_GOTREF(__pyx_t_1);
                       #endif
                     }
@@ -18870,7 +19031,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
                       PyObject* exc_type = PyErr_Occurred();
                       if (exc_type) {
                         if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-                        else __PYX_ERR(0, 536, __pyx_L21_error)
+                        else __PYX_ERR(0, 538, __pyx_L21_error)
                       }
                       break;
                     }
@@ -18879,14 +19040,14 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
                   __Pyx_XDECREF_SET(__pyx_v_row, __pyx_t_1);
                   __pyx_t_1 = 0;
 
-                  /* "LXG/replication.py":537
+                  /* "LXG/replication.py":539
  *                 with arcpy.da.UpdateCursor(fc[0], [f"{oid_fieldname}"], where_clause=query) as rows:
  *                     for row in rows:
  *                         rows.deleteRow()             # <<<<<<<<<<<<<<
  *             except Exception as e:
  *                 arcpy.AddError(e)
  */
-                  __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_v_rows, __pyx_n_s_deleteRow); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 537, __pyx_L21_error)
+                  __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_v_rows, __pyx_n_s_deleteRow); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 539, __pyx_L21_error)
                   __Pyx_GOTREF(__pyx_t_7);
                   __pyx_t_3 = NULL;
                   if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_7))) {
@@ -18900,12 +19061,12 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
                   }
                   __pyx_t_1 = (__pyx_t_3) ? __Pyx_PyObject_CallOneArg(__pyx_t_7, __pyx_t_3) : __Pyx_PyObject_CallNoArg(__pyx_t_7);
                   __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-                  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 537, __pyx_L21_error)
+                  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 539, __pyx_L21_error)
                   __Pyx_GOTREF(__pyx_t_1);
                   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
                   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-                  /* "LXG/replication.py":536
+                  /* "LXG/replication.py":538
  *                 query = f"{oid_fieldname} IN ({', '.join(str(x) for x in oid_nums)})"
  *                 with arcpy.da.UpdateCursor(fc[0], [f"{oid_fieldname}"], where_clause=query) as rows:
  *                     for row in rows:             # <<<<<<<<<<<<<<
@@ -18915,7 +19076,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
                 }
                 __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
 
-                /* "LXG/replication.py":535
+                /* "LXG/replication.py":537
  *                 # Start an edit operation
  *                 query = f"{oid_fieldname} IN ({', '.join(str(x) for x in oid_nums)})"
  *                 with arcpy.da.UpdateCursor(fc[0], [f"{oid_fieldname}"], where_clause=query) as rows:             # <<<<<<<<<<<<<<
@@ -18936,20 +19097,20 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
               __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
               /*except:*/ {
                 __Pyx_AddTraceback("LXGREP.AppendNewFeatures.fast_poly_append", __pyx_clineno, __pyx_lineno, __pyx_filename);
-                if (__Pyx_GetException(&__pyx_t_9, &__pyx_t_1, &__pyx_t_7) < 0) __PYX_ERR(0, 535, __pyx_L23_except_error)
+                if (__Pyx_GetException(&__pyx_t_9, &__pyx_t_1, &__pyx_t_7) < 0) __PYX_ERR(0, 537, __pyx_L23_except_error)
                 __Pyx_GOTREF(__pyx_t_9);
                 __Pyx_GOTREF(__pyx_t_1);
                 __Pyx_GOTREF(__pyx_t_7);
-                __pyx_t_3 = PyTuple_Pack(3, __pyx_t_9, __pyx_t_1, __pyx_t_7); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 535, __pyx_L23_except_error)
+                __pyx_t_3 = PyTuple_Pack(3, __pyx_t_9, __pyx_t_1, __pyx_t_7); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 537, __pyx_L23_except_error)
                 __Pyx_GOTREF(__pyx_t_3);
                 __pyx_t_20 = __Pyx_PyObject_Call(__pyx_t_16, __pyx_t_3, NULL);
                 __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
                 __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-                if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 535, __pyx_L23_except_error)
+                if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 537, __pyx_L23_except_error)
                 __Pyx_GOTREF(__pyx_t_20);
                 __pyx_t_12 = __Pyx_PyObject_IsTrue(__pyx_t_20);
                 __Pyx_DECREF(__pyx_t_20); __pyx_t_20 = 0;
-                if (__pyx_t_12 < 0) __PYX_ERR(0, 535, __pyx_L23_except_error)
+                if (__pyx_t_12 < 0) __PYX_ERR(0, 537, __pyx_L23_except_error)
                 __pyx_t_21 = ((!(__pyx_t_12 != 0)) != 0);
                 if (__pyx_t_21) {
                   __Pyx_GIVEREF(__pyx_t_9);
@@ -18957,7 +19118,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
                   __Pyx_XGIVEREF(__pyx_t_7);
                   __Pyx_ErrRestoreWithState(__pyx_t_9, __pyx_t_1, __pyx_t_7);
                   __pyx_t_9 = 0; __pyx_t_1 = 0; __pyx_t_7 = 0; 
-                  __PYX_ERR(0, 535, __pyx_L23_except_error)
+                  __PYX_ERR(0, 537, __pyx_L23_except_error)
                 }
                 __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
                 __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -18983,7 +19144,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
               if (__pyx_t_16) {
                 __pyx_t_19 = __Pyx_PyObject_Call(__pyx_t_16, __pyx_tuple__3, NULL);
                 __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
-                if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 535, __pyx_L11_error)
+                if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 537, __pyx_L11_error)
                 __Pyx_GOTREF(__pyx_t_19);
                 __Pyx_DECREF(__pyx_t_19); __pyx_t_19 = 0;
               }
@@ -18998,7 +19159,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
           __pyx_L32:;
         }
 
-        /* "LXG/replication.py":532
+        /* "LXG/replication.py":534
  *         edit.startOperation()
  *         if len(oid_nums) > 0:
  *             try:             # <<<<<<<<<<<<<<
@@ -19018,7 +19179,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
       __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
       __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
 
-      /* "LXG/replication.py":538
+      /* "LXG/replication.py":540
  *                     for row in rows:
  *                         rows.deleteRow()
  *             except Exception as e:             # <<<<<<<<<<<<<<
@@ -19028,23 +19189,23 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
       __pyx_t_8 = __Pyx_PyErr_ExceptionMatches(((PyObject *)(&((PyTypeObject*)PyExc_Exception)[0])));
       if (__pyx_t_8) {
         __Pyx_AddTraceback("LXGREP.AppendNewFeatures.fast_poly_append", __pyx_clineno, __pyx_lineno, __pyx_filename);
-        if (__Pyx_GetException(&__pyx_t_7, &__pyx_t_1, &__pyx_t_9) < 0) __PYX_ERR(0, 538, __pyx_L13_except_error)
+        if (__Pyx_GetException(&__pyx_t_7, &__pyx_t_1, &__pyx_t_9) < 0) __PYX_ERR(0, 540, __pyx_L13_except_error)
         __Pyx_GOTREF(__pyx_t_7);
         __Pyx_GOTREF(__pyx_t_1);
         __Pyx_GOTREF(__pyx_t_9);
         __Pyx_INCREF(__pyx_t_1);
         __pyx_v_e = __pyx_t_1;
 
-        /* "LXG/replication.py":539
+        /* "LXG/replication.py":541
  *                         rows.deleteRow()
  *             except Exception as e:
  *                 arcpy.AddError(e)             # <<<<<<<<<<<<<<
  *             except arcpy.ExecuteError as e:
  *                 arcpy.AddError(e)
  */
-        __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 539, __pyx_L13_except_error)
+        __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 541, __pyx_L13_except_error)
         __Pyx_GOTREF(__pyx_t_2);
-        __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_AddError); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 539, __pyx_L13_except_error)
+        __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_AddError); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 541, __pyx_L13_except_error)
         __Pyx_GOTREF(__pyx_t_4);
         __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
         __pyx_t_2 = NULL;
@@ -19059,7 +19220,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
         }
         __pyx_t_3 = (__pyx_t_2) ? __Pyx_PyObject_Call2Args(__pyx_t_4, __pyx_t_2, __pyx_v_e) : __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_v_e);
         __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-        if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 539, __pyx_L13_except_error)
+        if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 541, __pyx_L13_except_error)
         __Pyx_GOTREF(__pyx_t_3);
         __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
         __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -19069,7 +19230,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
         goto __pyx_L12_exception_handled;
       }
 
-      /* "LXG/replication.py":540
+      /* "LXG/replication.py":542
  *             except Exception as e:
  *                 arcpy.AddError(e)
  *             except arcpy.ExecuteError as e:             # <<<<<<<<<<<<<<
@@ -19077,9 +19238,9 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
  *         else:
  */
       __Pyx_ErrFetch(&__pyx_t_9, &__pyx_t_1, &__pyx_t_7);
-      __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 540, __pyx_L13_except_error)
+      __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 542, __pyx_L13_except_error)
       __Pyx_GOTREF(__pyx_t_3);
-      __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_ExecuteError); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 540, __pyx_L13_except_error)
+      __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_ExecuteError); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 542, __pyx_L13_except_error)
       __Pyx_GOTREF(__pyx_t_4);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       __pyx_t_8 = __Pyx_PyErr_GivenExceptionMatches(__pyx_t_9, __pyx_t_4);
@@ -19088,23 +19249,23 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
       __pyx_t_9 = 0; __pyx_t_1 = 0; __pyx_t_7 = 0;
       if (__pyx_t_8) {
         __Pyx_AddTraceback("LXGREP.AppendNewFeatures.fast_poly_append", __pyx_clineno, __pyx_lineno, __pyx_filename);
-        if (__Pyx_GetException(&__pyx_t_7, &__pyx_t_1, &__pyx_t_9) < 0) __PYX_ERR(0, 540, __pyx_L13_except_error)
+        if (__Pyx_GetException(&__pyx_t_7, &__pyx_t_1, &__pyx_t_9) < 0) __PYX_ERR(0, 542, __pyx_L13_except_error)
         __Pyx_GOTREF(__pyx_t_7);
         __Pyx_GOTREF(__pyx_t_1);
         __Pyx_GOTREF(__pyx_t_9);
         __Pyx_INCREF(__pyx_t_1);
         __pyx_v_e = __pyx_t_1;
 
-        /* "LXG/replication.py":541
+        /* "LXG/replication.py":543
  *                 arcpy.AddError(e)
  *             except arcpy.ExecuteError as e:
  *                 arcpy.AddError(e)             # <<<<<<<<<<<<<<
  *         else:
  *             pass
  */
-        __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 541, __pyx_L13_except_error)
+        __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 543, __pyx_L13_except_error)
         __Pyx_GOTREF(__pyx_t_3);
-        __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_AddError); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 541, __pyx_L13_except_error)
+        __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_AddError); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 543, __pyx_L13_except_error)
         __Pyx_GOTREF(__pyx_t_2);
         __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
         __pyx_t_3 = NULL;
@@ -19119,7 +19280,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
         }
         __pyx_t_4 = (__pyx_t_3) ? __Pyx_PyObject_Call2Args(__pyx_t_2, __pyx_t_3, __pyx_v_e) : __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_v_e);
         __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-        if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 541, __pyx_L13_except_error)
+        if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 543, __pyx_L13_except_error)
         __Pyx_GOTREF(__pyx_t_4);
         __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
         __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
@@ -19131,7 +19292,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
       goto __pyx_L13_except_error;
       __pyx_L13_except_error:;
 
-      /* "LXG/replication.py":532
+      /* "LXG/replication.py":534
  *         edit.startOperation()
  *         if len(oid_nums) > 0:
  *             try:             # <<<<<<<<<<<<<<
@@ -19151,7 +19312,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
       __pyx_L16_try_end:;
     }
 
-    /* "LXG/replication.py":531
+    /* "LXG/replication.py":533
  *         oid_fieldname = arcpy.Describe(selected_layer02).OIDFieldName
  *         edit.startOperation()
  *         if len(oid_nums) > 0:             # <<<<<<<<<<<<<<
@@ -19161,7 +19322,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
     goto __pyx_L10;
   }
 
-  /* "LXG/replication.py":543
+  /* "LXG/replication.py":545
  *                 arcpy.AddError(e)
  *         else:
  *             pass             # <<<<<<<<<<<<<<
@@ -19172,55 +19333,55 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
   }
   __pyx_L10:;
 
-  /* "LXG/replication.py":545
+  /* "LXG/replication.py":547
  *             pass
  * 
  *         _params = self.field_mappings(source_feature=selected_layer01,             # <<<<<<<<<<<<<<
  *                                       target_feature=fc[1],
  *                                       point_feat_dir=fc_pts)
  */
-  __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_field_mappings); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 545, __pyx_L1_error)
+  __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_field_mappings); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 547, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_9);
-  __pyx_t_1 = __Pyx_PyDict_NewPresized(3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 545, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyDict_NewPresized(3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 547, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_source_feature, __pyx_v_selected_layer01) < 0) __PYX_ERR(0, 545, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_source_feature, __pyx_v_selected_layer01) < 0) __PYX_ERR(0, 547, __pyx_L1_error)
 
-  /* "LXG/replication.py":546
+  /* "LXG/replication.py":548
  * 
  *         _params = self.field_mappings(source_feature=selected_layer01,
  *                                       target_feature=fc[1],             # <<<<<<<<<<<<<<
  *                                       point_feat_dir=fc_pts)
  * 
  */
-  __pyx_t_7 = __Pyx_GetItemInt(__pyx_v_fc, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 546, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_GetItemInt(__pyx_v_fc, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 548, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_target_feature, __pyx_t_7) < 0) __PYX_ERR(0, 545, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_target_feature, __pyx_t_7) < 0) __PYX_ERR(0, 547, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
-  /* "LXG/replication.py":547
+  /* "LXG/replication.py":549
  *         _params = self.field_mappings(source_feature=selected_layer01,
  *                                       target_feature=fc[1],
  *                                       point_feat_dir=fc_pts)             # <<<<<<<<<<<<<<
  * 
  *         try:
  */
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_point_feat_dir, __pyx_v_fc_pts) < 0) __PYX_ERR(0, 545, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_point_feat_dir, __pyx_v_fc_pts) < 0) __PYX_ERR(0, 547, __pyx_L1_error)
 
-  /* "LXG/replication.py":545
+  /* "LXG/replication.py":547
  *             pass
  * 
  *         _params = self.field_mappings(source_feature=selected_layer01,             # <<<<<<<<<<<<<<
  *                                       target_feature=fc[1],
  *                                       point_feat_dir=fc_pts)
  */
-  __pyx_t_7 = __Pyx_PyObject_Call(__pyx_t_9, __pyx_empty_tuple, __pyx_t_1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 545, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyObject_Call(__pyx_t_9, __pyx_empty_tuple, __pyx_t_1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 547, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v__params = __pyx_t_7;
   __pyx_t_7 = 0;
 
-  /* "LXG/replication.py":549
+  /* "LXG/replication.py":551
  *                                       point_feat_dir=fc_pts)
  * 
  *         try:             # <<<<<<<<<<<<<<
@@ -19236,30 +19397,30 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
     __Pyx_XGOTREF(__pyx_t_13);
     /*try:*/ {
 
-      /* "LXG/replication.py":551
+      /* "LXG/replication.py":553
  *         try:
  *             # Append selected points to a old version of feature class
  *             arcpy.Append_management(selected_layer01,             # <<<<<<<<<<<<<<
  *                                     fc[0],
  *                                     "NO_TEST",
  */
-      __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 551, __pyx_L37_error)
+      __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 553, __pyx_L37_error)
       __Pyx_GOTREF(__pyx_t_1);
-      __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_Append_management); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 551, __pyx_L37_error)
+      __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_Append_management); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 553, __pyx_L37_error)
       __Pyx_GOTREF(__pyx_t_9);
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-      /* "LXG/replication.py":552
+      /* "LXG/replication.py":554
  *             # Append selected points to a old version of feature class
  *             arcpy.Append_management(selected_layer01,
  *                                     fc[0],             # <<<<<<<<<<<<<<
  *                                     "NO_TEST",
  *                                     _params
  */
-      __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_fc, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 552, __pyx_L37_error)
+      __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_fc, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 554, __pyx_L37_error)
       __Pyx_GOTREF(__pyx_t_1);
 
-      /* "LXG/replication.py":554
+      /* "LXG/replication.py":556
  *                                     fc[0],
  *                                     "NO_TEST",
  *                                     _params             # <<<<<<<<<<<<<<
@@ -19281,7 +19442,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
       #if CYTHON_FAST_PYCALL
       if (PyFunction_Check(__pyx_t_9)) {
         PyObject *__pyx_temp[5] = {__pyx_t_4, __pyx_v_selected_layer01, __pyx_t_1, __pyx_n_s_NO_TEST, __pyx_v__params};
-        __pyx_t_7 = __Pyx_PyFunction_FastCall(__pyx_t_9, __pyx_temp+1-__pyx_t_8, 4+__pyx_t_8); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 551, __pyx_L37_error)
+        __pyx_t_7 = __Pyx_PyFunction_FastCall(__pyx_t_9, __pyx_temp+1-__pyx_t_8, 4+__pyx_t_8); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 553, __pyx_L37_error)
         __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
         __Pyx_GOTREF(__pyx_t_7);
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -19290,14 +19451,14 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
       #if CYTHON_FAST_PYCCALL
       if (__Pyx_PyFastCFunction_Check(__pyx_t_9)) {
         PyObject *__pyx_temp[5] = {__pyx_t_4, __pyx_v_selected_layer01, __pyx_t_1, __pyx_n_s_NO_TEST, __pyx_v__params};
-        __pyx_t_7 = __Pyx_PyCFunction_FastCall(__pyx_t_9, __pyx_temp+1-__pyx_t_8, 4+__pyx_t_8); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 551, __pyx_L37_error)
+        __pyx_t_7 = __Pyx_PyCFunction_FastCall(__pyx_t_9, __pyx_temp+1-__pyx_t_8, 4+__pyx_t_8); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 553, __pyx_L37_error)
         __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
         __Pyx_GOTREF(__pyx_t_7);
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
       } else
       #endif
       {
-        __pyx_t_2 = PyTuple_New(4+__pyx_t_8); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 551, __pyx_L37_error)
+        __pyx_t_2 = PyTuple_New(4+__pyx_t_8); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 553, __pyx_L37_error)
         __Pyx_GOTREF(__pyx_t_2);
         if (__pyx_t_4) {
           __Pyx_GIVEREF(__pyx_t_4); PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_t_4); __pyx_t_4 = NULL;
@@ -19314,14 +19475,14 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
         __Pyx_GIVEREF(__pyx_v__params);
         PyTuple_SET_ITEM(__pyx_t_2, 3+__pyx_t_8, __pyx_v__params);
         __pyx_t_1 = 0;
-        __pyx_t_7 = __Pyx_PyObject_Call(__pyx_t_9, __pyx_t_2, NULL); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 551, __pyx_L37_error)
+        __pyx_t_7 = __Pyx_PyObject_Call(__pyx_t_9, __pyx_t_2, NULL); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 553, __pyx_L37_error)
         __Pyx_GOTREF(__pyx_t_7);
         __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
       }
       __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
-      /* "LXG/replication.py":549
+      /* "LXG/replication.py":551
  *                                       point_feat_dir=fc_pts)
  * 
  *         try:             # <<<<<<<<<<<<<<
@@ -19341,7 +19502,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
     __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
     __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
 
-    /* "LXG/replication.py":556
+    /* "LXG/replication.py":558
  *                                     _params
  *                                     )
  *         except arcpy.ExecuteError as e:             # <<<<<<<<<<<<<<
@@ -19349,9 +19510,9 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
  * 
  */
     __Pyx_ErrFetch(&__pyx_t_7, &__pyx_t_9, &__pyx_t_2);
-    __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 556, __pyx_L39_except_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 558, __pyx_L39_except_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_ExecuteError); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 556, __pyx_L39_except_error)
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_ExecuteError); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 558, __pyx_L39_except_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __pyx_t_8 = __Pyx_PyErr_GivenExceptionMatches(__pyx_t_7, __pyx_t_4);
@@ -19360,23 +19521,23 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
     __pyx_t_7 = 0; __pyx_t_9 = 0; __pyx_t_2 = 0;
     if (__pyx_t_8) {
       __Pyx_AddTraceback("LXGREP.AppendNewFeatures.fast_poly_append", __pyx_clineno, __pyx_lineno, __pyx_filename);
-      if (__Pyx_GetException(&__pyx_t_2, &__pyx_t_9, &__pyx_t_7) < 0) __PYX_ERR(0, 556, __pyx_L39_except_error)
+      if (__Pyx_GetException(&__pyx_t_2, &__pyx_t_9, &__pyx_t_7) < 0) __PYX_ERR(0, 558, __pyx_L39_except_error)
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_GOTREF(__pyx_t_9);
       __Pyx_GOTREF(__pyx_t_7);
       __Pyx_INCREF(__pyx_t_9);
       __Pyx_XDECREF_SET(__pyx_v_e, __pyx_t_9);
 
-      /* "LXG/replication.py":557
+      /* "LXG/replication.py":559
  *                                     )
  *         except arcpy.ExecuteError as e:
  *             arcpy.AddError(e)             # <<<<<<<<<<<<<<
  * 
  *         del _params
  */
-      __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 557, __pyx_L39_except_error)
+      __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 559, __pyx_L39_except_error)
       __Pyx_GOTREF(__pyx_t_1);
-      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_AddError); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 557, __pyx_L39_except_error)
+      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_AddError); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 559, __pyx_L39_except_error)
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
       __pyx_t_1 = NULL;
@@ -19391,7 +19552,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
       }
       __pyx_t_4 = (__pyx_t_1) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_1, __pyx_v_e) : __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_v_e);
       __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
-      if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 557, __pyx_L39_except_error)
+      if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 559, __pyx_L39_except_error)
       __Pyx_GOTREF(__pyx_t_4);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
@@ -19403,7 +19564,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
     goto __pyx_L39_except_error;
     __pyx_L39_except_error:;
 
-    /* "LXG/replication.py":549
+    /* "LXG/replication.py":551
  *                                       point_feat_dir=fc_pts)
  * 
  *         try:             # <<<<<<<<<<<<<<
@@ -19423,7 +19584,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
     __pyx_L42_try_end:;
   }
 
-  /* "LXG/replication.py":559
+  /* "LXG/replication.py":561
  *             arcpy.AddError(e)
  * 
  *         del _params             # <<<<<<<<<<<<<<
@@ -19433,14 +19594,14 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
   __Pyx_DECREF(__pyx_v__params);
   __pyx_v__params = NULL;
 
-  /* "LXG/replication.py":561
+  /* "LXG/replication.py":563
  *         del _params
  *         # Stop the edit operation.
  *         edit.stopOperation()             # <<<<<<<<<<<<<<
  *         # Stop the edit session and save the changes
  *         edit.stopEditing(True)
  */
-  __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_v_edit, __pyx_n_s_stopOperation); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 561, __pyx_L1_error)
+  __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_v_edit, __pyx_n_s_stopOperation); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 563, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_9);
   __pyx_t_2 = NULL;
   if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_9))) {
@@ -19454,19 +19615,19 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
   }
   __pyx_t_7 = (__pyx_t_2) ? __Pyx_PyObject_CallOneArg(__pyx_t_9, __pyx_t_2) : __Pyx_PyObject_CallNoArg(__pyx_t_9);
   __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 561, __pyx_L1_error)
+  if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 563, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
-  /* "LXG/replication.py":563
+  /* "LXG/replication.py":565
  *         edit.stopOperation()
  *         # Stop the edit session and save the changes
  *         edit.stopEditing(True)             # <<<<<<<<<<<<<<
  * 
  *     def report(self, featureclass_list):
  */
-  __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_v_edit, __pyx_n_s_stopEditing); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 563, __pyx_L1_error)
+  __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_v_edit, __pyx_n_s_stopEditing); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 565, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_9);
   __pyx_t_2 = NULL;
   if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_9))) {
@@ -19480,12 +19641,12 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
   }
   __pyx_t_7 = (__pyx_t_2) ? __Pyx_PyObject_Call2Args(__pyx_t_9, __pyx_t_2, Py_True) : __Pyx_PyObject_CallOneArg(__pyx_t_9, Py_True);
   __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 563, __pyx_L1_error)
+  if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 565, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
-  /* "LXG/replication.py":502
+  /* "LXG/replication.py":504
  *         del _params
  * 
  *     def fast_poly_append(self, fc):             # <<<<<<<<<<<<<<
@@ -19526,7 +19687,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_20fast_poly_append(CYTHON_
   return __pyx_r;
 }
 
-/* "LXG/replication.py":565
+/* "LXG/replication.py":567
  *         edit.stopEditing(True)
  * 
  *     def report(self, featureclass_list):             # <<<<<<<<<<<<<<
@@ -19570,11 +19731,11 @@ static PyObject *__pyx_pw_6LXGREP_17AppendNewFeatures_23report(PyObject *__pyx_s
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_featureclass_list)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("report", 1, 2, 2, 1); __PYX_ERR(0, 565, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("report", 1, 2, 2, 1); __PYX_ERR(0, 567, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "report") < 0)) __PYX_ERR(0, 565, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "report") < 0)) __PYX_ERR(0, 567, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
       goto __pyx_L5_argtuple_error;
@@ -19587,7 +19748,7 @@ static PyObject *__pyx_pw_6LXGREP_17AppendNewFeatures_23report(PyObject *__pyx_s
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("report", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 565, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("report", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 567, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("LXGREP.AppendNewFeatures.report", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -19627,16 +19788,16 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_22report(CYTHON_UNUSED PyO
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("report", 0);
 
-  /* "LXG/replication.py":577
+  /* "LXG/replication.py":579
  * 
  *         """
  *         df = pd.DataFrame(featureclass_list)             # <<<<<<<<<<<<<<
  *         df.columns = ['FeatureClasses', 'Count']
  *         df_html = df.to_html(index=False, classes="table-title")
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_pd); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 577, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_pd); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 579, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_DataFrame); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 577, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_DataFrame); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 579, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_t_2 = NULL;
@@ -19651,20 +19812,20 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_22report(CYTHON_UNUSED PyO
   }
   __pyx_t_1 = (__pyx_t_2) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_2, __pyx_v_featureclass_list) : __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_v_featureclass_list);
   __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 577, __pyx_L1_error)
+  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 579, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_v_df = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "LXG/replication.py":578
+  /* "LXG/replication.py":580
  *         """
  *         df = pd.DataFrame(featureclass_list)
  *         df.columns = ['FeatureClasses', 'Count']             # <<<<<<<<<<<<<<
  *         df_html = df.to_html(index=False, classes="table-title")
  *         env = Environment(loader=FileSystemLoader('./report'))
  */
-  __pyx_t_1 = PyList_New(2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 578, __pyx_L1_error)
+  __pyx_t_1 = PyList_New(2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 580, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_INCREF(__pyx_n_s_FeatureClasses);
   __Pyx_GIVEREF(__pyx_n_s_FeatureClasses);
@@ -19672,41 +19833,41 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_22report(CYTHON_UNUSED PyO
   __Pyx_INCREF(__pyx_n_s_Count);
   __Pyx_GIVEREF(__pyx_n_s_Count);
   PyList_SET_ITEM(__pyx_t_1, 1, __pyx_n_s_Count);
-  if (__Pyx_PyObject_SetAttrStr(__pyx_v_df, __pyx_n_s_columns, __pyx_t_1) < 0) __PYX_ERR(0, 578, __pyx_L1_error)
+  if (__Pyx_PyObject_SetAttrStr(__pyx_v_df, __pyx_n_s_columns, __pyx_t_1) < 0) __PYX_ERR(0, 580, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "LXG/replication.py":579
+  /* "LXG/replication.py":581
  *         df = pd.DataFrame(featureclass_list)
  *         df.columns = ['FeatureClasses', 'Count']
  *         df_html = df.to_html(index=False, classes="table-title")             # <<<<<<<<<<<<<<
  *         env = Environment(loader=FileSystemLoader('./report'))
  *         template = env.get_template("replication_report.html")
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_df, __pyx_n_s_to_html); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 579, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_df, __pyx_n_s_to_html); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 581, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_3 = __Pyx_PyDict_NewPresized(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 579, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyDict_NewPresized(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 581, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_index, Py_False) < 0) __PYX_ERR(0, 579, __pyx_L1_error)
-  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_classes, __pyx_kp_s_table_title) < 0) __PYX_ERR(0, 579, __pyx_L1_error)
-  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_empty_tuple, __pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 579, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_index, Py_False) < 0) __PYX_ERR(0, 581, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_classes, __pyx_kp_s_table_title) < 0) __PYX_ERR(0, 581, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_empty_tuple, __pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 581, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_v_df_html = __pyx_t_2;
   __pyx_t_2 = 0;
 
-  /* "LXG/replication.py":580
+  /* "LXG/replication.py":582
  *         df.columns = ['FeatureClasses', 'Count']
  *         df_html = df.to_html(index=False, classes="table-title")
  *         env = Environment(loader=FileSystemLoader('./report'))             # <<<<<<<<<<<<<<
  *         template = env.get_template("replication_report.html")
  *         generated_html = template.render(date=date.today().strftime('%d, %b %Y'),
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_Environment); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 580, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_Environment); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 582, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 580, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 582, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_FileSystemLoader); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 580, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_FileSystemLoader); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 582, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __pyx_t_5 = NULL;
   if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_4))) {
@@ -19720,26 +19881,26 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_22report(CYTHON_UNUSED PyO
   }
   __pyx_t_1 = (__pyx_t_5) ? __Pyx_PyObject_Call2Args(__pyx_t_4, __pyx_t_5, __pyx_kp_s_report_2) : __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_kp_s_report_2);
   __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
-  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 580, __pyx_L1_error)
+  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 582, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_loader, __pyx_t_1) < 0) __PYX_ERR(0, 580, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_loader, __pyx_t_1) < 0) __PYX_ERR(0, 582, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_empty_tuple, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 580, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_empty_tuple, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 582, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_v_env = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "LXG/replication.py":581
+  /* "LXG/replication.py":583
  *         df_html = df.to_html(index=False, classes="table-title")
  *         env = Environment(loader=FileSystemLoader('./report'))
  *         template = env.get_template("replication_report.html")             # <<<<<<<<<<<<<<
  *         generated_html = template.render(date=date.today().strftime('%d, %b %Y'),
  *                                          title='Total new features added from 19C for each featureclass',
  */
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_env, __pyx_n_s_get_template); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 581, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_env, __pyx_n_s_get_template); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 583, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_t_2 = NULL;
   if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_3))) {
@@ -19753,26 +19914,26 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_22report(CYTHON_UNUSED PyO
   }
   __pyx_t_1 = (__pyx_t_2) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_2, __pyx_kp_s_replication_report_html) : __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_kp_s_replication_report_html);
   __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 581, __pyx_L1_error)
+  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 583, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_v_template = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "LXG/replication.py":582
+  /* "LXG/replication.py":584
  *         env = Environment(loader=FileSystemLoader('./report'))
  *         template = env.get_template("replication_report.html")
  *         generated_html = template.render(date=date.today().strftime('%d, %b %Y'),             # <<<<<<<<<<<<<<
  *                                          title='Total new features added from 19C for each featureclass',
  *                                          df=df_html)
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_template, __pyx_n_s_render); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 582, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_template, __pyx_n_s_render); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 584, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_3 = __Pyx_PyDict_NewPresized(3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 582, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyDict_NewPresized(3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 584, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_date); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 582, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_date); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 584, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_today); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 582, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_today); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 584, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   __pyx_t_5 = NULL;
@@ -19787,10 +19948,10 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_22report(CYTHON_UNUSED PyO
   }
   __pyx_t_4 = (__pyx_t_5) ? __Pyx_PyObject_CallOneArg(__pyx_t_6, __pyx_t_5) : __Pyx_PyObject_CallNoArg(__pyx_t_6);
   __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
-  if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 582, __pyx_L1_error)
+  if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 584, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_strftime); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 582, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_strftime); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 584, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __pyx_t_4 = NULL;
@@ -19805,37 +19966,37 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_22report(CYTHON_UNUSED PyO
   }
   __pyx_t_2 = (__pyx_t_4) ? __Pyx_PyObject_Call2Args(__pyx_t_6, __pyx_t_4, __pyx_kp_s_d_b_Y) : __Pyx_PyObject_CallOneArg(__pyx_t_6, __pyx_kp_s_d_b_Y);
   __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
-  if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 582, __pyx_L1_error)
+  if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 584, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_date, __pyx_t_2) < 0) __PYX_ERR(0, 582, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_date, __pyx_t_2) < 0) __PYX_ERR(0, 584, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_title, __pyx_kp_s_Total_new_features_added_from_19) < 0) __PYX_ERR(0, 582, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_title, __pyx_kp_s_Total_new_features_added_from_19) < 0) __PYX_ERR(0, 584, __pyx_L1_error)
 
-  /* "LXG/replication.py":584
+  /* "LXG/replication.py":586
  *         generated_html = template.render(date=date.today().strftime('%d, %b %Y'),
  *                                          title='Total new features added from 19C for each featureclass',
  *                                          df=df_html)             # <<<<<<<<<<<<<<
  * 
  *         # Convert HTML to PDF
  */
-  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_df, __pyx_v_df_html) < 0) __PYX_ERR(0, 582, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_df, __pyx_v_df_html) < 0) __PYX_ERR(0, 584, __pyx_L1_error)
 
-  /* "LXG/replication.py":582
+  /* "LXG/replication.py":584
  *         env = Environment(loader=FileSystemLoader('./report'))
  *         template = env.get_template("replication_report.html")
  *         generated_html = template.render(date=date.today().strftime('%d, %b %Y'),             # <<<<<<<<<<<<<<
  *                                          title='Total new features added from 19C for each featureclass',
  *                                          df=df_html)
  */
-  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_empty_tuple, __pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 582, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_empty_tuple, __pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 584, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_v_generated_html = __pyx_t_2;
   __pyx_t_2 = 0;
 
-  /* "LXG/replication.py":587
+  /* "LXG/replication.py":589
  * 
  *         # Convert HTML to PDF
  *         with open('./report/replication_report.pdf', "w+b") as out_pdf:             # <<<<<<<<<<<<<<
@@ -19843,11 +20004,11 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_22report(CYTHON_UNUSED PyO
  * 
  */
   /*with:*/ {
-    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_open, __pyx_tuple__17, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 587, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_open, __pyx_tuple__17, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 589, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_7 = __Pyx_PyObject_LookupSpecial(__pyx_t_2, __pyx_n_s_exit); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 587, __pyx_L1_error)
+    __pyx_t_7 = __Pyx_PyObject_LookupSpecial(__pyx_t_2, __pyx_n_s_exit); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 589, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
-    __pyx_t_1 = __Pyx_PyObject_LookupSpecial(__pyx_t_2, __pyx_n_s_enter); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 587, __pyx_L3_error)
+    __pyx_t_1 = __Pyx_PyObject_LookupSpecial(__pyx_t_2, __pyx_n_s_enter); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 589, __pyx_L3_error)
     __Pyx_GOTREF(__pyx_t_1);
     __pyx_t_6 = NULL;
     if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_1))) {
@@ -19861,7 +20022,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_22report(CYTHON_UNUSED PyO
     }
     __pyx_t_3 = (__pyx_t_6) ? __Pyx_PyObject_CallOneArg(__pyx_t_1, __pyx_t_6) : __Pyx_PyObject_CallNoArg(__pyx_t_1);
     __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
-    if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 587, __pyx_L3_error)
+    if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 589, __pyx_L3_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __pyx_t_1 = __pyx_t_3;
@@ -19879,29 +20040,29 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_22report(CYTHON_UNUSED PyO
           __pyx_v_out_pdf = __pyx_t_1;
           __pyx_t_1 = 0;
 
-          /* "LXG/replication.py":588
+          /* "LXG/replication.py":590
  *         # Convert HTML to PDF
  *         with open('./report/replication_report.pdf', "w+b") as out_pdf:
  *             pisa.CreatePDF(src=generated_html, dest=out_pdf)             # <<<<<<<<<<<<<<
  * 
  * 
  */
-          __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_pisa); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 588, __pyx_L7_error)
+          __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_pisa); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 590, __pyx_L7_error)
           __Pyx_GOTREF(__pyx_t_1);
-          __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_CreatePDF); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 588, __pyx_L7_error)
+          __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_CreatePDF); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 590, __pyx_L7_error)
           __Pyx_GOTREF(__pyx_t_2);
           __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-          __pyx_t_1 = __Pyx_PyDict_NewPresized(2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 588, __pyx_L7_error)
+          __pyx_t_1 = __Pyx_PyDict_NewPresized(2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 590, __pyx_L7_error)
           __Pyx_GOTREF(__pyx_t_1);
-          if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_src, __pyx_v_generated_html) < 0) __PYX_ERR(0, 588, __pyx_L7_error)
-          if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_dest, __pyx_v_out_pdf) < 0) __PYX_ERR(0, 588, __pyx_L7_error)
-          __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_empty_tuple, __pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 588, __pyx_L7_error)
+          if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_src, __pyx_v_generated_html) < 0) __PYX_ERR(0, 590, __pyx_L7_error)
+          if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_dest, __pyx_v_out_pdf) < 0) __PYX_ERR(0, 590, __pyx_L7_error)
+          __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_empty_tuple, __pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 590, __pyx_L7_error)
           __Pyx_GOTREF(__pyx_t_3);
           __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
           __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
           __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-          /* "LXG/replication.py":587
+          /* "LXG/replication.py":589
  * 
  *         # Convert HTML to PDF
  *         with open('./report/replication_report.pdf', "w+b") as out_pdf:             # <<<<<<<<<<<<<<
@@ -19922,20 +20083,20 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_22report(CYTHON_UNUSED PyO
         __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
         /*except:*/ {
           __Pyx_AddTraceback("LXGREP.AppendNewFeatures.report", __pyx_clineno, __pyx_lineno, __pyx_filename);
-          if (__Pyx_GetException(&__pyx_t_3, &__pyx_t_1, &__pyx_t_2) < 0) __PYX_ERR(0, 587, __pyx_L9_except_error)
+          if (__Pyx_GetException(&__pyx_t_3, &__pyx_t_1, &__pyx_t_2) < 0) __PYX_ERR(0, 589, __pyx_L9_except_error)
           __Pyx_GOTREF(__pyx_t_3);
           __Pyx_GOTREF(__pyx_t_1);
           __Pyx_GOTREF(__pyx_t_2);
-          __pyx_t_6 = PyTuple_Pack(3, __pyx_t_3, __pyx_t_1, __pyx_t_2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 587, __pyx_L9_except_error)
+          __pyx_t_6 = PyTuple_Pack(3, __pyx_t_3, __pyx_t_1, __pyx_t_2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 589, __pyx_L9_except_error)
           __Pyx_GOTREF(__pyx_t_6);
           __pyx_t_11 = __Pyx_PyObject_Call(__pyx_t_7, __pyx_t_6, NULL);
           __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
           __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-          if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 587, __pyx_L9_except_error)
+          if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 589, __pyx_L9_except_error)
           __Pyx_GOTREF(__pyx_t_11);
           __pyx_t_12 = __Pyx_PyObject_IsTrue(__pyx_t_11);
           __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
-          if (__pyx_t_12 < 0) __PYX_ERR(0, 587, __pyx_L9_except_error)
+          if (__pyx_t_12 < 0) __PYX_ERR(0, 589, __pyx_L9_except_error)
           __pyx_t_13 = ((!(__pyx_t_12 != 0)) != 0);
           if (__pyx_t_13) {
             __Pyx_GIVEREF(__pyx_t_3);
@@ -19943,7 +20104,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_22report(CYTHON_UNUSED PyO
             __Pyx_XGIVEREF(__pyx_t_2);
             __Pyx_ErrRestoreWithState(__pyx_t_3, __pyx_t_1, __pyx_t_2);
             __pyx_t_3 = 0; __pyx_t_1 = 0; __pyx_t_2 = 0; 
-            __PYX_ERR(0, 587, __pyx_L9_except_error)
+            __PYX_ERR(0, 589, __pyx_L9_except_error)
           }
           __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
           __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -19969,7 +20130,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_22report(CYTHON_UNUSED PyO
         if (__pyx_t_7) {
           __pyx_t_10 = __Pyx_PyObject_Call(__pyx_t_7, __pyx_tuple__3, NULL);
           __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-          if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 587, __pyx_L1_error)
+          if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 589, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_10);
           __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
         }
@@ -19984,7 +20145,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_22report(CYTHON_UNUSED PyO
     __pyx_L16:;
   }
 
-  /* "LXG/replication.py":565
+  /* "LXG/replication.py":567
  *         edit.stopEditing(True)
  * 
  *     def report(self, featureclass_list):             # <<<<<<<<<<<<<<
@@ -20016,7 +20177,7 @@ static PyObject *__pyx_pf_6LXGREP_17AppendNewFeatures_22report(CYTHON_UNUSED PyO
   return __pyx_r;
 }
 
-/* "LXG/replication.py":592
+/* "LXG/replication.py":594
  * 
  * class ReplicateSDE2GDB:
  *     def __init__(self, sde_instance, sde_username, sde_password,             # <<<<<<<<<<<<<<
@@ -20077,47 +20238,47 @@ static PyObject *__pyx_pw_6LXGREP_16ReplicateSDE2GDB_1__init__(PyObject *__pyx_s
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_sde_instance)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__init__", 1, 8, 8, 1); __PYX_ERR(0, 592, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__init__", 1, 8, 8, 1); __PYX_ERR(0, 594, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
         if (likely((values[2] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_sde_username)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__init__", 1, 8, 8, 2); __PYX_ERR(0, 592, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__init__", 1, 8, 8, 2); __PYX_ERR(0, 594, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  3:
         if (likely((values[3] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_sde_password)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__init__", 1, 8, 8, 3); __PYX_ERR(0, 592, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__init__", 1, 8, 8, 3); __PYX_ERR(0, 594, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  4:
         if (likely((values[4] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_output_directory)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__init__", 1, 8, 8, 4); __PYX_ERR(0, 592, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__init__", 1, 8, 8, 4); __PYX_ERR(0, 594, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  5:
         if (likely((values[5] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_file_gdb)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__init__", 1, 8, 8, 5); __PYX_ERR(0, 592, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__init__", 1, 8, 8, 5); __PYX_ERR(0, 594, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  6:
         if (likely((values[6] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_wildcard_datasets)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__init__", 1, 8, 8, 6); __PYX_ERR(0, 592, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__init__", 1, 8, 8, 6); __PYX_ERR(0, 594, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  7:
         if (likely((values[7] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_wildcard_featureclass)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__init__", 1, 8, 8, 7); __PYX_ERR(0, 592, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__init__", 1, 8, 8, 7); __PYX_ERR(0, 594, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__init__") < 0)) __PYX_ERR(0, 592, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__init__") < 0)) __PYX_ERR(0, 594, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 8) {
       goto __pyx_L5_argtuple_error;
@@ -20142,7 +20303,7 @@ static PyObject *__pyx_pw_6LXGREP_16ReplicateSDE2GDB_1__init__(PyObject *__pyx_s
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__init__", 1, 8, 8, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 592, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("__init__", 1, 8, 8, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 594, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("LXGREP.ReplicateSDE2GDB.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -20167,10 +20328,10 @@ static PyObject *__pyx_pf_6LXGREP_16ReplicateSDE2GDB___init__(CYTHON_UNUSED PyOb
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
-  int __pyx_t_2;
-  int __pyx_t_3;
-  PyObject *__pyx_t_4 = NULL;
-  PyObject *__pyx_t_5 = NULL;
+  PyObject *__pyx_t_2 = NULL;
+  PyObject *__pyx_t_3 = NULL;
+  int __pyx_t_4;
+  int __pyx_t_5;
   PyObject *__pyx_t_6 = NULL;
   PyObject *__pyx_t_7 = NULL;
   int __pyx_t_8;
@@ -20187,94 +20348,124 @@ static PyObject *__pyx_pf_6LXGREP_16ReplicateSDE2GDB___init__(CYTHON_UNUSED PyOb
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__init__", 0);
 
-  /* "LXG/replication.py":594
+  /* "LXG/replication.py":596
  *     def __init__(self, sde_instance, sde_username, sde_password,
  *                  output_directory, file_gdb, wildcard_datasets, wildcard_featureclass):
  *         self.instance = sde_instance             # <<<<<<<<<<<<<<
  *         self.usr = sde_username
  *         self.pwd = sde_password
  */
-  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_instance, __pyx_v_sde_instance) < 0) __PYX_ERR(0, 594, __pyx_L1_error)
+  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_instance, __pyx_v_sde_instance) < 0) __PYX_ERR(0, 596, __pyx_L1_error)
 
-  /* "LXG/replication.py":595
+  /* "LXG/replication.py":597
  *                  output_directory, file_gdb, wildcard_datasets, wildcard_featureclass):
  *         self.instance = sde_instance
  *         self.usr = sde_username             # <<<<<<<<<<<<<<
  *         self.pwd = sde_password
  *         self.out_dir = output_directory
  */
-  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_usr, __pyx_v_sde_username) < 0) __PYX_ERR(0, 595, __pyx_L1_error)
+  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_usr, __pyx_v_sde_username) < 0) __PYX_ERR(0, 597, __pyx_L1_error)
 
-  /* "LXG/replication.py":596
+  /* "LXG/replication.py":598
  *         self.instance = sde_instance
  *         self.usr = sde_username
  *         self.pwd = sde_password             # <<<<<<<<<<<<<<
  *         self.out_dir = output_directory
  *         self.gdb = file_gdb
  */
-  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_pwd, __pyx_v_sde_password) < 0) __PYX_ERR(0, 596, __pyx_L1_error)
+  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_pwd, __pyx_v_sde_password) < 0) __PYX_ERR(0, 598, __pyx_L1_error)
 
-  /* "LXG/replication.py":597
+  /* "LXG/replication.py":599
  *         self.usr = sde_username
  *         self.pwd = sde_password
  *         self.out_dir = output_directory             # <<<<<<<<<<<<<<
  *         self.gdb = file_gdb
  *         self.wildcard_ds = wildcard_datasets
  */
-  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_out_dir, __pyx_v_output_directory) < 0) __PYX_ERR(0, 597, __pyx_L1_error)
+  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_out_dir, __pyx_v_output_directory) < 0) __PYX_ERR(0, 599, __pyx_L1_error)
 
-  /* "LXG/replication.py":598
+  /* "LXG/replication.py":600
  *         self.pwd = sde_password
  *         self.out_dir = output_directory
  *         self.gdb = file_gdb             # <<<<<<<<<<<<<<
  *         self.wildcard_ds = wildcard_datasets
  *         self.wildcard_fc = wildcard_featureclass
  */
-  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_gdb, __pyx_v_file_gdb) < 0) __PYX_ERR(0, 598, __pyx_L1_error)
+  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_gdb, __pyx_v_file_gdb) < 0) __PYX_ERR(0, 600, __pyx_L1_error)
 
-  /* "LXG/replication.py":599
+  /* "LXG/replication.py":601
  *         self.out_dir = output_directory
  *         self.gdb = file_gdb
  *         self.wildcard_ds = wildcard_datasets             # <<<<<<<<<<<<<<
  *         self.wildcard_fc = wildcard_featureclass
- * 
+ *         self.temp_dir = tempfile.mkdtemp()
  */
-  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_wildcard_ds, __pyx_v_wildcard_datasets) < 0) __PYX_ERR(0, 599, __pyx_L1_error)
+  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_wildcard_ds, __pyx_v_wildcard_datasets) < 0) __PYX_ERR(0, 601, __pyx_L1_error)
 
-  /* "LXG/replication.py":600
+  /* "LXG/replication.py":602
  *         self.gdb = file_gdb
  *         self.wildcard_ds = wildcard_datasets
  *         self.wildcard_fc = wildcard_featureclass             # <<<<<<<<<<<<<<
+ *         self.temp_dir = tempfile.mkdtemp()
+ * 
+ */
+  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_wildcard_fc, __pyx_v_wildcard_featureclass) < 0) __PYX_ERR(0, 602, __pyx_L1_error)
+
+  /* "LXG/replication.py":603
+ *         self.wildcard_ds = wildcard_datasets
+ *         self.wildcard_fc = wildcard_featureclass
+ *         self.temp_dir = tempfile.mkdtemp()             # <<<<<<<<<<<<<<
  * 
  *         if self.wildcard_ds is None:
  */
-  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_wildcard_fc, __pyx_v_wildcard_featureclass) < 0) __PYX_ERR(0, 600, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_tempfile); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 603, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_mkdtemp); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 603, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_t_2 = NULL;
+  if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_3))) {
+    __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_3);
+    if (likely(__pyx_t_2)) {
+      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_3);
+      __Pyx_INCREF(__pyx_t_2);
+      __Pyx_INCREF(function);
+      __Pyx_DECREF_SET(__pyx_t_3, function);
+    }
+  }
+  __pyx_t_1 = (__pyx_t_2) ? __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_2) : __Pyx_PyObject_CallNoArg(__pyx_t_3);
+  __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
+  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 603, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_temp_dir, __pyx_t_1) < 0) __PYX_ERR(0, 603, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "LXG/replication.py":602
- *         self.wildcard_fc = wildcard_featureclass
+  /* "LXG/replication.py":605
+ *         self.temp_dir = tempfile.mkdtemp()
  * 
  *         if self.wildcard_ds is None:             # <<<<<<<<<<<<<<
  *             self.wildcard_ds = ""
  *         if self.wildcard_fc is None:
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_wildcard_ds); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 602, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_wildcard_ds); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 605, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = (__pyx_t_1 == Py_None);
+  __pyx_t_4 = (__pyx_t_1 == Py_None);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_3 = (__pyx_t_2 != 0);
-  if (__pyx_t_3) {
+  __pyx_t_5 = (__pyx_t_4 != 0);
+  if (__pyx_t_5) {
 
-    /* "LXG/replication.py":603
+    /* "LXG/replication.py":606
  * 
  *         if self.wildcard_ds is None:
  *             self.wildcard_ds = ""             # <<<<<<<<<<<<<<
  *         if self.wildcard_fc is None:
  *             self.wildcard_fc = ""
  */
-    if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_wildcard_ds, __pyx_kp_s_) < 0) __PYX_ERR(0, 603, __pyx_L1_error)
+    if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_wildcard_ds, __pyx_kp_s_) < 0) __PYX_ERR(0, 606, __pyx_L1_error)
 
-    /* "LXG/replication.py":602
- *         self.wildcard_fc = wildcard_featureclass
+    /* "LXG/replication.py":605
+ *         self.temp_dir = tempfile.mkdtemp()
  * 
  *         if self.wildcard_ds is None:             # <<<<<<<<<<<<<<
  *             self.wildcard_ds = ""
@@ -20282,30 +20473,30 @@ static PyObject *__pyx_pf_6LXGREP_16ReplicateSDE2GDB___init__(CYTHON_UNUSED PyOb
  */
   }
 
-  /* "LXG/replication.py":604
+  /* "LXG/replication.py":607
  *         if self.wildcard_ds is None:
  *             self.wildcard_ds = ""
  *         if self.wildcard_fc is None:             # <<<<<<<<<<<<<<
  *             self.wildcard_fc = ""
  * 
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_wildcard_fc); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 604, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_wildcard_fc); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 607, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_3 = (__pyx_t_1 == Py_None);
+  __pyx_t_5 = (__pyx_t_1 == Py_None);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_2 = (__pyx_t_3 != 0);
-  if (__pyx_t_2) {
+  __pyx_t_4 = (__pyx_t_5 != 0);
+  if (__pyx_t_4) {
 
-    /* "LXG/replication.py":605
+    /* "LXG/replication.py":608
  *             self.wildcard_ds = ""
  *         if self.wildcard_fc is None:
  *             self.wildcard_fc = ""             # <<<<<<<<<<<<<<
  * 
  *         sde = self.temp_connection()
  */
-    if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_wildcard_fc, __pyx_kp_s_) < 0) __PYX_ERR(0, 605, __pyx_L1_error)
+    if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_wildcard_fc, __pyx_kp_s_) < 0) __PYX_ERR(0, 608, __pyx_L1_error)
 
-    /* "LXG/replication.py":604
+    /* "LXG/replication.py":607
  *         if self.wildcard_ds is None:
  *             self.wildcard_ds = ""
  *         if self.wildcard_fc is None:             # <<<<<<<<<<<<<<
@@ -20314,187 +20505,187 @@ static PyObject *__pyx_pf_6LXGREP_16ReplicateSDE2GDB___init__(CYTHON_UNUSED PyOb
  */
   }
 
-  /* "LXG/replication.py":607
+  /* "LXG/replication.py":610
  *             self.wildcard_fc = ""
  * 
  *         sde = self.temp_connection()             # <<<<<<<<<<<<<<
  * 
  *         db_out = os.path.join(self.out_dir, self.gdb)
  */
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_temp_connection); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 607, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_5 = NULL;
-  if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_4))) {
-    __pyx_t_5 = PyMethod_GET_SELF(__pyx_t_4);
-    if (likely(__pyx_t_5)) {
-      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_4);
-      __Pyx_INCREF(__pyx_t_5);
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_temp_connection); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 610, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_2 = NULL;
+  if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_3))) {
+    __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_3);
+    if (likely(__pyx_t_2)) {
+      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_3);
+      __Pyx_INCREF(__pyx_t_2);
       __Pyx_INCREF(function);
-      __Pyx_DECREF_SET(__pyx_t_4, function);
+      __Pyx_DECREF_SET(__pyx_t_3, function);
     }
   }
-  __pyx_t_1 = (__pyx_t_5) ? __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_t_5) : __Pyx_PyObject_CallNoArg(__pyx_t_4);
-  __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
-  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 607, __pyx_L1_error)
+  __pyx_t_1 = (__pyx_t_2) ? __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_2) : __Pyx_PyObject_CallNoArg(__pyx_t_3);
+  __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
+  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 610, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_v_sde = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "LXG/replication.py":609
+  /* "LXG/replication.py":612
  *         sde = self.temp_connection()
  * 
  *         db_out = os.path.join(self.out_dir, self.gdb)             # <<<<<<<<<<<<<<
  *         if arcpy.Exists(db_out):
  *             arcpy.Delete_management(db_out)
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_os); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 609, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_path); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 609, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_join); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 609, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_out_dir); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 609, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_gdb); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 609, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_os); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 612, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_path); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 612, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_join); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 612, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_out_dir); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 612, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_gdb); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 612, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __pyx_t_7 = NULL;
   __pyx_t_8 = 0;
-  if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_4))) {
-    __pyx_t_7 = PyMethod_GET_SELF(__pyx_t_4);
+  if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_3))) {
+    __pyx_t_7 = PyMethod_GET_SELF(__pyx_t_3);
     if (likely(__pyx_t_7)) {
-      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_4);
+      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_3);
       __Pyx_INCREF(__pyx_t_7);
       __Pyx_INCREF(function);
-      __Pyx_DECREF_SET(__pyx_t_4, function);
+      __Pyx_DECREF_SET(__pyx_t_3, function);
       __pyx_t_8 = 1;
     }
   }
   #if CYTHON_FAST_PYCALL
-  if (PyFunction_Check(__pyx_t_4)) {
-    PyObject *__pyx_temp[3] = {__pyx_t_7, __pyx_t_5, __pyx_t_6};
-    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_4, __pyx_temp+1-__pyx_t_8, 2+__pyx_t_8); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 609, __pyx_L1_error)
+  if (PyFunction_Check(__pyx_t_3)) {
+    PyObject *__pyx_temp[3] = {__pyx_t_7, __pyx_t_2, __pyx_t_6};
+    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_8, 2+__pyx_t_8); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 612, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
     __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
   } else
   #endif
   #if CYTHON_FAST_PYCCALL
-  if (__Pyx_PyFastCFunction_Check(__pyx_t_4)) {
-    PyObject *__pyx_temp[3] = {__pyx_t_7, __pyx_t_5, __pyx_t_6};
-    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_4, __pyx_temp+1-__pyx_t_8, 2+__pyx_t_8); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 609, __pyx_L1_error)
+  if (__Pyx_PyFastCFunction_Check(__pyx_t_3)) {
+    PyObject *__pyx_temp[3] = {__pyx_t_7, __pyx_t_2, __pyx_t_6};
+    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_8, 2+__pyx_t_8); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 612, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
     __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
   } else
   #endif
   {
-    __pyx_t_9 = PyTuple_New(2+__pyx_t_8); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 609, __pyx_L1_error)
+    __pyx_t_9 = PyTuple_New(2+__pyx_t_8); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 612, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_9);
     if (__pyx_t_7) {
       __Pyx_GIVEREF(__pyx_t_7); PyTuple_SET_ITEM(__pyx_t_9, 0, __pyx_t_7); __pyx_t_7 = NULL;
     }
-    __Pyx_GIVEREF(__pyx_t_5);
-    PyTuple_SET_ITEM(__pyx_t_9, 0+__pyx_t_8, __pyx_t_5);
+    __Pyx_GIVEREF(__pyx_t_2);
+    PyTuple_SET_ITEM(__pyx_t_9, 0+__pyx_t_8, __pyx_t_2);
     __Pyx_GIVEREF(__pyx_t_6);
     PyTuple_SET_ITEM(__pyx_t_9, 1+__pyx_t_8, __pyx_t_6);
-    __pyx_t_5 = 0;
+    __pyx_t_2 = 0;
     __pyx_t_6 = 0;
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_9, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 609, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_9, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 612, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
   }
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_v_db_out = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "LXG/replication.py":610
+  /* "LXG/replication.py":613
  * 
  *         db_out = os.path.join(self.out_dir, self.gdb)
  *         if arcpy.Exists(db_out):             # <<<<<<<<<<<<<<
  *             arcpy.Delete_management(db_out)
  *             arcpy.CreateFileGDB_management(self.out_dir, self.gdb, "9.3")
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 610, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_Exists); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 610, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 613, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_Exists); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 613, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_9);
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_4 = NULL;
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __pyx_t_3 = NULL;
   if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_9))) {
-    __pyx_t_4 = PyMethod_GET_SELF(__pyx_t_9);
-    if (likely(__pyx_t_4)) {
+    __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_9);
+    if (likely(__pyx_t_3)) {
       PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_9);
-      __Pyx_INCREF(__pyx_t_4);
+      __Pyx_INCREF(__pyx_t_3);
       __Pyx_INCREF(function);
       __Pyx_DECREF_SET(__pyx_t_9, function);
     }
   }
-  __pyx_t_1 = (__pyx_t_4) ? __Pyx_PyObject_Call2Args(__pyx_t_9, __pyx_t_4, __pyx_v_db_out) : __Pyx_PyObject_CallOneArg(__pyx_t_9, __pyx_v_db_out);
-  __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
-  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 610, __pyx_L1_error)
+  __pyx_t_1 = (__pyx_t_3) ? __Pyx_PyObject_Call2Args(__pyx_t_9, __pyx_t_3, __pyx_v_db_out) : __Pyx_PyObject_CallOneArg(__pyx_t_9, __pyx_v_db_out);
+  __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
+  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 613, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 610, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_4 < 0)) __PYX_ERR(0, 613, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  if (__pyx_t_2) {
+  if (__pyx_t_4) {
 
-    /* "LXG/replication.py":611
+    /* "LXG/replication.py":614
  *         db_out = os.path.join(self.out_dir, self.gdb)
  *         if arcpy.Exists(db_out):
  *             arcpy.Delete_management(db_out)             # <<<<<<<<<<<<<<
  *             arcpy.CreateFileGDB_management(self.out_dir, self.gdb, "9.3")
  *         else:
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_9, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 611, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_9, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 614, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_9);
-    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_9, __pyx_n_s_Delete_management); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 611, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
+    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_9, __pyx_n_s_Delete_management); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 614, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
     __pyx_t_9 = NULL;
-    if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_4))) {
-      __pyx_t_9 = PyMethod_GET_SELF(__pyx_t_4);
+    if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_3))) {
+      __pyx_t_9 = PyMethod_GET_SELF(__pyx_t_3);
       if (likely(__pyx_t_9)) {
-        PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_4);
+        PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_3);
         __Pyx_INCREF(__pyx_t_9);
         __Pyx_INCREF(function);
-        __Pyx_DECREF_SET(__pyx_t_4, function);
+        __Pyx_DECREF_SET(__pyx_t_3, function);
       }
     }
-    __pyx_t_1 = (__pyx_t_9) ? __Pyx_PyObject_Call2Args(__pyx_t_4, __pyx_t_9, __pyx_v_db_out) : __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_v_db_out);
+    __pyx_t_1 = (__pyx_t_9) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_9, __pyx_v_db_out) : __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_v_db_out);
     __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 611, __pyx_L1_error)
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 614, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-    /* "LXG/replication.py":612
+    /* "LXG/replication.py":615
  *         if arcpy.Exists(db_out):
  *             arcpy.Delete_management(db_out)
  *             arcpy.CreateFileGDB_management(self.out_dir, self.gdb, "9.3")             # <<<<<<<<<<<<<<
  *         else:
  *             arcpy.CreateFileGDB_management(self.out_dir, self.gdb, "9.3")
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 612, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_CreateFileGDB_management); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 612, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 615, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_3);
+    __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_CreateFileGDB_management); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 615, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_9);
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_out_dir); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 612, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_gdb); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 612, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_out_dir); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 615, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_3);
+    __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_gdb); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 615, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
-    __pyx_t_5 = NULL;
+    __pyx_t_2 = NULL;
     __pyx_t_8 = 0;
     if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_9))) {
-      __pyx_t_5 = PyMethod_GET_SELF(__pyx_t_9);
-      if (likely(__pyx_t_5)) {
+      __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_9);
+      if (likely(__pyx_t_2)) {
         PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_9);
-        __Pyx_INCREF(__pyx_t_5);
+        __Pyx_INCREF(__pyx_t_2);
         __Pyx_INCREF(function);
         __Pyx_DECREF_SET(__pyx_t_9, function);
         __pyx_t_8 = 1;
@@ -20502,47 +20693,47 @@ static PyObject *__pyx_pf_6LXGREP_16ReplicateSDE2GDB___init__(CYTHON_UNUSED PyOb
     }
     #if CYTHON_FAST_PYCALL
     if (PyFunction_Check(__pyx_t_9)) {
-      PyObject *__pyx_temp[4] = {__pyx_t_5, __pyx_t_4, __pyx_t_6, __pyx_kp_s_9_3};
-      __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_9, __pyx_temp+1-__pyx_t_8, 3+__pyx_t_8); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 612, __pyx_L1_error)
-      __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
+      PyObject *__pyx_temp[4] = {__pyx_t_2, __pyx_t_3, __pyx_t_6, __pyx_kp_s_9_3};
+      __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_9, __pyx_temp+1-__pyx_t_8, 3+__pyx_t_8); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 615, __pyx_L1_error)
+      __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
       __Pyx_GOTREF(__pyx_t_1);
-      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+      __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     } else
     #endif
     #if CYTHON_FAST_PYCCALL
     if (__Pyx_PyFastCFunction_Check(__pyx_t_9)) {
-      PyObject *__pyx_temp[4] = {__pyx_t_5, __pyx_t_4, __pyx_t_6, __pyx_kp_s_9_3};
-      __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_9, __pyx_temp+1-__pyx_t_8, 3+__pyx_t_8); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 612, __pyx_L1_error)
-      __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
+      PyObject *__pyx_temp[4] = {__pyx_t_2, __pyx_t_3, __pyx_t_6, __pyx_kp_s_9_3};
+      __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_9, __pyx_temp+1-__pyx_t_8, 3+__pyx_t_8); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 615, __pyx_L1_error)
+      __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
       __Pyx_GOTREF(__pyx_t_1);
-      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+      __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     } else
     #endif
     {
-      __pyx_t_7 = PyTuple_New(3+__pyx_t_8); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 612, __pyx_L1_error)
+      __pyx_t_7 = PyTuple_New(3+__pyx_t_8); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 615, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_7);
-      if (__pyx_t_5) {
-        __Pyx_GIVEREF(__pyx_t_5); PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_t_5); __pyx_t_5 = NULL;
+      if (__pyx_t_2) {
+        __Pyx_GIVEREF(__pyx_t_2); PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_t_2); __pyx_t_2 = NULL;
       }
-      __Pyx_GIVEREF(__pyx_t_4);
-      PyTuple_SET_ITEM(__pyx_t_7, 0+__pyx_t_8, __pyx_t_4);
+      __Pyx_GIVEREF(__pyx_t_3);
+      PyTuple_SET_ITEM(__pyx_t_7, 0+__pyx_t_8, __pyx_t_3);
       __Pyx_GIVEREF(__pyx_t_6);
       PyTuple_SET_ITEM(__pyx_t_7, 1+__pyx_t_8, __pyx_t_6);
       __Pyx_INCREF(__pyx_kp_s_9_3);
       __Pyx_GIVEREF(__pyx_kp_s_9_3);
       PyTuple_SET_ITEM(__pyx_t_7, 2+__pyx_t_8, __pyx_kp_s_9_3);
-      __pyx_t_4 = 0;
+      __pyx_t_3 = 0;
       __pyx_t_6 = 0;
-      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_9, __pyx_t_7, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 612, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_9, __pyx_t_7, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 615, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
     }
     __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-    /* "LXG/replication.py":610
+    /* "LXG/replication.py":613
  * 
  *         db_out = os.path.join(self.out_dir, self.gdb)
  *         if arcpy.Exists(db_out):             # <<<<<<<<<<<<<<
@@ -20552,7 +20743,7 @@ static PyObject *__pyx_pf_6LXGREP_16ReplicateSDE2GDB___init__(CYTHON_UNUSED PyOb
     goto __pyx_L5;
   }
 
-  /* "LXG/replication.py":614
+  /* "LXG/replication.py":617
  *             arcpy.CreateFileGDB_management(self.out_dir, self.gdb, "9.3")
  *         else:
  *             arcpy.CreateFileGDB_management(self.out_dir, self.gdb, "9.3")             # <<<<<<<<<<<<<<
@@ -20560,22 +20751,22 @@ static PyObject *__pyx_pf_6LXGREP_16ReplicateSDE2GDB___init__(CYTHON_UNUSED PyOb
  *         arcpy.env.workspace = sde
  */
   /*else*/ {
-    __Pyx_GetModuleGlobalName(__pyx_t_9, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 614, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_9, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 617, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_9);
-    __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_9, __pyx_n_s_CreateFileGDB_management); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 614, __pyx_L1_error)
+    __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_9, __pyx_n_s_CreateFileGDB_management); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 617, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
     __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-    __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_out_dir); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 614, __pyx_L1_error)
+    __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_out_dir); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 617, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_9);
-    __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_gdb); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 614, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_gdb); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 617, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
-    __pyx_t_4 = NULL;
+    __pyx_t_3 = NULL;
     __pyx_t_8 = 0;
     if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_7))) {
-      __pyx_t_4 = PyMethod_GET_SELF(__pyx_t_7);
-      if (likely(__pyx_t_4)) {
+      __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_7);
+      if (likely(__pyx_t_3)) {
         PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_7);
-        __Pyx_INCREF(__pyx_t_4);
+        __Pyx_INCREF(__pyx_t_3);
         __Pyx_INCREF(function);
         __Pyx_DECREF_SET(__pyx_t_7, function);
         __pyx_t_8 = 1;
@@ -20583,9 +20774,9 @@ static PyObject *__pyx_pf_6LXGREP_16ReplicateSDE2GDB___init__(CYTHON_UNUSED PyOb
     }
     #if CYTHON_FAST_PYCALL
     if (PyFunction_Check(__pyx_t_7)) {
-      PyObject *__pyx_temp[4] = {__pyx_t_4, __pyx_t_9, __pyx_t_6, __pyx_kp_s_9_3};
-      __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_7, __pyx_temp+1-__pyx_t_8, 3+__pyx_t_8); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 614, __pyx_L1_error)
-      __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
+      PyObject *__pyx_temp[4] = {__pyx_t_3, __pyx_t_9, __pyx_t_6, __pyx_kp_s_9_3};
+      __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_7, __pyx_temp+1-__pyx_t_8, 3+__pyx_t_8); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 617, __pyx_L1_error)
+      __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
@@ -20593,67 +20784,67 @@ static PyObject *__pyx_pf_6LXGREP_16ReplicateSDE2GDB___init__(CYTHON_UNUSED PyOb
     #endif
     #if CYTHON_FAST_PYCCALL
     if (__Pyx_PyFastCFunction_Check(__pyx_t_7)) {
-      PyObject *__pyx_temp[4] = {__pyx_t_4, __pyx_t_9, __pyx_t_6, __pyx_kp_s_9_3};
-      __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_7, __pyx_temp+1-__pyx_t_8, 3+__pyx_t_8); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 614, __pyx_L1_error)
-      __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
+      PyObject *__pyx_temp[4] = {__pyx_t_3, __pyx_t_9, __pyx_t_6, __pyx_kp_s_9_3};
+      __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_7, __pyx_temp+1-__pyx_t_8, 3+__pyx_t_8); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 617, __pyx_L1_error)
+      __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     } else
     #endif
     {
-      __pyx_t_5 = PyTuple_New(3+__pyx_t_8); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 614, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_5);
-      if (__pyx_t_4) {
-        __Pyx_GIVEREF(__pyx_t_4); PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_4); __pyx_t_4 = NULL;
+      __pyx_t_2 = PyTuple_New(3+__pyx_t_8); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 617, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_2);
+      if (__pyx_t_3) {
+        __Pyx_GIVEREF(__pyx_t_3); PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_t_3); __pyx_t_3 = NULL;
       }
       __Pyx_GIVEREF(__pyx_t_9);
-      PyTuple_SET_ITEM(__pyx_t_5, 0+__pyx_t_8, __pyx_t_9);
+      PyTuple_SET_ITEM(__pyx_t_2, 0+__pyx_t_8, __pyx_t_9);
       __Pyx_GIVEREF(__pyx_t_6);
-      PyTuple_SET_ITEM(__pyx_t_5, 1+__pyx_t_8, __pyx_t_6);
+      PyTuple_SET_ITEM(__pyx_t_2, 1+__pyx_t_8, __pyx_t_6);
       __Pyx_INCREF(__pyx_kp_s_9_3);
       __Pyx_GIVEREF(__pyx_kp_s_9_3);
-      PyTuple_SET_ITEM(__pyx_t_5, 2+__pyx_t_8, __pyx_kp_s_9_3);
+      PyTuple_SET_ITEM(__pyx_t_2, 2+__pyx_t_8, __pyx_kp_s_9_3);
       __pyx_t_9 = 0;
       __pyx_t_6 = 0;
-      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_7, __pyx_t_5, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 614, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_7, __pyx_t_2, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 617, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
-      __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+      __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     }
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   }
   __pyx_L5:;
 
-  /* "LXG/replication.py":616
+  /* "LXG/replication.py":619
  *             arcpy.CreateFileGDB_management(self.out_dir, self.gdb, "9.3")
  * 
  *         arcpy.env.workspace = sde             # <<<<<<<<<<<<<<
  * 
  *         dss = sorted(arcpy.ListDatasets(self.wildcard_ds, "ALL"))
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 616, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 619, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_env); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 616, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_env); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 619, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  if (__Pyx_PyObject_SetAttrStr(__pyx_t_7, __pyx_n_s_workspace, __pyx_v_sde) < 0) __PYX_ERR(0, 616, __pyx_L1_error)
+  if (__Pyx_PyObject_SetAttrStr(__pyx_t_7, __pyx_n_s_workspace, __pyx_v_sde) < 0) __PYX_ERR(0, 619, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
-  /* "LXG/replication.py":618
+  /* "LXG/replication.py":621
  *         arcpy.env.workspace = sde
  * 
  *         dss = sorted(arcpy.ListDatasets(self.wildcard_ds, "ALL"))             # <<<<<<<<<<<<<<
  *         pbar01 = tqdm(dss, position=0, colour='GREEN')
  *         for ds in pbar01:
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 618, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_ListDatasets); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 618, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 621, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_ListDatasets); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 621, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_wildcard_ds); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 618, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_wildcard_ds); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 621, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_9 = NULL;
   __pyx_t_8 = 0;
   if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_6))) {
@@ -20668,75 +20859,75 @@ static PyObject *__pyx_pf_6LXGREP_16ReplicateSDE2GDB___init__(CYTHON_UNUSED PyOb
   }
   #if CYTHON_FAST_PYCALL
   if (PyFunction_Check(__pyx_t_6)) {
-    PyObject *__pyx_temp[3] = {__pyx_t_9, __pyx_t_5, __pyx_n_s_ALL};
-    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_6, __pyx_temp+1-__pyx_t_8, 2+__pyx_t_8); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 618, __pyx_L1_error)
+    PyObject *__pyx_temp[3] = {__pyx_t_9, __pyx_t_2, __pyx_n_s_ALL};
+    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_6, __pyx_temp+1-__pyx_t_8, 2+__pyx_t_8); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 621, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
     __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   } else
   #endif
   #if CYTHON_FAST_PYCCALL
   if (__Pyx_PyFastCFunction_Check(__pyx_t_6)) {
-    PyObject *__pyx_temp[3] = {__pyx_t_9, __pyx_t_5, __pyx_n_s_ALL};
-    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_6, __pyx_temp+1-__pyx_t_8, 2+__pyx_t_8); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 618, __pyx_L1_error)
+    PyObject *__pyx_temp[3] = {__pyx_t_9, __pyx_t_2, __pyx_n_s_ALL};
+    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_6, __pyx_temp+1-__pyx_t_8, 2+__pyx_t_8); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 621, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
     __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   } else
   #endif
   {
-    __pyx_t_4 = PyTuple_New(2+__pyx_t_8); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 618, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
+    __pyx_t_3 = PyTuple_New(2+__pyx_t_8); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 621, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_3);
     if (__pyx_t_9) {
-      __Pyx_GIVEREF(__pyx_t_9); PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_9); __pyx_t_9 = NULL;
+      __Pyx_GIVEREF(__pyx_t_9); PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_9); __pyx_t_9 = NULL;
     }
-    __Pyx_GIVEREF(__pyx_t_5);
-    PyTuple_SET_ITEM(__pyx_t_4, 0+__pyx_t_8, __pyx_t_5);
+    __Pyx_GIVEREF(__pyx_t_2);
+    PyTuple_SET_ITEM(__pyx_t_3, 0+__pyx_t_8, __pyx_t_2);
     __Pyx_INCREF(__pyx_n_s_ALL);
     __Pyx_GIVEREF(__pyx_n_s_ALL);
-    PyTuple_SET_ITEM(__pyx_t_4, 1+__pyx_t_8, __pyx_n_s_ALL);
-    __pyx_t_5 = 0;
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_t_4, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 618, __pyx_L1_error)
+    PyTuple_SET_ITEM(__pyx_t_3, 1+__pyx_t_8, __pyx_n_s_ALL);
+    __pyx_t_2 = 0;
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_t_3, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 621, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   }
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-  __pyx_t_6 = PySequence_List(__pyx_t_1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 618, __pyx_L1_error)
+  __pyx_t_6 = PySequence_List(__pyx_t_1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 621, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_t_7 = ((PyObject*)__pyx_t_6);
   __pyx_t_6 = 0;
-  __pyx_t_10 = PyList_Sort(__pyx_t_7); if (unlikely(__pyx_t_10 == ((int)-1))) __PYX_ERR(0, 618, __pyx_L1_error)
+  __pyx_t_10 = PyList_Sort(__pyx_t_7); if (unlikely(__pyx_t_10 == ((int)-1))) __PYX_ERR(0, 621, __pyx_L1_error)
   __pyx_v_dss = ((PyObject*)__pyx_t_7);
   __pyx_t_7 = 0;
 
-  /* "LXG/replication.py":619
+  /* "LXG/replication.py":622
  * 
  *         dss = sorted(arcpy.ListDatasets(self.wildcard_ds, "ALL"))
  *         pbar01 = tqdm(dss, position=0, colour='GREEN')             # <<<<<<<<<<<<<<
  *         for ds in pbar01:
  *             pbar01.set_description(ds)
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_7, __pyx_n_s_tqdm); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 619, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_7, __pyx_n_s_tqdm); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 622, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_6 = PyTuple_New(1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 619, __pyx_L1_error)
+  __pyx_t_6 = PyTuple_New(1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 622, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __Pyx_INCREF(__pyx_v_dss);
   __Pyx_GIVEREF(__pyx_v_dss);
   PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_v_dss);
-  __pyx_t_1 = __Pyx_PyDict_NewPresized(2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 619, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyDict_NewPresized(2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 622, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_position, __pyx_int_0) < 0) __PYX_ERR(0, 619, __pyx_L1_error)
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_colour, __pyx_n_s_GREEN) < 0) __PYX_ERR(0, 619, __pyx_L1_error)
-  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_7, __pyx_t_6, __pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 619, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_position, __pyx_int_0) < 0) __PYX_ERR(0, 622, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_colour, __pyx_n_s_GREEN) < 0) __PYX_ERR(0, 622, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_7, __pyx_t_6, __pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 622, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_v_pbar01 = __pyx_t_4;
-  __pyx_t_4 = 0;
+  __pyx_v_pbar01 = __pyx_t_3;
+  __pyx_t_3 = 0;
 
-  /* "LXG/replication.py":620
+  /* "LXG/replication.py":623
  *         dss = sorted(arcpy.ListDatasets(self.wildcard_ds, "ALL"))
  *         pbar01 = tqdm(dss, position=0, colour='GREEN')
  *         for ds in pbar01:             # <<<<<<<<<<<<<<
@@ -20744,39 +20935,39 @@ static PyObject *__pyx_pf_6LXGREP_16ReplicateSDE2GDB___init__(CYTHON_UNUSED PyOb
  *             dsname = '%s' % self.newname('SDE.', ds)
  */
   if (likely(PyList_CheckExact(__pyx_v_pbar01)) || PyTuple_CheckExact(__pyx_v_pbar01)) {
-    __pyx_t_4 = __pyx_v_pbar01; __Pyx_INCREF(__pyx_t_4); __pyx_t_11 = 0;
+    __pyx_t_3 = __pyx_v_pbar01; __Pyx_INCREF(__pyx_t_3); __pyx_t_11 = 0;
     __pyx_t_12 = NULL;
   } else {
-    __pyx_t_11 = -1; __pyx_t_4 = PyObject_GetIter(__pyx_v_pbar01); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 620, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_12 = Py_TYPE(__pyx_t_4)->tp_iternext; if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 620, __pyx_L1_error)
+    __pyx_t_11 = -1; __pyx_t_3 = PyObject_GetIter(__pyx_v_pbar01); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 623, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_3);
+    __pyx_t_12 = Py_TYPE(__pyx_t_3)->tp_iternext; if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 623, __pyx_L1_error)
   }
   for (;;) {
     if (likely(!__pyx_t_12)) {
-      if (likely(PyList_CheckExact(__pyx_t_4))) {
-        if (__pyx_t_11 >= PyList_GET_SIZE(__pyx_t_4)) break;
+      if (likely(PyList_CheckExact(__pyx_t_3))) {
+        if (__pyx_t_11 >= PyList_GET_SIZE(__pyx_t_3)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_1 = PyList_GET_ITEM(__pyx_t_4, __pyx_t_11); __Pyx_INCREF(__pyx_t_1); __pyx_t_11++; if (unlikely(0 < 0)) __PYX_ERR(0, 620, __pyx_L1_error)
+        __pyx_t_1 = PyList_GET_ITEM(__pyx_t_3, __pyx_t_11); __Pyx_INCREF(__pyx_t_1); __pyx_t_11++; if (unlikely(0 < 0)) __PYX_ERR(0, 623, __pyx_L1_error)
         #else
-        __pyx_t_1 = PySequence_ITEM(__pyx_t_4, __pyx_t_11); __pyx_t_11++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 620, __pyx_L1_error)
+        __pyx_t_1 = PySequence_ITEM(__pyx_t_3, __pyx_t_11); __pyx_t_11++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 623, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_1);
         #endif
       } else {
-        if (__pyx_t_11 >= PyTuple_GET_SIZE(__pyx_t_4)) break;
+        if (__pyx_t_11 >= PyTuple_GET_SIZE(__pyx_t_3)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_1 = PyTuple_GET_ITEM(__pyx_t_4, __pyx_t_11); __Pyx_INCREF(__pyx_t_1); __pyx_t_11++; if (unlikely(0 < 0)) __PYX_ERR(0, 620, __pyx_L1_error)
+        __pyx_t_1 = PyTuple_GET_ITEM(__pyx_t_3, __pyx_t_11); __Pyx_INCREF(__pyx_t_1); __pyx_t_11++; if (unlikely(0 < 0)) __PYX_ERR(0, 623, __pyx_L1_error)
         #else
-        __pyx_t_1 = PySequence_ITEM(__pyx_t_4, __pyx_t_11); __pyx_t_11++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 620, __pyx_L1_error)
+        __pyx_t_1 = PySequence_ITEM(__pyx_t_3, __pyx_t_11); __pyx_t_11++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 623, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_1);
         #endif
       }
     } else {
-      __pyx_t_1 = __pyx_t_12(__pyx_t_4);
+      __pyx_t_1 = __pyx_t_12(__pyx_t_3);
       if (unlikely(!__pyx_t_1)) {
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
           if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else __PYX_ERR(0, 620, __pyx_L1_error)
+          else __PYX_ERR(0, 623, __pyx_L1_error)
         }
         break;
       }
@@ -20785,14 +20976,14 @@ static PyObject *__pyx_pf_6LXGREP_16ReplicateSDE2GDB___init__(CYTHON_UNUSED PyOb
     __Pyx_XDECREF_SET(__pyx_v_ds, __pyx_t_1);
     __pyx_t_1 = 0;
 
-    /* "LXG/replication.py":621
+    /* "LXG/replication.py":624
  *         pbar01 = tqdm(dss, position=0, colour='GREEN')
  *         for ds in pbar01:
  *             pbar01.set_description(ds)             # <<<<<<<<<<<<<<
  *             dsname = '%s' % self.newname('SDE.', ds)
  *             # copy everything in dataset
  */
-    __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_v_pbar01, __pyx_n_s_set_description); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 621, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_v_pbar01, __pyx_n_s_set_description); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 624, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     __pyx_t_7 = NULL;
     if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_6))) {
@@ -20806,19 +20997,19 @@ static PyObject *__pyx_pf_6LXGREP_16ReplicateSDE2GDB___init__(CYTHON_UNUSED PyOb
     }
     __pyx_t_1 = (__pyx_t_7) ? __Pyx_PyObject_Call2Args(__pyx_t_6, __pyx_t_7, __pyx_v_ds) : __Pyx_PyObject_CallOneArg(__pyx_t_6, __pyx_v_ds);
     __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 621, __pyx_L1_error)
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 624, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-    /* "LXG/replication.py":622
+    /* "LXG/replication.py":625
  *         for ds in pbar01:
  *             pbar01.set_description(ds)
  *             dsname = '%s' % self.newname('SDE.', ds)             # <<<<<<<<<<<<<<
  *             # copy everything in dataset
  *             try:
  */
-    __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_newname); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 622, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_newname); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 625, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     __pyx_t_7 = NULL;
     __pyx_t_8 = 0;
@@ -20835,7 +21026,7 @@ static PyObject *__pyx_pf_6LXGREP_16ReplicateSDE2GDB___init__(CYTHON_UNUSED PyOb
     #if CYTHON_FAST_PYCALL
     if (PyFunction_Check(__pyx_t_6)) {
       PyObject *__pyx_temp[3] = {__pyx_t_7, __pyx_kp_s_SDE, __pyx_v_ds};
-      __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_6, __pyx_temp+1-__pyx_t_8, 2+__pyx_t_8); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 622, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_6, __pyx_temp+1-__pyx_t_8, 2+__pyx_t_8); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 625, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
       __Pyx_GOTREF(__pyx_t_1);
     } else
@@ -20843,35 +21034,35 @@ static PyObject *__pyx_pf_6LXGREP_16ReplicateSDE2GDB___init__(CYTHON_UNUSED PyOb
     #if CYTHON_FAST_PYCCALL
     if (__Pyx_PyFastCFunction_Check(__pyx_t_6)) {
       PyObject *__pyx_temp[3] = {__pyx_t_7, __pyx_kp_s_SDE, __pyx_v_ds};
-      __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_6, __pyx_temp+1-__pyx_t_8, 2+__pyx_t_8); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 622, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_6, __pyx_temp+1-__pyx_t_8, 2+__pyx_t_8); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 625, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
       __Pyx_GOTREF(__pyx_t_1);
     } else
     #endif
     {
-      __pyx_t_5 = PyTuple_New(2+__pyx_t_8); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 622, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_5);
+      __pyx_t_2 = PyTuple_New(2+__pyx_t_8); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 625, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_2);
       if (__pyx_t_7) {
-        __Pyx_GIVEREF(__pyx_t_7); PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_7); __pyx_t_7 = NULL;
+        __Pyx_GIVEREF(__pyx_t_7); PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_t_7); __pyx_t_7 = NULL;
       }
       __Pyx_INCREF(__pyx_kp_s_SDE);
       __Pyx_GIVEREF(__pyx_kp_s_SDE);
-      PyTuple_SET_ITEM(__pyx_t_5, 0+__pyx_t_8, __pyx_kp_s_SDE);
+      PyTuple_SET_ITEM(__pyx_t_2, 0+__pyx_t_8, __pyx_kp_s_SDE);
       __Pyx_INCREF(__pyx_v_ds);
       __Pyx_GIVEREF(__pyx_v_ds);
-      PyTuple_SET_ITEM(__pyx_t_5, 1+__pyx_t_8, __pyx_v_ds);
-      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_t_5, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 622, __pyx_L1_error)
+      PyTuple_SET_ITEM(__pyx_t_2, 1+__pyx_t_8, __pyx_v_ds);
+      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_t_2, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 625, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
-      __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+      __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     }
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-    __pyx_t_6 = __Pyx_PyString_FormatSafe(__pyx_kp_s_s_2, __pyx_t_1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 622, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyString_FormatSafe(__pyx_kp_s_s_2, __pyx_t_1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 625, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __Pyx_XDECREF_SET(__pyx_v_dsname, ((PyObject*)__pyx_t_6));
     __pyx_t_6 = 0;
 
-    /* "LXG/replication.py":624
+    /* "LXG/replication.py":627
  *             dsname = '%s' % self.newname('SDE.', ds)
  *             # copy everything in dataset
  *             try:             # <<<<<<<<<<<<<<
@@ -20887,28 +21078,28 @@ static PyObject *__pyx_pf_6LXGREP_16ReplicateSDE2GDB___init__(CYTHON_UNUSED PyOb
       __Pyx_XGOTREF(__pyx_t_15);
       /*try:*/ {
 
-        /* "LXG/replication.py":625
+        /* "LXG/replication.py":628
  *             # copy everything in dataset
  *             try:
  *                 out_data = os.path.join(db_out, dsname)             # <<<<<<<<<<<<<<
  *                 arcpy.Copy_management(ds, out_data)
  *             except Exception as e:
  */
-        __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_os); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 625, __pyx_L8_error)
+        __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_os); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 628, __pyx_L8_error)
         __Pyx_GOTREF(__pyx_t_1);
-        __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_path); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 625, __pyx_L8_error)
-        __Pyx_GOTREF(__pyx_t_5);
+        __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_path); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 628, __pyx_L8_error)
+        __Pyx_GOTREF(__pyx_t_2);
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-        __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_join); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 625, __pyx_L8_error)
+        __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_join); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 628, __pyx_L8_error)
         __Pyx_GOTREF(__pyx_t_1);
-        __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-        __pyx_t_5 = NULL;
+        __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+        __pyx_t_2 = NULL;
         __pyx_t_8 = 0;
         if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_1))) {
-          __pyx_t_5 = PyMethod_GET_SELF(__pyx_t_1);
-          if (likely(__pyx_t_5)) {
+          __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_1);
+          if (likely(__pyx_t_2)) {
             PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_1);
-            __Pyx_INCREF(__pyx_t_5);
+            __Pyx_INCREF(__pyx_t_2);
             __Pyx_INCREF(function);
             __Pyx_DECREF_SET(__pyx_t_1, function);
             __pyx_t_8 = 1;
@@ -20916,25 +21107,25 @@ static PyObject *__pyx_pf_6LXGREP_16ReplicateSDE2GDB___init__(CYTHON_UNUSED PyOb
         }
         #if CYTHON_FAST_PYCALL
         if (PyFunction_Check(__pyx_t_1)) {
-          PyObject *__pyx_temp[3] = {__pyx_t_5, __pyx_v_db_out, __pyx_v_dsname};
-          __pyx_t_6 = __Pyx_PyFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_8, 2+__pyx_t_8); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 625, __pyx_L8_error)
-          __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
+          PyObject *__pyx_temp[3] = {__pyx_t_2, __pyx_v_db_out, __pyx_v_dsname};
+          __pyx_t_6 = __Pyx_PyFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_8, 2+__pyx_t_8); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 628, __pyx_L8_error)
+          __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
           __Pyx_GOTREF(__pyx_t_6);
         } else
         #endif
         #if CYTHON_FAST_PYCCALL
         if (__Pyx_PyFastCFunction_Check(__pyx_t_1)) {
-          PyObject *__pyx_temp[3] = {__pyx_t_5, __pyx_v_db_out, __pyx_v_dsname};
-          __pyx_t_6 = __Pyx_PyCFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_8, 2+__pyx_t_8); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 625, __pyx_L8_error)
-          __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
+          PyObject *__pyx_temp[3] = {__pyx_t_2, __pyx_v_db_out, __pyx_v_dsname};
+          __pyx_t_6 = __Pyx_PyCFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_8, 2+__pyx_t_8); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 628, __pyx_L8_error)
+          __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
           __Pyx_GOTREF(__pyx_t_6);
         } else
         #endif
         {
-          __pyx_t_7 = PyTuple_New(2+__pyx_t_8); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 625, __pyx_L8_error)
+          __pyx_t_7 = PyTuple_New(2+__pyx_t_8); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 628, __pyx_L8_error)
           __Pyx_GOTREF(__pyx_t_7);
-          if (__pyx_t_5) {
-            __Pyx_GIVEREF(__pyx_t_5); PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_t_5); __pyx_t_5 = NULL;
+          if (__pyx_t_2) {
+            __Pyx_GIVEREF(__pyx_t_2); PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_t_2); __pyx_t_2 = NULL;
           }
           __Pyx_INCREF(__pyx_v_db_out);
           __Pyx_GIVEREF(__pyx_v_db_out);
@@ -20942,7 +21133,7 @@ static PyObject *__pyx_pf_6LXGREP_16ReplicateSDE2GDB___init__(CYTHON_UNUSED PyOb
           __Pyx_INCREF(__pyx_v_dsname);
           __Pyx_GIVEREF(__pyx_v_dsname);
           PyTuple_SET_ITEM(__pyx_t_7, 1+__pyx_t_8, __pyx_v_dsname);
-          __pyx_t_6 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_7, NULL); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 625, __pyx_L8_error)
+          __pyx_t_6 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_7, NULL); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 628, __pyx_L8_error)
           __Pyx_GOTREF(__pyx_t_6);
           __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
         }
@@ -20950,16 +21141,16 @@ static PyObject *__pyx_pf_6LXGREP_16ReplicateSDE2GDB___init__(CYTHON_UNUSED PyOb
         __Pyx_XDECREF_SET(__pyx_v_out_data, __pyx_t_6);
         __pyx_t_6 = 0;
 
-        /* "LXG/replication.py":626
+        /* "LXG/replication.py":629
  *             try:
  *                 out_data = os.path.join(db_out, dsname)
  *                 arcpy.Copy_management(ds, out_data)             # <<<<<<<<<<<<<<
  *             except Exception as e:
  *                 arcpy.AddError(e)
  */
-        __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 626, __pyx_L8_error)
+        __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 629, __pyx_L8_error)
         __Pyx_GOTREF(__pyx_t_1);
-        __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_Copy_management); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 626, __pyx_L8_error)
+        __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_Copy_management); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 629, __pyx_L8_error)
         __Pyx_GOTREF(__pyx_t_7);
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
         __pyx_t_1 = NULL;
@@ -20977,7 +21168,7 @@ static PyObject *__pyx_pf_6LXGREP_16ReplicateSDE2GDB___init__(CYTHON_UNUSED PyOb
         #if CYTHON_FAST_PYCALL
         if (PyFunction_Check(__pyx_t_7)) {
           PyObject *__pyx_temp[3] = {__pyx_t_1, __pyx_v_ds, __pyx_v_out_data};
-          __pyx_t_6 = __Pyx_PyFunction_FastCall(__pyx_t_7, __pyx_temp+1-__pyx_t_8, 2+__pyx_t_8); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 626, __pyx_L8_error)
+          __pyx_t_6 = __Pyx_PyFunction_FastCall(__pyx_t_7, __pyx_temp+1-__pyx_t_8, 2+__pyx_t_8); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 629, __pyx_L8_error)
           __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
           __Pyx_GOTREF(__pyx_t_6);
         } else
@@ -20985,31 +21176,31 @@ static PyObject *__pyx_pf_6LXGREP_16ReplicateSDE2GDB___init__(CYTHON_UNUSED PyOb
         #if CYTHON_FAST_PYCCALL
         if (__Pyx_PyFastCFunction_Check(__pyx_t_7)) {
           PyObject *__pyx_temp[3] = {__pyx_t_1, __pyx_v_ds, __pyx_v_out_data};
-          __pyx_t_6 = __Pyx_PyCFunction_FastCall(__pyx_t_7, __pyx_temp+1-__pyx_t_8, 2+__pyx_t_8); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 626, __pyx_L8_error)
+          __pyx_t_6 = __Pyx_PyCFunction_FastCall(__pyx_t_7, __pyx_temp+1-__pyx_t_8, 2+__pyx_t_8); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 629, __pyx_L8_error)
           __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
           __Pyx_GOTREF(__pyx_t_6);
         } else
         #endif
         {
-          __pyx_t_5 = PyTuple_New(2+__pyx_t_8); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 626, __pyx_L8_error)
-          __Pyx_GOTREF(__pyx_t_5);
+          __pyx_t_2 = PyTuple_New(2+__pyx_t_8); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 629, __pyx_L8_error)
+          __Pyx_GOTREF(__pyx_t_2);
           if (__pyx_t_1) {
-            __Pyx_GIVEREF(__pyx_t_1); PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_1); __pyx_t_1 = NULL;
+            __Pyx_GIVEREF(__pyx_t_1); PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_t_1); __pyx_t_1 = NULL;
           }
           __Pyx_INCREF(__pyx_v_ds);
           __Pyx_GIVEREF(__pyx_v_ds);
-          PyTuple_SET_ITEM(__pyx_t_5, 0+__pyx_t_8, __pyx_v_ds);
+          PyTuple_SET_ITEM(__pyx_t_2, 0+__pyx_t_8, __pyx_v_ds);
           __Pyx_INCREF(__pyx_v_out_data);
           __Pyx_GIVEREF(__pyx_v_out_data);
-          PyTuple_SET_ITEM(__pyx_t_5, 1+__pyx_t_8, __pyx_v_out_data);
-          __pyx_t_6 = __Pyx_PyObject_Call(__pyx_t_7, __pyx_t_5, NULL); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 626, __pyx_L8_error)
+          PyTuple_SET_ITEM(__pyx_t_2, 1+__pyx_t_8, __pyx_v_out_data);
+          __pyx_t_6 = __Pyx_PyObject_Call(__pyx_t_7, __pyx_t_2, NULL); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 629, __pyx_L8_error)
           __Pyx_GOTREF(__pyx_t_6);
-          __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+          __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
         }
         __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
         __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
 
-        /* "LXG/replication.py":624
+        /* "LXG/replication.py":627
  *             dsname = '%s' % self.newname('SDE.', ds)
  *             # copy everything in dataset
  *             try:             # <<<<<<<<<<<<<<
@@ -21023,12 +21214,12 @@ static PyObject *__pyx_pf_6LXGREP_16ReplicateSDE2GDB___init__(CYTHON_UNUSED PyOb
       goto __pyx_L15_try_end;
       __pyx_L8_error:;
       __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
-      __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
+      __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
       __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
       __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
       __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
 
-      /* "LXG/replication.py":627
+      /* "LXG/replication.py":630
  *                 out_data = os.path.join(db_out, dsname)
  *                 arcpy.Copy_management(ds, out_data)
  *             except Exception as e:             # <<<<<<<<<<<<<<
@@ -21038,23 +21229,23 @@ static PyObject *__pyx_pf_6LXGREP_16ReplicateSDE2GDB___init__(CYTHON_UNUSED PyOb
       __pyx_t_8 = __Pyx_PyErr_ExceptionMatches(((PyObject *)(&((PyTypeObject*)PyExc_Exception)[0])));
       if (__pyx_t_8) {
         __Pyx_AddTraceback("LXGREP.ReplicateSDE2GDB.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
-        if (__Pyx_GetException(&__pyx_t_6, &__pyx_t_7, &__pyx_t_5) < 0) __PYX_ERR(0, 627, __pyx_L10_except_error)
+        if (__Pyx_GetException(&__pyx_t_6, &__pyx_t_7, &__pyx_t_2) < 0) __PYX_ERR(0, 630, __pyx_L10_except_error)
         __Pyx_GOTREF(__pyx_t_6);
         __Pyx_GOTREF(__pyx_t_7);
-        __Pyx_GOTREF(__pyx_t_5);
+        __Pyx_GOTREF(__pyx_t_2);
         __Pyx_INCREF(__pyx_t_7);
         __Pyx_XDECREF_SET(__pyx_v_e, __pyx_t_7);
 
-        /* "LXG/replication.py":628
+        /* "LXG/replication.py":631
  *                 arcpy.Copy_management(ds, out_data)
  *             except Exception as e:
  *                 arcpy.AddError(e)             # <<<<<<<<<<<<<<
  * 
- *         shutil.rmtree(current_dir)
+ *         shutil.rmtree(self.temp_dir)
  */
-        __Pyx_GetModuleGlobalName(__pyx_t_9, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 628, __pyx_L10_except_error)
+        __Pyx_GetModuleGlobalName(__pyx_t_9, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 631, __pyx_L10_except_error)
         __Pyx_GOTREF(__pyx_t_9);
-        __pyx_t_16 = __Pyx_PyObject_GetAttrStr(__pyx_t_9, __pyx_n_s_AddError); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 628, __pyx_L10_except_error)
+        __pyx_t_16 = __Pyx_PyObject_GetAttrStr(__pyx_t_9, __pyx_n_s_AddError); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 631, __pyx_L10_except_error)
         __Pyx_GOTREF(__pyx_t_16);
         __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
         __pyx_t_9 = NULL;
@@ -21069,19 +21260,19 @@ static PyObject *__pyx_pf_6LXGREP_16ReplicateSDE2GDB___init__(CYTHON_UNUSED PyOb
         }
         __pyx_t_1 = (__pyx_t_9) ? __Pyx_PyObject_Call2Args(__pyx_t_16, __pyx_t_9, __pyx_v_e) : __Pyx_PyObject_CallOneArg(__pyx_t_16, __pyx_v_e);
         __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
-        if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 628, __pyx_L10_except_error)
+        if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 631, __pyx_L10_except_error)
         __Pyx_GOTREF(__pyx_t_1);
         __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
         __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
         __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
-        __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
+        __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
         goto __pyx_L9_exception_handled;
       }
       goto __pyx_L10_except_error;
       __pyx_L10_except_error:;
 
-      /* "LXG/replication.py":624
+      /* "LXG/replication.py":627
  *             dsname = '%s' % self.newname('SDE.', ds)
  *             # copy everything in dataset
  *             try:             # <<<<<<<<<<<<<<
@@ -21101,7 +21292,7 @@ static PyObject *__pyx_pf_6LXGREP_16ReplicateSDE2GDB___init__(CYTHON_UNUSED PyOb
       __pyx_L15_try_end:;
     }
 
-    /* "LXG/replication.py":620
+    /* "LXG/replication.py":623
  *         dss = sorted(arcpy.ListDatasets(self.wildcard_ds, "ALL"))
  *         pbar01 = tqdm(dss, position=0, colour='GREEN')
  *         for ds in pbar01:             # <<<<<<<<<<<<<<
@@ -21109,22 +21300,22 @@ static PyObject *__pyx_pf_6LXGREP_16ReplicateSDE2GDB___init__(CYTHON_UNUSED PyOb
  *             dsname = '%s' % self.newname('SDE.', ds)
  */
   }
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "LXG/replication.py":630
+  /* "LXG/replication.py":633
  *                 arcpy.AddError(e)
  * 
- *         shutil.rmtree(current_dir)             # <<<<<<<<<<<<<<
+ *         shutil.rmtree(self.temp_dir)             # <<<<<<<<<<<<<<
  * 
  *     def temp_connection(self):
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_shutil); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 630, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_rmtree); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 630, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_shutil); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 633, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_rmtree); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 633, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_current_dir); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 630, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_temp_dir); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 633, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_6 = NULL;
   if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_7))) {
     __pyx_t_6 = PyMethod_GET_SELF(__pyx_t_7);
@@ -21135,15 +21326,15 @@ static PyObject *__pyx_pf_6LXGREP_16ReplicateSDE2GDB___init__(CYTHON_UNUSED PyOb
       __Pyx_DECREF_SET(__pyx_t_7, function);
     }
   }
-  __pyx_t_4 = (__pyx_t_6) ? __Pyx_PyObject_Call2Args(__pyx_t_7, __pyx_t_6, __pyx_t_5) : __Pyx_PyObject_CallOneArg(__pyx_t_7, __pyx_t_5);
+  __pyx_t_3 = (__pyx_t_6) ? __Pyx_PyObject_Call2Args(__pyx_t_7, __pyx_t_6, __pyx_t_2) : __Pyx_PyObject_CallOneArg(__pyx_t_7, __pyx_t_2);
   __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 630, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 633, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "LXG/replication.py":592
+  /* "LXG/replication.py":594
  * 
  * class ReplicateSDE2GDB:
  *     def __init__(self, sde_instance, sde_username, sde_password,             # <<<<<<<<<<<<<<
@@ -21156,8 +21347,8 @@ static PyObject *__pyx_pf_6LXGREP_16ReplicateSDE2GDB___init__(CYTHON_UNUSED PyOb
   goto __pyx_L0;
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_XDECREF(__pyx_t_4);
-  __Pyx_XDECREF(__pyx_t_5);
+  __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_6);
   __Pyx_XDECREF(__pyx_t_7);
   __Pyx_XDECREF(__pyx_t_9);
@@ -21178,12 +21369,12 @@ static PyObject *__pyx_pf_6LXGREP_16ReplicateSDE2GDB___init__(CYTHON_UNUSED PyOb
   return __pyx_r;
 }
 
-/* "LXG/replication.py":632
- *         shutil.rmtree(current_dir)
+/* "LXG/replication.py":635
+ *         shutil.rmtree(self.temp_dir)
  * 
  *     def temp_connection(self):             # <<<<<<<<<<<<<<
  *         # create connection parameters
- *         conn = {"out_folder_path": current_dir,
+ *         conn = {"out_folder_path": self.temp_dir,
  */
 
 /* Python wrapper */
@@ -21218,81 +21409,81 @@ static PyObject *__pyx_pf_6LXGREP_16ReplicateSDE2GDB_2temp_connection(CYTHON_UNU
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("temp_connection", 0);
 
-  /* "LXG/replication.py":634
+  /* "LXG/replication.py":637
  *     def temp_connection(self):
  *         # create connection parameters
- *         conn = {"out_folder_path": current_dir,             # <<<<<<<<<<<<<<
+ *         conn = {"out_folder_path": self.temp_dir,             # <<<<<<<<<<<<<<
  *                 "out_name": 'temp.sde',
  *                 "database_platform": 'ORACLE',
  */
-  __pyx_t_1 = __Pyx_PyDict_NewPresized(9); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 634, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyDict_NewPresized(9); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 637, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_current_dir); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 634, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_temp_dir); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 637, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_out_folder_path, __pyx_t_2) < 0) __PYX_ERR(0, 634, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_out_folder_path, __pyx_t_2) < 0) __PYX_ERR(0, 637, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_out_name, __pyx_kp_s_temp_sde) < 0) __PYX_ERR(0, 634, __pyx_L1_error)
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_database_platform, __pyx_n_s_ORACLE) < 0) __PYX_ERR(0, 634, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_out_name, __pyx_kp_s_temp_sde) < 0) __PYX_ERR(0, 637, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_database_platform, __pyx_n_s_ORACLE) < 0) __PYX_ERR(0, 637, __pyx_L1_error)
 
-  /* "LXG/replication.py":637
+  /* "LXG/replication.py":640
  *                 "out_name": 'temp.sde',
  *                 "database_platform": 'ORACLE',
  *                 "instance": self.instance,             # <<<<<<<<<<<<<<
  *                 "account_authentication": "DATABASE_AUTH",
  *                 "database": "",
  */
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_instance); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 637, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_instance); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 640, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_instance, __pyx_t_2) < 0) __PYX_ERR(0, 634, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_instance, __pyx_t_2) < 0) __PYX_ERR(0, 637, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_account_authentication, __pyx_n_s_DATABASE_AUTH) < 0) __PYX_ERR(0, 634, __pyx_L1_error)
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_database, __pyx_kp_s_) < 0) __PYX_ERR(0, 634, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_account_authentication, __pyx_n_s_DATABASE_AUTH) < 0) __PYX_ERR(0, 637, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_database, __pyx_kp_s_) < 0) __PYX_ERR(0, 637, __pyx_L1_error)
 
-  /* "LXG/replication.py":640
+  /* "LXG/replication.py":643
  *                 "account_authentication": "DATABASE_AUTH",
  *                 "database": "",
  *                 "username": self.usr,             # <<<<<<<<<<<<<<
  *                 "password": self.pwd,
  *                 "save_user_pass": "SAVE_USERNAME"}
  */
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_usr); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 640, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_usr); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 643, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_username, __pyx_t_2) < 0) __PYX_ERR(0, 634, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_username, __pyx_t_2) < 0) __PYX_ERR(0, 637, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "LXG/replication.py":641
+  /* "LXG/replication.py":644
  *                 "database": "",
  *                 "username": self.usr,
  *                 "password": self.pwd,             # <<<<<<<<<<<<<<
  *                 "save_user_pass": "SAVE_USERNAME"}
  * 
  */
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_pwd); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 641, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_pwd); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 644, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_password, __pyx_t_2) < 0) __PYX_ERR(0, 634, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_password, __pyx_t_2) < 0) __PYX_ERR(0, 637, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_save_user_pass, __pyx_n_s_SAVE_USERNAME) < 0) __PYX_ERR(0, 634, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_save_user_pass, __pyx_n_s_SAVE_USERNAME) < 0) __PYX_ERR(0, 637, __pyx_L1_error)
   __pyx_v_conn = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "LXG/replication.py":644
+  /* "LXG/replication.py":647
  *                 "save_user_pass": "SAVE_USERNAME"}
  * 
  *         temp_sde = os.path.join(conn["out_folder_path"], conn["out_name"])             # <<<<<<<<<<<<<<
  * 
  *         if arcpy.Exists(temp_sde):
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_os); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 644, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_os); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 647, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_path); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 644, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_path); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 647, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_join); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 644, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_join); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 647, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = __Pyx_PyDict_GetItem(__pyx_v_conn, __pyx_n_s_out_folder_path); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 644, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyDict_GetItem(__pyx_v_conn, __pyx_n_s_out_folder_path); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 647, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = __Pyx_PyDict_GetItem(__pyx_v_conn, __pyx_n_s_out_name); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 644, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyDict_GetItem(__pyx_v_conn, __pyx_n_s_out_name); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 647, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __pyx_t_5 = NULL;
   __pyx_t_6 = 0;
@@ -21309,7 +21500,7 @@ static PyObject *__pyx_pf_6LXGREP_16ReplicateSDE2GDB_2temp_connection(CYTHON_UNU
   #if CYTHON_FAST_PYCALL
   if (PyFunction_Check(__pyx_t_2)) {
     PyObject *__pyx_temp[3] = {__pyx_t_5, __pyx_t_3, __pyx_t_4};
-    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_6, 2+__pyx_t_6); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 644, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_6, 2+__pyx_t_6); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 647, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -21319,7 +21510,7 @@ static PyObject *__pyx_pf_6LXGREP_16ReplicateSDE2GDB_2temp_connection(CYTHON_UNU
   #if CYTHON_FAST_PYCCALL
   if (__Pyx_PyFastCFunction_Check(__pyx_t_2)) {
     PyObject *__pyx_temp[3] = {__pyx_t_5, __pyx_t_3, __pyx_t_4};
-    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_6, 2+__pyx_t_6); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 644, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_6, 2+__pyx_t_6); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 647, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -21327,7 +21518,7 @@ static PyObject *__pyx_pf_6LXGREP_16ReplicateSDE2GDB_2temp_connection(CYTHON_UNU
   } else
   #endif
   {
-    __pyx_t_7 = PyTuple_New(2+__pyx_t_6); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 644, __pyx_L1_error)
+    __pyx_t_7 = PyTuple_New(2+__pyx_t_6); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 647, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
     if (__pyx_t_5) {
       __Pyx_GIVEREF(__pyx_t_5); PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_t_5); __pyx_t_5 = NULL;
@@ -21338,7 +21529,7 @@ static PyObject *__pyx_pf_6LXGREP_16ReplicateSDE2GDB_2temp_connection(CYTHON_UNU
     PyTuple_SET_ITEM(__pyx_t_7, 1+__pyx_t_6, __pyx_t_4);
     __pyx_t_3 = 0;
     __pyx_t_4 = 0;
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_7, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 644, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_7, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 647, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
   }
@@ -21346,16 +21537,16 @@ static PyObject *__pyx_pf_6LXGREP_16ReplicateSDE2GDB_2temp_connection(CYTHON_UNU
   __pyx_v_temp_sde = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "LXG/replication.py":646
+  /* "LXG/replication.py":649
  *         temp_sde = os.path.join(conn["out_folder_path"], conn["out_name"])
  * 
  *         if arcpy.Exists(temp_sde):             # <<<<<<<<<<<<<<
  *             arcpy.Delete_management(temp_sde)
  * 
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 646, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 649, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_Exists); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 646, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_Exists); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 649, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_t_2 = NULL;
@@ -21370,23 +21561,23 @@ static PyObject *__pyx_pf_6LXGREP_16ReplicateSDE2GDB_2temp_connection(CYTHON_UNU
   }
   __pyx_t_1 = (__pyx_t_2) ? __Pyx_PyObject_Call2Args(__pyx_t_7, __pyx_t_2, __pyx_v_temp_sde) : __Pyx_PyObject_CallOneArg(__pyx_t_7, __pyx_v_temp_sde);
   __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 646, __pyx_L1_error)
+  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 649, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __pyx_t_8 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_8 < 0)) __PYX_ERR(0, 646, __pyx_L1_error)
+  __pyx_t_8 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_8 < 0)) __PYX_ERR(0, 649, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   if (__pyx_t_8) {
 
-    /* "LXG/replication.py":647
+    /* "LXG/replication.py":650
  * 
  *         if arcpy.Exists(temp_sde):
  *             arcpy.Delete_management(temp_sde)             # <<<<<<<<<<<<<<
  * 
  *         arcpy.CreateDatabaseConnection_management(**conn)
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_7, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 647, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_7, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 650, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
-    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_n_s_Delete_management); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 647, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_n_s_Delete_management); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 650, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
     __pyx_t_7 = NULL;
@@ -21401,12 +21592,12 @@ static PyObject *__pyx_pf_6LXGREP_16ReplicateSDE2GDB_2temp_connection(CYTHON_UNU
     }
     __pyx_t_1 = (__pyx_t_7) ? __Pyx_PyObject_Call2Args(__pyx_t_2, __pyx_t_7, __pyx_v_temp_sde) : __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_v_temp_sde);
     __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 647, __pyx_L1_error)
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 650, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-    /* "LXG/replication.py":646
+    /* "LXG/replication.py":649
  *         temp_sde = os.path.join(conn["out_folder_path"], conn["out_name"])
  * 
  *         if arcpy.Exists(temp_sde):             # <<<<<<<<<<<<<<
@@ -21415,27 +21606,27 @@ static PyObject *__pyx_pf_6LXGREP_16ReplicateSDE2GDB_2temp_connection(CYTHON_UNU
  */
   }
 
-  /* "LXG/replication.py":649
+  /* "LXG/replication.py":652
  *             arcpy.Delete_management(temp_sde)
  * 
  *         arcpy.CreateDatabaseConnection_management(**conn)             # <<<<<<<<<<<<<<
  * 
  *         return temp_sde
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 649, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_arcpy); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 652, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_CreateDatabaseConnection_managem); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 649, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_CreateDatabaseConnection_managem); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 652, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = PyDict_Copy(__pyx_v_conn); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 649, __pyx_L1_error)
+  __pyx_t_1 = PyDict_Copy(__pyx_v_conn); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 652, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_7 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_empty_tuple, __pyx_t_1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 649, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_empty_tuple, __pyx_t_1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 652, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
-  /* "LXG/replication.py":651
+  /* "LXG/replication.py":654
  *         arcpy.CreateDatabaseConnection_management(**conn)
  * 
  *         return temp_sde             # <<<<<<<<<<<<<<
@@ -21447,12 +21638,12 @@ static PyObject *__pyx_pf_6LXGREP_16ReplicateSDE2GDB_2temp_connection(CYTHON_UNU
   __pyx_r = __pyx_v_temp_sde;
   goto __pyx_L0;
 
-  /* "LXG/replication.py":632
- *         shutil.rmtree(current_dir)
+  /* "LXG/replication.py":635
+ *         shutil.rmtree(self.temp_dir)
  * 
  *     def temp_connection(self):             # <<<<<<<<<<<<<<
  *         # create connection parameters
- *         conn = {"out_folder_path": current_dir,
+ *         conn = {"out_folder_path": self.temp_dir,
  */
 
   /* function exit code */
@@ -21473,7 +21664,7 @@ static PyObject *__pyx_pf_6LXGREP_16ReplicateSDE2GDB_2temp_connection(CYTHON_UNU
   return __pyx_r;
 }
 
-/* "LXG/replication.py":654
+/* "LXG/replication.py":657
  * 
  *     @staticmethod
  *     def newname(target_string, old_name):             # <<<<<<<<<<<<<<
@@ -21516,11 +21707,11 @@ static PyObject *__pyx_pw_6LXGREP_16ReplicateSDE2GDB_5newname(PyObject *__pyx_se
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_old_name)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("newname", 1, 2, 2, 1); __PYX_ERR(0, 654, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("newname", 1, 2, 2, 1); __PYX_ERR(0, 657, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "newname") < 0)) __PYX_ERR(0, 654, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "newname") < 0)) __PYX_ERR(0, 657, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
       goto __pyx_L5_argtuple_error;
@@ -21533,7 +21724,7 @@ static PyObject *__pyx_pw_6LXGREP_16ReplicateSDE2GDB_5newname(PyObject *__pyx_se
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("newname", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 654, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("newname", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 657, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("LXGREP.ReplicateSDE2GDB.newname", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -21560,14 +21751,14 @@ static PyObject *__pyx_pf_6LXGREP_16ReplicateSDE2GDB_4newname(CYTHON_UNUSED PyOb
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("newname", 0);
 
-  /* "LXG/replication.py":655
+  /* "LXG/replication.py":658
  *     @staticmethod
  *     def newname(target_string, old_name):
  *         new_name = old_name.replace(target_string, "", 1)             # <<<<<<<<<<<<<<
  *         return new_name
  * 
  */
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_old_name, __pyx_n_s_replace); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 655, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_old_name, __pyx_n_s_replace); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 658, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_3 = NULL;
   __pyx_t_4 = 0;
@@ -21584,7 +21775,7 @@ static PyObject *__pyx_pf_6LXGREP_16ReplicateSDE2GDB_4newname(CYTHON_UNUSED PyOb
   #if CYTHON_FAST_PYCALL
   if (PyFunction_Check(__pyx_t_2)) {
     PyObject *__pyx_temp[4] = {__pyx_t_3, __pyx_v_target_string, __pyx_kp_s_, __pyx_int_1};
-    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_4, 3+__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 655, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_4, 3+__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 658, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_GOTREF(__pyx_t_1);
   } else
@@ -21592,13 +21783,13 @@ static PyObject *__pyx_pf_6LXGREP_16ReplicateSDE2GDB_4newname(CYTHON_UNUSED PyOb
   #if CYTHON_FAST_PYCCALL
   if (__Pyx_PyFastCFunction_Check(__pyx_t_2)) {
     PyObject *__pyx_temp[4] = {__pyx_t_3, __pyx_v_target_string, __pyx_kp_s_, __pyx_int_1};
-    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_4, 3+__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 655, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_4, 3+__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 658, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_GOTREF(__pyx_t_1);
   } else
   #endif
   {
-    __pyx_t_5 = PyTuple_New(3+__pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 655, __pyx_L1_error)
+    __pyx_t_5 = PyTuple_New(3+__pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 658, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     if (__pyx_t_3) {
       __Pyx_GIVEREF(__pyx_t_3); PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_3); __pyx_t_3 = NULL;
@@ -21612,7 +21803,7 @@ static PyObject *__pyx_pf_6LXGREP_16ReplicateSDE2GDB_4newname(CYTHON_UNUSED PyOb
     __Pyx_INCREF(__pyx_int_1);
     __Pyx_GIVEREF(__pyx_int_1);
     PyTuple_SET_ITEM(__pyx_t_5, 2+__pyx_t_4, __pyx_int_1);
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_5, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 655, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_5, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 658, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   }
@@ -21620,7 +21811,7 @@ static PyObject *__pyx_pf_6LXGREP_16ReplicateSDE2GDB_4newname(CYTHON_UNUSED PyOb
   __pyx_v_new_name = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "LXG/replication.py":656
+  /* "LXG/replication.py":659
  *     def newname(target_string, old_name):
  *         new_name = old_name.replace(target_string, "", 1)
  *         return new_name             # <<<<<<<<<<<<<<
@@ -21632,7 +21823,7 @@ static PyObject *__pyx_pf_6LXGREP_16ReplicateSDE2GDB_4newname(CYTHON_UNUSED PyOb
   __pyx_r = __pyx_v_new_name;
   goto __pyx_L0;
 
-  /* "LXG/replication.py":654
+  /* "LXG/replication.py":657
  * 
  *     @staticmethod
  *     def newname(target_string, old_name):             # <<<<<<<<<<<<<<
@@ -22101,6 +22292,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_df, __pyx_k_df, sizeof(__pyx_k_df), 0, 0, 1, 1},
   {&__pyx_n_s_df_html, __pyx_k_df_html, sizeof(__pyx_k_df_html), 0, 0, 1, 1},
   {&__pyx_n_s_dir, __pyx_k_dir, sizeof(__pyx_k_dir), 0, 0, 1, 1},
+  {&__pyx_n_s_directory, __pyx_k_directory, sizeof(__pyx_k_directory), 0, 0, 1, 1},
   {&__pyx_n_s_dirname, __pyx_k_dirname, sizeof(__pyx_k_dirname), 0, 0, 1, 1},
   {&__pyx_n_s_dirs, __pyx_k_dirs, sizeof(__pyx_k_dirs), 0, 0, 1, 1},
   {&__pyx_n_s_doc, __pyx_k_doc, sizeof(__pyx_k_doc), 0, 0, 1, 1},
@@ -22297,6 +22489,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_target_feature, __pyx_k_target_feature, sizeof(__pyx_k_target_feature), 0, 0, 1, 1},
   {&__pyx_n_s_target_string, __pyx_k_target_string, sizeof(__pyx_k_target_string), 0, 0, 1, 1},
   {&__pyx_n_s_temp_connection, __pyx_k_temp_connection, sizeof(__pyx_k_temp_connection), 0, 0, 1, 1},
+  {&__pyx_n_s_temp_dir, __pyx_k_temp_dir, sizeof(__pyx_k_temp_dir), 0, 0, 1, 1},
   {&__pyx_kp_s_temp_sde, __pyx_k_temp_sde, sizeof(__pyx_k_temp_sde), 0, 0, 1, 0},
   {&__pyx_n_s_temp_sde_2, __pyx_k_temp_sde_2, sizeof(__pyx_k_temp_sde_2), 0, 0, 1, 1},
   {&__pyx_n_s_tempfile, __pyx_k_tempfile, sizeof(__pyx_k_tempfile), 0, 0, 1, 1},
@@ -22338,7 +22531,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {0, 0, 0, 0, 0, 0, 0}
 };
 static CYTHON_SMALL_CODE int __Pyx_InitCachedBuiltins(void) {
-  __pyx_builtin_staticmethod = __Pyx_GetBuiltinName(__pyx_n_s_staticmethod); if (!__pyx_builtin_staticmethod) __PYX_ERR(0, 653, __pyx_L1_error)
+  __pyx_builtin_staticmethod = __Pyx_GetBuiltinName(__pyx_n_s_staticmethod); if (!__pyx_builtin_staticmethod) __PYX_ERR(0, 656, __pyx_L1_error)
   __pyx_builtin_IOError = __Pyx_GetBuiltinName(__pyx_n_s_IOError); if (!__pyx_builtin_IOError) __PYX_ERR(0, 81, __pyx_L1_error)
   __pyx_builtin_zip = __Pyx_GetBuiltinName(__pyx_n_s_zip); if (!__pyx_builtin_zip) __PYX_ERR(0, 97, __pyx_L1_error)
   __pyx_builtin_open = __Pyx_GetBuiltinName(__pyx_n_s_open); if (!__pyx_builtin_open) __PYX_ERR(0, 99, __pyx_L1_error)
@@ -22384,50 +22577,50 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__4);
   __Pyx_GIVEREF(__pyx_tuple__4);
 
-  /* "LXG/replication.py":197
+  /* "LXG/replication.py":199
  * 
  *         arcpy.env.workspace = geodatabase
  *         dss = sorted(arcpy.ListDatasets("", "Feature"))             # <<<<<<<<<<<<<<
  *         pbar01 = tqdm(dss, desc=f'{geodatabase}', position=0, colour='GREEN')
  *         for ds in pbar01:
  */
-  __pyx_tuple__7 = PyTuple_Pack(2, __pyx_kp_s_, __pyx_n_s_Feature); if (unlikely(!__pyx_tuple__7)) __PYX_ERR(0, 197, __pyx_L1_error)
+  __pyx_tuple__7 = PyTuple_Pack(2, __pyx_kp_s_, __pyx_n_s_Feature); if (unlikely(!__pyx_tuple__7)) __PYX_ERR(0, 199, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__7);
   __Pyx_GIVEREF(__pyx_tuple__7);
 
-  /* "LXG/replication.py":426
+  /* "LXG/replication.py":428
  *                     fc_list = [[os.path.join(self.gdb1, ds, fc),
  *                                 os.path.join(self.gdb2, ds, fc),
  *                                 self.gdb_poly] for fc in fcs if fc in featureclass_list[:, 0]]             # <<<<<<<<<<<<<<
  *                     with mp.Pool(processes=4) as pool1:
  *                         results = tqdm(pool1.imap(self.fast_poly_append, fc_list),
  */
-  __pyx_slice__12 = PySlice_New(Py_None, Py_None, Py_None); if (unlikely(!__pyx_slice__12)) __PYX_ERR(0, 426, __pyx_L1_error)
+  __pyx_slice__12 = PySlice_New(Py_None, Py_None, Py_None); if (unlikely(!__pyx_slice__12)) __PYX_ERR(0, 428, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_slice__12);
   __Pyx_GIVEREF(__pyx_slice__12);
-  __pyx_tuple__13 = PyTuple_Pack(2, __pyx_slice__12, __pyx_int_0); if (unlikely(!__pyx_tuple__13)) __PYX_ERR(0, 426, __pyx_L1_error)
+  __pyx_tuple__13 = PyTuple_Pack(2, __pyx_slice__12, __pyx_int_0); if (unlikely(!__pyx_tuple__13)) __PYX_ERR(0, 428, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__13);
   __Pyx_GIVEREF(__pyx_tuple__13);
 
-  /* "LXG/replication.py":525
+  /* "LXG/replication.py":527
  *         # Start an edit session. Must provide the workspace.
  *         edit = arcpy.da.Editor(self.gdb1)
  *         edit.startEditing(False, False)             # <<<<<<<<<<<<<<
  * 
  *         # delete selected layer for old data
  */
-  __pyx_tuple__14 = PyTuple_Pack(2, Py_False, Py_False); if (unlikely(!__pyx_tuple__14)) __PYX_ERR(0, 525, __pyx_L1_error)
+  __pyx_tuple__14 = PyTuple_Pack(2, Py_False, Py_False); if (unlikely(!__pyx_tuple__14)) __PYX_ERR(0, 527, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__14);
   __Pyx_GIVEREF(__pyx_tuple__14);
 
-  /* "LXG/replication.py":587
+  /* "LXG/replication.py":589
  * 
  *         # Convert HTML to PDF
  *         with open('./report/replication_report.pdf', "w+b") as out_pdf:             # <<<<<<<<<<<<<<
  *             pisa.CreatePDF(src=generated_html, dest=out_pdf)
  * 
  */
-  __pyx_tuple__17 = PyTuple_Pack(2, __pyx_kp_s_report_replication_report_pdf, __pyx_kp_s_w_b); if (unlikely(!__pyx_tuple__17)) __PYX_ERR(0, 587, __pyx_L1_error)
+  __pyx_tuple__17 = PyTuple_Pack(2, __pyx_kp_s_report_replication_report_pdf, __pyx_kp_s_w_b); if (unlikely(!__pyx_tuple__17)) __PYX_ERR(0, 589, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__17);
   __Pyx_GIVEREF(__pyx_tuple__17);
 
@@ -22446,14 +22639,14 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   /* "LXG/replication.py":25
  *     return converted_time
  * 
- * def your_existance_in_questions(geodatabase_name):             # <<<<<<<<<<<<<<
- *     gdb_filename = os.path.join(current_dir, geodatabase_name)
+ * def your_existance_in_questions(directory, geodatabase_name):             # <<<<<<<<<<<<<<
+ *     gdb_filename = os.path.join(directory, geodatabase_name)
  *     if arcpy.Exists(gdb_filename):
  */
-  __pyx_tuple__20 = PyTuple_Pack(2, __pyx_n_s_geodatabase_name, __pyx_n_s_gdb_filename); if (unlikely(!__pyx_tuple__20)) __PYX_ERR(0, 25, __pyx_L1_error)
+  __pyx_tuple__20 = PyTuple_Pack(3, __pyx_n_s_directory, __pyx_n_s_geodatabase_name, __pyx_n_s_gdb_filename); if (unlikely(!__pyx_tuple__20)) __PYX_ERR(0, 25, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__20);
   __Pyx_GIVEREF(__pyx_tuple__20);
-  __pyx_codeobj__21 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__20, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_LXG_replication_py, __pyx_n_s_your_existance_in_questions, 25, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__21)) __PYX_ERR(0, 25, __pyx_L1_error)
+  __pyx_codeobj__21 = (PyObject*)__Pyx_PyCode_New(2, 0, 3, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__20, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_LXG_replication_py, __pyx_n_s_your_existance_in_questions, 25, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__21)) __PYX_ERR(0, 25, __pyx_L1_error)
 
   /* "LXG/replication.py":37
  * 
@@ -22522,181 +22715,181 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  *         self.gdb1 = init_geodatabase
  *         self.gdb2 = latest_geodatabase
  */
-  __pyx_tuple__32 = PyTuple_Pack(7, __pyx_n_s_self, __pyx_n_s_init_geodatabase, __pyx_n_s_latest_geodatabase, __pyx_n_s_report, __pyx_n_s_start0, __pyx_n_s_check_list, __pyx_n_s_stop0); if (unlikely(!__pyx_tuple__32)) __PYX_ERR(0, 157, __pyx_L1_error)
+  __pyx_tuple__32 = PyTuple_Pack(8, __pyx_n_s_self, __pyx_n_s_init_geodatabase, __pyx_n_s_latest_geodatabase, __pyx_n_s_report, __pyx_n_s_start0, __pyx_n_s_current_dir, __pyx_n_s_check_list, __pyx_n_s_stop0); if (unlikely(!__pyx_tuple__32)) __PYX_ERR(0, 157, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__32);
   __Pyx_GIVEREF(__pyx_tuple__32);
-  __pyx_codeobj__33 = (PyObject*)__Pyx_PyCode_New(4, 0, 7, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__32, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_LXG_replication_py, __pyx_n_s_init, 157, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__33)) __PYX_ERR(0, 157, __pyx_L1_error)
+  __pyx_codeobj__33 = (PyObject*)__Pyx_PyCode_New(4, 0, 8, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__32, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_LXG_replication_py, __pyx_n_s_init, 157, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__33)) __PYX_ERR(0, 157, __pyx_L1_error)
   __pyx_tuple__34 = PyTuple_Pack(1, ((PyObject *)Py_False)); if (unlikely(!__pyx_tuple__34)) __PYX_ERR(0, 157, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__34);
   __Pyx_GIVEREF(__pyx_tuple__34);
 
-  /* "LXG/replication.py":187
+  /* "LXG/replication.py":189
  *         shutil.rmtree(current_dir)
  * 
  *     def prepare_features(self, geodatabase):             # <<<<<<<<<<<<<<
  *         fc_class_name = None
  *         if geodatabase == self.gdb1:
  */
-  __pyx_tuple__35 = PyTuple_Pack(19, __pyx_n_s_self, __pyx_n_s_geodatabase, __pyx_n_s_fc_class_name, __pyx_n_s_dss, __pyx_n_s_pbar01, __pyx_n_s_ds, __pyx_n_s_fc_poly, __pyx_n_s_pbar03, __pyx_n_s_poly, __pyx_n_s_fc_lines, __pyx_n_s_line, __pyx_n_s_input_line, __pyx_n_s_pts_feat_line, __pyx_n_s_e, __pyx_n_s_fc_points, __pyx_n_s_fc_points_list, __pyx_n_s_pool3, __pyx_n_s_results, __pyx_n_s_pts_2); if (unlikely(!__pyx_tuple__35)) __PYX_ERR(0, 187, __pyx_L1_error)
+  __pyx_tuple__35 = PyTuple_Pack(19, __pyx_n_s_self, __pyx_n_s_geodatabase, __pyx_n_s_fc_class_name, __pyx_n_s_dss, __pyx_n_s_pbar01, __pyx_n_s_ds, __pyx_n_s_fc_poly, __pyx_n_s_pbar03, __pyx_n_s_poly, __pyx_n_s_fc_lines, __pyx_n_s_line, __pyx_n_s_input_line, __pyx_n_s_pts_feat_line, __pyx_n_s_e, __pyx_n_s_fc_points, __pyx_n_s_fc_points_list, __pyx_n_s_pool3, __pyx_n_s_results, __pyx_n_s_pts_2); if (unlikely(!__pyx_tuple__35)) __PYX_ERR(0, 189, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__35);
   __Pyx_GIVEREF(__pyx_tuple__35);
-  __pyx_codeobj__36 = (PyObject*)__Pyx_PyCode_New(2, 0, 19, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__35, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_LXG_replication_py, __pyx_n_s_prepare_features, 187, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__36)) __PYX_ERR(0, 187, __pyx_L1_error)
+  __pyx_codeobj__36 = (PyObject*)__Pyx_PyCode_New(2, 0, 19, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__35, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_LXG_replication_py, __pyx_n_s_prepare_features, 189, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__36)) __PYX_ERR(0, 189, __pyx_L1_error)
 
-  /* "LXG/replication.py":258
+  /* "LXG/replication.py":260
  *         del fc_class_name
  * 
  *     def _polys(self, fc_list):             # <<<<<<<<<<<<<<
  *         geodatabase = fc_list[1]
  *         pts_feat_poly = fc_list[2]
  */
-  __pyx_tuple__37 = PyTuple_Pack(6, __pyx_n_s_self, __pyx_n_s_fc_list, __pyx_n_s_geodatabase, __pyx_n_s_pts_feat_poly, __pyx_n_s_buf_feat_poly, __pyx_n_s_e); if (unlikely(!__pyx_tuple__37)) __PYX_ERR(0, 258, __pyx_L1_error)
+  __pyx_tuple__37 = PyTuple_Pack(6, __pyx_n_s_self, __pyx_n_s_fc_list, __pyx_n_s_geodatabase, __pyx_n_s_pts_feat_poly, __pyx_n_s_buf_feat_poly, __pyx_n_s_e); if (unlikely(!__pyx_tuple__37)) __PYX_ERR(0, 260, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__37);
   __Pyx_GIVEREF(__pyx_tuple__37);
-  __pyx_codeobj__38 = (PyObject*)__Pyx_PyCode_New(2, 0, 6, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__37, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_LXG_replication_py, __pyx_n_s_polys, 258, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__38)) __PYX_ERR(0, 258, __pyx_L1_error)
+  __pyx_codeobj__38 = (PyObject*)__Pyx_PyCode_New(2, 0, 6, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__37, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_LXG_replication_py, __pyx_n_s_polys, 260, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__38)) __PYX_ERR(0, 260, __pyx_L1_error)
 
-  /* "LXG/replication.py":276
+  /* "LXG/replication.py":278
  *         del geodatabase, pts_feat_poly, buf_feat_poly
  * 
  *     def _lines(self, fc_list):             # <<<<<<<<<<<<<<
  *         input_line = fc_list[0]
  *         geodatabase = fc_list[1]
  */
-  __pyx_tuple__39 = PyTuple_Pack(7, __pyx_n_s_self, __pyx_n_s_fc_list, __pyx_n_s_input_line, __pyx_n_s_geodatabase, __pyx_n_s_pts_feat_line, __pyx_n_s_buf_feat_line, __pyx_n_s_e); if (unlikely(!__pyx_tuple__39)) __PYX_ERR(0, 276, __pyx_L1_error)
+  __pyx_tuple__39 = PyTuple_Pack(7, __pyx_n_s_self, __pyx_n_s_fc_list, __pyx_n_s_input_line, __pyx_n_s_geodatabase, __pyx_n_s_pts_feat_line, __pyx_n_s_buf_feat_line, __pyx_n_s_e); if (unlikely(!__pyx_tuple__39)) __PYX_ERR(0, 278, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__39);
   __Pyx_GIVEREF(__pyx_tuple__39);
-  __pyx_codeobj__40 = (PyObject*)__Pyx_PyCode_New(2, 0, 7, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__39, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_LXG_replication_py, __pyx_n_s_lines, 276, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__40)) __PYX_ERR(0, 276, __pyx_L1_error)
+  __pyx_codeobj__40 = (PyObject*)__Pyx_PyCode_New(2, 0, 7, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__39, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_LXG_replication_py, __pyx_n_s_lines, 278, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__40)) __PYX_ERR(0, 278, __pyx_L1_error)
 
-  /* "LXG/replication.py":300
+  /* "LXG/replication.py":302
  *         del geodatabase, pts_feat_line, buf_feat_line
  * 
  *     def _points(self, fc_list):             # <<<<<<<<<<<<<<
  *         geodatabase = fc_list[1]
  *         pts_feat_pts = fc_list[2]
  */
-  __pyx_tuple__41 = PyTuple_Pack(6, __pyx_n_s_self, __pyx_n_s_fc_list, __pyx_n_s_geodatabase, __pyx_n_s_pts_feat_pts, __pyx_n_s_buf_feat_pts, __pyx_n_s_e); if (unlikely(!__pyx_tuple__41)) __PYX_ERR(0, 300, __pyx_L1_error)
+  __pyx_tuple__41 = PyTuple_Pack(6, __pyx_n_s_self, __pyx_n_s_fc_list, __pyx_n_s_geodatabase, __pyx_n_s_pts_feat_pts, __pyx_n_s_buf_feat_pts, __pyx_n_s_e); if (unlikely(!__pyx_tuple__41)) __PYX_ERR(0, 302, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__41);
   __Pyx_GIVEREF(__pyx_tuple__41);
-  __pyx_codeobj__42 = (PyObject*)__Pyx_PyCode_New(2, 0, 6, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__41, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_LXG_replication_py, __pyx_n_s_points, 300, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__42)) __PYX_ERR(0, 300, __pyx_L1_error)
+  __pyx_codeobj__42 = (PyObject*)__Pyx_PyCode_New(2, 0, 6, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__41, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_LXG_replication_py, __pyx_n_s_points, 302, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__42)) __PYX_ERR(0, 302, __pyx_L1_error)
 
-  /* "LXG/replication.py":318
+  /* "LXG/replication.py":320
  *         del geodatabase, pts_feat_pts, buf_feat_pts
  * 
  *     def intersect(self, in_layer, select_features):             # <<<<<<<<<<<<<<
  *         _, _, selected_count = arcpy.SelectLayerByLocation_management(
  *             in_layer=in_layer,
  */
-  __pyx_tuple__43 = PyTuple_Pack(6, __pyx_n_s_self, __pyx_n_s_in_layer, __pyx_n_s_select_features, __pyx_n_s__8, __pyx_n_s_selected_count, __pyx_n_s_selected_layer); if (unlikely(!__pyx_tuple__43)) __PYX_ERR(0, 318, __pyx_L1_error)
+  __pyx_tuple__43 = PyTuple_Pack(6, __pyx_n_s_self, __pyx_n_s_in_layer, __pyx_n_s_select_features, __pyx_n_s__8, __pyx_n_s_selected_count, __pyx_n_s_selected_layer); if (unlikely(!__pyx_tuple__43)) __PYX_ERR(0, 320, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__43);
   __Pyx_GIVEREF(__pyx_tuple__43);
-  __pyx_codeobj__44 = (PyObject*)__Pyx_PyCode_New(3, 0, 6, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__43, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_LXG_replication_py, __pyx_n_s_intersect, 318, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__44)) __PYX_ERR(0, 318, __pyx_L1_error)
+  __pyx_codeobj__44 = (PyObject*)__Pyx_PyCode_New(3, 0, 6, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__43, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_LXG_replication_py, __pyx_n_s_intersect, 320, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__44)) __PYX_ERR(0, 320, __pyx_L1_error)
 
-  /* "LXG/replication.py":340
+  /* "LXG/replication.py":342
  *         return int(selected_count)
  * 
  *     def check_differences(self):             # <<<<<<<<<<<<<<
  *         arcpy.env.workspace = self.gdb2
  *         new_features_list = []
  */
-  __pyx_tuple__45 = PyTuple_Pack(14, __pyx_n_s_self, __pyx_n_s_new_features_list, __pyx_n_s_dss, __pyx_n_s_pbar01, __pyx_n_s_ds, __pyx_n_s_fcs, __pyx_n_s_pbar02, __pyx_n_s_fc, __pyx_n_s_fc_pts, __pyx_n_s_old_fc_buf, __pyx_n_s_get_count, __pyx_n_s_e, __pyx_n_s_pbar03, __pyx_n_s_pbar04); if (unlikely(!__pyx_tuple__45)) __PYX_ERR(0, 340, __pyx_L1_error)
+  __pyx_tuple__45 = PyTuple_Pack(14, __pyx_n_s_self, __pyx_n_s_new_features_list, __pyx_n_s_dss, __pyx_n_s_pbar01, __pyx_n_s_ds, __pyx_n_s_fcs, __pyx_n_s_pbar02, __pyx_n_s_fc, __pyx_n_s_fc_pts, __pyx_n_s_old_fc_buf, __pyx_n_s_get_count, __pyx_n_s_e, __pyx_n_s_pbar03, __pyx_n_s_pbar04); if (unlikely(!__pyx_tuple__45)) __PYX_ERR(0, 342, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__45);
   __Pyx_GIVEREF(__pyx_tuple__45);
-  __pyx_codeobj__46 = (PyObject*)__Pyx_PyCode_New(1, 0, 14, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__45, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_LXG_replication_py, __pyx_n_s_check_differences, 340, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__46)) __PYX_ERR(0, 340, __pyx_L1_error)
+  __pyx_codeobj__46 = (PyObject*)__Pyx_PyCode_New(1, 0, 14, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__45, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_LXG_replication_py, __pyx_n_s_check_differences, 342, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__46)) __PYX_ERR(0, 342, __pyx_L1_error)
 
-  /* "LXG/replication.py":393
+  /* "LXG/replication.py":395
  *         return new_features_list
  * 
  *     def field_mappings(self, source_feature, target_feature, point_feat_dir):             # <<<<<<<<<<<<<<
  *         field_src = arcpy.ListFields(source_feature)
  *         field_tgt = arcpy.ListFields(target_feature)
  */
-  __pyx_tuple__47 = PyTuple_Pack(16, __pyx_n_s_self, __pyx_n_s_source_feature, __pyx_n_s_target_feature, __pyx_n_s_point_feat_dir, __pyx_n_s_field_src, __pyx_n_s_field_tgt, __pyx_n_s_namelist_tgt, __pyx_n_s_namelist_src, __pyx_n_s_exclude_list, __pyx_n_s_fd, __pyx_n_s_fd2, __pyx_n_s_fd_mapping, __pyx_n_s_name, __pyx_n_s_alias, __pyx_n_s_type_2, __pyx_n_s_len); if (unlikely(!__pyx_tuple__47)) __PYX_ERR(0, 393, __pyx_L1_error)
+  __pyx_tuple__47 = PyTuple_Pack(16, __pyx_n_s_self, __pyx_n_s_source_feature, __pyx_n_s_target_feature, __pyx_n_s_point_feat_dir, __pyx_n_s_field_src, __pyx_n_s_field_tgt, __pyx_n_s_namelist_tgt, __pyx_n_s_namelist_src, __pyx_n_s_exclude_list, __pyx_n_s_fd, __pyx_n_s_fd2, __pyx_n_s_fd_mapping, __pyx_n_s_name, __pyx_n_s_alias, __pyx_n_s_type_2, __pyx_n_s_len); if (unlikely(!__pyx_tuple__47)) __PYX_ERR(0, 395, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__47);
   __Pyx_GIVEREF(__pyx_tuple__47);
-  __pyx_codeobj__48 = (PyObject*)__Pyx_PyCode_New(4, 0, 16, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__47, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_LXG_replication_py, __pyx_n_s_field_mappings, 393, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__48)) __PYX_ERR(0, 393, __pyx_L1_error)
+  __pyx_codeobj__48 = (PyObject*)__Pyx_PyCode_New(4, 0, 16, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__47, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_LXG_replication_py, __pyx_n_s_field_mappings, 395, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__48)) __PYX_ERR(0, 395, __pyx_L1_error)
 
-  /* "LXG/replication.py":414
+  /* "LXG/replication.py":416
  *         return fd_mapping
  * 
  *     def append_latest(self, featureclass_list):             # <<<<<<<<<<<<<<
  *         featureclass_list = np.array(featureclass_list)
  *         arcpy.env.workspace = self.gdb2
  */
-  __pyx_tuple__49 = PyTuple_Pack(13, __pyx_n_s_self, __pyx_n_s_featureclass_list, __pyx_n_s_dss, __pyx_n_s_pbar01, __pyx_n_s_ds, __pyx_n_s_fcs, __pyx_n_s_fc_list, __pyx_n_s_pool1, __pyx_n_s_results, __pyx_n_s_e, __pyx_n_s_pool2, __pyx_n_s_pool3, __pyx_n_s_fc); if (unlikely(!__pyx_tuple__49)) __PYX_ERR(0, 414, __pyx_L1_error)
+  __pyx_tuple__49 = PyTuple_Pack(13, __pyx_n_s_self, __pyx_n_s_featureclass_list, __pyx_n_s_dss, __pyx_n_s_pbar01, __pyx_n_s_ds, __pyx_n_s_fcs, __pyx_n_s_fc_list, __pyx_n_s_pool1, __pyx_n_s_results, __pyx_n_s_e, __pyx_n_s_pool2, __pyx_n_s_pool3, __pyx_n_s_fc); if (unlikely(!__pyx_tuple__49)) __PYX_ERR(0, 416, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__49);
   __Pyx_GIVEREF(__pyx_tuple__49);
-  __pyx_codeobj__50 = (PyObject*)__Pyx_PyCode_New(2, 0, 13, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__49, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_LXG_replication_py, __pyx_n_s_append_latest, 414, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__50)) __PYX_ERR(0, 414, __pyx_L1_error)
+  __pyx_codeobj__50 = (PyObject*)__Pyx_PyCode_New(2, 0, 13, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__49, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_LXG_replication_py, __pyx_n_s_append_latest, 416, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__50)) __PYX_ERR(0, 416, __pyx_L1_error)
 
-  /* "LXG/replication.py":477
+  /* "LXG/replication.py":479
  *             del fcs
  * 
  *     def fast_append(self, fc):             # <<<<<<<<<<<<<<
  *         _fc = os.path.basename(fc[1])
  * 
  */
-  __pyx_tuple__51 = PyTuple_Pack(8, __pyx_n_s_self, __pyx_n_s_fc, __pyx_n_s_fc_2, __pyx_n_s_fc_pts, __pyx_n_s_selected_layer, __pyx_n_s__8, __pyx_n_s_params, __pyx_n_s_e); if (unlikely(!__pyx_tuple__51)) __PYX_ERR(0, 477, __pyx_L1_error)
+  __pyx_tuple__51 = PyTuple_Pack(8, __pyx_n_s_self, __pyx_n_s_fc, __pyx_n_s_fc_2, __pyx_n_s_fc_pts, __pyx_n_s_selected_layer, __pyx_n_s__8, __pyx_n_s_params, __pyx_n_s_e); if (unlikely(!__pyx_tuple__51)) __PYX_ERR(0, 479, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__51);
   __Pyx_GIVEREF(__pyx_tuple__51);
-  __pyx_codeobj__52 = (PyObject*)__Pyx_PyCode_New(2, 0, 8, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__51, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_LXG_replication_py, __pyx_n_s_fast_append, 477, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__52)) __PYX_ERR(0, 477, __pyx_L1_error)
+  __pyx_codeobj__52 = (PyObject*)__Pyx_PyCode_New(2, 0, 8, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__51, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_LXG_replication_py, __pyx_n_s_fast_append, 479, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__52)) __PYX_ERR(0, 479, __pyx_L1_error)
 
-  /* "LXG/replication.py":502
+  /* "LXG/replication.py":504
  *         del _params
  * 
  *     def fast_poly_append(self, fc):             # <<<<<<<<<<<<<<
  *         _fc = os.path.basename(fc[1])
  *         fc_pts = os.path.join(fc[2], f'gdb2_{_fc}_pts')
  */
-  __pyx_tuple__53 = PyTuple_Pack(18, __pyx_n_s_self, __pyx_n_s_fc, __pyx_n_s_fc_2, __pyx_n_s_fc_pts, __pyx_n_s_selected_layer01, __pyx_n_s__8, __pyx_n_s_selected_layer02, __pyx_n_s_edit, __pyx_n_s_oid_nums, __pyx_n_s_oid_fieldname, __pyx_n_s_query, __pyx_n_s_rows, __pyx_n_s_row, __pyx_n_s_e, __pyx_n_s_params, __pyx_n_s_fid, __pyx_n_s_genexpr, __pyx_n_s_genexpr); if (unlikely(!__pyx_tuple__53)) __PYX_ERR(0, 502, __pyx_L1_error)
+  __pyx_tuple__53 = PyTuple_Pack(18, __pyx_n_s_self, __pyx_n_s_fc, __pyx_n_s_fc_2, __pyx_n_s_fc_pts, __pyx_n_s_selected_layer01, __pyx_n_s__8, __pyx_n_s_selected_layer02, __pyx_n_s_edit, __pyx_n_s_oid_nums, __pyx_n_s_oid_fieldname, __pyx_n_s_query, __pyx_n_s_rows, __pyx_n_s_row, __pyx_n_s_e, __pyx_n_s_params, __pyx_n_s_fid, __pyx_n_s_genexpr, __pyx_n_s_genexpr); if (unlikely(!__pyx_tuple__53)) __PYX_ERR(0, 504, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__53);
   __Pyx_GIVEREF(__pyx_tuple__53);
-  __pyx_codeobj__54 = (PyObject*)__Pyx_PyCode_New(2, 0, 18, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__53, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_LXG_replication_py, __pyx_n_s_fast_poly_append, 502, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__54)) __PYX_ERR(0, 502, __pyx_L1_error)
+  __pyx_codeobj__54 = (PyObject*)__Pyx_PyCode_New(2, 0, 18, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__53, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_LXG_replication_py, __pyx_n_s_fast_poly_append, 504, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__54)) __PYX_ERR(0, 504, __pyx_L1_error)
 
-  /* "LXG/replication.py":565
+  /* "LXG/replication.py":567
  *         edit.stopEditing(True)
  * 
  *     def report(self, featureclass_list):             # <<<<<<<<<<<<<<
  *         """
  *         Generate PDF Report for total count of new feature added from 19C
  */
-  __pyx_tuple__55 = PyTuple_Pack(8, __pyx_n_s_self, __pyx_n_s_featureclass_list, __pyx_n_s_df, __pyx_n_s_df_html, __pyx_n_s_env, __pyx_n_s_template, __pyx_n_s_generated_html, __pyx_n_s_out_pdf); if (unlikely(!__pyx_tuple__55)) __PYX_ERR(0, 565, __pyx_L1_error)
+  __pyx_tuple__55 = PyTuple_Pack(8, __pyx_n_s_self, __pyx_n_s_featureclass_list, __pyx_n_s_df, __pyx_n_s_df_html, __pyx_n_s_env, __pyx_n_s_template, __pyx_n_s_generated_html, __pyx_n_s_out_pdf); if (unlikely(!__pyx_tuple__55)) __PYX_ERR(0, 567, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__55);
   __Pyx_GIVEREF(__pyx_tuple__55);
-  __pyx_codeobj__56 = (PyObject*)__Pyx_PyCode_New(2, 0, 8, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__55, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_LXG_replication_py, __pyx_n_s_report, 565, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__56)) __PYX_ERR(0, 565, __pyx_L1_error)
+  __pyx_codeobj__56 = (PyObject*)__Pyx_PyCode_New(2, 0, 8, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__55, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_LXG_replication_py, __pyx_n_s_report, 567, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__56)) __PYX_ERR(0, 567, __pyx_L1_error)
 
-  /* "LXG/replication.py":592
+  /* "LXG/replication.py":594
  * 
  * class ReplicateSDE2GDB:
  *     def __init__(self, sde_instance, sde_username, sde_password,             # <<<<<<<<<<<<<<
  *                  output_directory, file_gdb, wildcard_datasets, wildcard_featureclass):
  *         self.instance = sde_instance
  */
-  __pyx_tuple__57 = PyTuple_Pack(16, __pyx_n_s_self, __pyx_n_s_sde_instance, __pyx_n_s_sde_username, __pyx_n_s_sde_password, __pyx_n_s_output_directory, __pyx_n_s_file_gdb, __pyx_n_s_wildcard_datasets, __pyx_n_s_wildcard_featureclass, __pyx_n_s_sde, __pyx_n_s_db_out, __pyx_n_s_dss, __pyx_n_s_pbar01, __pyx_n_s_ds, __pyx_n_s_dsname, __pyx_n_s_out_data, __pyx_n_s_e); if (unlikely(!__pyx_tuple__57)) __PYX_ERR(0, 592, __pyx_L1_error)
+  __pyx_tuple__57 = PyTuple_Pack(16, __pyx_n_s_self, __pyx_n_s_sde_instance, __pyx_n_s_sde_username, __pyx_n_s_sde_password, __pyx_n_s_output_directory, __pyx_n_s_file_gdb, __pyx_n_s_wildcard_datasets, __pyx_n_s_wildcard_featureclass, __pyx_n_s_sde, __pyx_n_s_db_out, __pyx_n_s_dss, __pyx_n_s_pbar01, __pyx_n_s_ds, __pyx_n_s_dsname, __pyx_n_s_out_data, __pyx_n_s_e); if (unlikely(!__pyx_tuple__57)) __PYX_ERR(0, 594, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__57);
   __Pyx_GIVEREF(__pyx_tuple__57);
-  __pyx_codeobj__58 = (PyObject*)__Pyx_PyCode_New(8, 0, 16, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__57, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_LXG_replication_py, __pyx_n_s_init, 592, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__58)) __PYX_ERR(0, 592, __pyx_L1_error)
+  __pyx_codeobj__58 = (PyObject*)__Pyx_PyCode_New(8, 0, 16, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__57, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_LXG_replication_py, __pyx_n_s_init, 594, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__58)) __PYX_ERR(0, 594, __pyx_L1_error)
 
-  /* "LXG/replication.py":632
- *         shutil.rmtree(current_dir)
+  /* "LXG/replication.py":635
+ *         shutil.rmtree(self.temp_dir)
  * 
  *     def temp_connection(self):             # <<<<<<<<<<<<<<
  *         # create connection parameters
- *         conn = {"out_folder_path": current_dir,
+ *         conn = {"out_folder_path": self.temp_dir,
  */
-  __pyx_tuple__59 = PyTuple_Pack(3, __pyx_n_s_self, __pyx_n_s_conn, __pyx_n_s_temp_sde_2); if (unlikely(!__pyx_tuple__59)) __PYX_ERR(0, 632, __pyx_L1_error)
+  __pyx_tuple__59 = PyTuple_Pack(3, __pyx_n_s_self, __pyx_n_s_conn, __pyx_n_s_temp_sde_2); if (unlikely(!__pyx_tuple__59)) __PYX_ERR(0, 635, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__59);
   __Pyx_GIVEREF(__pyx_tuple__59);
-  __pyx_codeobj__60 = (PyObject*)__Pyx_PyCode_New(1, 0, 3, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__59, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_LXG_replication_py, __pyx_n_s_temp_connection, 632, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__60)) __PYX_ERR(0, 632, __pyx_L1_error)
+  __pyx_codeobj__60 = (PyObject*)__Pyx_PyCode_New(1, 0, 3, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__59, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_LXG_replication_py, __pyx_n_s_temp_connection, 635, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__60)) __PYX_ERR(0, 635, __pyx_L1_error)
 
-  /* "LXG/replication.py":654
+  /* "LXG/replication.py":657
  * 
  *     @staticmethod
  *     def newname(target_string, old_name):             # <<<<<<<<<<<<<<
  *         new_name = old_name.replace(target_string, "", 1)
  *         return new_name
  */
-  __pyx_tuple__61 = PyTuple_Pack(3, __pyx_n_s_target_string, __pyx_n_s_old_name, __pyx_n_s_new_name); if (unlikely(!__pyx_tuple__61)) __PYX_ERR(0, 654, __pyx_L1_error)
+  __pyx_tuple__61 = PyTuple_Pack(3, __pyx_n_s_target_string, __pyx_n_s_old_name, __pyx_n_s_new_name); if (unlikely(!__pyx_tuple__61)) __PYX_ERR(0, 657, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__61);
   __Pyx_GIVEREF(__pyx_tuple__61);
-  __pyx_codeobj__62 = (PyObject*)__Pyx_PyCode_New(2, 0, 3, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__61, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_LXG_replication_py, __pyx_n_s_newname, 654, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__62)) __PYX_ERR(0, 654, __pyx_L1_error)
+  __pyx_codeobj__62 = (PyObject*)__Pyx_PyCode_New(2, 0, 3, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__61, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_LXG_replication_py, __pyx_n_s_newname, 657, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__62)) __PYX_ERR(0, 657, __pyx_L1_error)
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -22755,7 +22948,7 @@ static int __Pyx_modinit_type_init_code(void) {
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__Pyx_modinit_type_init_code", 0);
   /*--- Type init code ---*/
-  if (PyType_Ready(&__pyx_type_6LXGREP___pyx_scope_struct__fast_poly_append) < 0) __PYX_ERR(0, 502, __pyx_L1_error)
+  if (PyType_Ready(&__pyx_type_6LXGREP___pyx_scope_struct__fast_poly_append) < 0) __PYX_ERR(0, 504, __pyx_L1_error)
   #if PY_VERSION_HEX < 0x030800B1
   __pyx_type_6LXGREP___pyx_scope_struct__fast_poly_append.tp_print = 0;
   #endif
@@ -22763,7 +22956,7 @@ static int __Pyx_modinit_type_init_code(void) {
     __pyx_type_6LXGREP___pyx_scope_struct__fast_poly_append.tp_getattro = __Pyx_PyObject_GenericGetAttrNoDict;
   }
   __pyx_ptype_6LXGREP___pyx_scope_struct__fast_poly_append = &__pyx_type_6LXGREP___pyx_scope_struct__fast_poly_append;
-  if (PyType_Ready(&__pyx_type_6LXGREP___pyx_scope_struct_1_genexpr) < 0) __PYX_ERR(0, 534, __pyx_L1_error)
+  if (PyType_Ready(&__pyx_type_6LXGREP___pyx_scope_struct_1_genexpr) < 0) __PYX_ERR(0, 536, __pyx_L1_error)
   #if PY_VERSION_HEX < 0x030800B1
   __pyx_type_6LXGREP___pyx_scope_struct_1_genexpr.tp_print = 0;
   #endif
@@ -23195,24 +23388,6 @@ if (!__Pyx_RefNanny) {
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "LXG/replication.py":16
- * 
- * # current_dir = os.path.dirname(os.path.realpath(__file__))
- * current_dir = tempfile.mkdtemp()             # <<<<<<<<<<<<<<
- * 
- * 
- */
-  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_tempfile); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 16, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_mkdtemp); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 16, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyObject_CallNoArg(__pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 16, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_current_dir, __pyx_t_1) < 0) __PYX_ERR(0, 16, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-
   /* "LXG/replication.py":19
  * 
  * 
@@ -23228,8 +23403,8 @@ if (!__Pyx_RefNanny) {
   /* "LXG/replication.py":25
  *     return converted_time
  * 
- * def your_existance_in_questions(geodatabase_name):             # <<<<<<<<<<<<<<
- *     gdb_filename = os.path.join(current_dir, geodatabase_name)
+ * def your_existance_in_questions(directory, geodatabase_name):             # <<<<<<<<<<<<<<
+ *     gdb_filename = os.path.join(directory, geodatabase_name)
  *     if arcpy.Exists(gdb_filename):
  */
   __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_6LXGREP_3your_existance_in_questions, 0, __pyx_n_s_your_existance_in_questions, NULL, __pyx_n_s_LXGREP, __pyx_d, ((PyObject *)__pyx_codeobj__21)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 25, __pyx_L1_error)
@@ -23389,136 +23564,136 @@ if (!__Pyx_RefNanny) {
   if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_init, __pyx_t_2) < 0) __PYX_ERR(0, 157, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "LXG/replication.py":187
+  /* "LXG/replication.py":189
  *         shutil.rmtree(current_dir)
  * 
  *     def prepare_features(self, geodatabase):             # <<<<<<<<<<<<<<
  *         fc_class_name = None
  *         if geodatabase == self.gdb1:
  */
-  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_6LXGREP_17AppendNewFeatures_3prepare_features, 0, __pyx_n_s_AppendNewFeatures_prepare_featur, NULL, __pyx_n_s_LXGREP, __pyx_d, ((PyObject *)__pyx_codeobj__36)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 187, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_6LXGREP_17AppendNewFeatures_3prepare_features, 0, __pyx_n_s_AppendNewFeatures_prepare_featur, NULL, __pyx_n_s_LXGREP, __pyx_d, ((PyObject *)__pyx_codeobj__36)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 189, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_prepare_features, __pyx_t_2) < 0) __PYX_ERR(0, 187, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_prepare_features, __pyx_t_2) < 0) __PYX_ERR(0, 189, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "LXG/replication.py":258
+  /* "LXG/replication.py":260
  *         del fc_class_name
  * 
  *     def _polys(self, fc_list):             # <<<<<<<<<<<<<<
  *         geodatabase = fc_list[1]
  *         pts_feat_poly = fc_list[2]
  */
-  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_6LXGREP_17AppendNewFeatures_5_polys, 0, __pyx_n_s_AppendNewFeatures__polys, NULL, __pyx_n_s_LXGREP, __pyx_d, ((PyObject *)__pyx_codeobj__38)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 258, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_6LXGREP_17AppendNewFeatures_5_polys, 0, __pyx_n_s_AppendNewFeatures__polys, NULL, __pyx_n_s_LXGREP, __pyx_d, ((PyObject *)__pyx_codeobj__38)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 260, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_polys, __pyx_t_2) < 0) __PYX_ERR(0, 258, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_polys, __pyx_t_2) < 0) __PYX_ERR(0, 260, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "LXG/replication.py":276
+  /* "LXG/replication.py":278
  *         del geodatabase, pts_feat_poly, buf_feat_poly
  * 
  *     def _lines(self, fc_list):             # <<<<<<<<<<<<<<
  *         input_line = fc_list[0]
  *         geodatabase = fc_list[1]
  */
-  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_6LXGREP_17AppendNewFeatures_7_lines, 0, __pyx_n_s_AppendNewFeatures__lines, NULL, __pyx_n_s_LXGREP, __pyx_d, ((PyObject *)__pyx_codeobj__40)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 276, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_6LXGREP_17AppendNewFeatures_7_lines, 0, __pyx_n_s_AppendNewFeatures__lines, NULL, __pyx_n_s_LXGREP, __pyx_d, ((PyObject *)__pyx_codeobj__40)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 278, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_lines, __pyx_t_2) < 0) __PYX_ERR(0, 276, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_lines, __pyx_t_2) < 0) __PYX_ERR(0, 278, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "LXG/replication.py":300
+  /* "LXG/replication.py":302
  *         del geodatabase, pts_feat_line, buf_feat_line
  * 
  *     def _points(self, fc_list):             # <<<<<<<<<<<<<<
  *         geodatabase = fc_list[1]
  *         pts_feat_pts = fc_list[2]
  */
-  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_6LXGREP_17AppendNewFeatures_9_points, 0, __pyx_n_s_AppendNewFeatures__points, NULL, __pyx_n_s_LXGREP, __pyx_d, ((PyObject *)__pyx_codeobj__42)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 300, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_6LXGREP_17AppendNewFeatures_9_points, 0, __pyx_n_s_AppendNewFeatures__points, NULL, __pyx_n_s_LXGREP, __pyx_d, ((PyObject *)__pyx_codeobj__42)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 302, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_points, __pyx_t_2) < 0) __PYX_ERR(0, 300, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_points, __pyx_t_2) < 0) __PYX_ERR(0, 302, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "LXG/replication.py":318
+  /* "LXG/replication.py":320
  *         del geodatabase, pts_feat_pts, buf_feat_pts
  * 
  *     def intersect(self, in_layer, select_features):             # <<<<<<<<<<<<<<
  *         _, _, selected_count = arcpy.SelectLayerByLocation_management(
  *             in_layer=in_layer,
  */
-  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_6LXGREP_17AppendNewFeatures_11intersect, 0, __pyx_n_s_AppendNewFeatures_intersect, NULL, __pyx_n_s_LXGREP, __pyx_d, ((PyObject *)__pyx_codeobj__44)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 318, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_6LXGREP_17AppendNewFeatures_11intersect, 0, __pyx_n_s_AppendNewFeatures_intersect, NULL, __pyx_n_s_LXGREP, __pyx_d, ((PyObject *)__pyx_codeobj__44)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 320, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_intersect, __pyx_t_2) < 0) __PYX_ERR(0, 318, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_intersect, __pyx_t_2) < 0) __PYX_ERR(0, 320, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "LXG/replication.py":340
+  /* "LXG/replication.py":342
  *         return int(selected_count)
  * 
  *     def check_differences(self):             # <<<<<<<<<<<<<<
  *         arcpy.env.workspace = self.gdb2
  *         new_features_list = []
  */
-  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_6LXGREP_17AppendNewFeatures_13check_differences, 0, __pyx_n_s_AppendNewFeatures_check_differen, NULL, __pyx_n_s_LXGREP, __pyx_d, ((PyObject *)__pyx_codeobj__46)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 340, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_6LXGREP_17AppendNewFeatures_13check_differences, 0, __pyx_n_s_AppendNewFeatures_check_differen, NULL, __pyx_n_s_LXGREP, __pyx_d, ((PyObject *)__pyx_codeobj__46)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 342, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_check_differences, __pyx_t_2) < 0) __PYX_ERR(0, 340, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_check_differences, __pyx_t_2) < 0) __PYX_ERR(0, 342, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "LXG/replication.py":393
+  /* "LXG/replication.py":395
  *         return new_features_list
  * 
  *     def field_mappings(self, source_feature, target_feature, point_feat_dir):             # <<<<<<<<<<<<<<
  *         field_src = arcpy.ListFields(source_feature)
  *         field_tgt = arcpy.ListFields(target_feature)
  */
-  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_6LXGREP_17AppendNewFeatures_15field_mappings, 0, __pyx_n_s_AppendNewFeatures_field_mappings, NULL, __pyx_n_s_LXGREP, __pyx_d, ((PyObject *)__pyx_codeobj__48)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 393, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_6LXGREP_17AppendNewFeatures_15field_mappings, 0, __pyx_n_s_AppendNewFeatures_field_mappings, NULL, __pyx_n_s_LXGREP, __pyx_d, ((PyObject *)__pyx_codeobj__48)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 395, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_field_mappings, __pyx_t_2) < 0) __PYX_ERR(0, 393, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_field_mappings, __pyx_t_2) < 0) __PYX_ERR(0, 395, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "LXG/replication.py":414
+  /* "LXG/replication.py":416
  *         return fd_mapping
  * 
  *     def append_latest(self, featureclass_list):             # <<<<<<<<<<<<<<
  *         featureclass_list = np.array(featureclass_list)
  *         arcpy.env.workspace = self.gdb2
  */
-  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_6LXGREP_17AppendNewFeatures_17append_latest, 0, __pyx_n_s_AppendNewFeatures_append_latest, NULL, __pyx_n_s_LXGREP, __pyx_d, ((PyObject *)__pyx_codeobj__50)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 414, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_6LXGREP_17AppendNewFeatures_17append_latest, 0, __pyx_n_s_AppendNewFeatures_append_latest, NULL, __pyx_n_s_LXGREP, __pyx_d, ((PyObject *)__pyx_codeobj__50)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 416, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_append_latest, __pyx_t_2) < 0) __PYX_ERR(0, 414, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_append_latest, __pyx_t_2) < 0) __PYX_ERR(0, 416, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "LXG/replication.py":477
+  /* "LXG/replication.py":479
  *             del fcs
  * 
  *     def fast_append(self, fc):             # <<<<<<<<<<<<<<
  *         _fc = os.path.basename(fc[1])
  * 
  */
-  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_6LXGREP_17AppendNewFeatures_19fast_append, 0, __pyx_n_s_AppendNewFeatures_fast_append, NULL, __pyx_n_s_LXGREP, __pyx_d, ((PyObject *)__pyx_codeobj__52)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 477, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_6LXGREP_17AppendNewFeatures_19fast_append, 0, __pyx_n_s_AppendNewFeatures_fast_append, NULL, __pyx_n_s_LXGREP, __pyx_d, ((PyObject *)__pyx_codeobj__52)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 479, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_fast_append, __pyx_t_2) < 0) __PYX_ERR(0, 477, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_fast_append, __pyx_t_2) < 0) __PYX_ERR(0, 479, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "LXG/replication.py":502
+  /* "LXG/replication.py":504
  *         del _params
  * 
  *     def fast_poly_append(self, fc):             # <<<<<<<<<<<<<<
  *         _fc = os.path.basename(fc[1])
  *         fc_pts = os.path.join(fc[2], f'gdb2_{_fc}_pts')
  */
-  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_6LXGREP_17AppendNewFeatures_21fast_poly_append, 0, __pyx_n_s_AppendNewFeatures_fast_poly_appe_2, NULL, __pyx_n_s_LXGREP, __pyx_d, ((PyObject *)__pyx_codeobj__54)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 502, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_6LXGREP_17AppendNewFeatures_21fast_poly_append, 0, __pyx_n_s_AppendNewFeatures_fast_poly_appe_2, NULL, __pyx_n_s_LXGREP, __pyx_d, ((PyObject *)__pyx_codeobj__54)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 504, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_fast_poly_append, __pyx_t_2) < 0) __PYX_ERR(0, 502, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_fast_poly_append, __pyx_t_2) < 0) __PYX_ERR(0, 504, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "LXG/replication.py":565
+  /* "LXG/replication.py":567
  *         edit.stopEditing(True)
  * 
  *     def report(self, featureclass_list):             # <<<<<<<<<<<<<<
  *         """
  *         Generate PDF Report for total count of new feature added from 19C
  */
-  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_6LXGREP_17AppendNewFeatures_23report, 0, __pyx_n_s_AppendNewFeatures_report, NULL, __pyx_n_s_LXGREP, __pyx_d, ((PyObject *)__pyx_codeobj__56)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 565, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_6LXGREP_17AppendNewFeatures_23report, 0, __pyx_n_s_AppendNewFeatures_report, NULL, __pyx_n_s_LXGREP, __pyx_d, ((PyObject *)__pyx_codeobj__56)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 567, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_report, __pyx_t_2) < 0) __PYX_ERR(0, 565, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_report, __pyx_t_2) < 0) __PYX_ERR(0, 567, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
   /* "LXG/replication.py":156
@@ -23534,73 +23709,73 @@ if (!__Pyx_RefNanny) {
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "LXG/replication.py":591
+  /* "LXG/replication.py":593
  * 
  * 
  * class ReplicateSDE2GDB:             # <<<<<<<<<<<<<<
  *     def __init__(self, sde_instance, sde_username, sde_password,
  *                  output_directory, file_gdb, wildcard_datasets, wildcard_featureclass):
  */
-  __pyx_t_1 = __Pyx_Py3MetaclassPrepare((PyObject *) NULL, __pyx_empty_tuple, __pyx_n_s_ReplicateSDE2GDB, __pyx_n_s_ReplicateSDE2GDB, (PyObject *) NULL, __pyx_n_s_LXGREP, (PyObject *) NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 591, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_Py3MetaclassPrepare((PyObject *) NULL, __pyx_empty_tuple, __pyx_n_s_ReplicateSDE2GDB, __pyx_n_s_ReplicateSDE2GDB, (PyObject *) NULL, __pyx_n_s_LXGREP, (PyObject *) NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 593, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
 
-  /* "LXG/replication.py":592
+  /* "LXG/replication.py":594
  * 
  * class ReplicateSDE2GDB:
  *     def __init__(self, sde_instance, sde_username, sde_password,             # <<<<<<<<<<<<<<
  *                  output_directory, file_gdb, wildcard_datasets, wildcard_featureclass):
  *         self.instance = sde_instance
  */
-  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_6LXGREP_16ReplicateSDE2GDB_1__init__, 0, __pyx_n_s_ReplicateSDE2GDB___init, NULL, __pyx_n_s_LXGREP, __pyx_d, ((PyObject *)__pyx_codeobj__58)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 592, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_6LXGREP_16ReplicateSDE2GDB_1__init__, 0, __pyx_n_s_ReplicateSDE2GDB___init, NULL, __pyx_n_s_LXGREP, __pyx_d, ((PyObject *)__pyx_codeobj__58)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 594, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_init, __pyx_t_2) < 0) __PYX_ERR(0, 592, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_init, __pyx_t_2) < 0) __PYX_ERR(0, 594, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "LXG/replication.py":632
- *         shutil.rmtree(current_dir)
+  /* "LXG/replication.py":635
+ *         shutil.rmtree(self.temp_dir)
  * 
  *     def temp_connection(self):             # <<<<<<<<<<<<<<
  *         # create connection parameters
- *         conn = {"out_folder_path": current_dir,
+ *         conn = {"out_folder_path": self.temp_dir,
  */
-  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_6LXGREP_16ReplicateSDE2GDB_3temp_connection, 0, __pyx_n_s_ReplicateSDE2GDB_temp_connection, NULL, __pyx_n_s_LXGREP, __pyx_d, ((PyObject *)__pyx_codeobj__60)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 632, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_6LXGREP_16ReplicateSDE2GDB_3temp_connection, 0, __pyx_n_s_ReplicateSDE2GDB_temp_connection, NULL, __pyx_n_s_LXGREP, __pyx_d, ((PyObject *)__pyx_codeobj__60)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 635, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_temp_connection, __pyx_t_2) < 0) __PYX_ERR(0, 632, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_temp_connection, __pyx_t_2) < 0) __PYX_ERR(0, 635, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "LXG/replication.py":654
+  /* "LXG/replication.py":657
  * 
  *     @staticmethod
  *     def newname(target_string, old_name):             # <<<<<<<<<<<<<<
  *         new_name = old_name.replace(target_string, "", 1)
  *         return new_name
  */
-  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_6LXGREP_16ReplicateSDE2GDB_5newname, __Pyx_CYFUNCTION_STATICMETHOD, __pyx_n_s_ReplicateSDE2GDB_newname, NULL, __pyx_n_s_LXGREP, __pyx_d, ((PyObject *)__pyx_codeobj__62)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 654, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_6LXGREP_16ReplicateSDE2GDB_5newname, __Pyx_CYFUNCTION_STATICMETHOD, __pyx_n_s_ReplicateSDE2GDB_newname, NULL, __pyx_n_s_LXGREP, __pyx_d, ((PyObject *)__pyx_codeobj__62)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 657, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
 
-  /* "LXG/replication.py":653
+  /* "LXG/replication.py":656
  *         return temp_sde
  * 
  *     @staticmethod             # <<<<<<<<<<<<<<
  *     def newname(target_string, old_name):
  *         new_name = old_name.replace(target_string, "", 1)
  */
-  __pyx_t_3 = __Pyx_PyObject_CallOneArg(__pyx_builtin_staticmethod, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 653, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_CallOneArg(__pyx_builtin_staticmethod, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 656, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_newname, __pyx_t_3) < 0) __PYX_ERR(0, 654, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_newname, __pyx_t_3) < 0) __PYX_ERR(0, 657, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "LXG/replication.py":591
+  /* "LXG/replication.py":593
  * 
  * 
  * class ReplicateSDE2GDB:             # <<<<<<<<<<<<<<
  *     def __init__(self, sde_instance, sde_username, sde_password,
  *                  output_directory, file_gdb, wildcard_datasets, wildcard_featureclass):
  */
-  __pyx_t_3 = __Pyx_Py3ClassCreate(((PyObject*)&__Pyx_DefaultClassType), __pyx_n_s_ReplicateSDE2GDB, __pyx_empty_tuple, __pyx_t_1, NULL, 0, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 591, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_Py3ClassCreate(((PyObject*)&__Pyx_DefaultClassType), __pyx_n_s_ReplicateSDE2GDB, __pyx_empty_tuple, __pyx_t_1, NULL, 0, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 593, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_ReplicateSDE2GDB, __pyx_t_3) < 0) __PYX_ERR(0, 591, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_ReplicateSDE2GDB, __pyx_t_3) < 0) __PYX_ERR(0, 593, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
@@ -23969,35 +24144,6 @@ static CYTHON_INLINE PyObject* __Pyx_PyObject_CallOneArg(PyObject *func, PyObjec
 }
 #endif
 
-/* PyObjectCall2Args */
-static CYTHON_UNUSED PyObject* __Pyx_PyObject_Call2Args(PyObject* function, PyObject* arg1, PyObject* arg2) {
-    PyObject *args, *result = NULL;
-    #if CYTHON_FAST_PYCALL
-    if (PyFunction_Check(function)) {
-        PyObject *args[2] = {arg1, arg2};
-        return __Pyx_PyFunction_FastCall(function, args, 2);
-    }
-    #endif
-    #if CYTHON_FAST_PYCCALL
-    if (__Pyx_PyFastCFunction_Check(function)) {
-        PyObject *args[2] = {arg1, arg2};
-        return __Pyx_PyCFunction_FastCall(function, args, 2);
-    }
-    #endif
-    args = PyTuple_New(2);
-    if (unlikely(!args)) goto done;
-    Py_INCREF(arg1);
-    PyTuple_SET_ITEM(args, 0, arg1);
-    Py_INCREF(arg2);
-    PyTuple_SET_ITEM(args, 1, arg2);
-    Py_INCREF(function);
-    result = __Pyx_PyObject_Call(function, args, NULL);
-    Py_DECREF(args);
-    Py_DECREF(function);
-done:
-    return result;
-}
-
 /* RaiseArgTupleInvalid */
 static void __Pyx_RaiseArgtupleInvalid(
     const char* func_name,
@@ -24138,6 +24284,35 @@ invalid_keyword:
     #endif
 bad:
     return -1;
+}
+
+/* PyObjectCall2Args */
+static CYTHON_UNUSED PyObject* __Pyx_PyObject_Call2Args(PyObject* function, PyObject* arg1, PyObject* arg2) {
+    PyObject *args, *result = NULL;
+    #if CYTHON_FAST_PYCALL
+    if (PyFunction_Check(function)) {
+        PyObject *args[2] = {arg1, arg2};
+        return __Pyx_PyFunction_FastCall(function, args, 2);
+    }
+    #endif
+    #if CYTHON_FAST_PYCCALL
+    if (__Pyx_PyFastCFunction_Check(function)) {
+        PyObject *args[2] = {arg1, arg2};
+        return __Pyx_PyCFunction_FastCall(function, args, 2);
+    }
+    #endif
+    args = PyTuple_New(2);
+    if (unlikely(!args)) goto done;
+    Py_INCREF(arg1);
+    PyTuple_SET_ITEM(args, 0, arg1);
+    Py_INCREF(arg2);
+    PyTuple_SET_ITEM(args, 1, arg2);
+    Py_INCREF(function);
+    result = __Pyx_PyObject_Call(function, args, NULL);
+    Py_DECREF(args);
+    Py_DECREF(function);
+done:
+    return result;
 }
 
 /* PyObjectSetAttrStr */

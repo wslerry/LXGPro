@@ -3,6 +3,9 @@ __pycache__
 test*
 build
 build/*
+dist
+*.egg-info
+
 
 latest.py
 convert2shp.py

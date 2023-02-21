@@ -2,7 +2,23 @@
 
 ## Build and installation
 
+
+
+To install as python extension module:
+
 `python setup.py build_ext --inplace`
+
+
+
+To install as python module
+
+`python setup.py install`
+
+
+
+To save as wheel for pip installation
+
+`python setup.py bdist_wheel`
 
 ## Usage
 
