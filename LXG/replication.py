@@ -1,5 +1,6 @@
 import arcpy
 import os
+import contextlib
 from tqdm import tqdm
 import multiprocessing as mp
 import numpy as np
@@ -21,6 +22,16 @@ def process(seconds):
     converted_time = str(conversion)
 
     return converted_time
+
+
+@contextlib.contextmanager
+def make_temp_directory():
+    temp_dir = tempfile.mkdtemp()
+    try:
+        yield temp_dir
+    finally:
+        shutil.rmtree(temp_dir)
+
 
 def your_existance_in_questions(directory, geodatabase_name):
     gdb_filename = os.path.join(directory, geodatabase_name)
@@ -162,29 +173,26 @@ class AppendNewFeatures:
         self.new_ds_list = list()
         start0 = time.time()
 
-        current_dir = tempfile.mkdtemp()
+        with make_temp_directory() as current_dir:
+            # self.gdb_poly = os.path.join(current_dir, 'polys.gdb')
+            self.gdb_poly = your_existance_in_questions(current_dir, 'polys.gdb')
+            self.gdb_lines = your_existance_in_questions(current_dir, 'lines.gdb')
+            self.gdb_points = your_existance_in_questions(current_dir, 'points.gdb')
 
-        # self.gdb_poly = os.path.join(current_dir, 'polys.gdb')
-        self.gdb_poly = your_existance_in_questions(current_dir, 'polys.gdb')
-        self.gdb_lines = your_existance_in_questions(current_dir, 'lines.gdb')
-        self.gdb_points = your_existance_in_questions(current_dir, 'points.gdb')
+            self.prepare_features(self.gdb1)
+            self.prepare_features(self.gdb2)
 
-        self.prepare_features(self.gdb1)
-        self.prepare_features(self.gdb2)
+            check_list = self.check_differences()
 
-        check_list = self.check_differences()
+            if self.create_report:
+                self.report(check_list)
+            else:
+                pass
 
-        if self.create_report:
-            self.report(check_list)
-        else:
-            pass
+            self.append_latest(check_list)
 
-        self.append_latest(check_list)
-
-        stop0 = time.time()
-        arcpy.AddMessage(f'[INFO]\t Processing Done. Total time {process(stop0 - start0)}s ...')
-
-        shutil.rmtree(current_dir)
+            stop0 = time.time()
+            arcpy.AddMessage(f'[INFO]\t Processing Done. Total time {process(stop0 - start0)}s ...')
 
     def prepare_features(self, geodatabase):
         fc_class_name = None
