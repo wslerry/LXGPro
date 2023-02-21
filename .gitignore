@@ -2,6 +2,7 @@
 __pycache__
 test*
 build
+build/*
 
 latest.py
 convert2shp.py
