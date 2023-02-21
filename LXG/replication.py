@@ -4,13 +4,17 @@ from tqdm import tqdm
 import multiprocessing as mp
 import numpy as np
 import pandas as pd
+import tempfile
+import shutil
 from jinja2 import Environment, FileSystemLoader
 from xhtml2pdf import pisa
 import time
 from datetime import date, timedelta
 
 
-current_dir = os.path.dirname(os.path.realpath(__file__))
+# current_dir = os.path.dirname(os.path.realpath(__file__))
+current_dir = tempfile.mkdtemp()
+
 
 def process(seconds):
     conversion = timedelta(seconds=seconds)
@@ -177,6 +181,8 @@ class AppendNewFeatures:
 
         stop0 = time.time()
         arcpy.AddMessage(f'[INFO]\t Processing Done. Total time {process(stop0 - start0)}s ...')
+
+        shutil.rmtree(current_dir)
 
     def prepare_features(self, geodatabase):
         fc_class_name = None
@@ -583,10 +589,12 @@ class AppendNewFeatures:
 
 
 class ReplicateSDE2GDB:
-    def __init__(self, sde_instance, sde_username, sde_password, file_gdb, wildcard_datasets, wildcard_featureclass):
+    def __init__(self, sde_instance, sde_username, sde_password,
+                 output_directory, file_gdb, wildcard_datasets, wildcard_featureclass):
         self.instance = sde_instance
         self.usr = sde_username
         self.pwd = sde_password
+        self.out_dir = output_directory
         self.gdb = file_gdb
         self.wildcard_ds = wildcard_datasets
         self.wildcard_fc = wildcard_featureclass
@@ -598,12 +606,12 @@ class ReplicateSDE2GDB:
 
         sde = self.temp_connection()
 
-        db_out = os.path.join(current_dir, self.gdb)
+        db_out = os.path.join(self.out_dir, self.gdb)
         if arcpy.Exists(db_out):
             arcpy.Delete_management(db_out)
-            arcpy.CreateFileGDB_management(current_dir, self.gdb, "9.3")
+            arcpy.CreateFileGDB_management(self.out_dir, self.gdb, "9.3")
         else:
-            arcpy.CreateFileGDB_management(current_dir, self.gdb, "9.3")
+            arcpy.CreateFileGDB_management(self.out_dir, self.gdb, "9.3")
 
         arcpy.env.workspace = sde
 
@@ -619,9 +627,11 @@ class ReplicateSDE2GDB:
             except Exception as e:
                 arcpy.AddError(e)
 
+        shutil.rmtree(current_dir)
+
     def temp_connection(self):
         # create connection parameters
-        conn = {"out_folder_path": os.path.dirname(os.path.realpath(__file__)),
+        conn = {"out_folder_path": current_dir,
                 "out_name": 'temp.sde',
                 "database_platform": 'ORACLE',
                 "instance": self.instance,
@@ -644,4 +654,5 @@ class ReplicateSDE2GDB:
     def newname(target_string, old_name):
         new_name = old_name.replace(target_string, "", 1)
         return new_name
+
 
