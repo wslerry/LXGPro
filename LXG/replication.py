@@ -30,7 +30,8 @@ def make_temp_directory():
     try:
         yield temp_dir
     finally:
-        shutil.rmtree(temp_dir)
+        temp_dir.cleanup()
+        # shutil.rmtree(temp_dir)
 
 
 def your_existance_in_questions(directory, geodatabase_name):
@@ -173,40 +174,53 @@ class AppendNewFeatures:
         self.new_ds_list = list()
         start0 = time.time()
 
-        with make_temp_directory() as current_dir:
-            # self.gdb_poly = os.path.join(current_dir, 'polys.gdb')
-            self.gdb_poly = your_existance_in_questions(current_dir, 'polys.gdb')
-            self.gdb_lines = your_existance_in_questions(current_dir, 'lines.gdb')
-            self.gdb_points = your_existance_in_questions(current_dir, 'points.gdb')
+        current_dir = os.path.join(tempfile.gettempdir(), "lxg_replica_temp")
+        # print("CURRENT DIR", current_dir)
+        if not os.path.isdir(current_dir):
+            os.mkdir(current_dir)
 
-            edit1 = arcpy.da.Editor(self.gdb_poly)
-            edit1.startEditing(False, False)
-            edit2 = arcpy.da.Editor(self.gdb_lines)
-            edit2.startEditing(False, False)
-            edit3 = arcpy.da.Editor(self.gdb_points)
-            edit3.startEditing(False, False)
+        # self.gdb_poly = os.path.join(current_dir, 'polys.gdb')
+        self.gdb_poly = your_existance_in_questions(current_dir, 'polys.gdb')
+        self.gdb_lines = your_existance_in_questions(current_dir, 'lines.gdb')
+        self.gdb_points = your_existance_in_questions(current_dir, 'points.gdb')
 
-            self.prepare_features(self.gdb1)
-            self.prepare_features(self.gdb2)
+        self.prepare_features(self.gdb1)
+        self.prepare_features(self.gdb2)
 
-            check_list = self.check_differences()
+        check_list = self.check_differences()
 
-            if self.create_report:
-                self.report(check_list)
-            else:
+        if self.create_report:
+            self.report(check_list)
+        else:
+            pass
+
+        self.append_latest(check_list)
+
+        arcpy.Compact_management(self.gdb_poly)
+        arcpy.Compact_management(self.gdb_lines)
+        arcpy.Compact_management(self.gdb_points)
+        arcpy.Compact_management(self.gdb1)
+        arcpy.Compact_management(self.gdb2)
+
+        try:
+            arcpy.Delete_management(self.gdb_poly)
+            arcpy.Delete_management(self.gdb_lines)
+            arcpy.Delete_management(self.gdb_points)
+        except arcpy.ExecuteError as e:
+            arcpy.AddError(e)
+
+        stop0 = time.time()
+        arcpy.AddMessage(f'[INFO]\t Processing Done. Total time {process(stop0 - start0)}s ...')
+
+        # del self.gdb_poly, self.gdb_lines, self.gdb_points
+
+        if not os.path.isdir(current_dir):
+            try:
+                shutil.rmtree(current_dir)
+            except Exception:
                 pass
-
-            self.append_latest(check_list)
-
-            stop0 = time.time()
-            arcpy.AddMessage(f'[INFO]\t Processing Done. Total time {process(stop0 - start0)}s ...')
-
-            edit1.stopOperation()
-            edit1.stopEditing(True)
-            edit2.stopOperation()
-            edit2.stopEditing(True)
-            edit3.stopOperation()
-            edit3.stopEditing(True)
+            finally:
+                os.unlink(current_dir)
 
     def prepare_features(self, geodatabase):
         fc_class_name = None
@@ -248,7 +262,7 @@ class AppendNewFeatures:
                                                               Include_End_Points="")
                     try:
                         if geodatabase == self.gdb1:
-                            # Execute the Buffer tool if initial geodatabase
+                            # Execute the Buffer tool of initial geodatabase
                             arcpy.Buffer_analysis(pts_feat_line,
                                                   os.path.join(self.gdb_lines, f'{fc_class_name}_{line}_buf'),
                                                   "0.5 meters")

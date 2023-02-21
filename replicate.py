@@ -1,12 +1,19 @@
-from LXGREP import ReplicateSDE2GDB
+import os
+from LXG import AppendNewFeatures
+import tempfile
+import shutil
 
 if __name__ == "__main__":
-    params = {
-        "sde_instance": "KUCHINGLXG",
-        "sde_username": "sde",
-        "sde_password": "sde",
-        "file_gdb": "cms_replica.gdb",
-        "wildcard_datasets": "*CMS_ADMINISTRATIVE*",
-        "wildcard_featureclass": ""}
+    params1 = {
+        "init_geodatabase": r"C:\LXG\replication\arcpro\data\old.gdb",
+        "latest_geodatabase": r"C:\LXG\replication\arcpro\data\new.gdb",
+        "report": False
+    }
 
-    ReplicateSDE2GDB(**params)
+    AppendNewFeatures(**params1)
+
+    # current_ = os.path.join(tempfile.gettempdir(), "lxg_replica_temp")
+    # if os.path.isdir(current_):
+    #     shutil.rmtree(current_)
+    # else:
+    #     pass
