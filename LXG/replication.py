@@ -179,6 +179,13 @@ class AppendNewFeatures:
             self.gdb_lines = your_existance_in_questions(current_dir, 'lines.gdb')
             self.gdb_points = your_existance_in_questions(current_dir, 'points.gdb')
 
+            edit1 = arcpy.da.Editor(self.gdb_poly)
+            edit1.startEditing(False, False)
+            edit2 = arcpy.da.Editor(self.gdb_lines)
+            edit2.startEditing(False, False)
+            edit3 = arcpy.da.Editor(self.gdb_points)
+            edit3.startEditing(False, False)
+
             self.prepare_features(self.gdb1)
             self.prepare_features(self.gdb2)
 
@@ -193,6 +200,13 @@ class AppendNewFeatures:
 
             stop0 = time.time()
             arcpy.AddMessage(f'[INFO]\t Processing Done. Total time {process(stop0 - start0)}s ...')
+
+            edit1.stopOperation()
+            edit1.stopEditing(True)
+            edit2.stopOperation()
+            edit2.stopEditing(True)
+            edit3.stopOperation()
+            edit3.stopEditing(True)
 
     def prepare_features(self, geodatabase):
         fc_class_name = None
