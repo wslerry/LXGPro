@@ -13,7 +13,7 @@ from datetime import date, timedelta
 
 
 # current_dir = os.path.dirname(os.path.realpath(__file__))
-current_dir = tempfile.mkdtemp()
+# current_dir = tempfile.mkdtemp()
 
 
 def process(seconds):
@@ -22,13 +22,13 @@ def process(seconds):
 
     return converted_time
 
-def your_existance_in_questions(geodatabase_name):
-    gdb_filename = os.path.join(current_dir, geodatabase_name)
+def your_existance_in_questions(directory, geodatabase_name):
+    gdb_filename = os.path.join(directory, geodatabase_name)
     if arcpy.Exists(gdb_filename):
         arcpy.Delete_management(gdb_filename)
-        arcpy.CreateFileGDB_management(current_dir, geodatabase_name, "9.3")
+        arcpy.CreateFileGDB_management(directory, geodatabase_name, "9.3")
     else:
-        arcpy.CreateFileGDB_management(current_dir, geodatabase_name, "9.3")
+        arcpy.CreateFileGDB_management(directory, geodatabase_name, "9.3")
 
     return gdb_filename
 
@@ -162,10 +162,12 @@ class AppendNewFeatures:
         self.new_ds_list = list()
         start0 = time.time()
 
+        current_dir = tempfile.mkdtemp()
+
         # self.gdb_poly = os.path.join(current_dir, 'polys.gdb')
-        self.gdb_poly = your_existance_in_questions('polys.gdb')
-        self.gdb_lines = your_existance_in_questions('lines.gdb')
-        self.gdb_points = your_existance_in_questions('points.gdb')
+        self.gdb_poly = your_existance_in_questions(current_dir, 'polys.gdb')
+        self.gdb_lines = your_existance_in_questions(current_dir, 'lines.gdb')
+        self.gdb_points = your_existance_in_questions(current_dir, 'points.gdb')
 
         self.prepare_features(self.gdb1)
         self.prepare_features(self.gdb2)
@@ -598,6 +600,7 @@ class ReplicateSDE2GDB:
         self.gdb = file_gdb
         self.wildcard_ds = wildcard_datasets
         self.wildcard_fc = wildcard_featureclass
+        self.temp_dir = tempfile.mkdtemp()
 
         if self.wildcard_ds is None:
             self.wildcard_ds = ""
@@ -627,11 +630,11 @@ class ReplicateSDE2GDB:
             except Exception as e:
                 arcpy.AddError(e)
 
-        shutil.rmtree(current_dir)
+        shutil.rmtree(self.temp_dir)
 
     def temp_connection(self):
         # create connection parameters
-        conn = {"out_folder_path": current_dir,
+        conn = {"out_folder_path": self.temp_dir,
                 "out_name": 'temp.sde',
                 "database_platform": 'ORACLE',
                 "instance": self.instance,
