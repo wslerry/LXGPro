@@ -5,7 +5,7 @@ build
 build/*
 dist
 *.egg-info
-
+LXG/*.c
 
 latest.py
 convert2shp.py
