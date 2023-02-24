@@ -4,6 +4,7 @@ test*
 build
 build/*
 assets
+LXG/__pycache__
 
 dist
 *.egg-info
