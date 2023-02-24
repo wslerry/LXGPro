@@ -50,18 +50,34 @@ class ToBRSO:
         self.gdb = file_geodatabase
         self.crs = projection
         arcpy.env.workspace = self.gdb
-        dss = sorted(arcpy.ListDatasets("", "ALL"))
-        ds_list = [os.path.join(self.gdb, ds) for ds in dss]
 
-        with mp.Pool(processes=8) as pool:
-            results = tqdm(pool.imap(self.define, ds_list),
-                           total=len(ds_list),
-                           desc='BRSO',
-                           position=0,
-                           colour='GREEN')
-            tuple(results)
-            pool.close()
-            pool.join()
+        dss = sorted(arcpy.ListDatasets("", "ALL"))
+        if len(dss) > 0:
+            ds_list = [os.path.join(self.gdb, ds) for ds in dss]
+
+            with mp.Pool(processes=4) as pool:
+                results = tqdm(pool.imap(self.define, ds_list),
+                               total=len(ds_list),
+                               desc='BRSO - Dataset',
+                               position=0,
+                               colour='GREEN')
+                tuple(results)
+                pool.close()
+                pool.join()
+
+        fclasses = sorted(arcpy.ListFeatureClasses("*", ""))
+        if len(fclasses) > 0:
+            fc_list = [os.path.join(self.gdb, fc) for fc in fclasses]
+
+            with mp.Pool(processes=4) as pool:
+                results = tqdm(pool.imap(self.define, fc_list),
+                               total=len(fc_list),
+                               desc='BRSO - Featureclass',
+                               position=0,
+                               colour='GREEN')
+                tuple(results)
+                pool.close()
+                pool.join()
 
     def define(self, datasets):
         try:
