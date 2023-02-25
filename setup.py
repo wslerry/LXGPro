@@ -1,21 +1,23 @@
 import sys
 import versioneer
+
 try:
     import arcpy
 except ImportError:
-    sys.exit("lxg_replication requires Arcpy/Arcgispro to be installed")
+    sys.exit("LXGPro requires Arcpy/Arcgispro to be installed")
+
 if sys.version_info < (3, 7):
-    sys.exit("doctr requires Python 3.7 or newer")
+    sys.exit("LXGPro requires Python 3.7 or newer")
 
 try:
     import setuptools
     from setuptools import setup
     from setuptools import Extension
+    from Cython.Distutils import build_ext
 except ImportError:
     from distutils.core import setup
     from distutils.extension import Extension
-
-from Cython.Distutils import build_ext
+    from Cython.Distutils import build_ext
 
 
 ext_modules = [
