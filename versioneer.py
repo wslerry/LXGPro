@@ -382,13 +382,7 @@ def get_config_from_root(root):
     pyproject_toml = root / "pyproject.toml"
     setup_cfg = root / "setup.cfg"
     section = None
-    if pyproject_toml.exists() and have_tomllib:
-        try:
-            with open(pyproject_toml, 'rb') as fobj:
-                pp = tomllib.load(fobj)
-            section = pp['tool']['versioneer']
-        except (tomllib.TOMLDecodeError, KeyError):
-            pass
+
     if not section:
         parser = configparser.ConfigParser()
         with open(setup_cfg) as cfg_file:
@@ -396,6 +390,21 @@ def get_config_from_root(root):
         parser.get("versioneer", "VCS")  # raise error if missing
 
         section = parser["versioneer"]
+
+    # if pyproject_toml.exists() and have_tomllib:
+    #     try:
+    #         with open(pyproject_toml, 'rb') as fobj:
+    #             pp = tomllib.load(fobj)
+    #         section = pp['tool']['versioneer']
+    #     except (tomllib.TOMLDecodeError, KeyError):
+    #         pass
+    # if not section:
+    #     parser = configparser.ConfigParser()
+    #     with open(setup_cfg) as cfg_file:
+    #         parser.read_file(cfg_file)
+    #     parser.get("versioneer", "VCS")  # raise error if missing
+    #
+    #     section = parser["versioneer"]
 
     cfg = VersioneerConfig()
     cfg.VCS = section['VCS']
