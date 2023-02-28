@@ -182,23 +182,41 @@ class BatchImportXML:
 
 
 class AppendNewFeatures:
-    def __init__(self, init_geodatabase, latest_geodatabase, report=False):
+    def __init__(self, init_geodatabase, latest_geodatabase, temporary_directory=None, report=False):
         self.gdb1 = init_geodatabase
         self.gdb2 = latest_geodatabase
+        self.temp = temporary_directory
         self.create_report = report
 
         self.new_ds_list = list()
         start0 = time.time()
 
-        current_dir = os.path.join(tempfile.gettempdir(), "lxg_replica_temp")
-        # print("CURRENT DIR", current_dir)
-        if not os.path.isdir(current_dir):
-            os.mkdir(current_dir)
+        if self.temp is None or self.temp == "":
+            temp_dir = os.path.join(tempfile.gettempdir(), "lxg_replica_temp")
+            if not os.path.isdir(temp_dir):
+                os.mkdir(temp_dir)
+        elif self.temp == "./" or self.temp == ".":
+            temp_dir = os.path.dirname(os.path.realpath(__file__))
+        else:
+            temp_dir = self.temp
+            if not os.path.isdir(temp_dir):
+                os.mkdir(temp_dir)
 
         # self.gdb_poly = os.path.join(current_dir, 'polys.gdb')
-        self.gdb_poly = your_existance_in_questions(current_dir, 'polys.gdb')
-        self.gdb_lines = your_existance_in_questions(current_dir, 'lines.gdb')
-        self.gdb_points = your_existance_in_questions(current_dir, 'points.gdb')
+        self.gdb_poly = your_existance_in_questions(temp_dir, 'polys.gdb')
+        self.gdb_lines = your_existance_in_questions(temp_dir, 'lines.gdb')
+        self.gdb_points = your_existance_in_questions(temp_dir, 'points.gdb')
+
+        # edit01 = arcpy.da.Editor(self.gdb1)
+        # edit01.startEditing(False, False)
+        # edit02 = arcpy.da.Editor(self.gdb2)
+        # edit02.startEditing(False, False)
+        # edit_polys = arcpy.da.Editor(self.gdb_poly)
+        # edit_lines = arcpy.da.Editor(self.gdb_lines)
+        # edit_points = arcpy.da.Editor(self.gdb_points)
+        # edit_polys.startEditing(False, True)
+        # edit_lines.startEditing(False, True)
+        # edit_points.startEditing(False, True)
 
         self.prepare_features(self.gdb1)
         self.prepare_features(self.gdb2)
@@ -218,25 +236,62 @@ class AppendNewFeatures:
         arcpy.Compact_management(self.gdb1)
         arcpy.Compact_management(self.gdb2)
 
-        try:
-            arcpy.Delete_management(self.gdb_poly)
-            arcpy.Delete_management(self.gdb_lines)
-            arcpy.Delete_management(self.gdb_points)
-        except arcpy.ExecuteError as e:
-            arcpy.AddError(e)
+        # # Stop the edit operation.
+        # edit01.stopOperation()
+        # # Stop the edit session and save the changes
+        # edit01.stopEditing(True)
+        # # Stop the edit operation.
+        # edit02.stopOperation()
+        # # Stop the edit session and save the changes
+        # edit02.stopEditing(True)
+        # # Stop the edit operation.
+        # edit_polys.stopOperation()
+        # # Stop the edit session and save the changes
+        # edit_polys.stopEditing(True)
+        # # Stop the edit operation.
+        # edit_lines.stopOperation()
+        # # Stop the edit session and save the changes
+        # edit_lines.stopEditing(True)
+        # # Stop the edit operation.
+        # edit_points.stopOperation()
+        # # Stop the edit session and save the changes
+        # edit_points.stopEditing(True)
+
+        # try:
+        #     arcpy.Delete_management(self.gdb_poly)
+        #     arcpy.Delete_management(self.gdb_lines)
+        #     arcpy.Delete_management(self.gdb_points)
+        # except arcpy.ExecuteError as e:
+        #     arcpy.AddError(e)
 
         stop0 = time.time()
         arcpy.AddMessage(f'[INFO]\t Processing Done. Total time {process(stop0 - start0)}s ...')
 
-        # del self.gdb_poly, self.gdb_lines, self.gdb_points
-
-        if not os.path.isdir(current_dir):
+        if self.temp is None or self.temp == "":
             try:
-                shutil.rmtree(current_dir)
+                shutil.rmtree(temp_dir)
             except Exception:
                 pass
             finally:
-                os.unlink(current_dir)
+                os.unlink(temp_dir)
+        elif self.temp == "./" or self.temp == ".":
+            try:
+                arcpy.Delete_management(os.path.join(temp_dir, 'polys.gdb'))
+                arcpy.Delete_management(os.path.join(temp_dir, 'lines.gdb'))
+                arcpy.Delete_management(os.path.join(temp_dir, 'points.gdb'))
+            except arcpy.ExecuteError as e:
+                arcpy.AddError(e)
+            finally:
+                os.unlink(os.path.join(temp_dir, 'polys.gdb'))
+                os.unlink(os.path.join(temp_dir, 'lines.gdb'))
+                os.unlink(os.path.join(temp_dir, 'points.gdb'))
+        else:
+            try:
+                shutil.rmtree(temp_dir)
+            except Exception:
+                pass
+            finally:
+                os.unlink(temp_dir)
 
     def prepare_features(self, geodatabase):
         fc_class_name = None
@@ -394,7 +449,7 @@ class AppendNewFeatures:
     def check_differences(self):
         arcpy.env.workspace = self.gdb2
         new_features_list = []
-        dss = sorted(arcpy.ListDatasets("", "ALL"))
+        dss = sorted(arcpy.ListDatasets("", "Feature"))
         pbar01 = tqdm(dss, desc='Detect changes', position=0, colour='GREEN')
         for ds in pbar01:
             fcs = sorted(arcpy.ListFeatureClasses("", "Polygon", ds))
@@ -574,14 +629,14 @@ class AppendNewFeatures:
                                                                         "NEW_SELECTION",
                                                                         "NOT_INVERT")
 
-        # Start an edit session. Must provide the workspace.
-        edit = arcpy.da.Editor(self.gdb1)
-        edit.startEditing(False, False)
+        # # Start an edit session. Must provide the workspace.
+        # edit = arcpy.da.Editor(self.gdb1)
+        # edit.startEditing(False, False)
 
         # delete selected layer for old data
         oid_nums = [int(fid) for fid in arcpy.Describe(selected_layer02).FIDSet.split(";") if fid != '']
         oid_fieldname = arcpy.Describe(selected_layer02).OIDFieldName
-        edit.startOperation()
+        # edit.startOperation()
         if len(oid_nums) > 0:
             try:
                 # Start an edit operation
@@ -611,10 +666,10 @@ class AppendNewFeatures:
             arcpy.AddError(e)
 
         del _params
-        # Stop the edit operation.
-        edit.stopOperation()
-        # Stop the edit session and save the changes
-        edit.stopEditing(True)
+        # # Stop the edit operation.
+        # edit.stopOperation()
+        # # Stop the edit session and save the changes
+        # edit.stopEditing(True)
 
     def report(self, featureclass_list):
         """
