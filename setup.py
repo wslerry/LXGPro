@@ -21,9 +21,14 @@ except ImportError:
 
 
 ext_modules = [
-    Extension("LXGMIG",  ["LXG/migration.py"]),
-    Extension("LXGREP",  ["LXG/replication.py"]),
+    Extension("LXGMIG", ["LXG/migration.py"]),
+    Extension("LXGREP", ["LXG/replication.py"]),
+    Extension("LXGLoad", ["LXG/dataloader.py"])
 ]
+
+# ext_modules = [
+#     Extension("LXGApps", ["LXG/migration.py", "LXG/replication.py", "LXG/dataloader.py"]),
+# ]
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
