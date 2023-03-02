@@ -23,7 +23,7 @@ except ImportError:
 ext_modules = [
     Extension("LXGMIG", ["LXG/migration.py"]),
     Extension("LXGREP", ["LXG/replication.py"]),
-    Extension("LXGLoad", ["LXG/dataloader.py"])
+    Extension("LXGAnalysis", ["LXG/analysis.py"])
 ]
 
 # ext_modules = [
