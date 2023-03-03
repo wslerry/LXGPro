@@ -211,17 +211,6 @@ class AppendNewFeatures:
         self.gdb_lines = your_existance_in_questions(temp_dir, 'lines.gdb')
         self.gdb_points = your_existance_in_questions(temp_dir, 'points.gdb')
 
-        # edit01 = arcpy.da.Editor(self.gdb1)
-        # edit01.startEditing(False, False)
-        # edit02 = arcpy.da.Editor(self.gdb2)
-        # edit02.startEditing(False, False)
-        # edit_polys = arcpy.da.Editor(self.gdb_poly)
-        # edit_lines = arcpy.da.Editor(self.gdb_lines)
-        # edit_points = arcpy.da.Editor(self.gdb_points)
-        # edit_polys.startEditing(False, True)
-        # edit_lines.startEditing(False, True)
-        # edit_points.startEditing(False, True)
-
         self.prepare_features(self.gdb1)
         self.prepare_features(self.gdb2)
 
@@ -240,62 +229,10 @@ class AppendNewFeatures:
         arcpy.Compact_management(self.gdb1)
         arcpy.Compact_management(self.gdb2)
 
-        # # Stop the edit operation.
-        # edit01.stopOperation()
-        # # Stop the edit session and save the changes
-        # edit01.stopEditing(True)
-        # # Stop the edit operation.
-        # edit02.stopOperation()
-        # # Stop the edit session and save the changes
-        # edit02.stopEditing(True)
-        # # Stop the edit operation.
-        # edit_polys.stopOperation()
-        # # Stop the edit session and save the changes
-        # edit_polys.stopEditing(True)
-        # # Stop the edit operation.
-        # edit_lines.stopOperation()
-        # # Stop the edit session and save the changes
-        # edit_lines.stopEditing(True)
-        # # Stop the edit operation.
-        # edit_points.stopOperation()
-        # # Stop the edit session and save the changes
-        # edit_points.stopEditing(True)
-
-        # try:
-        #     arcpy.Delete_management(self.gdb_poly)
-        #     arcpy.Delete_management(self.gdb_lines)
-        #     arcpy.Delete_management(self.gdb_points)
-        # except arcpy.ExecuteError as e:
-        #     arcpy.AddError(e)
-
         stop0 = time.time()
         arcpy.AddMessage(f'[INFO]\t Processing Done. Total time {process(stop0 - start0)}s ...')
 
-        if self.temp is None or self.temp == "":
-            try:
-                shutil.rmtree(temp_dir)
-            except Exception:
-                pass
-            finally:
-                os.unlink(temp_dir)
-        elif self.temp == "./" or self.temp == ".":
-            try:
-                arcpy.Delete_management(os.path.join(temp_dir, 'polys.gdb'))
-                arcpy.Delete_management(os.path.join(temp_dir, 'lines.gdb'))
-                arcpy.Delete_management(os.path.join(temp_dir, 'points.gdb'))
-            except arcpy.ExecuteError as e:
-                arcpy.AddError(e)
-            finally:
-                os.unlink(os.path.join(temp_dir, 'polys.gdb'))
-                os.unlink(os.path.join(temp_dir, 'lines.gdb'))
-                os.unlink(os.path.join(temp_dir, 'points.gdb'))
-        else:
-            try:
-                shutil.rmtree(temp_dir)
-            except Exception:
-                pass
-            finally:
-                os.unlink(temp_dir)
+        time.time(10)
 
     def prepare_features(self, geodatabase):
         fc_class_name = None
@@ -674,6 +611,33 @@ class AppendNewFeatures:
         # edit.stopOperation()
         # # Stop the edit session and save the changes
         # edit.stopEditing(True)
+
+    def delete(self):
+        if self.temp is None or self.temp == "":
+            try:
+                shutil.rmtree(self.temp)
+            except Exception:
+                pass
+            finally:
+                os.unlink(self.temp)
+        elif self.temp == "./" or self.temp == ".":
+            try:
+                arcpy.Delete_management(os.path.join(self.temp, 'polys.gdb'))
+                arcpy.Delete_management(os.path.join(self.temp, 'lines.gdb'))
+                arcpy.Delete_management(os.path.join(self.temp, 'points.gdb'))
+            except arcpy.ExecuteError as e:
+                arcpy.AddError(e)
+            finally:
+                os.unlink(os.path.join(self.temp, 'polys.gdb'))
+                os.unlink(os.path.join(self.temp, 'lines.gdb'))
+                os.unlink(os.path.join(self.temp, 'points.gdb'))
+        else:
+            try:
+                shutil.rmtree(self.temp)
+            except Exception:
+                pass
+            finally:
+                os.unlink(self.temp)
 
     def report(self, featureclass_list):
         """
