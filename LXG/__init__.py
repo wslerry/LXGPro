@@ -1,4 +1,3 @@
-import assets
 from .migration import Migration
 from .replication import ToBRSO, ToShapefile, AppendNewFeatures, BatchImportXML, ReplicateSDE2GDB
 from .analysis import CheckDifferences
