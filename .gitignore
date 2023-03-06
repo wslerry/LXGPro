@@ -9,6 +9,8 @@ dist
 *.egg-info
 LXG/*.c
 
+*.sh
+*.bat
 latest.py
 convert2shp.py
 projection_multiprocessing.py
