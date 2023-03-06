@@ -3,7 +3,6 @@ __pycache__
 test*
 build
 build/*
-assets
 LXG/__pycache__
 
 dist
