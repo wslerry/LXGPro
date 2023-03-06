@@ -1,5 +1,6 @@
 import sys
 import versioneer
+from glob import glob
 
 try:
     import arcpy
@@ -19,7 +20,6 @@ except ImportError:
     from distutils.extension import Extension
     from Cython.Distutils import build_ext
 
-
 # ext_modules = [
 #     Extension("LXGMIG", ["LXG/migration.py"]),
 #     Extension("LXGREP", ["LXG/replication.py"]),
@@ -29,6 +29,14 @@ except ImportError:
 ext_modules = [
     Extension("LXG", ["LXG/migration.py", "LXG/replication.py", "LXG/dataloader.py", "LXG/analysis.py"]),
 ]
+
+_data_files = [
+    ('LXG', glob('assets/**/*', recursive=True))
+]
+
+package_data = {
+    '': ['*.prj', '*.XML']
+}
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
@@ -40,6 +48,8 @@ setup(
     version=versioneer.get_version(),
     cmdclass={'build_ext': build_ext, 'versioning': versioneer.get_cmdclass()},
     ext_modules=ext_modules,
+    data_files=_data_files,
+    package_data=package_data,
     author="Lerry William",
     author_email="lerryws@sains.com.my",
     description="A Python library to migrate FileGDB to ArcSDE and replicate ArcSDE to FileGDB",

@@ -43,7 +43,6 @@ class DataLoader:
             recs.sort()
             df = pd.DataFrame(recs)
             df.columns = ['FeatureClasses', 'Count']
-            print(f"{len()}")
             return df
         else:
             return None
