@@ -2,6 +2,18 @@
 
 ## Build and installation
 
+Install master repo
+
+`pip install -U git+https://github.com/wslerry/LXGPro.git`
+
+
+
+Install development repo
+
+`pip install -U git+https://github.com/wslerry/LXGPro.git@dev`
+
+
+
 
 
 To install as python extension module:
