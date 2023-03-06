@@ -20,12 +20,6 @@ except ImportError:
     from distutils.extension import Extension
     from Cython.Distutils import build_ext
 
-# ext_modules = [
-#     Extension("LXGMIG", ["LXG/migration.py"]),
-#     Extension("LXGREP", ["LXG/replication.py"]),
-#     Extension("LXGAnalysis", ["LXG/analysis.py"])
-# ]
-
 ext_modules = [
     Extension("LXG", ["LXG/migration.py", "LXG/replication.py", "LXG/dataloader.py", "LXG/analysis.py"]),
 ]
