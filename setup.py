@@ -46,8 +46,9 @@ with open("requirements.txt", "r") as fh:
 setup(
     name=f'LXG',
     version=versioneer.get_version(),
-    cmdclass={'build_ext': build_ext, 'versioning': versioneer.get_cmdclass()},
-    ext_modules=ext_modules,
+    cmdclass={'versioning': versioneer.get_cmdclass()},
+    # cmdclass={'build_ext': build_ext, 'versioning': versioneer.get_cmdclass()},
+    # ext_modules=ext_modules,
     data_files=_data_files,
     package_data=package_data,
     author="Lerry William",
