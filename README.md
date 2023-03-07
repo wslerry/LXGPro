@@ -14,7 +14,13 @@ Install development repo
 
 
 
+To install from repo
 
+`git clone https://github.com/wslerry/LXGPro.git`
+
+`cd LXGPro`
+
+then follow as below as your choice of installation.
 
 To install as python extension module:
 
@@ -34,12 +40,23 @@ To save as wheel for pip installation
 
 ## Usage
 
-```python
-from LXG import Migration, Replication
+1. For migration or replication
 
-Migration()
-Replication()
-```
+    ```python
+    from LXG import Migration, Replication
+    
+    Migration()
+    Replication()
+    ```
+
+
+2. For detecting changes of two different version of database
+
+   ```python
+   as
+   ```
+
+   
 
 ## Dev
 
