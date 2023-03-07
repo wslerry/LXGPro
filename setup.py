@@ -11,9 +11,7 @@ if sys.version_info < (3, 7):
     sys.exit("LXGPro requires Python 3.7 or newer")
 
 try:
-    import setuptools
-    from setuptools import setup
-    from setuptools import Extension
+    from setuptools import setup, Extension, find_packages
     from Cython.Distutils import build_ext
 except ImportError:
     from distutils.core import setup
@@ -50,7 +48,7 @@ setup(
     description="A Python library to migrate FileGDB to ArcSDE and replicate ArcSDE to FileGDB",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    packages=setuptools.find_packages(),
+    packages=find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
