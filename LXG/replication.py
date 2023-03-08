@@ -282,6 +282,8 @@ class AppendNewFeatures:
 
         arcpy.DeleteRows_management(selected_layer)
 
+        arcpy.SelectLayerByAttribute_management(in_layer, "CLEAR_SELECTION")
+
         return int(selected_count)
 
     def check_differences(self):
@@ -474,6 +476,8 @@ class AppendNewFeatures:
         except arcpy.ExecuteError as e:
             arcpy.AddError(e)
 
+        arcpy.SelectLayerByAttribute_management(selected_layer, "CLEAR_SELECTION")
+
         del _params
 
     def fast_poly_append(self, fc):
@@ -534,10 +538,9 @@ class AppendNewFeatures:
             arcpy.AddError(e)
 
         del _params
-        # # Stop the edit operation.
-        # edit.stopOperation()
-        # # Stop the edit session and save the changes
-        # edit.stopEditing(True)
+
+        arcpy.SelectLayerByAttribute_management(selected_layer01, "CLEAR_SELECTION")
+        arcpy.SelectLayerByAttribute_management(selected_layer02, "CLEAR_SELECTION")
 
     def delete(self):
         if self.temp is None or self.temp == "":
