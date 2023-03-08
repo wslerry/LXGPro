@@ -1,7 +1,7 @@
 """
 Author : Lerry William
 """
-
+import sys
 import arcpy
 import os
 import contextlib
@@ -49,115 +49,6 @@ def your_existance_in_questions(directory, geodatabase_name):
     return gdb_filename
 
 
-class ToBRSO:
-    def __init__(self, file_geodatabase, projection):
-        self.gdb = file_geodatabase
-        self.crs = projection
-        arcpy.env.workspace = self.gdb
-
-        dss = sorted(arcpy.ListDatasets("", "ALL"))
-        if len(dss) > 0:
-            ds_list = [os.path.join(self.gdb, ds) for ds in dss]
-
-            with mp.Pool(processes=4) as pool:
-                results = tqdm(pool.imap(self.define, ds_list),
-                               total=len(ds_list),
-                               desc='BRSO - Dataset',
-                               position=0,
-                               colour='GREEN')
-                tuple(results)
-                pool.close()
-                pool.join()
-
-        fclasses = sorted(arcpy.ListFeatureClasses("*", ""))
-        if len(fclasses) > 0:
-            fc_list = [os.path.join(self.gdb, fc) for fc in fclasses]
-
-            with mp.Pool(processes=4) as pool:
-                results = tqdm(pool.imap(self.define, fc_list),
-                               total=len(fc_list),
-                               desc='BRSO - Featureclass',
-                               position=0,
-                               colour='GREEN')
-                tuple(results)
-                pool.close()
-                pool.join()
-
-    def define(self, datasets):
-        try:
-            arcpy.DefineProjection_management(datasets, self.crs)
-        except arcpy.ExecuteError as e:
-            arcpy.AddError(e)
-
-
-class ToShapefile:
-    def __init__(self, geodatabase, output_directory):
-        self.gdb = geodatabase
-        self.dir = output_directory
-
-        arcpy.env.workspace = self.gdb
-
-        dss = sorted(arcpy.ListDatasets("", "feature"))
-        pbar01 = tqdm(dss, desc=f'{self.gdb}', position=0, colour='GREEN')
-        for ds in pbar01:
-            fcs = sorted(arcpy.ListFeatureClasses("", "All", ds))
-            pbar02 = tqdm(fcs, position=1, colour='YELLOW', leave=False)
-            for fc in pbar02:
-                pbar02.set_description(fc)
-                desc = arcpy.Describe(fc)
-                if desc.FeatureType != 'Annotation':
-                    try:
-                        arcpy.FeatureClassToShapefile_conversion(fc, self.dir)
-                    except arcpy.ExecuteError as e:
-                        arcpy.AddError(e)
-                    except IOError as e:
-                        arcpy.AddError(e)
-                    except Exception as e:
-                        arcpy.AddError(e)
-
-                    output_shapefile = os.path.join(self.dir, f"{fc}.shp")
-                    fc_tabs = None
-                    shp_tabs = None
-                    try:
-                        fc_tabs = self.column_names(fc)
-                        shp_tabs = self.column_names(output_shapefile)
-                    except IOError as e:
-                        arcpy.AddError(e)
-                    except Exception as e:
-                        arcpy.AddError(e)
-
-                    zip_list = zip(shp_tabs, fc_tabs)
-                    try:
-                        list_file = open(os.path.join(self.dir, fc + ".txt"), "w")
-                        for x in zip_list:
-                            list_file.write(f"{x[0]} {x[1]}\n")
-                        list_file.close()
-                    except Exception as e:
-                        arcpy.AddError(e)
-                    except arcpy.ExecuteError as e:
-                        arcpy.AddError(e)
-
-    def column_names(self, featureclass):
-        field_names = []
-        avoid_this = ['GLOBALID',
-                      'Shape',
-                      'SHAPE',
-                      'SHAPE_Leng',
-                      'SHAPE_Length',
-                      'SHAPE_Area']
-        fields = arcpy.ListFields(featureclass, "")
-        for field in fields:
-            if field.editable is True and field.name not in avoid_this:
-                try:
-                    field_names.append(field.name)
-                except Exception as e:
-                    arcpy.AddError(e)
-                except arcpy.ExecuteError as e:
-                    arcpy.AddError(e)
-
-        return field_names
-
-
 class BatchImportXML:
     def __init__(self, geodatabase, xml_directory):
         self.gdb = geodatabase
@@ -186,11 +77,16 @@ class BatchImportXML:
 
 
 class AppendNewFeatures:
-    def __init__(self, init_geodatabase, latest_geodatabase, temporary_directory=None, report=False):
+    def __init__(self, init_geodatabase,
+                 latest_geodatabase,
+                 temporary_directory=None,
+                 report=False,
+                 report_output_directory=None):
         self.gdb1 = init_geodatabase
         self.gdb2 = latest_geodatabase
         self.temp = temporary_directory
         self.create_report = report
+        self.report_out_dir = report_output_directory
 
         self.new_ds_list = list()
         start0 = time.time()
@@ -217,22 +113,21 @@ class AppendNewFeatures:
         check_list = self.check_differences()
 
         if self.create_report:
-            self.report(check_list)
+            if self.report_out_dir is not None:
+                os.makedirs(self.report_out_dir, exist_ok=True)
+                self.report(check_list)
+            else:
+                sys.exit("System exit... Please state the output directory for analysis report")
         else:
             pass
 
         self.append_latest(check_list)
 
-        arcpy.Compact_management(self.gdb_poly)
-        arcpy.Compact_management(self.gdb_lines)
-        arcpy.Compact_management(self.gdb_points)
         arcpy.Compact_management(self.gdb1)
         arcpy.Compact_management(self.gdb2)
 
         stop0 = time.time()
         arcpy.AddMessage(f'[INFO]\t Processing Done. Total time {process(stop0 - start0)}s ...')
-
-        time.time(10)
 
     def prepare_features(self, geodatabase):
         fc_class_name = None
@@ -304,6 +199,8 @@ class AppendNewFeatures:
                     del results
 
         del fc_class_name
+
+        return None
 
     def _polys(self, fc_list):
         geodatabase = fc_list[1]
@@ -461,6 +358,34 @@ class AppendNewFeatures:
 
         return fd_mapping
 
+    def fieldmapping(self, fc_source, fc_target):
+        fieldMappings = arcpy.FieldMappings()
+        field_tgt = arcpy.ListFields(fc_target)
+        namelist_tgt = []
+        exclude_list = ['OBJECT_ID',
+                        'OBJECTID',
+                        'OBJECT_ID1',
+                        'OBJECT_ID2',
+                        'SHAPE']
+
+        # Creating field maps for the two files
+        fieldMappings.addTable(fc_source)
+        fieldMappings.addTable(fc_target)
+
+        # for fd in field_tgt:
+        #     if fd.name not in exclude_list:
+        #         namelist_tgt.append(fd.name)
+
+        for fd in field_tgt:
+            if fd.name not in exclude_list and fd.type != "OID" and fd.editable is True:
+                namelist_tgt.append(fd.name)
+
+        for field in fieldMappings.fields:
+            if field.name not in namelist_tgt:
+                fieldMappings.removeFieldMap(fieldMappings.findFieldMapIndex(field.name))
+
+        return fieldMappings
+
     def append_latest(self, featureclass_list):
         featureclass_list = np.array(featureclass_list)
         arcpy.env.workspace = self.gdb2
@@ -537,12 +462,14 @@ class AppendNewFeatures:
                                       target_feature=fc[1],
                                       point_feat_dir=fc_pts)
 
+        _params = self.fieldmapping(selected_layer, fc[1])
+
         try:
             # Append selected points to a old version of feature class
             arcpy.Append_management(selected_layer,
                                     fc[0],
                                     "NO_TEST",
-                                    _params
+                                    field_mapping=_params
                                     )
         except arcpy.ExecuteError as e:
             arcpy.AddError(e)
@@ -651,18 +578,25 @@ class AppendNewFeatures:
         Returns:
 
         """
+        file_dir = os.path.dirname(os.path.realpath(__file__))
         df = pd.DataFrame(featureclass_list)
         df.columns = ['FeatureClasses', 'Count']
         df_html = df.to_html(index=False, classes="table-title")
-        env = Environment(loader=FileSystemLoader('./report'))
+        env = Environment(loader=FileSystemLoader(os.path.join(file_dir, "assets", "report")))
         template = env.get_template("replication_report.html")
-        generated_html = template.render(date=date.today().strftime('%d, %b %Y'),
-                                         title='Total new features added from 19C for each featureclass',
+        generated_html = template.render(date=str(date.today().strftime('%d, %b %Y')),
+                                         title='Total new features from 19C for each featureclass',
                                          df=df_html)
 
-        # Convert HTML to PDF
-        with open('./report/replication_report.pdf', "w+b") as out_pdf:
-            pisa.CreatePDF(src=generated_html, dest=out_pdf)
+        report_fd = os.path.join(self.report_out_dir, "report")
+        os.makedirs(report_fd, exist_ok=True)
+        pdf_out = os.path.join(report_fd, "replication_report.pdf")
+
+        with open(pdf_out, "w+b") as out_pdf:
+            try:
+                pisa.CreatePDF(src=generated_html, dest=out_pdf)
+            except Exception as e:
+                arcpy.AddError(e)
 
 
 class ReplicateSDE2GDB:

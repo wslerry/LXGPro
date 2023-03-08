@@ -1,0 +1,35 @@
+@import url(https://fonts.googleapis.com/css?family=Enriqueta:400,500,700,300,100);
+@import url(https://fonts.googleapis.com/css?family=Georgia:400,500,700,300,100);
+@page {
+ size: A4 potrait;
+ margin: 2cm;
+}
+
+html, body {
+  font-family: 'Enriqueta', 'Georgia', serif;
+  width:100%;
+  margin: 0;
+  color: #000;
+  background-color: #fff;
+}
+
+p { 
+  margin: 0; 
+  -pdf-keep-with-next: true; 
+}
+
+p.separator { 
+  -pdf-keep-with-next: false; 
+  font-size: 6pt; 
+}
+
+table { 
+  -pdf-keep-with-next: true; 
+}
+
+table, th, td {
+  font-family: 'Enriqueta', 'Georgia', serif;
+  border-collapse: collapse;
+  font-size: 0.9em;
+  break-inside: avoid;
+}

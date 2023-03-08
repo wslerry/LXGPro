@@ -27,7 +27,7 @@ _data_files = [
 ]
 
 package_data = {
-    '': ['*.prj', '*.XML']
+    '': ['*.prj', '*.XML', '*.otf', '*.ttf', '*.html', '*.css']
 }
 
 with open("README.md", "r") as fh:
