@@ -210,3 +210,9 @@ class GDB2SDE:
                             arcpy.AddError(e)
             else:
                 pass
+
+
+class EnterpriseGDB:
+    """
+    Create a geodatabase enterprise
+    """

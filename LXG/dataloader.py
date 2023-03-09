@@ -208,3 +208,14 @@ class OGRDataLoader:
             return namesplit[-2]
         else:
             return None
+
+    # def records(self):
+    #     arcpy.env.workspace = self.gdb
+    #     df_list = list()
+    #     for ds in sorted(arcpy.ListDatasets("*", "Feature")):
+    #         for fc in sorted(arcpy.ListFeatureClasses("*", "All", ds)):
+    #             feat_name = os.path.join(self.gdb, ds, fc)
+    #             columns = [f.name for f in arcpy.ListFields(fc) if f.type != "Geometry"]
+    #             df = pd.DataFrame(data=arcpy.da.SearchCursor(fc, columns), columns=columns)
+    #             df_list.append((feat_name, df))
+    #     return df_list

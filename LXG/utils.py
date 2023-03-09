@@ -1,9 +1,11 @@
 import os
+import errno
 import arcpy
-from datetime import timedelta, datetime
+import tempfile
+from datetime import datetime
 import multiprocessing as mp
 from tqdm import tqdm
-import time
+import shutil
 import logging
 import logging.handlers
 
@@ -195,3 +197,38 @@ class ToShapefile:
                     arcpy.AddError(e)
 
         return field_names
+
+
+def makedirs(folder, *args, **kwargs):
+    try:
+        return os.makedirs(folder, exist_ok=True, *args, **kwargs)
+    except TypeError:
+        # Unexpected arguments encountered
+        pass
+
+    try:
+        # Should work is TypeError was caused by exist_ok, eg., Py2
+        return os.makedirs(folder, *args, **kwargs)
+    except OSError as e:
+        if e.errno != errno.EEXIST:
+            raise
+        if os.path.isfile(folder):
+            # folder is a file, raise OSError just like os.makedirs() in Py3
+            raise
+
+
+def delete_workdir():
+    _temp = os.path.join(tempfile.gettempdir(), "lxg_replica_temp")
+    if os.path.isdir(_temp):
+        shutil.rmtree(_temp)
+        return print(f"[INFO] Temporary working directory deleted :)")
+    else:
+        return None
+
+
+def temporary_workdir():
+    _temp = os.path.join(tempfile.gettempdir(), "lxg_replica_temp")
+    makedirs(_temp)
+
+    return _temp
+

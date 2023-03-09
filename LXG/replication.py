@@ -4,7 +4,6 @@ Author : Lerry William
 import sys
 import arcpy
 import os
-import contextlib
 from tqdm import tqdm
 import multiprocessing as mp
 import numpy as np
@@ -15,10 +14,7 @@ from jinja2 import Environment, FileSystemLoader
 from xhtml2pdf import pisa
 import time
 from datetime import date, timedelta
-
-
-# current_dir = os.path.dirname(os.path.realpath(__file__))
-# current_dir = tempfile.mkdtemp()
+from .utils import temporary_workdir, delete_workdir
 
 
 def process(seconds):
@@ -26,16 +22,6 @@ def process(seconds):
     converted_time = str(conversion)
 
     return converted_time
-
-
-@contextlib.contextmanager
-def make_temp_directory():
-    temp_dir = tempfile.mkdtemp()
-    try:
-        yield temp_dir
-    finally:
-        temp_dir.cleanup()
-        # shutil.rmtree(temp_dir)
 
 
 def your_existance_in_questions(directory, geodatabase_name):
@@ -87,14 +73,20 @@ class AppendNewFeatures:
         self.temp = temporary_directory
         self.create_report = report
         self.report_out_dir = report_output_directory
-
+        self.processor_num = 4 if mp.cpu_count() >= 4 else (2 if mp.cpu_count() == 2 else 1)
         self.new_ds_list = list()
         start0 = time.time()
+        arcpy.AddMessage(f'[INFO]\tProcessing start at {start0} ...')
+
+        delete_workdir()
+
+        if arcpy.Exists(self.gdb1) or arcpy.Exists(self.gdb2):
+            pass
+        else:
+            sys.exit("Invalid init_geodatabase or latest_geodatabase input. System exit...")
 
         if self.temp is None or self.temp == "":
-            temp_dir = os.path.join(tempfile.gettempdir(), "lxg_replica_temp")
-            if not os.path.isdir(temp_dir):
-                os.mkdir(temp_dir)
+            temp_dir = temporary_workdir()
         elif self.temp == "./" or self.temp == ".":
             temp_dir = os.path.dirname(os.path.realpath(__file__))
         else:
@@ -117,7 +109,7 @@ class AppendNewFeatures:
                 os.makedirs(self.report_out_dir, exist_ok=True)
                 self.report(check_list)
             else:
-                sys.exit("System exit... Please state the output directory for analysis report")
+                sys.exit("Please state the output directory for analysis report. System exit... ")
         else:
             pass
 
@@ -127,7 +119,7 @@ class AppendNewFeatures:
         arcpy.Compact_management(self.gdb2)
 
         stop0 = time.time()
-        arcpy.AddMessage(f'[INFO]\t Processing Done. Total time {process(stop0 - start0)}s ...')
+        arcpy.AddMessage(f'[INFO]\tProcessing Done. Total time {process(stop0 - start0)}s ...')
 
     def prepare_features(self, geodatabase):
         fc_class_name = None
@@ -144,7 +136,6 @@ class AppendNewFeatures:
         for ds in pbar01:
             # Polygon
             fc_poly = sorted(arcpy.ListFeatureClasses("", "Polygon", ds))
-
             if len(fc_poly) > 0:
                 pbar03 = tqdm(fc_poly, desc="Polygon", position=1, colour='Yellow', leave=False)
                 for poly in pbar03:
@@ -154,6 +145,7 @@ class AppendNewFeatures:
                                  os.path.join(self.gdb_poly, f'{fc_class_name}_{poly}_buf')
                                  ])
 
+            # Polyline
             fc_lines = sorted(arcpy.ListFeatureClasses("", "Polyline", ds))
             if len(fc_lines) > 0:
                 pbar03 = tqdm(fc_lines, desc="Polyline", position=1, colour='Yellow', leave=False)
@@ -179,14 +171,14 @@ class AppendNewFeatures:
 
                     del pts_feat_line
 
-            # points
+            # Points
             fc_points = sorted(arcpy.ListFeatureClasses("", "Point", ds))
             if len(fc_points) > 0:
                 fc_points_list = [[os.path.join(geodatabase, ds, pts),
                                    geodatabase,
                                    os.path.join(self.gdb_points, f'{fc_class_name}_{pts}_pts'),
                                    os.path.join(self.gdb_points, f'{fc_class_name}_{pts}_buf')] for pts in fc_points]
-                with mp.Pool(processes=4) as pool3:
+                with mp.Pool(processes=self.processor_num) as pool3:
                     results = tqdm(pool3.imap(self._points, fc_points_list),
                                    total=len(fc_points_list),
                                    desc="Points",
@@ -374,10 +366,6 @@ class AppendNewFeatures:
         fieldMappings.addTable(fc_source)
         fieldMappings.addTable(fc_target)
 
-        # for fd in field_tgt:
-        #     if fd.name not in exclude_list:
-        #         namelist_tgt.append(fd.name)
-
         for fd in field_tgt:
             if fd.name not in exclude_list and fd.type != "OID" and fd.editable is True:
                 namelist_tgt.append(fd.name)
@@ -401,15 +389,18 @@ class AppendNewFeatures:
                     fc_list = [[os.path.join(self.gdb1, ds, fc),
                                 os.path.join(self.gdb2, ds, fc),
                                 self.gdb_poly] for fc in fcs if fc in featureclass_list[:, 0]]
-                    with mp.Pool(processes=4) as pool1:
+                    with mp.Pool(processes=self.processor_num) as pool1:
                         results = tqdm(pool1.imap(self.fast_poly_append, fc_list),
                                        total=len(fc_list),
-                                       desc='Append FeatureClasses',
+                                       desc='Append Polygons',
                                        colour='Yellow',
+                                       position=1,
                                        leave=False)
                         tuple(results)
                         pool1.close()
                         pool1.join()
+
+                        del results
                 except Exception as e:
                     arcpy.AddError(e)
 
@@ -420,16 +411,18 @@ class AppendNewFeatures:
                 fc_list = [[os.path.join(self.gdb1, ds, fc),
                             os.path.join(self.gdb2, ds, fc),
                             self.gdb_lines] for fc in fcs if fc in featureclass_list[:, 0]]
-                with mp.Pool(processes=4) as pool2:
+                with mp.Pool(processes=self.processor_num) as pool2:
                     results = tqdm(pool2.imap(self.fast_append, fc_list),
                                    total=len(fc_list),
-                                   desc='Append FeatureClasses',
+                                   desc='Append Polylines',
                                    colour='Yellow',
                                    position=1,
                                    leave=False)
                     tuple(results)
                     pool2.close()
                     pool2.join()
+
+                    del results
 
             del fcs
 
@@ -438,16 +431,18 @@ class AppendNewFeatures:
                 fc_list = [[os.path.join(self.gdb1, ds, fc),
                             os.path.join(self.gdb2, ds, fc),
                             self.gdb_points] for fc in fcs if fc in featureclass_list[:, 0]]
-                with mp.Pool(processes=4) as pool3:
+                with mp.Pool(processes=self.processor_num) as pool3:
                     results = tqdm(pool3.imap(self.fast_append, fc_list),
                                    total=len(fc_list),
-                                   desc='Append FeatureClasses',
+                                   desc='Append Points',
                                    colour='Yellow',
                                    position=1,
                                    leave=False)
                     tuple(results)
                     pool3.close()
                     pool3.join()
+
+                    del results
 
             del fcs
 
@@ -457,28 +452,17 @@ class AppendNewFeatures:
         fc_pts = os.path.join(fc[2], f'gdb2_{_fc}_pts')
 
         # Select the points that are touching the buffer using the Select Layer By Location tool
-        selected_layer, _, _ = arcpy.SelectLayerByLocation_management(fc[1],
-                                                                      "INTERSECT",
-                                                                      fc_pts)
-        _params = self.field_mappings(source_feature=selected_layer,
-                                      target_feature=fc[1],
-                                      point_feat_dir=fc_pts)
+        selected_layer, _, _ = arcpy.SelectLayerByLocation_management(fc[1], "INTERSECT", fc_pts)
 
         _params = self.fieldmapping(selected_layer, fc[1])
 
         try:
             # Append selected points to a old version of feature class
-            arcpy.Append_management(selected_layer,
-                                    fc[0],
-                                    "NO_TEST",
-                                    field_mapping=_params
-                                    )
+            arcpy.Append_management(selected_layer, fc[0], "NO_TEST", field_mapping=_params)
         except arcpy.ExecuteError as e:
             arcpy.AddError(e)
 
         arcpy.SelectLayerByAttribute_management(selected_layer, "CLEAR_SELECTION")
-
-        del _params
 
     def fast_poly_append(self, fc):
         _fc = os.path.basename(fc[1])
@@ -542,33 +526,6 @@ class AppendNewFeatures:
         arcpy.SelectLayerByAttribute_management(selected_layer01, "CLEAR_SELECTION")
         arcpy.SelectLayerByAttribute_management(selected_layer02, "CLEAR_SELECTION")
 
-    def delete(self):
-        if self.temp is None or self.temp == "":
-            try:
-                shutil.rmtree(self.temp)
-            except Exception:
-                pass
-            finally:
-                os.unlink(self.temp)
-        elif self.temp == "./" or self.temp == ".":
-            try:
-                arcpy.Delete_management(os.path.join(self.temp, 'polys.gdb'))
-                arcpy.Delete_management(os.path.join(self.temp, 'lines.gdb'))
-                arcpy.Delete_management(os.path.join(self.temp, 'points.gdb'))
-            except arcpy.ExecuteError as e:
-                arcpy.AddError(e)
-            finally:
-                os.unlink(os.path.join(self.temp, 'polys.gdb'))
-                os.unlink(os.path.join(self.temp, 'lines.gdb'))
-                os.unlink(os.path.join(self.temp, 'points.gdb'))
-        else:
-            try:
-                shutil.rmtree(self.temp)
-            except Exception:
-                pass
-            finally:
-                os.unlink(self.temp)
-
     def report(self, featureclass_list):
         """
         Generate PDF Report for total count of new feature added from 19C
@@ -600,6 +557,15 @@ class AppendNewFeatures:
                 pisa.CreatePDF(src=generated_html, dest=out_pdf)
             except Exception as e:
                 arcpy.AddError(e)
+
+    def __repr__(self):
+        cls = self.__class__.__name__
+        return f'{cls}(init_geodatabase={self.gdb1}, ' \
+               f'latest_geodatabase={self.gdb2},' \
+               f'temporary_directory={self.temp},' \
+               f'report={self.create_report},' \
+               f'report_output_directory={self.report_out_dir})\n' \
+               f'Processor number : {self.processor_num}\n'
 
 
 class ReplicateSDE2GDB:

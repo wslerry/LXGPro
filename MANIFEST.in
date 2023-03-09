@@ -1,7 +1,7 @@
 include README.md
 include requirements.txt
 graft LXG
-recursive-exclude * *.py[co]
+recursive-exclude * *.py[co][pyc]
 include versioneer.py
 include LXG/_version.py
 recursive-include LXG/assets/**/* *.XML *.prj
