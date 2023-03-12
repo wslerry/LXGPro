@@ -249,15 +249,20 @@ class ToShapefile:
 
 
 class GenerateScript:
-    def __init__(self, shapefile_directory):
+    def __init__(self, shapefile_directory, directory_in_server):
         self.shp_dir = shapefile_directory
+
+        if directory_in_server is None:
+            self.serverdir = "/home0/sde/lxg_spatial"
+        else:
+            self.serverdir = directory_in_server
 
         arcpy.env.workspace = self.shp_dir
 
         replica_script = open(os.path.join(self.shp_dir, "cms_replication.sh"), "w")
 
         replica_script.write("#!/bin/bash \n")
-        replica_script.write("cd /home0/sde/lxg_spatial\n")
+        replica_script.write(f"cd {self.serverdir}\n")
         replica_script.write("TruncateLogFile='/home0/sde/truncate_logger.log'\n")
         replica_script.write("AppendLogFile='/home0/sde/append_logger.log'\n")
         replica_script.write("ReplicationAdminLog='/home0/sde/replication_users_locks_logger.log'\n")
