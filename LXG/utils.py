@@ -248,6 +248,48 @@ class ToShapefile:
         return field_names
 
 
+class GenerateScript:
+    def __init__(self, shapefile_directory):
+        self.shp_dir = shapefile_directory
+
+        arcpy.env.workspace = self.shp_dir
+
+        replica_script = open(os.path.join(self.shp_dir, "cms_replication.sh"), "w")
+
+        replica_script.write("#!/bin/bash \n")
+        replica_script.write("cd /home0/sde/lxg_spatial\n")
+        replica_script.write("TruncateLogFile='/home0/sde/truncate_logger.log'\n")
+        replica_script.write("AppendLogFile='/home0/sde/append_logger.log'\n")
+        replica_script.write("ReplicationAdminLog='/home0/sde/replication_users_locks_logger.log'\n")
+        replica_script.write("rm -f $TruncateLogFile\n")
+        replica_script.write("rm -f $AppendLogFile\n")
+        replica_script.write("rm -f $ReplicationAdminLog\n")
+        replica_script.write("echo 'START: ' `date` >> $TruncateLogFile\n")
+        replica_script.write("echo 'START: ' `date` >> $AppendLogFile\n")
+        replica_script.write('sdemon -o info -I users >> $ReplicationAdminLog\n')
+        replica_script.write('sdemon -o info -I locks >> $ReplicationAdminLog\n')
+        replica_script.write('sdemon -o kill -t all -N -p sde >> $ReplicationAdminLog\n')
+        shapefiles = sorted(arcpy.ListFeatureClasses())
+
+        prog01 = tqdm(shapefiles, desc='Create .sh', position=0, colour='GREEN')
+        for shp in prog01:
+            shp_name = os.path.splitext(os.path.basename(shp))[0]
+            replica_script.write("echo '----------' >>  $TruncateLogFile\n")
+            replica_script.write("echo '" + shp_name + "' >>  $TruncateLogFile\n")
+            replica_script.write("sdetable -o truncate -t " + shp_name + " -u sde -p sde -N  >> $TruncateLogFile\n")
+            replica_script.write("echo '" + shp_name + " finish: ' `date` >> $TruncateLogFile\n")
+            replica_script.write("echo '----------' >>  $TruncateLogFile\n")
+            replica_script.write("echo '----------' >>  $AppendLogFile\n")
+            replica_script.write("echo '" + shp_name + "' >>  $AppendLogFile\n")
+            replica_script.write("shp2sde -o append -l " + shp_name + ",shape -f " + shp_name +
+                                 " -a file=" + shp_name + ".txt -u sde -p sde >> $AppendLogFile\n")
+            replica_script.write("echo '" + shp_name + " finish: ' `date` >> $AppendLogFile\n")
+            replica_script.write("echo '----------' >>  $AppendLogFile\n")
+        replica_script.write("echo 'END: ' `date` >> $TruncateLogFile\n")
+        replica_script.write("echo 'END: ' `date` >> $AppendLogFile\n")
+        replica_script.close()
+
+
 def makedirs(folder, *args, **kwargs):
     try:
         return os.makedirs(folder, exist_ok=True, *args, **kwargs)
