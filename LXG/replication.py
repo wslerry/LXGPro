@@ -13,6 +13,7 @@ import shutil
 from jinja2 import Environment, FileSystemLoader
 from xhtml2pdf import pisa
 import time
+import uuid
 from datetime import date, timedelta
 from .utils import temporary_workdir, delete_workdir
 
@@ -65,12 +66,16 @@ class BatchImportXML:
 class AppendNewFeatures:
     def __init__(self, init_geodatabase,
                  latest_geodatabase,
-                 temporary_directory=None,
+                 division,
+                 datasets_wildcard=None,
+                 feature_wildcard=None,
                  report=False,
                  report_output_directory=None):
         self.gdb1 = init_geodatabase
         self.gdb2 = latest_geodatabase
-        self.temp = temporary_directory
+        self.div = division
+        self.ds_wildcard = f"*" if datasets_wildcard is None or datasets_wildcard == "" else datasets_wildcard
+        self.fc_wildcard = f"*" if feature_wildcard is None or feature_wildcard == "" else feature_wildcard
         self.create_report = report
         self.report_out_dir = report_output_directory
         self.processor_num = 4 if mp.cpu_count() >= 4 else (2 if mp.cpu_count() == 2 else 1)
@@ -85,35 +90,34 @@ class AppendNewFeatures:
         else:
             sys.exit("Invalid init_geodatabase or latest_geodatabase input. System exit...")
 
-        if self.temp is None or self.temp == "":
-            temp_dir = temporary_workdir()
-        elif self.temp == "./" or self.temp == ".":
-            temp_dir = os.path.dirname(os.path.realpath(__file__))
-        else:
-            temp_dir = self.temp
-            if not os.path.isdir(temp_dir):
-                os.mkdir(temp_dir)
+        self.memory = "in_memory"
+        arcpy.Delete_management(self.memory)
+        self.memory = "in_memory"
 
-        # self.gdb_poly = os.path.join(current_dir, 'polys.gdb')
-        self.gdb_poly = your_existance_in_questions(temp_dir, 'polys.gdb')
-        self.gdb_lines = your_existance_in_questions(temp_dir, 'lines.gdb')
-        self.gdb_points = your_existance_in_questions(temp_dir, 'points.gdb')
+        try:
+            self.prepare_features(self.gdb1)
+            self.prepare_features(self.gdb2)
 
-        self.prepare_features(self.gdb1)
-        self.prepare_features(self.gdb2)
+            check_list = self.check_differences()
 
-        check_list = self.check_differences()
+            self.append_latest(check_list)
 
-        if self.create_report:
-            if self.report_out_dir is not None:
-                os.makedirs(self.report_out_dir, exist_ok=True)
-                self.report(check_list)
+            if self.create_report:
+                if self.report_out_dir is not None:
+                    os.makedirs(self.report_out_dir, exist_ok=True)
+                    self.report(check_list)
+                else:
+                    report_dir = os.path.join(os.path.expanduser('~'), "Documents", "GIS_Reports", "LXG_New_Features")
+                    self.report_out_dir = report_dir
+                    os.makedirs(self.report_out_dir, exist_ok=True)
+                    self.report(check_list)
             else:
-                sys.exit("Please state the output directory for analysis report. System exit... ")
-        else:
-            pass
+                pass
 
-        self.append_latest(check_list)
+            arcpy.Delete_management(self.memory)
+        except arcpy.ExecuteError as e:
+            arcpy.Delete_management(self.memory)
+            arcpy.AddError(e)
 
         arcpy.Compact_management(self.gdb1)
         arcpy.Compact_management(self.gdb2)
@@ -141,8 +145,8 @@ class AppendNewFeatures:
                 for poly in pbar03:
                     self._polys([os.path.join(geodatabase, ds, poly),
                                  geodatabase,
-                                 os.path.join(self.gdb_poly, f'{fc_class_name}_{poly}_pts'),
-                                 os.path.join(self.gdb_poly, f'{fc_class_name}_{poly}_buf')
+                                 os.path.join(self.memory, f'{fc_class_name}_{poly}_pts'),
+                                 os.path.join(self.memory, f'{fc_class_name}_{poly}_buf')
                                  ])
 
             # Polyline
@@ -152,18 +156,21 @@ class AppendNewFeatures:
                 for line in pbar03:
                     # pbar03.set_description(line)
                     input_line = os.path.join(geodatabase, ds, line)
-                    pts_feat_line = os.path.join(self.gdb_lines, f'{fc_class_name}_{line}_pts')
-                    arcpy.GeneratePointsAlongLines_management(Input_Features=input_line,
-                                                              Output_Feature_Class=pts_feat_line,
-                                                              Point_Placement="PERCENTAGE",
-                                                              Distance="",
-                                                              Percentage=50,
-                                                              Include_End_Points="")
+                    pts_feat_line = os.path.join(self.memory, f'{fc_class_name}_{line}_pts')
+                    if arcpy.Exists(pts_feat_line):
+                        pass
+                    else:
+                        arcpy.GeneratePointsAlongLines_management(Input_Features=input_line,
+                                                                  Output_Feature_Class=pts_feat_line,
+                                                                  Point_Placement="PERCENTAGE",
+                                                                  Distance="",
+                                                                  Percentage=50,
+                                                                  Include_End_Points="")
                     try:
                         if geodatabase == self.gdb1:
                             # Execute the Buffer tool of initial geodatabase
                             arcpy.Buffer_analysis(pts_feat_line,
-                                                  os.path.join(self.gdb_lines, f'{fc_class_name}_{line}_buf'),
+                                                  os.path.join(self.memory, f'{fc_class_name}_{line}_buf'),
                                                   "0.5 meters")
                             arcpy.Delete_management(pts_feat_line)
                     except arcpy.ExecuteError as e:
@@ -176,8 +183,8 @@ class AppendNewFeatures:
             if len(fc_points) > 0:
                 fc_points_list = [[os.path.join(geodatabase, ds, pts),
                                    geodatabase,
-                                   os.path.join(self.gdb_points, f'{fc_class_name}_{pts}_pts'),
-                                   os.path.join(self.gdb_points, f'{fc_class_name}_{pts}_buf')] for pts in fc_points]
+                                   os.path.join(self.memory, f'{fc_class_name}_{pts}_pts'),
+                                   os.path.join(self.memory, f'{fc_class_name}_{pts}_buf')] for pts in fc_points]
                 with mp.Pool(processes=self.processor_num) as pool3:
                     results = tqdm(pool3.imap(self._points, fc_points_list),
                                    total=len(fc_points_list),
@@ -199,18 +206,16 @@ class AppendNewFeatures:
         pts_feat_poly = fc_list[2]
         buf_feat_poly = fc_list[3]
 
-        arcpy.FeatureToPoint_management(fc_list[0], pts_feat_poly, "CENTROID")
         try:
+            arcpy.FeatureToPoint_management(fc_list[0], pts_feat_poly, "CENTROID")
             if geodatabase == self.gdb1:
                 # Execute the Buffer tool if initial geodatabase
                 arcpy.Buffer_analysis(pts_feat_poly,
                                       buf_feat_poly,
                                       "0.5 meters")
-                arcpy.Delete_management(pts_feat_poly)
+                # arcpy.Delete_management(pts_feat_poly)
         except arcpy.ExecuteError as e:
             arcpy.AddError(e)
-
-        del geodatabase, pts_feat_poly, buf_feat_poly
 
     def _lines(self, fc_list):
         input_line = fc_list[0]
@@ -218,41 +223,37 @@ class AppendNewFeatures:
         pts_feat_line = fc_list[2]
         buf_feat_line = fc_list[3]
 
-        arcpy.GeneratePointsAlongLines_management(Input_Features=input_line,
-                                                  Output_Feature_Class=pts_feat_line,
-                                                  Point_Placement="PERCENTAGE",
-                                                  Distance="",
-                                                  Percentage=50,
-                                                  Include_End_Points="")
         try:
+            arcpy.GeneratePointsAlongLines_management(Input_Features=input_line,
+                                                      Output_Feature_Class=pts_feat_line,
+                                                      Point_Placement="PERCENTAGE",
+                                                      Distance="",
+                                                      Percentage=50,
+                                                      Include_End_Points="")
             if geodatabase == self.gdb1:
                 # Execute the Buffer tool if initial geodatabase
                 arcpy.Buffer_analysis(pts_feat_line,
                                       buf_feat_line,
                                       "0.5 meters")
-                arcpy.Delete_management(pts_feat_line)
+                # arcpy.Delete_management(pts_feat_line)
         except arcpy.ExecuteError as e:
             arcpy.AddError(e)
-
-        del geodatabase, pts_feat_line, buf_feat_line
 
     def _points(self, fc_list):
         geodatabase = fc_list[1]
         pts_feat_pts = fc_list[2]
         buf_feat_pts = fc_list[3]
 
-        arcpy.CopyFeatures_management(fc_list[0], pts_feat_pts)
         try:
+            arcpy.CopyFeatures_management(fc_list[0], pts_feat_pts)
             if geodatabase == self.gdb1:
                 # Execute the Buffer tool if initial geodatabase
                 arcpy.Buffer_analysis(fc_list[0],
                                       buf_feat_pts,
                                       "0.5 meters")
-                arcpy.Delete_management(pts_feat_pts)
+                # arcpy.Delete_management(pts_feat_pts)
         except arcpy.ExecuteError as e:
             arcpy.AddError(e)
-
-        del geodatabase, pts_feat_pts, buf_feat_pts
 
     def intersect(self, in_layer, select_features):
         _, _, selected_count = arcpy.SelectLayerByLocation_management(
@@ -288,8 +289,8 @@ class AppendNewFeatures:
             pbar02 = tqdm(fcs, position=1, colour='Yellow', leave=False)
             for fc in pbar02:
                 pbar02.set_description(fc)
-                fc_pts = os.path.join(self.gdb_poly, f'gdb2_{fc}_pts')
-                old_fc_buf = os.path.join(self.gdb_poly, f'gdb1_{fc}_buf')
+                fc_pts = os.path.join(self.memory, f'gdb2_{fc}_pts')
+                old_fc_buf = os.path.join(self.memory, f'gdb1_{fc}_buf')
                 try:
                     if arcpy.Exists(fc_pts):
                         if arcpy.Exists(old_fc_buf):
@@ -303,8 +304,8 @@ class AppendNewFeatures:
             pbar03 = tqdm(fcs, position=1, colour='Yellow', leave=False)
             for fc in pbar03:
                 pbar03.set_description(fc)
-                fc_pts = os.path.join(self.gdb_lines, f'gdb2_{fc}_pts')
-                old_fc_buf = os.path.join(self.gdb_lines, f'gdb1_{fc}_buf')
+                fc_pts = os.path.join(self.memory, f'gdb2_{fc}_pts')
+                old_fc_buf = os.path.join(self.memory, f'gdb1_{fc}_buf')
                 try:
                     if arcpy.Exists(fc_pts):
                         if arcpy.Exists(old_fc_buf):
@@ -318,8 +319,8 @@ class AppendNewFeatures:
             pbar04 = tqdm(fcs, position=1, colour='Yellow', leave=False)
             for fc in pbar04:
                 pbar04.set_description(fc)
-                fc_pts = os.path.join(self.gdb_points, f'gdb2_{fc}_pts')
-                old_fc_buf = os.path.join(self.gdb_points, f'gdb1_{fc}_buf')
+                fc_pts = os.path.join(self.memory, f'gdb2_{fc}_pts')
+                old_fc_buf = os.path.join(self.memory, f'gdb1_{fc}_buf')
                 try:
                     if arcpy.Exists(fc_pts):
                         if arcpy.Exists(old_fc_buf):
@@ -388,19 +389,21 @@ class AppendNewFeatures:
                 try:
                     fc_list = [[os.path.join(self.gdb1, ds, fc),
                                 os.path.join(self.gdb2, ds, fc),
-                                self.gdb_poly] for fc in fcs if fc in featureclass_list[:, 0]]
-                    with mp.Pool(processes=self.processor_num) as pool1:
-                        results = tqdm(pool1.imap(self.fast_poly_append, fc_list),
-                                       total=len(fc_list),
-                                       desc='Append Polygons',
-                                       colour='Yellow',
-                                       position=1,
-                                       leave=False)
-                        tuple(results)
-                        pool1.close()
-                        pool1.join()
-
-                        del results
+                                self.memory] for fc in fcs if fc in featureclass_list[:, 0]]
+                    for fc in fc_list:
+                        self.fast_poly_append(fc)
+                    # with mp.Pool(processes=self.processor_num) as pool1:
+                    #     results = tqdm(pool1.imap(self.fast_poly_append, fc_list),
+                    #                    total=len(fc_list),
+                    #                    desc='Append Polygons',
+                    #                    colour='Yellow',
+                    #                    position=1,
+                    #                    leave=False)
+                    #     tuple(results)
+                    #     pool1.close()
+                    #     pool1.join()
+                    #
+                    #     del results
                 except Exception as e:
                     arcpy.AddError(e)
 
@@ -410,19 +413,21 @@ class AppendNewFeatures:
             if len(fcs) > 0:
                 fc_list = [[os.path.join(self.gdb1, ds, fc),
                             os.path.join(self.gdb2, ds, fc),
-                            self.gdb_lines] for fc in fcs if fc in featureclass_list[:, 0]]
-                with mp.Pool(processes=self.processor_num) as pool2:
-                    results = tqdm(pool2.imap(self.fast_append, fc_list),
-                                   total=len(fc_list),
-                                   desc='Append Polylines',
-                                   colour='Yellow',
-                                   position=1,
-                                   leave=False)
-                    tuple(results)
-                    pool2.close()
-                    pool2.join()
-
-                    del results
+                            self.memory] for fc in fcs if fc in featureclass_list[:, 0]]
+                for fc in fc_list:
+                    self.fast_append(fc)
+                # with mp.Pool(processes=self.processor_num) as pool2:
+                #     results = tqdm(pool2.imap(self.fast_append, fc_list),
+                #                    total=len(fc_list),
+                #                    desc='Append Polylines',
+                #                    colour='Yellow',
+                #                    position=1,
+                #                    leave=False)
+                #     tuple(results)
+                #     pool2.close()
+                #     pool2.join()
+                #
+                #     del results
 
             del fcs
 
@@ -430,7 +435,7 @@ class AppendNewFeatures:
             if len(fcs) > 0:
                 fc_list = [[os.path.join(self.gdb1, ds, fc),
                             os.path.join(self.gdb2, ds, fc),
-                            self.gdb_points] for fc in fcs if fc in featureclass_list[:, 0]]
+                            self.memory] for fc in fcs if fc in featureclass_list[:, 0]]
                 with mp.Pool(processes=self.processor_num) as pool3:
                     results = tqdm(pool3.imap(self.fast_append, fc_list),
                                    total=len(fc_list),
@@ -466,6 +471,7 @@ class AppendNewFeatures:
 
     def fast_poly_append(self, fc):
         _fc = os.path.basename(fc[1])
+
         fc_pts = os.path.join(fc[2], f'gdb2_{_fc}_pts')
 
         arcpy.SelectLayerByAttribute_management(fc[0], "CLEAR_SELECTION")
@@ -484,11 +490,6 @@ class AppendNewFeatures:
                                                                         "-0.2 Meters",
                                                                         "NEW_SELECTION",
                                                                         "NOT_INVERT")
-
-        # # Start an edit session. Must provide the workspace.
-        # edit = arcpy.da.Editor(self.gdb1)
-        # edit.startEditing(False, False)
-
         # delete selected layer for old data
         oid_nums = [int(fid) for fid in arcpy.Describe(selected_layer02).FIDSet.split(";") if fid != '']
         oid_fieldname = arcpy.Describe(selected_layer02).OIDFieldName
@@ -539,30 +540,33 @@ class AppendNewFeatures:
 
         """
         file_dir = os.path.dirname(os.path.realpath(__file__))
-        df = pd.DataFrame(featureclass_list)
-        df.columns = ['FeatureClasses', 'Count']
-        df_html = df.to_html(index=False, classes="table-title")
-        env = Environment(loader=FileSystemLoader(os.path.join(file_dir, "assets", "report")))
-        template = env.get_template("replication_report.html")
-        generated_html = template.render(date=str(date.today().strftime('%d, %b %Y')),
-                                         title='Total new features from 19C for each featureclass',
-                                         df=df_html)
+        # df = pd.DataFrame(featureclass_list)
+        # df.columns = ['FeatureClasses', 'Count']
 
-        report_fd = os.path.join(self.report_out_dir, "report")
-        os.makedirs(report_fd, exist_ok=True)
-        pdf_out = os.path.join(report_fd, "replication_report.pdf")
+        df = pd.DataFrame(featureclass_list, columns=["FeatureClasses", "Count"])
+        # report_dir = os.path.join(os.path.expanduser('~'), "Documents", "GIS_Reports", "Test")
+        # os.makedirs(report_dir, exist_ok=True)
+        df.to_csv(os.path.join(self.report_out_dir, f"{self.div}_KPG_EXT.csv"), index=False)
 
-        with open(pdf_out, "w+b") as out_pdf:
-            try:
-                pisa.CreatePDF(src=generated_html, dest=out_pdf)
-            except Exception as e:
-                arcpy.AddError(e)
+        # df_html = df.to_html(index=False, classes="table-title")
+        # env = Environment(loader=FileSystemLoader(os.path.join(file_dir, "assets", "report")))
+        # template = env.get_template("replication_report.html")
+        # generated_html = template.render(date=str(date.today().strftime('%d, %b %Y')),
+        #                                  title='Total new features from 19C for each featureclass',
+        #                                  df=df_html)
+        #
+        # pdf_out = os.path.join(self.report_out_dir, "latest_features.pdf")
+        #
+        # with open(pdf_out, "w+b") as out_pdf:
+        #     try:
+        #         pisa.CreatePDF(src=generated_html, dest=out_pdf)
+        #     except Exception as e:
+        #         arcpy.AddError(e)
 
     def __repr__(self):
         cls = self.__class__.__name__
         return f'{cls}(init_geodatabase={self.gdb1}, ' \
                f'latest_geodatabase={self.gdb2},' \
-               f'temporary_directory={self.temp},' \
                f'report={self.create_report},' \
                f'report_output_directory={self.report_out_dir})\n' \
                f'Processor number : {self.processor_num}\n'
@@ -570,7 +574,7 @@ class AppendNewFeatures:
 
 class ReplicateSDE2GDB:
     def __init__(self, sde_instance, sde_username, sde_password,
-                 output_directory, file_gdb, wildcard_datasets, wildcard_featureclass):
+                 output_directory, file_gdb, wildcard_datasets=None, wildcard_featureclass=None):
         self.instance = sde_instance
         self.usr = sde_username
         self.pwd = sde_password
