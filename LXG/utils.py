@@ -9,6 +9,7 @@ import shutil
 import logging
 import logging.handlers
 import numpy as np
+from .assets import BRSO
 
 
 class LXGLogging(logging.handlers.RotatingFileHandler):
@@ -92,9 +93,10 @@ class ReplicationLog:
 
 
 class ToBRSO:
-    def __init__(self, file_geodatabase, projection):
+    def __init__(self, file_geodatabase, projection=None):
         self.gdb = file_geodatabase
-        self.crs = projection
+        self.crs = BRSO() if projection is None else projection
+
         arcpy.env.workspace = self.gdb
 
         dss = sorted(arcpy.ListDatasets("", "ALL"))
@@ -148,15 +150,14 @@ class ToShapefile:
     def run(self):
         arcpy.env.workspace = self.gdb
         dss = sorted(arcpy.ListDatasets("", "feature"))
-        pbar01 = tqdm(dss, desc=f'{self.gdb}', position=0, colour='GREEN')
-
+        # pbar01 = tqdm(dss, desc=f'{self.gdb}', position=0, colour='GREEN')
         if self.featureclass_list is None:
-            for ds in pbar01:
+            for ds in dss:
                 fcs = sorted(arcpy.ListFeatureClasses("", "All", ds))
-                pbar02 = tqdm(fcs, position=1, colour='YELLOW', leave=False)
+                # pbar02 = tqdm(fcs, position=1, colour='YELLOW', leave=False)
                 if len(fcs) > 0:
-                    for fc in pbar02:
-                        pbar02.set_description(fc)
+                    for fc in fcs:
+                        # pbar02.set_description(fc)
                         desc = arcpy.Describe(fc)
                         if desc.FeatureType != 'Annotation':
                             try:
@@ -187,13 +188,13 @@ class ToShapefile:
                             except Exception as e:
                                 arcpy.AddError(e)
         else:
-            for ds in pbar01:
+            for ds in dss:
                 fcs = sorted(arcpy.ListFeatureClasses("", "All", ds))
                 if len(fcs) > 0:
                     fc_list = [os.path.basename(fc) for fc in fcs if fc in self.featureclass_list[:, 0]]
-                    pbar02 = tqdm(fc_list, position=1, colour='YELLOW', leave=False)
-                    for fc in pbar02:
-                        pbar02.set_description(fc)
+                    # pbar02 = tqdm(fc_list, position=1, colour='YELLOW', leave=False)
+                    for fc in fc_list:
+                        # pbar02.set_description(fc)
                         desc = arcpy.Describe(fc)
                         if desc.FeatureType != 'Annotation':
                             try:
@@ -223,6 +224,8 @@ class ToShapefile:
                                 arcpy.AddError(e)
                             except Exception as e:
                                 arcpy.AddError(e)
+
+        arcpy.ClearWorkspaceCache_management()
 
     def column_names(self, featureclass):
         field_names = []

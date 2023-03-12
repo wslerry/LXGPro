@@ -96,10 +96,9 @@ class AppendNewFeatures:
         else:
             sys.exit("Invalid init_geodatabase or latest_geodatabase input. System exit...")
 
+        # self.memory = "in_memory"
+        # arcpy.Delete_management(self.memory)
         self.memory = "in_memory"
-        arcpy.Delete_management(self.memory)
-        self.memory = "in_memory"
-
         try:
             self.prepare_features(self.gdb1)
             self.prepare_features(self.gdb2)
@@ -122,6 +121,7 @@ class AppendNewFeatures:
             else:
                 pass
 
+            arcpy.ClearWorkspaceCache_management()
             arcpy.Delete_management(self.memory)
         except arcpy.ExecuteError as e:
             arcpy.Delete_management(self.memory)
@@ -143,11 +143,11 @@ class AppendNewFeatures:
             pass
 
         arcpy.env.workspace = geodatabase
-        dss = sorted(arcpy.ListDatasets("", "Feature"))
+        dss = sorted(arcpy.ListDatasets(self.ds_wildcard, "Feature"))
         pbar01 = tqdm(dss, desc=f'{geodatabase}', position=0, colour='GREEN')
         for ds in pbar01:
             # Polygon
-            fc_poly = sorted(arcpy.ListFeatureClasses("", "Polygon", ds))
+            fc_poly = sorted(arcpy.ListFeatureClasses(self.fc_wildcard, "Polygon", ds))
             if len(fc_poly) > 0:
                 pbar03 = tqdm(fc_poly, desc="Polygon", position=1, colour='Yellow', leave=False)
                 for poly in pbar03:
@@ -158,7 +158,7 @@ class AppendNewFeatures:
                                  ])
 
             # Polyline
-            fc_lines = sorted(arcpy.ListFeatureClasses("", "Polyline", ds))
+            fc_lines = sorted(arcpy.ListFeatureClasses(self.fc_wildcard, "Polyline", ds))
             if len(fc_lines) > 0:
                 pbar03 = tqdm(fc_lines, desc="Polyline", position=1, colour='Yellow', leave=False)
                 for line in pbar03:
@@ -187,7 +187,7 @@ class AppendNewFeatures:
                     del pts_feat_line
 
             # Points
-            fc_points = sorted(arcpy.ListFeatureClasses("", "Point", ds))
+            fc_points = sorted(arcpy.ListFeatureClasses(self.fc_wildcard, "Point", ds))
             if len(fc_points) > 0:
                 fc_points_list = [[os.path.join(geodatabase, ds, pts),
                                    geodatabase,
@@ -290,10 +290,10 @@ class AppendNewFeatures:
     def check_differences(self):
         arcpy.env.workspace = self.gdb2
         new_features_list = []
-        dss = sorted(arcpy.ListDatasets("", "Feature"))
+        dss = sorted(arcpy.ListDatasets(self.ds_wildcard, "Feature"))
         pbar01 = tqdm(dss, desc='Detect changes', position=0, colour='GREEN')
         for ds in pbar01:
-            fcs = sorted(arcpy.ListFeatureClasses("", "Polygon", ds))
+            fcs = sorted(arcpy.ListFeatureClasses(self.fc_wildcard, "Polygon", ds))
             pbar02 = tqdm(fcs, position=1, colour='Yellow', leave=False)
             for fc in pbar02:
                 pbar02.set_description(fc)
@@ -308,7 +308,7 @@ class AppendNewFeatures:
                 except arcpy.ExecuteError as e:
                     arcpy.AddError(e)
 
-            fcs = sorted(arcpy.ListFeatureClasses("", "Polyline", ds))
+            fcs = sorted(arcpy.ListFeatureClasses(self.fc_wildcard, "Polyline", ds))
             pbar03 = tqdm(fcs, position=1, colour='Yellow', leave=False)
             for fc in pbar03:
                 pbar03.set_description(fc)
@@ -323,7 +323,7 @@ class AppendNewFeatures:
                 except arcpy.ExecuteError as e:
                     arcpy.AddError(e)
 
-            fcs = sorted(arcpy.ListFeatureClasses("", "Point", ds))
+            fcs = sorted(arcpy.ListFeatureClasses(self.fc_wildcard, "Point", ds))
             pbar04 = tqdm(fcs, position=1, colour='Yellow', leave=False)
             for fc in pbar04:
                 pbar04.set_description(fc)
@@ -389,10 +389,10 @@ class AppendNewFeatures:
         featureclass_list = np.array(featureclass_list)
         arcpy.env.workspace = self.gdb2
 
-        dss = sorted(arcpy.ListDatasets("", "ALL"))
+        dss = sorted(arcpy.ListDatasets(self.ds_wildcard, "ALL"))
         pbar01 = tqdm(dss, desc='Append', position=0, colour='GREEN')
         for ds in pbar01:
-            fcs = sorted(arcpy.ListFeatureClasses("", "Polygon", ds))
+            fcs = sorted(arcpy.ListFeatureClasses(self.fc_wildcard, "Polygon", ds))
             if len(fcs) > 0:
                 try:
                     fc_list = [[os.path.join(self.gdb1, ds, fc),
@@ -417,7 +417,7 @@ class AppendNewFeatures:
 
             del fcs
 
-            fcs = sorted(arcpy.ListFeatureClasses("", "Polyline", ds))
+            fcs = sorted(arcpy.ListFeatureClasses(self.fc_wildcard, "Polyline", ds))
             if len(fcs) > 0:
                 fc_list = [[os.path.join(self.gdb1, ds, fc),
                             os.path.join(self.gdb2, ds, fc),
@@ -439,7 +439,7 @@ class AppendNewFeatures:
 
             del fcs
 
-            fcs = sorted(arcpy.ListFeatureClasses("", "Point", ds))
+            fcs = sorted(arcpy.ListFeatureClasses(self.fc_wildcard, "Point", ds))
             if len(fcs) > 0:
                 fc_list = [[os.path.join(self.gdb1, ds, fc),
                             os.path.join(self.gdb2, ds, fc),
