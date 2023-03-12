@@ -81,7 +81,7 @@ class AppendNewFeatures:
         self.processor_num = 4 if mp.cpu_count() >= 4 else (2 if mp.cpu_count() == 2 else 1)
         self.new_ds_list = list()
         start0 = time.time()
-        arcpy.AddMessage(f'[INFO]\tProcessing start at {start0} ...')
+        arcpy.AddMessage(f'[INFO]\tProcessing start at {time.strftime("%H:%M:%S", time.localtime())}')
 
         delete_workdir()
 
@@ -106,7 +106,7 @@ class AppendNewFeatures:
             check_list = self.check_differences()
 
             self.append_latest(check_list)
-
+            arcpy.AddMessage(f'[INFO]\tConverting affected layers to shapefile...')
             ToShapefile(self.gdb1, output_lasis, check_list).run()
 
             if self.create_report:
@@ -131,7 +131,8 @@ class AppendNewFeatures:
         arcpy.Compact_management(self.gdb2)
 
         stop0 = time.time()
-        arcpy.AddMessage(f'[INFO]\tProcessing Done. Total time {process(stop0 - start0)}s ...')
+        arcpy.AddMessage(f'[INFO]\tProcessing Done at {time.strftime("%H:%M:%S", time.localtime())}'
+                         f'\nTotal time {process(stop0 - start0)}s ...')
 
     def prepare_features(self, geodatabase):
         fc_class_name = None
