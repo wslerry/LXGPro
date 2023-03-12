@@ -249,7 +249,7 @@ class ToShapefile:
 
 
 class GenerateScript:
-    def __init__(self, shapefile_directory, directory_in_server):
+    def __init__(self, shapefile_directory, directory_in_server=None):
         self.shp_dir = shapefile_directory
 
         if directory_in_server is None:
