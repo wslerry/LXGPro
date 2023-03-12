@@ -8,6 +8,7 @@ from tqdm import tqdm
 import shutil
 import logging
 import logging.handlers
+import numpy as np
 
 
 class LXGLogging(logging.handlers.RotatingFileHandler):
@@ -132,51 +133,96 @@ class ToBRSO:
 
 
 class ToShapefile:
-    def __init__(self, geodatabase, output_directory):
+    def __init__(self, geodatabase, output_directory, checklist=None):
         self.gdb = geodatabase
         self.dir = output_directory
+        self.checklist = checklist
 
+        os.makedirs(self.dir, exist_ok=True)
+
+        if self.checklist:
+            self.featureclass_list = np.array(self.checklist)
+        else:
+            self.featureclass_list = None
+
+    def run(self):
         arcpy.env.workspace = self.gdb
-
         dss = sorted(arcpy.ListDatasets("", "feature"))
         pbar01 = tqdm(dss, desc=f'{self.gdb}', position=0, colour='GREEN')
-        for ds in pbar01:
-            fcs = sorted(arcpy.ListFeatureClasses("", "All", ds))
-            pbar02 = tqdm(fcs, position=1, colour='YELLOW', leave=False)
-            for fc in pbar02:
-                pbar02.set_description(fc)
-                desc = arcpy.Describe(fc)
-                if desc.FeatureType != 'Annotation':
-                    try:
-                        arcpy.FeatureClassToShapefile_conversion(fc, self.dir)
-                    except arcpy.ExecuteError as e:
-                        arcpy.AddError(e)
-                    except IOError as e:
-                        arcpy.AddError(e)
-                    except Exception as e:
-                        arcpy.AddError(e)
 
-                    output_shapefile = os.path.join(self.dir, f"{fc}.shp")
-                    fc_tabs = None
-                    shp_tabs = None
-                    try:
-                        fc_tabs = self.column_names(fc)
-                        shp_tabs = self.column_names(output_shapefile)
-                    except IOError as e:
-                        arcpy.AddError(e)
-                    except Exception as e:
-                        arcpy.AddError(e)
+        if self.featureclass_list is None:
+            for ds in pbar01:
+                fcs = sorted(arcpy.ListFeatureClasses("", "All", ds))
+                pbar02 = tqdm(fcs, position=1, colour='YELLOW', leave=False)
+                if len(fcs) > 0:
+                    for fc in pbar02:
+                        pbar02.set_description(fc)
+                        desc = arcpy.Describe(fc)
+                        if desc.FeatureType != 'Annotation':
+                            try:
+                                arcpy.FeatureClassToShapefile_conversion(fc, self.dir)
+                            except arcpy.ExecuteError as e:
+                                arcpy.AddError(e)
+                            except IOError as e:
+                                arcpy.AddError(e)
+                            except Exception as e:
+                                arcpy.AddError(e)
 
-                    zip_list = zip(shp_tabs, fc_tabs)
-                    try:
-                        list_file = open(os.path.join(self.dir, fc + ".txt"), "w")
-                        for x in zip_list:
-                            list_file.write(f"{x[0]} {x[1]}\n")
-                        list_file.close()
-                    except Exception as e:
-                        arcpy.AddError(e)
-                    except arcpy.ExecuteError as e:
-                        arcpy.AddError(e)
+                            output_shapefile = os.path.join(self.dir, f"{fc}.shp")
+                            try:
+                                fc_tabs = self.column_names(fc)
+                                shp_tabs = self.column_names(output_shapefile)
+                                zip_list = zip(shp_tabs, fc_tabs)
+                                try:
+                                    list_file = open(os.path.join(self.dir, fc + ".txt"), "w")
+                                    for x in zip_list:
+                                        list_file.write(f"{x[0]} {x[1]}\n")
+                                    list_file.close()
+                                except Exception as e:
+                                    arcpy.AddError(e)
+                                except arcpy.ExecuteError as e:
+                                    arcpy.AddError(e)
+                            except IOError as e:
+                                arcpy.AddError(e)
+                            except Exception as e:
+                                arcpy.AddError(e)
+        else:
+            for ds in pbar01:
+                fcs = sorted(arcpy.ListFeatureClasses("", "All", ds))
+                if len(fcs) > 0:
+                    fc_list = [os.path.basename(fc) for fc in fcs if fc in self.featureclass_list[:, 0]]
+                    pbar02 = tqdm(fc_list, position=1, colour='YELLOW', leave=False)
+                    for fc in pbar02:
+                        pbar02.set_description(fc)
+                        desc = arcpy.Describe(fc)
+                        if desc.FeatureType != 'Annotation':
+                            try:
+                                arcpy.FeatureClassToShapefile_conversion(fc, self.dir)
+                            except arcpy.ExecuteError as e:
+                                arcpy.AddError(e)
+                            except IOError as e:
+                                arcpy.AddError(e)
+                            except Exception as e:
+                                arcpy.AddError(e)
+
+                            output_shapefile = os.path.join(self.dir, f"{fc}.shp")
+                            try:
+                                fc_tabs = self.column_names(fc)
+                                shp_tabs = self.column_names(output_shapefile)
+                                zip_list = zip(shp_tabs, fc_tabs)
+                                try:
+                                    list_file = open(os.path.join(self.dir, fc + ".txt"), "w")
+                                    for x in zip_list:
+                                        list_file.write(f"{x[0]} {x[1]}\n")
+                                    list_file.close()
+                                except Exception as e:
+                                    arcpy.AddError(e)
+                                except arcpy.ExecuteError as e:
+                                    arcpy.AddError(e)
+                            except IOError as e:
+                                arcpy.AddError(e)
+                            except Exception as e:
+                                arcpy.AddError(e)
 
     def column_names(self, featureclass):
         field_names = []

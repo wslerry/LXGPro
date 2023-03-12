@@ -15,7 +15,7 @@ from xhtml2pdf import pisa
 import time
 import uuid
 from datetime import date, timedelta
-from .utils import temporary_workdir, delete_workdir
+from .utils import ToShapefile, delete_workdir
 
 
 def process(seconds):
@@ -85,6 +85,12 @@ class AppendNewFeatures:
 
         delete_workdir()
 
+        output_lasis = os.path.join(os.path.expanduser('~'), ".LXG")
+        if os.path.isdir(output_lasis):
+            shutil.rmtree(output_lasis)
+
+        os.makedirs(output_lasis)
+
         if arcpy.Exists(self.gdb1) or arcpy.Exists(self.gdb2):
             pass
         else:
@@ -101,6 +107,8 @@ class AppendNewFeatures:
             check_list = self.check_differences()
 
             self.append_latest(check_list)
+
+            ToShapefile(self.gdb1, output_lasis, check_list).run()
 
             if self.create_report:
                 if self.report_out_dir is not None:
@@ -539,29 +547,8 @@ class AppendNewFeatures:
         Returns:
 
         """
-        file_dir = os.path.dirname(os.path.realpath(__file__))
-        # df = pd.DataFrame(featureclass_list)
-        # df.columns = ['FeatureClasses', 'Count']
-
         df = pd.DataFrame(featureclass_list, columns=["FeatureClasses", "Count"])
-        # report_dir = os.path.join(os.path.expanduser('~'), "Documents", "GIS_Reports", "Test")
-        # os.makedirs(report_dir, exist_ok=True)
-        df.to_csv(os.path.join(self.report_out_dir, f"{self.div}_KPG_EXT.csv"), index=False)
-
-        # df_html = df.to_html(index=False, classes="table-title")
-        # env = Environment(loader=FileSystemLoader(os.path.join(file_dir, "assets", "report")))
-        # template = env.get_template("replication_report.html")
-        # generated_html = template.render(date=str(date.today().strftime('%d, %b %Y')),
-        #                                  title='Total new features from 19C for each featureclass',
-        #                                  df=df_html)
-        #
-        # pdf_out = os.path.join(self.report_out_dir, "latest_features.pdf")
-        #
-        # with open(pdf_out, "w+b") as out_pdf:
-        #     try:
-        #         pisa.CreatePDF(src=generated_html, dest=out_pdf)
-        #     except Exception as e:
-        #         arcpy.AddError(e)
+        df.to_csv(os.path.join(self.report_out_dir, f"{self.div}_LATEST_FEATURES.csv"), index=False)
 
     def __repr__(self):
         cls = self.__class__.__name__
