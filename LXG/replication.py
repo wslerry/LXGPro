@@ -96,10 +96,8 @@ class AppendNewFeatures:
         else:
             sys.exit("Invalid init_geodatabase or latest_geodatabase input. System exit...")
 
-        # self.memory = "in_memory"
-        # arcpy.Delete_management(self.memory)
-        self.memory = "in_memory"
         try:
+            self.memory = "in_memory"
             self.prepare_features(self.gdb1)
             self.prepare_features(self.gdb2)
 
@@ -121,18 +119,18 @@ class AppendNewFeatures:
             else:
                 pass
 
+            arcpy.Compact_management(self.gdb1)
+            arcpy.Compact_management(self.gdb2)
+
+            stop0 = time.time()
+            arcpy.AddMessage(f'[INFO]\tProcessing Done at {time.strftime("%H:%M:%S", time.localtime())}'
+                             f'\nTotal time {process(stop0 - start0)}s ...')
+
             arcpy.ClearWorkspaceCache_management()
             arcpy.Delete_management(self.memory)
         except arcpy.ExecuteError as e:
             arcpy.Delete_management(self.memory)
             arcpy.AddError(e)
-
-        arcpy.Compact_management(self.gdb1)
-        arcpy.Compact_management(self.gdb2)
-
-        stop0 = time.time()
-        arcpy.AddMessage(f'[INFO]\tProcessing Done at {time.strftime("%H:%M:%S", time.localtime())}'
-                         f'\nTotal time {process(stop0 - start0)}s ...')
 
     def prepare_features(self, geodatabase):
         fc_class_name = None
