@@ -1,3 +1,5 @@
+import sys
+
 import arcpy
 import re
 import os
@@ -5,9 +7,35 @@ from tqdm import tqdm
 import multiprocessing as mp
 import pandas as pd
 import uuid
+import tempfile
 
 
-class DetectNewFeatures:
+class TOLNewFeatures:
+    """Detect a new created polygon from TOL *KPG_EXT* layer.
+
+    Args:
+        init_geodatabase: initial geodatabase (a replica geodatabase) before new changes
+        latest_geodatabase: latest geodatabase (SDE) which contains *KPG_EXT* layers
+        division: LASIS divisional abbreviation eg. KCH, BTU, LBG ...
+        datasets_wildcard (optional): Query for interested dataset layer(s)
+
+    Usage:
+        ```
+        init = r"C:\Datasets\TNT\TEST\OLD\TNT.gdb"
+
+        new = r"C:\LXG\replication\ARC\replication_test\127.0.0.1.sde"
+
+        check_db = TOLNewFeatures(init_geodatabase=init,
+                                  latest_geodatabase=new,
+                                  division="KCH")
+        ```
+
+    Returns:
+        None
+
+    Note:
+        Make sure SDE connected or create a new SDE connection before running the script.
+    """
     def __init__(self, init_geodatabase, latest_geodatabase, division, datasets_wildcard=None,
                  featureclass_wildcard=None):
         self.init = init_geodatabase
@@ -17,9 +45,6 @@ class DetectNewFeatures:
         self.fc_wildcard = f"*KPG_EXT*{self.div}*" if featureclass_wildcard is None or featureclass_wildcard == "" else featureclass_wildcard
 
         self.processor_num = 4 if mp.cpu_count() >= 4 else (2 if mp.cpu_count() == 2 else 1)
-
-        # self.scratch = "in_memory"
-        # arcpy.Delete_management(self.scratch)
 
         self.scratch = "in_memory"
         arcpy.env.workspace = self.scratch
@@ -91,12 +116,12 @@ class DetectNewFeatures:
         new_features_list = []
 
         dss = sorted(arcpy.ListDatasets(self.ds_wildcard, "Feature"))
-        # pbar01 = tqdm(dss, desc='Detect changes', position=0, colour='GREEN')
-        for ds in dss:
+        pbar01 = tqdm(dss, desc='Detect changes', position=0, colour='GREEN')
+        for ds in pbar01:
             fcs = sorted(arcpy.ListFeatureClasses(self.fc_wildcard, "Polygon", ds))
-            # pbar02 = tqdm(fcs, position=1, colour='Yellow', leave=False)
-            for fc in fcs:
-                # pbar02.set_description(fc)
+            pbar02 = tqdm(fcs, position=1, colour='Yellow', leave=False)
+            for fc in pbar02:
+                pbar02.set_description(fc)
                 if re.search('sde.', fc):
                     fc = fc.split(os.extsep)[-1]
                 elif re.search('SDE.', fc):
@@ -192,4 +217,146 @@ class DetectNewFeatures:
                 fieldMappings.removeFieldMap(fieldMappings.findFieldMapIndex(field.name))
 
         return fieldMappings
+
+
+class ReplicateTOL:
+    """Replicate TOL dataset into a replica for dynamic layers.
+    This is one way replication from SDE to local geodatabase.
+
+    Args:
+        sde_connection: SDE Connection geodatabase, a temporary SDE connection will be created if not provide.
+        sde_instance: Database Instance
+        sde_platform: ORACLE,POSTGRESQL
+        sde_username: Query for interested layers
+        sde_password:
+        sde_database:
+        division:
+        wildcard_datasets:
+        wildcard_featureclass
+        replica:
+        replica_name:
+
+    Usage:
+        ```
+        init = r"C:\Datasets\TNT\TEST\OLD\TNT.gdb"
+
+        new = r"C:\LXG\replication\ARC\replication_test\127.0.0.1.sde"
+
+        check_db = TOLNewFeatures(init_geodatabase=init,
+                                  latest_geodatabase=new,
+                                  division="KCH")
+        ```
+    """
+    def __init__(self, sde_connection=None, sde_instance=None, sde_platform=None,
+                 sde_username=None, sde_password=None, sde_database=None, division=None,
+                 wildcard_datasets=None, wildcard_featureclass=None, replica=None, replica_name=None):
+        self.sde = self.temp_connection() if sde_connection is None else sde_connection
+        self.platform = sde_platform
+        self.instance = "127.0.0.1" if sde_instance is None else sde_instance
+        self.usr = "sde" if sde_username is None else sde_username
+        self.pwd = "sde" if sde_password is None else sde_password
+        self.database = "" if sde_database is None else sde_database
+        self.division = division
+        self.wildcard_ds = "*" if wildcard_datasets is None else wildcard_datasets
+        self.wildcard_fc = "*" if wildcard_featureclass is None else wildcard_featureclass
+        work_dir = os.path.join(os.path.expanduser('~'), ".LXG_WORKSPACE")
+        if not os.path.isdir(work_dir):
+            os.makedirs(work_dir)
+        else:
+            pass
+        replica_gdb = os.path.join(work_dir, "tol_replica.gdb")
+        if arcpy.Exists(replica_gdb):
+            # if file exist, keep it. It is a replica geodatabase by the way.
+            self.replica = replica_gdb if replica is None else replica
+        else:
+            # create a new replica if not exist in the system.
+            self.replica = arcpy.CreateFileGDB_management(work_dir, "tol_replica.gdb") if replica is None else replica
+
+        self.replica_name = "tol_replication" if replica_name is None else replica_name
+
+    def run(self):
+        repl_name = []
+        for replica in arcpy.da.ListReplicas(self.replica):
+            repl_name.append(replica.name)
+
+        if self.replica_name in repl_name:
+            sys.exit(f"Hello..hi..yes you there.. Replica name '{self.replica_name}' "
+                     f"already exist, use other name. System exit...")
+        else:
+            pass
+
+        kpg_ext = f"{self.database}.sde.{self.division}_LAND_KPG_EXT" if self.platform == "POSTGRESQL" \
+            else f"SDE.{self.division}_LAND_KPG_EXT"
+        try:
+            arcpy.CreateReplica_management(
+                os.path.join(self.sde, kpg_ext),
+                "ONE_WAY_REPLICA",
+                self.replica,
+                self.replica_name,
+                "FULL",
+                "PARENT_DATA_SENDER",
+                "USE_DEFAULTS",
+                "DO_NOT_REUSE",
+                "GET_RELATED",
+                None,
+                "DO_NOT_USE_ARCHIVING",
+                "DO_NOT_USE_REGISTER_EXISTING_DATA",
+                "GEODATABASE",
+                None)
+        except arcpy.ExecuteError as e:
+            arcpy.AddError(e)
+
+    def sync(self):
+        try:
+            arcpy.SynchronizeChanges_management(
+                self.replica,
+                self.replica_name,
+                self.sde,
+                "FROM_GEODATABASE2_TO_1",
+                "IN_FAVOR_OF_GDB2",
+                "BY_OBJECT",
+                "RECONCILE ")
+        except arcpy.ExecuteError as e:
+            arcpy.AddError(e)
+
+    def check(self):
+        repl_name = []
+        for replica in arcpy.da.ListReplicas(self.replica):
+            repl_name.append(replica.name)
+        try:
+            print_out = 'Replica name list:\n'+'\u25A0 '+'\n\u25A0 '.join(repl_name)
+            print(print_out)
+        except UnicodeDecodeError:
+            pass
+
+    def temp_connection(self):
+        if self.platform == "oracle":
+            platform = "ORACLE"
+        elif self.platform == "postgres":
+            platform = "POSTGRESQL"
+        else:
+            platform = self.platform
+
+        assert self.platform is not None or self.platform != ""
+
+        f_uid = uuid.uuid4()
+        tempdir = tempfile.mkdtemp()
+        conn = {"out_folder_path": tempdir,
+                "out_name": f'temp_{str(f_uid.hex)}.sde',
+                "database_platform": platform,
+                "instance": self.instance,
+                "account_authentication": "DATABASE_AUTH",
+                "database": self.database if platform == "POSTGRESQL" else "",
+                "username": self.usr,
+                "password": self.pwd,
+                "save_user_pass": "SAVE_USERNAME"}
+
+        temp_sde = os.path.join(conn["out_folder_path"], conn["out_name"])
+
+        if arcpy.Exists(temp_sde):
+            arcpy.Delete_management(temp_sde)
+
+        arcpy.CreateDatabaseConnection_management(**conn)
+
+        return temp_sde
 

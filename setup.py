@@ -24,9 +24,12 @@ ext_modules = [
 
 _data_files = [
     ('LXG', glob('assets/**/*', recursive=True)),
-    ('LXG.apis', glob('apis/**/*', recursive=True)),
-    ('LXG.tol', glob('tol/**/*', recursive=True)),
-    ('LXG.verification', glob('verification/**/*', recursive=True)),
+    ('LXG/assets/projection', glob('assets/**/*', recursive=True)),
+    ('LXG/assets/report', glob('assets/**/*', recursive=True)),
+    ('LXG/assets/workspace_xml', glob('assets/**/*', recursive=True)),
+    ('LXG/apis', glob('apis/**/*', recursive=True)),
+    ('LXG/tol', glob('tol/**/*', recursive=True)),
+    ('LXG/verification', glob('verification/**/*', recursive=True)),
 ]
 
 package_data = {
@@ -54,6 +57,7 @@ setup(
     packages=find_packages(),
     python_requires='>=3.7',
     install_requires=requirements,
+    zip_safe=False,
     classifiers=[
         "Development Status :: 5 - Production/Stable",
         "Intended Audience :: Developers",
