@@ -88,8 +88,12 @@ class DetectNewFeatures:
                     fc = fc.split(os.extsep)[-1]
                 else:
                     fc = fc
-                fc_pts = os.path.join(self.scratch, f'new_{fc}_pts')
-                old_fc_buf = os.path.join(self.scratch, f'init_{fc}_buf')
+                fc_pts = os.path.join(self.scratch, f'new_{fc}_pts') \
+                    if arcpy.Exists(os.path.join(self.scratch, f'new_{fc}_pts')) \
+                    else os.path.join(self.scratch, f'new_{fc}_pts0')
+                old_fc_buf = os.path.join(self.scratch, f'init_{fc}_buf') \
+                    if arcpy.Exists(os.path.join(self.scratch, f'new_{fc}_buf')) \
+                    else os.path.join(self.scratch, f'new_{fc}_buf0')
                 try:
                     if arcpy.Exists(fc_pts):
                         if arcpy.Exists(old_fc_buf):
