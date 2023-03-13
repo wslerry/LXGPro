@@ -1,1 +1,1 @@
-from detect_new_layers import DetectNewFeatures
+from .detect_new_layers import DetectNewFeatures

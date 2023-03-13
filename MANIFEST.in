@@ -4,4 +4,7 @@ graft LXG
 recursive-exclude * *.py[co][pyc]
 include versioneer.py
 include LXG/_version.py
+include LXG/apis
+include LXG/tol
+include LXG/verification
 recursive-include LXG/assets/**/* *.XML *.prj

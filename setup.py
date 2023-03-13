@@ -23,7 +23,10 @@ ext_modules = [
 ]
 
 _data_files = [
-    ('LXG', glob('assets/**/*', recursive=True))
+    ('LXG', glob('assets/**/*', recursive=True)),
+    ('LXG.apis', glob('apis/**/*', recursive=True)),
+    ('LXG.tol', glob('tol/**/*', recursive=True)),
+    ('LXG.verification', glob('verification/**/*', recursive=True)),
 ]
 
 package_data = {
