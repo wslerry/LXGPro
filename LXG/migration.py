@@ -27,7 +27,7 @@ class GDB2SDE:
 
         self.UpgradeDatasets()
 
-        sde = self.temp_connection()
+        self.sde = self.temp_connection()
 
         arcpy.env.workspace = self.gdb
 
@@ -39,24 +39,17 @@ class GDB2SDE:
             pbar01.set_description(ds)
             try:
                 src_data = os.path.join(self.gdb, ds)
-                out_data = os.path.join(sde,
+                out_data = os.path.join(self.sde,
                                         f"{self.database}.sde.{ds}" if self.platform == "POSTGRESQL" else f"SDE.{ds}")
                 if arcpy.Exists(out_data):
                     exist_ds.append([src_data, out_data])
-                    # feats = sorted(arcpy.ListFeatureClasses("", "All", ds))
-                    # for fc in feats:
-                    #     out_fc_name = os.path.join(
-                    #         sde,
-                    #         out_data,
-                    #         f"{self.database}.sde.{fc}" if self.platform == "POSTGRESQL" else f"SDE.{fc}"
-                    #     )
-                    #     src_fc_data = os.path.join(src_data, fc)
-                    #     tgt_fc_data = os.path.join(out_data, out_fc_name)
-                    #     exist_ds.append([src_fc_data, tgt_fc_data])
                 else:
                     nonexist_ds.append([src_data, out_data])
             except Exception as e:
                 arcpy.AddError(e)
+
+        # change Alias
+        self.ChangeAlias()
 
         # run multiprocessing
         if len(exist_ds) > 0:
@@ -211,6 +204,16 @@ class GDB2SDE:
             else:
                 pass
 
+    def ChangeAlias(self):
+        arcpy.env.workspace = self.sde
+        try:
+            for ds in arcpy.ListDatasets("*", "Feature"):
+                for fc in arcpy.ListFeatureClasses("*", "All", ds):
+                    if re.search('SDE.', fc) or re.search('sde.', fc):
+                        alias = fc.split(os.extsep)[-1]
+                        arcpy.AlterAliasName(fc, alias)
+        except arcpy.ExecuteError as e:
+            arcpy.AddError(e)
 
 class EnterpriseGDB:
     """

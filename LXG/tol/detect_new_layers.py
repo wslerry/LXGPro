@@ -18,6 +18,9 @@ class DetectNewFeatures:
 
         self.processor_num = 4 if mp.cpu_count() >= 4 else (2 if mp.cpu_count() == 2 else 1)
 
+        # self.scratch = "in_memory"
+        # arcpy.Delete_management(self.scratch)
+
         self.scratch = "in_memory"
         arcpy.env.workspace = self.scratch
 
@@ -41,7 +44,7 @@ class DetectNewFeatures:
         for ds in pbar01:
             fc_poly = sorted(arcpy.ListFeatureClasses(self.fc_wildcard, "Polygon", ds))
             if len(fc_poly) > 0:
-                pbar03 = tqdm(fc_poly, desc="Polygon", position=1, colour='Yellow', leave=False)
+                pbar03 = tqdm(fc_poly, position=1, colour='Yellow', leave=False)
                 for poly in pbar03:
                     if re.search('sde.', poly):
                         poly_name = poly.split(os.extsep)[-1]
@@ -49,11 +52,22 @@ class DetectNewFeatures:
                         poly_name = poly.split(os.extsep)[-1]
                     else:
                         poly_name = poly
+
+                    pts = os.path.join(self.scratch, f'{fc_class_name}_{poly_name}_pts')
+                    buf = os.path.join(self.scratch, f'{fc_class_name}_{poly_name}_buf')
                     self._polys([os.path.join(geodatabase, ds, poly),
                                  geodatabase,
-                                 os.path.join(self.scratch, f'{fc_class_name}_{poly_name}_pts'),
-                                 os.path.join(self.scratch, f'{fc_class_name}_{poly_name}_buf')
+                                 pts,
+                                 buf
                                  ])
+
+    def get_scratch_features(self):
+        arcpy.env.workspace = self.scratch
+
+        print(arcpy.ListFeatureClasses("", "All"))
+        all_feats = [fc for fc in sorted(arcpy.ListFeatureClasses("", ""))]
+
+        return all_feats
 
     def _polys(self, fc_list):
         geodatabase = fc_list[1]
@@ -75,25 +89,23 @@ class DetectNewFeatures:
     def check_differences(self):
         arcpy.env.workspace = self.new
         new_features_list = []
+
         dss = sorted(arcpy.ListDatasets(self.ds_wildcard, "Feature"))
-        pbar01 = tqdm(dss, desc='Detect changes', position=0, colour='GREEN')
-        for ds in pbar01:
+        # pbar01 = tqdm(dss, desc='Detect changes', position=0, colour='GREEN')
+        for ds in dss:
             fcs = sorted(arcpy.ListFeatureClasses(self.fc_wildcard, "Polygon", ds))
-            pbar02 = tqdm(fcs, position=1, colour='Yellow', leave=False)
-            for fc in pbar02:
-                pbar02.set_description(fc)
+            # pbar02 = tqdm(fcs, position=1, colour='Yellow', leave=False)
+            for fc in fcs:
+                # pbar02.set_description(fc)
                 if re.search('sde.', fc):
                     fc = fc.split(os.extsep)[-1]
                 elif re.search('SDE.', fc):
                     fc = fc.split(os.extsep)[-1]
                 else:
                     fc = fc
-                fc_pts = os.path.join(self.scratch, f'new_{fc}_pts') \
-                    if arcpy.Exists(os.path.join(self.scratch, f'new_{fc}_pts')) \
-                    else os.path.join(self.scratch, f'new_{fc}_pts0')
-                old_fc_buf = os.path.join(self.scratch, f'init_{fc}_buf') \
-                    if arcpy.Exists(os.path.join(self.scratch, f'new_{fc}_buf')) \
-                    else os.path.join(self.scratch, f'new_{fc}_buf0')
+                fc_pts = os.path.join(self.scratch, f'new_{fc}_pts')
+
+                old_fc_buf = os.path.join(self.scratch, f'init_{fc}_buf')
                 try:
                     if arcpy.Exists(fc_pts):
                         if arcpy.Exists(old_fc_buf):
