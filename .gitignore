@@ -4,7 +4,7 @@ test*
 build
 build/*
 LXG/__pycache__
-
+docs
 dist
 *.egg-info
 LXG/*.c
@@ -12,9 +12,4 @@ LXG/*.c
 *.sh
 *.bat
 *.json
-latest.py
-convert2shp.py
-projection_multiprocessing.py
-replicate.py
-workspace.py
 *.pyd

@@ -1,0 +1,179 @@
+import arcpy
+import re
+import os
+from tqdm import tqdm
+import multiprocessing as mp
+import pandas as pd
+import uuid
+
+
+class DetectNewFeatures:
+    def __init__(self, init_geodatabase, latest_geodatabase, division, datasets_wildcard=None,
+                 featureclass_wildcard=None):
+        self.init = init_geodatabase
+        self.new = latest_geodatabase
+        self.div = division
+        self.ds_wildcard = f"*{self.div}*KPG_EXT*" if datasets_wildcard is None or datasets_wildcard == "" else datasets_wildcard
+        self.fc_wildcard = f"*KPG_EXT*{self.div}*" if featureclass_wildcard is None or featureclass_wildcard == "" else featureclass_wildcard
+
+        self.processor_num = 4 if mp.cpu_count() >= 4 else (2 if mp.cpu_count() == 2 else 1)
+
+        self.scratch = "in_memory"
+        arcpy.env.workspace = self.scratch
+
+        try:
+            self.prepare_features(self.init, "init")
+            self.prepare_features(self.new, "new")
+
+            _ = self.check_differences()
+
+            arcpy.ClearWorkspaceCache_management()
+            arcpy.Delete_management(self.scratch)
+        except arcpy.ExecuteError as e:
+            print(e)
+
+    def prepare_features(self, geodatabase, name):
+        fc_class_name = name
+
+        arcpy.env.workspace = geodatabase
+        dss = sorted(arcpy.ListDatasets(self.ds_wildcard, "Feature"))
+        pbar01 = tqdm(dss, desc=f'Analyze {fc_class_name}', position=0, colour='GREEN')
+        for ds in pbar01:
+            fc_poly = sorted(arcpy.ListFeatureClasses(self.fc_wildcard, "Polygon", ds))
+            if len(fc_poly) > 0:
+                pbar03 = tqdm(fc_poly, desc="Polygon", position=1, colour='Yellow', leave=False)
+                for poly in pbar03:
+                    if re.search('sde.', poly):
+                        poly_name = poly.split(os.extsep)[-1]
+                    elif re.search('SDE.', poly):
+                        poly_name = poly.split(os.extsep)[-1]
+                    else:
+                        poly_name = poly
+                    self._polys([os.path.join(geodatabase, ds, poly),
+                                 geodatabase,
+                                 os.path.join(self.scratch, f'{fc_class_name}_{poly_name}_pts'),
+                                 os.path.join(self.scratch, f'{fc_class_name}_{poly_name}_buf')
+                                 ])
+
+    def _polys(self, fc_list):
+        geodatabase = fc_list[1]
+        pts_feat_poly = fc_list[2]
+        buf_feat_poly = fc_list[3]
+        try:
+            arcpy.FeatureToPoint_management(fc_list[0], pts_feat_poly, "CENTROID")
+            if geodatabase == self.init:
+                # Execute the Buffer tool if initial geodatabase
+                arcpy.Buffer_analysis(pts_feat_poly,
+                                      buf_feat_poly,
+                                      "0.02 meters")
+                arcpy.Delete_management(pts_feat_poly)
+        except arcpy.ExecuteError as e:
+            arcpy.AddError(e)
+
+        del geodatabase, pts_feat_poly, buf_feat_poly
+
+    def check_differences(self):
+        arcpy.env.workspace = self.new
+        new_features_list = []
+        dss = sorted(arcpy.ListDatasets(self.ds_wildcard, "Feature"))
+        pbar01 = tqdm(dss, desc='Detect changes', position=0, colour='GREEN')
+        for ds in pbar01:
+            fcs = sorted(arcpy.ListFeatureClasses(self.fc_wildcard, "Polygon", ds))
+            pbar02 = tqdm(fcs, position=1, colour='Yellow', leave=False)
+            for fc in pbar02:
+                pbar02.set_description(fc)
+                if re.search('sde.', fc):
+                    fc = fc.split(os.extsep)[-1]
+                elif re.search('SDE.', fc):
+                    fc = fc.split(os.extsep)[-1]
+                else:
+                    fc = fc
+                fc_pts = os.path.join(self.scratch, f'new_{fc}_pts')
+                old_fc_buf = os.path.join(self.scratch, f'init_{fc}_buf')
+                try:
+                    if arcpy.Exists(fc_pts):
+                        if arcpy.Exists(old_fc_buf):
+                            get_count = self.intersect(fc_pts, old_fc_buf)
+                            if get_count > 0:
+                                new_features_list.append((fc, get_count))
+                            # start copy/append
+                            target_point_fc = os.path.join(self.new, ds, f"KPG_EXT_POINT_{self.div}")
+                            if arcpy.Exists(target_point_fc):
+                                self.truncate_append(target_point_fc, fc_pts)
+                            else:
+                                arcpy.CopyFeatures_management(fc_pts, target_point_fc)
+                except arcpy.ExecuteError as e:
+                    arcpy.AddError(e)
+        if len(new_features_list) > 0:
+            df = pd.DataFrame(new_features_list, columns=["FeatureClasses", "Count"])
+            report_dir = os.path.join(os.path.expanduser('~'), "Documents", "GIS_Reports", "KPG_EXT")
+            os.makedirs(report_dir, exist_ok=True)
+            df.to_csv(os.path.join(report_dir, f"{self.div}_KPG_EXT_new_layers.csv"), index=False)
+
+        return new_features_list
+
+    def intersect(self, in_layer, select_features):
+        _, _, selected_count = arcpy.SelectLayerByLocation_management(
+            in_layer=in_layer,
+            overlap_type="INTERSECT",
+            select_features=select_features,
+            selection_type="NEW_SELECTION",
+            invert_spatial_relationship="INVERT")
+
+        arcpy.SelectLayerByAttribute_management(select_features, "CLEAR_SELECTION")
+
+        selected_layer, _, _ = arcpy.SelectLayerByLocation_management(
+            in_layer=in_layer,
+            overlap_type="INTERSECT",
+            select_features=select_features,
+            selection_type="NEW_SELECTION",
+            invert_spatial_relationship="NOT_INVERT")
+
+        arcpy.DeleteRows_management(selected_layer)
+
+        arcpy.SelectLayerByAttribute_management(in_layer, "CLEAR_SELECTION")
+
+        return int(selected_count)
+
+    def truncate_append(self, featureclass_target, feature_point):
+        try:
+            fc_uid = uuid.uuid4()
+            arcpy.MakeTableView_management(featureclass_target, f"tab_{str(fc_uid)}")
+            query = f"OBJECTID IS NOT NULL"
+            arcpy.SelectLayerByAttribute_management(f"tab_{str(fc_uid)}", "NEW_SELECTION", query)
+            arcpy.DeleteRows_management(f"tab_{str(fc_uid)}")
+            arcpy.SelectLayerByAttribute_management(f"tab_{str(fc_uid)}", "CLEAR_SELECTION")
+            arcpy.Delete_management(f"tab_{str(fc_uid)}")
+        except arcpy.ExecuteError as e:
+            arcpy.AddError(e)
+
+        try:
+            fieldMappings = self.fieldmapping(feature_point,
+                                              featureclass_target)
+            arcpy.Append_management(inputs=feature_point,
+                                    target=featureclass_target,
+                                    schema_type="NO_TEST",
+                                    field_mapping=fieldMappings
+                                    )
+            del fieldMappings
+        except arcpy.ExecuteError as e:
+            arcpy.AddError(e)
+
+    def fieldmapping(self, fc_source, fc_target):
+        fieldMappings = arcpy.FieldMappings()
+        field_tgt = arcpy.ListFields(fc_target)
+        namelist_tgt = []
+        # Creating field maps for the two files
+        fieldMappings.addTable(fc_source)
+        fieldMappings.addTable(fc_target)
+
+        for fd in field_tgt:
+            if fd.type != "OID" and fd.editable is False:
+                namelist_tgt.append(fd.name)
+
+        for field in fieldMappings.fields:
+            if field.name not in namelist_tgt:
+                fieldMappings.removeFieldMap(fieldMappings.findFieldMapIndex(field.name))
+
+        return fieldMappings
+
