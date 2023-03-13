@@ -1,5 +1,4 @@
 import sys
-
 import arcpy
 import re
 import os
@@ -8,6 +7,8 @@ import multiprocessing as mp
 import pandas as pd
 import uuid
 import tempfile
+import shutil
+from ..utils import TemporaryDirectory
 
 
 class TOLNewFeatures:
@@ -224,17 +225,17 @@ class ReplicateTOL:
     This is one way replication from SDE to local geodatabase.
 
     Args:
-        sde_connection: SDE Connection geodatabase, a temporary SDE connection will be created if not provide.
+        sde_connection: SDE Connection file, a temporary SDE connection will be created if not provide.
         sde_instance: Database Instance
         sde_platform: ORACLE,POSTGRESQL
-        sde_username: Query for interested layers
-        sde_password:
-        sde_database:
-        division:
-        wildcard_datasets:
-        wildcard_featureclass
-        replica:
-        replica_name:
+        sde_username (Optional): Query for interested layers
+        sde_password (Optional): SDE Password
+        sde_database (Optional): SDE database name - only for POSTGRESQL
+        division (Optional): LASIS divisional abbreviation eg. KCH, BTU, LBG ...
+        wildcard_datasets (Optional): SQL Query to select table for interested dataset layer
+        wildcard_featureclass (Optional): SQL Query to select table for interested featureclass layer
+        replica (Optional): Geodatabase file for replica
+        replica_name (Optional): Replica name.
 
     Usage:
         ```
@@ -242,20 +243,19 @@ class ReplicateTOL:
 
         new = r"C:\LXG\replication\ARC\replication_test\127.0.0.1.sde"
 
-        check_db = TOLNewFeatures(init_geodatabase=init,
-                                  latest_geodatabase=new,
-                                  division="KCH")
+        ReplicateTOL(init_geodatabase=init, latest_geodatabase=new, division="KCH")
         ```
     """
     def __init__(self, sde_connection=None, sde_instance=None, sde_platform=None,
                  sde_username=None, sde_password=None, sde_database=None, division=None,
                  wildcard_datasets=None, wildcard_featureclass=None, replica=None, replica_name=None):
-        self.sde = self.temp_connection() if sde_connection is None else sde_connection
+        self.tempdir = tempfile.mkdtemp()
         self.platform = sde_platform
         self.instance = "127.0.0.1" if sde_instance is None else sde_instance
         self.usr = "sde" if sde_username is None else sde_username
         self.pwd = "sde" if sde_password is None else sde_password
         self.database = "" if sde_database is None else sde_database
+        self.sde = self.temp_connection() if sde_connection is None else sde_connection
         self.division = division
         self.wildcard_ds = "*" if wildcard_datasets is None else wildcard_datasets
         self.wildcard_fc = "*" if wildcard_featureclass is None else wildcard_featureclass
@@ -274,39 +274,49 @@ class ReplicateTOL:
 
         self.replica_name = "tol_replication" if replica_name is None else replica_name
 
+        try:
+            self.run()
+            self.check()
+            self.sync()
+        except arcpy.ExecuteError as e:
+            arcpy.AddError(e)
+
+        shutil.rmtree(self.tempdir)
+
     def run(self):
+        """"Run ReplicateTOL"""
         repl_name = []
         for replica in arcpy.da.ListReplicas(self.replica):
             repl_name.append(replica.name)
 
         if self.replica_name in repl_name:
-            sys.exit(f"Hello..hi..yes you there.. Replica name '{self.replica_name}' "
-                     f"already exist, use other name. System exit...")
-        else:
+            arcpy.AddWarning(f"[WARNING]\tReplica name '{self.replica_name}' already exist, continue to sync...")
             pass
-
-        kpg_ext = f"{self.database}.sde.{self.division}_LAND_KPG_EXT" if self.platform == "POSTGRESQL" \
-            else f"SDE.{self.division}_LAND_KPG_EXT"
-        try:
-            arcpy.CreateReplica_management(
-                os.path.join(self.sde, kpg_ext),
-                "ONE_WAY_REPLICA",
-                self.replica,
-                self.replica_name,
-                "FULL",
-                "PARENT_DATA_SENDER",
-                "USE_DEFAULTS",
-                "DO_NOT_REUSE",
-                "GET_RELATED",
-                None,
-                "DO_NOT_USE_ARCHIVING",
-                "DO_NOT_USE_REGISTER_EXISTING_DATA",
-                "GEODATABASE",
-                None)
-        except arcpy.ExecuteError as e:
-            arcpy.AddError(e)
+        else:
+            kpg_ext = f"{self.database}.sde.{self.division}_LAND_KPG_EXT" if self.platform == "POSTGRESQL" \
+                else f"SDE.{self.division}_LAND_KPG_EXT"
+            try:
+                arcpy.CreateReplica_management(
+                    os.path.join(self.sde, kpg_ext),
+                    "ONE_WAY_REPLICA",
+                    self.replica,
+                    self.replica_name,
+                    "FULL",
+                    "PARENT_DATA_SENDER",
+                    "USE_DEFAULTS",
+                    "DO_NOT_REUSE",
+                    "GET_RELATED",
+                    None,
+                    "DO_NOT_USE_ARCHIVING",
+                    "DO_NOT_USE_REGISTER_EXISTING_DATA",
+                    "GEODATABASE",
+                    None)
+                arcpy.AddMessage(f"[INFO]\tReplica created, continue to sync...")
+            except arcpy.ExecuteError as e:
+                arcpy.AddError(e)
 
     def sync(self):
+        """Sync replica geodatabase to SDE database"""
         try:
             arcpy.SynchronizeChanges_management(
                 self.replica,
@@ -330,6 +340,7 @@ class ReplicateTOL:
             pass
 
     def temp_connection(self):
+        """Create a temporary connection to SDE"""
         if self.platform == "oracle":
             platform = "ORACLE"
         elif self.platform == "postgres":
@@ -340,8 +351,8 @@ class ReplicateTOL:
         assert self.platform is not None or self.platform != ""
 
         f_uid = uuid.uuid4()
-        tempdir = tempfile.mkdtemp()
-        conn = {"out_folder_path": tempdir,
+
+        conn = {"out_folder_path": self.tempdir,
                 "out_name": f'temp_{str(f_uid.hex)}.sde',
                 "database_platform": platform,
                 "instance": self.instance,
