@@ -251,7 +251,6 @@ class ReplicateTOL:
                  wildcard_datasets=None, wildcard_featureclass=None, replica=None, replica_name=None):
         if sde_connection is None:
             with TemporaryDirectory() as self.tempdir:
-                # self.tempdir = tempfile.mkdtemp()
                 os.makedirs(self.tempdir, exist_ok=True)
                 self.sde_name_uid = uuid.uuid4()
                 self.platform = sde_platform
@@ -277,7 +276,7 @@ class ReplicateTOL:
                     # create a new replica if not exist in the system.
                     self.replica = arcpy.CreateFileGDB_management(work_dir, "tol_replica.gdb") if replica is None else replica
 
-                self.replica_name = "tol_replication01" if replica_name is None else replica_name
+                self.replica_name = "tol_replication" if replica_name is None else replica_name
 
                 try:
                     self.run()
@@ -304,11 +303,11 @@ class ReplicateTOL:
                 self.replica = arcpy.CreateFileGDB_management(work_dir,
                                                               "tol_replica.gdb") if replica is None else replica
 
-            self.replica_name = "tol_replication01" if replica_name is None else replica_name
+            self.replica_name = "tol_replication" if replica_name is None else replica_name
 
             try:
-                self.run()
                 self.check()
+                self.run()
                 self.sync()
             except arcpy.ExecuteError as e:
                 arcpy.AddError(e)
