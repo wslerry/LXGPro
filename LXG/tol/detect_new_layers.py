@@ -249,39 +249,69 @@ class ReplicateTOL:
     def __init__(self, sde_connection=None, sde_instance=None, sde_platform=None,
                  sde_username=None, sde_password=None, sde_database=None, division=None,
                  wildcard_datasets=None, wildcard_featureclass=None, replica=None, replica_name=None):
-        self.tempdir = tempfile.mkdtemp()
-        self.platform = sde_platform
-        self.instance = "127.0.0.1" if sde_instance is None else sde_instance
-        self.usr = "sde" if sde_username is None else sde_username
-        self.pwd = "sde" if sde_password is None else sde_password
-        self.database = "" if sde_database is None else sde_database
-        self.sde = self.temp_connection() if sde_connection is None else sde_connection
-        self.division = division
-        self.wildcard_ds = "*" if wildcard_datasets is None else wildcard_datasets
-        self.wildcard_fc = "*" if wildcard_featureclass is None else wildcard_featureclass
-        work_dir = os.path.join(os.path.expanduser('~'), ".LXG_WORKSPACE")
-        if not os.path.isdir(work_dir):
-            os.makedirs(work_dir)
+        if sde_connection is None:
+            with TemporaryDirectory() as self.tempdir:
+                # self.tempdir = tempfile.mkdtemp()
+                os.makedirs(self.tempdir, exist_ok=True)
+                self.sde_name_uid = uuid.uuid4()
+                self.platform = sde_platform
+                self.instance = "127.0.0.1" if sde_instance is None else sde_instance
+                self.usr = "sde" if sde_username is None else sde_username
+                self.pwd = "sde" if sde_password is None else sde_password
+                self.database = "sde_gis" if sde_database is None else sde_database
+                _sde = self.temp_connection()
+                self.sde = _sde if sde_connection is None else sde_connection
+                self.division = division
+                self.wildcard_ds = "*" if wildcard_datasets is None else wildcard_datasets
+                self.wildcard_fc = "*" if wildcard_featureclass is None else wildcard_featureclass
+                work_dir = os.path.join(os.path.expanduser('~'), ".LXG_WORKSPACE")
+                if not os.path.isdir(work_dir):
+                    os.makedirs(work_dir)
+                else:
+                    pass
+                replica_gdb = os.path.join(work_dir, "tol_replica.gdb")
+                if arcpy.Exists(replica_gdb):
+                    # if file exist, keep it. It is a replica geodatabase by the way.
+                    self.replica = replica_gdb if replica is None else replica
+                else:
+                    # create a new replica if not exist in the system.
+                    self.replica = arcpy.CreateFileGDB_management(work_dir, "tol_replica.gdb") if replica is None else replica
+
+                self.replica_name = "tol_replication01" if replica_name is None else replica_name
+
+                try:
+                    self.run()
+                    self.check()
+                    self.sync()
+                except arcpy.ExecuteError as e:
+                    arcpy.AddError(e)
         else:
-            pass
-        replica_gdb = os.path.join(work_dir, "tol_replica.gdb")
-        if arcpy.Exists(replica_gdb):
-            # if file exist, keep it. It is a replica geodatabase by the way.
-            self.replica = replica_gdb if replica is None else replica
-        else:
-            # create a new replica if not exist in the system.
-            self.replica = arcpy.CreateFileGDB_management(work_dir, "tol_replica.gdb") if replica is None else replica
+            self.sde = sde_connection
+            self.division = division
+            self.wildcard_ds = "*" if wildcard_datasets is None else wildcard_datasets
+            self.wildcard_fc = "*" if wildcard_featureclass is None else wildcard_featureclass
+            work_dir = os.path.join(os.path.expanduser('~'), ".LXG_WORKSPACE")
+            if not os.path.isdir(work_dir):
+                os.makedirs(work_dir)
+            else:
+                pass
+            replica_gdb = os.path.join(work_dir, "tol_replica.gdb")
+            if arcpy.Exists(replica_gdb):
+                # if file exist, keep it. It is a replica geodatabase by the way.
+                self.replica = replica_gdb if replica is None else replica
+            else:
+                # create a new replica if not exist in the system.
+                self.replica = arcpy.CreateFileGDB_management(work_dir,
+                                                              "tol_replica.gdb") if replica is None else replica
 
-        self.replica_name = "tol_replication" if replica_name is None else replica_name
+            self.replica_name = "tol_replication01" if replica_name is None else replica_name
 
-        try:
-            self.run()
-            self.check()
-            self.sync()
-        except arcpy.ExecuteError as e:
-            arcpy.AddError(e)
-
-        shutil.rmtree(self.tempdir)
+            try:
+                self.run()
+                self.check()
+                self.sync()
+            except arcpy.ExecuteError as e:
+                arcpy.AddError(e)
 
     def run(self):
         """"Run ReplicateTOL"""
@@ -289,10 +319,7 @@ class ReplicateTOL:
         for replica in arcpy.da.ListReplicas(self.replica):
             repl_name.append(replica.name)
 
-        if self.replica_name in repl_name:
-            arcpy.AddWarning(f"[WARNING]\tReplica name '{self.replica_name}' already exist, continue to sync...")
-            pass
-        else:
+        if self.replica_name not in repl_name:
             kpg_ext = f"{self.database}.sde.{self.division}_LAND_KPG_EXT" if self.platform == "POSTGRESQL" \
                 else f"SDE.{self.division}_LAND_KPG_EXT"
             try:
@@ -314,6 +341,10 @@ class ReplicateTOL:
                 arcpy.AddMessage(f"[INFO]\tReplica created, continue to sync...")
             except arcpy.ExecuteError as e:
                 arcpy.AddError(e)
+        else:
+            print(f"[INFO]\t{self.replica_name} already exist, continue to sync...")
+
+        return
 
     def sync(self):
         """Sync replica geodatabase to SDE database"""
@@ -326,18 +357,23 @@ class ReplicateTOL:
                 "IN_FAVOR_OF_GDB2",
                 "BY_OBJECT",
                 "RECONCILE ")
+            arcpy.AddMessage(f"[INFO]\t{self.replica} successfully sync with {self.sde}...")
         except arcpy.ExecuteError as e:
             arcpy.AddError(e)
+
+        return
 
     def check(self):
         repl_name = []
         for replica in arcpy.da.ListReplicas(self.replica):
             repl_name.append(replica.name)
         try:
-            print_out = 'Replica name list:\n'+'\u25A0 '+'\n\u25A0 '.join(repl_name)
+            print_out = '[INFO]\tReplica name list:\n'+'\t\t\u25A0 '+'\n\t\t\u25A0 '.join(repl_name)
             print(print_out)
         except UnicodeDecodeError:
             pass
+
+        return
 
     def temp_connection(self):
         """Create a temporary connection to SDE"""
@@ -350,10 +386,8 @@ class ReplicateTOL:
 
         assert self.platform is not None or self.platform != ""
 
-        f_uid = uuid.uuid4()
-
         conn = {"out_folder_path": self.tempdir,
-                "out_name": f'temp_{str(f_uid.hex)}.sde',
+                "out_name": f'{str(self.sde_name_uid.hex)}.sde',
                 "database_platform": platform,
                 "instance": self.instance,
                 "account_authentication": "DATABASE_AUTH",
@@ -370,4 +404,14 @@ class ReplicateTOL:
         arcpy.CreateDatabaseConnection_management(**conn)
 
         return temp_sde
+
+    def __repr__(self):
+        return f"{self.__class__.__name__}(sde_connection={self.sde}, " \
+               f"sde_instance={self.instance}, sde_platform={self.platform}, sde_username={self.usr}, " \
+               f"sde_password={self.pwd}, sde_database={self.database}, division={self.division}, " \
+               f"wildcard_datasets={self.wildcard_ds}, wildcard_featureclass={self.wildcard_fc}, " \
+               f"replica={self.replica}, replica_name={self.replica_name})"
+
+
+
 
