@@ -220,7 +220,7 @@ class TOLNewFeatures:
         return fieldMappings
 
 
-class ReplicateTOL:
+class TOLReplication:
     """Replicate TOL dataset into a replica for dynamic layers.
     This is one way replication from SDE to local geodatabase.
 
@@ -247,8 +247,9 @@ class ReplicateTOL:
         ```
     """
     def __init__(self, sde_connection=None, sde_instance=None, sde_platform=None,
-                 sde_username=None, sde_password=None, sde_database=None, division=None,
-                 wildcard_datasets=None, wildcard_featureclass=None, replica=None, replica_name=None):
+                 sde_username=None, sde_password=None, sde_database=None,
+                 division=None, wildcard_datasets=None, wildcard_featureclass=None,
+                 replica=None, replica_name=None, unregister_replica=False):
         if sde_connection is None:
             with TemporaryDirectory() as self.tempdir:
                 os.makedirs(self.tempdir, exist_ok=True)
@@ -263,12 +264,19 @@ class ReplicateTOL:
                 self.division = division
                 self.wildcard_ds = "*" if wildcard_datasets is None else wildcard_datasets
                 self.wildcard_fc = "*" if wildcard_featureclass is None else wildcard_featureclass
+
+                self.unregister_replica = unregister_replica
+                if self.unregister_replica:
+                    self.unregister()
+
                 work_dir = os.path.join(os.path.expanduser('~'), ".LXG_WORKSPACE")
                 if not os.path.isdir(work_dir):
                     os.makedirs(work_dir)
                 else:
                     pass
+
                 replica_gdb = os.path.join(work_dir, "tol_replica.gdb")
+
                 if arcpy.Exists(replica_gdb):
                     # if file exist, keep it. It is a replica geodatabase by the way.
                     self.replica = replica_gdb if replica is None else replica
@@ -279,8 +287,8 @@ class ReplicateTOL:
                 self.replica_name = "tol_replication" if replica_name is None else replica_name
 
                 try:
-                    self.run()
                     self.check()
+                    self.run()
                     self.sync()
                 except arcpy.ExecuteError as e:
                     arcpy.AddError(e)
@@ -289,12 +297,19 @@ class ReplicateTOL:
             self.division = division
             self.wildcard_ds = "*" if wildcard_datasets is None else wildcard_datasets
             self.wildcard_fc = "*" if wildcard_featureclass is None else wildcard_featureclass
+
+            self.unregister_replica = unregister_replica
+            if self.unregister_replica:
+                self.unregister()
+
             work_dir = os.path.join(os.path.expanduser('~'), ".LXG_WORKSPACE")
             if not os.path.isdir(work_dir):
                 os.makedirs(work_dir)
             else:
                 pass
+
             replica_gdb = os.path.join(work_dir, "tol_replica.gdb")
+
             if arcpy.Exists(replica_gdb):
                 # if file exist, keep it. It is a replica geodatabase by the way.
                 self.replica = replica_gdb if replica is None else replica
@@ -304,6 +319,7 @@ class ReplicateTOL:
                                                               "tol_replica.gdb") if replica is None else replica
 
             self.replica_name = "tol_replication" if replica_name is None else replica_name
+            self.unregister_replica = unregister_replica
 
             try:
                 self.check()
@@ -403,6 +419,16 @@ class ReplicateTOL:
         arcpy.CreateDatabaseConnection_management(**conn)
 
         return temp_sde
+
+    def unregister(self):
+        try:
+            arcpy.UnregisterReplica_management(
+                self.sde,
+                f"sde.{self.replica_name}")
+        except arcpy.ExecuteError as e:
+            arcpy.AddError(e)
+
+        return
 
     def __repr__(self):
         return f"{self.__class__.__name__}(sde_connection={self.sde}, " \

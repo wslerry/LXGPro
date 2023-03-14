@@ -13,7 +13,7 @@ from .utils import (MigrationLog,
                     delete_workdir,
                     )
 
-from .tol import TOLNewFeatures, ReplicateTOL
+from .tol import TOLNewFeatures, TOLReplication
 from . import _version
 
 __version__ = _version.get_versions()['version']
